@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.DiaryAndTasksController">
+        <fx:include source="CommonPanel.fxml" />
+        <Button layoutX="81.0" layoutY="322.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: #9067C6; -fx-border-image-width: 16px; -fx-border-radius: 16px;" text="Button" />
+        <Button layoutX="598.0" layoutY="173.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: #9067C6; -fx-border-image-width: 16px; -fx-border-radius: 16px;" text="Button" />
+        <Button layoutX="81.0" layoutY="173.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: #9067C6; -fx-border-image-width: 16px; -fx-border-radius: 16px;" text="Diario" textAlignment="RIGHT" />
+        <Button layoutX="351.0" layoutY="322.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="200.0" style="-fx-border-color: #9067C6; -fx-background-color: transparent; -fx-border-image-width: 16px; -fx-border-radius: 16px;" text="Button" />
+        <Button layoutX="351.0" layoutY="173.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="200.0" style="-fx-border-color: #9067C6; -fx-background-color: transparent; -fx-border-image-width: 16px; -fx-border-radius: 16px;" text="Button" />
+        <ImageView fitHeight="60.0" fitWidth="70.0" layoutX="88.0" layoutY="190.0">
+                <image>
+                        <Image url="@images/commonPanel/diario.png" />
+                </image>
+        </ImageView>
+        <ImageView fitHeight="68.0" fitWidth="62.0" layoutX="361.0" layoutY="333.0">
+                <image>
+                        <Image url="@images/commonPanel/todo.png" />
+                </image>
+        </ImageView>
+        <ImageView fitHeight="77.0" fitWidth="70.0" layoutX="361.0" layoutY="180.0">
+                <image>
+                        <Image url="@images/commonPanel/pc.png" />
+                </image>
+        </ImageView>
+        <ImageView fitHeight="77.0" fitWidth="70.0" layoutX="88.0" layoutY="329.0">
+                <image>
+                        <Image url="@images/commonPanel/psicologo.png" />
+                </image>
+        </ImageView>
+        <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="611.0" layoutY="184.0">
+                <image>
+                        <Image url="@images/commonPanel/post.png" />
+                </image>
+        </ImageView>
+</AnchorPane>

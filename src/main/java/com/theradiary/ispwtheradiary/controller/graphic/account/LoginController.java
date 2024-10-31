@@ -1,10 +1,11 @@
-package com.theradiary.ispwtheradiary.controller.graphic;
+package com.theradiary.ispwtheradiary.controller.graphic.account;
 
+import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
 import com.theradiary.ispwtheradiary.engineering.Session;
 import javafx.scene.input.MouseEvent;
 
-public class LoginController extends CommonController{
-    protected LoginController(Session session) {
+public class LoginController extends CommonController {
+    public LoginController(Session session) {
         super(session);
     }
 
