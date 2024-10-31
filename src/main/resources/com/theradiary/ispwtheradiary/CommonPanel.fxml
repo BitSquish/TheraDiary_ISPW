@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="604.0" prefWidth="847.0" style="-fx-background-color: #F7ECE1;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.CommonController">
+    <AnchorPane layoutX="-2.0" prefHeight="35.0" prefWidth="876.0" BorderPane.alignment="CENTER">
+
+        <!-- Menù superiore -->
+        <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9067c6" height="86.0" stroke="#9067c6" strokeType="INSIDE" width="876.0" />
+            <ImageView fx:id="logo" fitHeight="161.0" fitWidth="254.0" layoutX="622.0" layoutY="-34.0" onMouseClicked="#goToHomepage">
+                <image>
+                    <Image url="@images/other/WhiteLogo.png" />
+                </image>
+            </ImageView>
+            <ImageView fx:id="home" fitHeight="38.0" fitWidth="38.0" layoutX="26.0" layoutY="20.0" onMouseClicked="#goToHomepage" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@images/other/home.png" />
+                </image>
+            </ImageView>
+            <ImageView fx:id="account" fitHeight="38.0" fitWidth="38.0" layoutX="115.0" layoutY="23.0" onMouseClicked="#goToAccountPage" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@images/other/account.png" />
+                </image>
+            </ImageView>
+            <ImageView fx:id="diaryTasks" fitHeight="44.0" fitWidth="52.0" layoutX="205.0" layoutY="21.0" onMouseClicked="#goToTasks" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@images/other/diarioTask.png" />
+                </image>
+            </ImageView>
+            <ImageView fx:id="dashboard" fitHeight="52.0" fitWidth="35.0" layoutX="295.0" layoutY="24.0" onMouseClicked="#goToDashboard" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@images/other/bacheca.png" />
+                </image>
+            </ImageView>
+            <ImageView fx:id="PAG" fitHeight="38.0" fitWidth="38.0" layoutX="470.0" layoutY="24.0" onMouseClicked="#goToPAG" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@images/other/pag.png" />
+                </image>
+            </ImageView>
+            <ImageView fx:id="Appointment" fitHeight="40.0" fitWidth="40.0" layoutX="550.0" layoutY="23.0" onMouseClicked="#goToAppointment" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@images/other/calendario.png" />
+                </image>
+            </ImageView>
+            <Text fill="WHITE" layoutX="28.0" layoutY="74.0" onMouseClicked="#goToHomepage" strokeType="OUTSIDE" strokeWidth="0.0" text="Home">
+                <font>
+                    <Font name="System Bold" size="12.0" />
+                </font>
+            </Text>
+            <Text fill="WHITE" layoutX="111.0" layoutY="74.0" onMouseClicked="#goToAccountPage" strokeType="OUTSIDE" strokeWidth="0.0" text="Account">
+                <font>
+                    <Font name="System Bold" size="12.0" />
+                </font>
+            </Text>
+            <Text fill="WHITE" layoutX="191.0" layoutY="76.0" onMouseClicked="#goToTasks" strokeType="OUTSIDE" strokeWidth="0.0" text="Task e diario">
+                <font>
+                    <Font name="System Bold" size="12.0" />
+                </font>
+            </Text>
+            <Text fill="WHITE" layoutX="290.0" layoutY="74.0" onMouseClicked="#goToDashboard" strokeType="OUTSIDE" strokeWidth="0.0" text="Bacheca">
+                <font>
+                    <Font name="System Bold" size="12.0" />
+                </font>
+            </Text>
+            <Text fill="WHITE" layoutX="363.0" layoutY="74.0" onMouseClicked="#goToSearch" strokeType="OUTSIDE" strokeWidth="0.0" text="Studio medico">
+                <font>
+                    <Font name="System Bold" size="12.0" />
+                </font>
+            </Text>
+            <Text fill="WHITE" layoutX="529.0" layoutY="76.0" onMouseClicked="#goToAppointment" strokeType="OUTSIDE" strokeWidth="0.0" text="Appuntamenti">
+                <font>
+                    <Font name="System Bold" size="12.0" />
+                </font>
+            </Text>
+            <Text fill="WHITE" layoutX="472.0" layoutY="75.0" onMouseClicked="#goToPAG" strokeType="OUTSIDE" strokeWidth="0.0" text="P.A.G.">
+                <font>
+                    <Font name="System Bold" size="12.0" />
+                </font>
+            </Text>
+            <ImageView fx:id="Search" fitHeight="38.0" fitWidth="38.0" layoutX="386.0" layoutY="22.0" onMouseClicked="#goToSearch" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@images/other/office.png" />
+                </image>
+            </ImageView>
+        </children>
+
+        <!-- Footer -->
+    </AnchorPane>
+    <Line endX="514.800048828125" layoutX="285.0" layoutY="533.0" startX="-210.80001831054688" stroke="#242038" strokeWidth="1.2" />
+    <ImageView fitHeight="35.0" fitWidth="38.0" layoutX="231.0" layoutY="542.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@images/other/mail.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="54.0" fitWidth="52.0" layoutX="411.0" layoutY="533.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@images/other/stars.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="47.0" fitWidth="38.0" layoutX="597.0" layoutY="541.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@images/other/faq.png" />
+        </image>
+    </ImageView>
+    <Text fill="#9067c6" layoutX="219.0" layoutY="589.0" strokeType="OUTSIDE" text="Contattaci">
+        <font>
+            <Font name="System Bold" size="12.0" />
+        </font>
+    </Text>
+    <Text fill="#9067c6" layoutX="376.0" layoutY="589.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lascia una recensione">
+        <font>
+            <Font name="System Bold" size="12.0" />
+        </font>
+    </Text>
+    <Text fill="#9067c6" layoutX="561.0" layoutY="590.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Domande frequenti">
+        <font>
+            <Font name="System Bold" size="12.0" />
+        </font>
+    </Text>
+</AnchorPane>

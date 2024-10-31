@@ -4,7 +4,9 @@ module com.theradiary.ispwtheradiary {
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
+    requires java.sql;
 
-    opens com.theradiary.ispwtheradiary to javafx.fxml;
-    exports com.theradiary.ispwtheradiary;
+    //exports com.theradiary.ispwtheradiary;
+    exports com.theradiary.ispwtheradiary.start;
+    opens com.theradiary.ispwtheradiary.start to javafx.fxml;
 }

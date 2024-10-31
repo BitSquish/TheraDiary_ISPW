@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.HomepagePtController">
+    <fx:include source="CommonPanel.fxml" />
+   <Button fx:id="iniziamo" layoutX="55.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#goToAccountPage" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: #9067C6; -fx-background-radius: 15px;" textFill="WHITE">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Button>
+   <Button fx:id="iniziamo1" layoutX="328.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#goToTasks" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: #9067C6; -fx-background-radius: 15px;" textFill="WHITE">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Button>
+   <Button fx:id="iniziamo2" layoutX="606.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#goToDashboard" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: #9067C6; -fx-background-radius: 15px;" textFill="WHITE">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Button>
+   <ImageView fitHeight="57.0" fitWidth="53.0" layoutX="74.0" layoutY="233.0" onMouseClicked="#goToAccountPage" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@images/commonPanel/account.png" />
+      </image>
+   </ImageView>
+   <Button fx:id="iniziamo11" layoutX="328.0" layoutY="358.0" mnemonicParsing="false" onMouseClicked="#goToSearch" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: #9067C6; -fx-background-radius: 15px;" textFill="WHITE">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Button>
+   <Button fx:id="iniziamo12" layoutX="606.0" layoutY="357.0" mnemonicParsing="false" onMouseClicked="#goToAppointment" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: #9067C6; -fx-background-radius: 15px;" textFill="WHITE">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Button>
+   <Button fx:id="iniziamo13" layoutX="55.0" layoutY="357.0" mnemonicParsing="false" onMouseClicked="#goToPAG" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: #9067C6; -fx-background-radius: 15px;" textFill="WHITE">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Button>
+   <Text fill="WHITE" layoutX="404.0" layoutY="224.0" onMouseClicked="#goToTasks" strokeType="OUTSIDE" strokeWidth="0.0" text="Diario e task">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </Text>
+   <ImageView fitHeight="62.0" fitWidth="58.0" layoutX="339.0" layoutY="230.0" onMouseClicked="#goToTasks" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@images/commonPanel/diarioTask.png" />
+      </image>
+   </ImageView>
+   <Text fill="WHITE" layoutX="404.0" layoutY="246.0" onMouseClicked="#goToTasks" strokeType="OUTSIDE" strokeWidth="0.0" text="Visualizza le task assegnate dal tuo psicologo o scrivi sul tuo diario" wrappingWidth="143.73678588867188">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Text>
+   <Text fill="#242038" layoutX="227.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Esplora il mondo di TheraDiary">
+      <font>
+         <Font name="System Bold" size="30.0" />
+      </font>
+   </Text>
+   <Text fill="WHITE" layoutX="140.0" layoutY="225.0" onMouseClicked="#goToAccountPage" strokeType="OUTSIDE" strokeWidth="0.0" text="Account:">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </Text>
+   <Text fill="WHITE" layoutX="141.0" layoutY="246.0" onMouseClicked="#goToAccountPage" strokeType="OUTSIDE" strokeWidth="0.0" text="Visualizza o modifica i tuoi dati personali" wrappingWidth="116.5367431640625">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Text>
+   <Text fill="WHITE" layoutX="682.0" layoutY="224.0" onMouseClicked="#goToDashboard" strokeType="OUTSIDE" strokeWidth="0.0" text="Bacheca">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </Text>
+   <Text fill="WHITE" layoutX="681.0" layoutY="247.0" onMouseClicked="#goToDashboard" strokeType="OUTSIDE" strokeWidth="0.0" text="Condividi pensieri sul tuo percorso nel totale anonimato" wrappingWidth="134.93685913085938">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Text>
+   <Text fill="WHITE" layoutX="137.0" layoutY="390.0" onMouseClicked="#goToPAG" strokeType="OUTSIDE" strokeWidth="0.0" text="P.A.G.">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </Text>
+   <Text fill="WHITE" layoutX="137.0" layoutY="410.0" onMouseClicked="#goToPAG" strokeType="OUTSIDE" strokeWidth="0.0" text="Scopri le agevolazioni del Programma di Assistenza Gratuito" wrappingWidth="124.5367431640625">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Text>
+   <Text fill="WHITE" layoutX="404.0" layoutY="421.0" onMouseClicked="#goToSearch" strokeType="OUTSIDE" strokeWidth="0.0" text="Ricerca per nome, zona, adesione al P.A.G. o altro" wrappingWidth="116.5367431640625">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Text>
+   <Text fill="WHITE" layoutX="404.0" layoutY="382.0" onMouseClicked="#goToSearch" strokeType="OUTSIDE" strokeWidth="0.0" text="Trova lo psicologo adatto a te" wrappingWidth="124.53674316406256">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </Text>
+   <Text fill="WHITE" layoutX="681.0" layoutY="392.0" onMouseClicked="#goToAppointment" strokeType="OUTSIDE" strokeWidth="0.0" text="Appuntamenti">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </Text>
+   <Text fill="WHITE" layoutX="681.0" layoutY="414.0" onMouseClicked="#goToAppointment" strokeType="OUTSIDE" strokeWidth="0.0" text="Controlla gli orari del tuo psicologo e gli appuntamenti fissati" wrappingWidth="134.93685913085938">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Text>
+   <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="616.0" layoutY="236.0" onMouseClicked="#goToDashboard" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@images/commonPanel/bacheca.png" />
+      </image>
+   </ImageView>
+   <ImageView fitHeight="57.0" fitWidth="53.0" layoutX="73.0" layoutY="396.0" onMouseClicked="#goToPAG" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@images/commonPanel/pag.png" />
+      </image>
+   </ImageView>
+   <ImageView fitHeight="53.0" fitWidth="53.0" layoutX="344.0" layoutY="396.0" onMouseClicked="#goToSearch" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@images/commonPanel/office.png" />
+      </image>
+   </ImageView>
+   <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="619.0" layoutY="395.0" onMouseClicked="#goToAppointment" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@images/commonPanel/calendario.png" />
+      </image>
+   </ImageView>
+
+</AnchorPane>
