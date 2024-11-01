@@ -2,7 +2,7 @@ package com.theradiary.ispwtheradiary.controller.graphic.account;
 
 
 import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
-import com.theradiary.ispwtheradiary.engineering.Session;
+import com.theradiary.ispwtheradiary.engineering.others.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -1,0 +1,108 @@
+package com.theradiary.ispwtheradiary.controller.graphic.login;
+
+import com.theradiary.ispwtheradiary.controller.application.Login;
+import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
+import com.theradiary.ispwtheradiary.controller.graphic.HomepagePsController;
+import com.theradiary.ispwtheradiary.controller.graphic.HomepagePtController;
+import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
+import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
+import com.theradiary.ispwtheradiary.engineering.others.Session;
+import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+public class LoginController extends CommonController {
+
+    public LoginController(Session session) {
+        super(session);
+    }
+
+    @FXML
+    TextField mail;
+    @FXML
+    PasswordField password;
+    @FXML
+    Label errorMessage;
+
+    @FXML
+    private void setCredentials(MouseEvent event) throws IOException {
+        errorMessage.setVisible(false);
+        try{
+            validateFields();
+            CredentialsBean credentialsBean = new CredentialsBean(mail.getText(), password.getText(), null);
+            Login login = new Login();
+            login.log(credentialsBean);
+            if(credentialsBean.getRole() != null){
+                session.setUser(credentialsBean);
+                goToHomepage(event, credentialsBean.getRole());
+            }
+            else{
+                throw new WrongEmailOrPasswordException("Mail o password errati");
+            }
+        }catch(WrongEmailOrPasswordException | EmptyFieldException exception){
+            errorMessage.setText(exception.getMessage());
+            errorMessage.setVisible(true);
+        }
+
+
+    }
+
+    private Connection getConnection() throws SQLException { //Mai usato???
+        // Abstracted database connection method
+        return ConnectionFactory.getConnection();
+    }
+    private void validateFields() throws EmptyFieldException {
+        if (mail.getText().isEmpty() || password.getText().isEmpty()) {
+            throw new EmptyFieldException("Compila tutti campi.");
+        }
+    }
+
+    private void goToHomepage(MouseEvent event, Role role) throws IOException {
+        FXMLLoader loader;
+        if (role.equals(Role.PATIENT)) {
+            loader = new FXMLLoader(getClass().getResource("/com/example/res/view/HomepageLoggedPt.fxml"));
+            loader.setControllerFactory(c -> new HomepagePtController(session));
+        } else {
+            loader = new FXMLLoader(getClass().getResource("/com/example/res/view/HomepageLoggedPs.fxml"));
+            loader.setControllerFactory(c -> new HomepagePsController(session));
+        }
+        Parent root = loader.load();
+        changeScene(root, event);
+    }
+
+
+    @FXML
+    private void goToPatientRegistration(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/res/view/PatientRegistration.fxml"));
+            loader.setControllerFactory(c -> new PatientRegistrationController(session));
+            Parent root = loader.load();
+            changeScene(root, event);
+        } catch (IOException exception) {
+            throw new RuntimeException(exception.getMessage());
+        }
+    }
+
+    @FXML
+    private void goToPsychologistRegistration(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/res/view/PsychologistRegistration.fxml"));
+            loader.setControllerFactory(c -> new PsychologistRegistrationController(session));
+            Parent root = loader.load();
+            changeScene(root, event);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+}

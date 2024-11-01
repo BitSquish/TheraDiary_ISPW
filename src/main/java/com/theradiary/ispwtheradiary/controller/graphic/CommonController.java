@@ -3,17 +3,19 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 import com.theradiary.ispwtheradiary.controller.graphic.account.LoginController;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController;
-import com.theradiary.ispwtheradiary.engineering.Session;
+import com.theradiary.ispwtheradiary.engineering.others.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 public abstract class CommonController {
     protected Session session;
@@ -22,7 +24,7 @@ public abstract class CommonController {
         this.session = session;
     }
 
-/*
+
     @FXML
     private Line line1;
 
@@ -42,7 +44,7 @@ public abstract class CommonController {
     private ImageView faq1;
 
     @FXML
-    private Label faqLabel;*/
+    private Label faqLabel;
 
     @FXML
     protected void goToHomepage(MouseEvent event){

@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
-import com.theradiary.ispwtheradiary.engineering.Session;
+import com.theradiary.ispwtheradiary.engineering.others.Session;
 import javafx.scene.input.MouseEvent;
 
 public class MedicalOfficeController extends CommonController{

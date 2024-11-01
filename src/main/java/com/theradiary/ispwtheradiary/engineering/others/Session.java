@@ -1,4 +1,4 @@
-package com.theradiary.ispwtheradiary.engineering;
+package com.theradiary.ispwtheradiary.engineering.others;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
