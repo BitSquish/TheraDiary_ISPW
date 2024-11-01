@@ -30,22 +30,7 @@ public abstract class AccountController extends CommonController {
 
     @FXML
     ImageView account;
-    @FXML
-    private List<CheckBox> Box;
-   /* @FXML
-     protected void handleCheckBoxSave() {
-        Properties properties = new Properties();
-        for (int i = 0; i < checkBoxes.size(); i++) {
-            properties.setProperty("checkBox" + (i + 1), String.valueOf(checkBoxes.get(i).isSelected()));
-        }
 
-        try (FileOutputStream output = new FileOutputStream("checkboxes.properties")) {
-            properties.store(output, null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-     */
 
     @FXML
     protected void goToModifyScreen(MouseEvent event) throws IOException {

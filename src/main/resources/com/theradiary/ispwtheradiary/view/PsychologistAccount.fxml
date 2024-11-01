@@ -35,7 +35,7 @@
       <Button fx:id="log" layoutX="174.0" layoutY="464.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Logout" textFill="WHITE" />
       <Button fx:id="indietro" layoutX="725.0" layoutY="119.0" mnemonicParsing="false" onMouseClicked="#goBack" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
       <Button fx:id="pazienti" layoutX="149.0" layoutY="266.0" mnemonicParsing="false" onMouseClicked="#goToListPatients" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Visualizza pazienti" textFill="WHITE" />
-      <VBox fx:id="box" layoutX="476.0" layoutY="192.0" prefHeight="318.0" prefWidth="306.0">
+      <VBox fx:id="categoryVBOXps" layoutX="476.0" layoutY="192.0" prefHeight="318.0" prefWidth="306.0">
          <children>
             <CheckBox fx:id="neuro" mnemonicParsing="false" text="Psicoterapia" textFill="#231f36">
                <padding>
@@ -85,7 +85,7 @@
                   <Insets bottom="7.0" left="6.0" top="10.0" />
                </padding>
             </CheckBox>
-            <Button fx:id="save" mnemonicParsing="false" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE">
+            <Button fx:id="save" mnemonicParsing="false" onMouseClicked="#saveMajor" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE">
                <VBox.margin>
                   <Insets bottom="5.0" left="90.0" />
                </VBox.margin>

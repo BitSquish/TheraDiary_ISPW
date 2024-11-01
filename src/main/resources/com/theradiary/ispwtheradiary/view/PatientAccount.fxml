@@ -20,7 +20,7 @@
          <image>
             <Image url="@img/account.png" />
          </image></ImageView>
-      <VBox fx:id="box" layoutX="477.0" layoutY="204.0" prefHeight="318.0" prefWidth="306.0">
+      <VBox fx:id="categoryVBox" layoutX="477.0" layoutY="204.0" prefHeight="318.0" prefWidth="306.0">
          <children>
             <CheckBox fx:id="neuro" mnemonicParsing="false" text="Disturbo del neurosviluppo" textFill="#231f36">
                <padding>
@@ -70,7 +70,7 @@
                   <Insets bottom="7.0" left="6.0" top="10.0" />
                </padding>
             </CheckBox>
-            <Button fx:id="save" mnemonicParsing="false" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE">
+            <Button fx:id="saveCategory" mnemonicParsing="false" onMouseClicked="#saveCategory" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE">
                <VBox.margin>
                   <Insets bottom="5.0" left="90.0" />
                </VBox.margin>
