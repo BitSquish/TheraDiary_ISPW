@@ -1,8 +1,20 @@
 package com.theradiary.ispwtheradiary.engineering.dao;
 
 
+import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
+import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
+import com.theradiary.ispwtheradiary.engineering.query.RetrieveQuery;
+import com.theradiary.ispwtheradiary.model.Credentials;
+import com.theradiary.ispwtheradiary.model.MedicalOffice;
+import com.theradiary.ispwtheradiary.model.Psychologist;
 
-/*public class RetrieveDAO {
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+public class RetrieveDAO {
     private RetrieveDAO(){}
 
     public static void searchPsychologists(List<Psychologist> psychologists, String name, String surname, String city, boolean inPerson, boolean online, boolean pag) throws NoResultException{
@@ -50,4 +62,4 @@ package com.theradiary.ispwtheradiary.engineering.dao;
         }
 
     }
-}*/
+}

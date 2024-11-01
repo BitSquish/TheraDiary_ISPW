@@ -6,6 +6,7 @@ import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsExc
 import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.LoginAndRegistrationQuery;
 import com.theradiary.ispwtheradiary.model.Credentials;
+import com.theradiary.ispwtheradiary.model.MedicalOffice;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 
@@ -68,12 +69,12 @@ public class RegistrationDAO {
             throw new SQLException(); //DA SOSTITUIRE CON ECCEZIONE SPECIFICA PER INSERIMENTO SU UTENTI NON A BUON FINE (O FORSE NO?)
     }
 
-    /*public static void registerMedicalOffice(MedicalOffice medicalOffice) throws SQLException {
+    public static void registerMedicalOffice(MedicalOffice medicalOffice) throws SQLException {
         try(Connection conn = ConnectionFactory.getConnection()){
             LoginAndRegistrationQuery.registerMedicalOffice(conn, medicalOffice.getMail(), medicalOffice.getCity(), medicalOffice.getPostCode(), medicalOffice.getAddress(), medicalOffice.getOtherInfo());
         } catch(SQLException e){
             throw new SQLException(e.getMessage());
         }
-    }*/
+    }
 }
 

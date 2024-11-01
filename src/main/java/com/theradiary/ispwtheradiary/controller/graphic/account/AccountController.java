@@ -2,6 +2,11 @@ package com.theradiary.ispwtheradiary.controller.graphic.account;
 
 
 import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
+import com.theradiary.ispwtheradiary.controller.graphic.HomepagePsController;
+import com.theradiary.ispwtheradiary.controller.graphic.HomepagePtController;
+import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
+import com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPatientController;
+import com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPsychologistController;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +17,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
+import java.util.Properties;
 
 public abstract class AccountController extends CommonController {
 
@@ -22,9 +30,9 @@ public abstract class AccountController extends CommonController {
 
     @FXML
     ImageView account;
-    /*@FXML
-    private List<CheckBox> Box;
     @FXML
+    private List<CheckBox> Box;
+   /* @FXML
      protected void handleCheckBoxSave() {
         Properties properties = new Properties();
         for (int i = 0; i < checkBoxes.size(); i++) {
@@ -41,23 +49,23 @@ public abstract class AccountController extends CommonController {
 
     @FXML
     protected void goToModifyScreen(MouseEvent event) throws IOException {
-        /*try {
+        try {
             FXMLLoader loader;
             if(session.getUser()==null){
-                loader = new FXMLLoader(getClass().getResource("/com/example/res/view/Login.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
                 loader.setControllerFactory(c -> new LoginController(session));
             }else if (session.getUser().getRole().toString().equals("PATIENT")) {
-                loader = new FXMLLoader(getClass().getResource("/com/example/res/view/ModifyPatient.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/ModifyPatient.fxml"));
                 loader.setControllerFactory(c -> new ModifyPatientController(session));
             } else  {
-                loader = new FXMLLoader(getClass().getResource("/com/example/res/view/ModifyPsychologist.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/ModifyPsychologist.fxml"));
                 loader.setControllerFactory(c -> new ModifyPsychologistController(session));
             }
             Parent root = loader.load();
             changeScene(root,event);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }*/
+        }
     }
 
     @FXML
@@ -83,24 +91,23 @@ public abstract class AccountController extends CommonController {
 
     @FXML
     protected void goBack(MouseEvent event) throws IOException {
-        /*
         try {
             FXMLLoader loader;
             if(session.getUser()==null){
-                loader = new FXMLLoader(getClass().getResource("/com/example/res/view/Login.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
                 loader.setControllerFactory(c -> new LoginController(session));
             }else if (session.getUser().getRole().toString().equals("PATIENT")) {
-                loader = new FXMLLoader(getClass().getResource("/com/example/res/view/HomepageLoggedPt.fxml"));
-                loader.setControllerFactory(c -> new HomepagePtLoggedController(session));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/HomepageLoggedPt.fxml"));
+                loader.setControllerFactory(c -> new HomepagePtController(session));
             } else {
-                loader = new FXMLLoader(getClass().getResource("/com/example/res/view/HomepageLoggedPs.fxml"));
-                loader.setControllerFactory(c -> new HomepageLoggedPsController(session));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/HomepageLoggedPs.fxml"));
+                loader.setControllerFactory(c -> new HomepagePsController(session));
             }
             Parent root = loader.load();
             changeScene(root,event);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }*/
+        }
     }
 }
 

@@ -1,13 +1,13 @@
-package com.theradiary.ispwtheradiary.model.beans;
+package com.theradiary.ispwtheradiary.model;
 
-public class MedicalOfficeBean {
+public class MedicalOffice {
     private String mail;
     private String postCode;
     private String address;
     private String city;
     private String otherInfo;
 
-    public MedicalOfficeBean (String mail, String city, String postCode, String address, String otherInfo){
+    public MedicalOffice (String mail, String city, String postCode, String address, String otherInfo){
         this.mail = mail;
         this.postCode = postCode;
         this.address = address;

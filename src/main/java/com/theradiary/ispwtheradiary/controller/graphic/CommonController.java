@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController;
+import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
