@@ -16,7 +16,7 @@
       <fx:include source="CommonPanel.fxml" />
       <ImageView fx:id="account" fitHeight="94.0" fitWidth="94.0" layoutX="31.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/commonPanel/account.png" />
+            <Image url="@img/account.png" />
          </image>
       </ImageView>
       <Button fx:id="pag" layoutX="150.0" layoutY="363.0" mnemonicParsing="false" onMouseClicked="#joinPag" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Aderisci al P.A.G." textFill="WHITE" />

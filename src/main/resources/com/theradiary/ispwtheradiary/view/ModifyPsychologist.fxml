@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.theradiaryispw.logic.controller.graphic.modify.ModifyPsychologistController">
+   <children>
+      <fx:include source="CommonPanel.fxml" />
+      <Text fill="#242038" layoutX="312.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modica i tuoi dati">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Text>
+      <TextField fx:id="nome" layoutX="119.0" layoutY="208.0" prefHeight="35.0" prefWidth="203.0" style="-fx-background-radius: 20px;" />
+      <TextField fx:id="cognome" layoutX="119.0" layoutY="277.0" prefHeight="35.0" prefWidth="203.0" style="-fx-background-radius: 20px;" />
+      <TextField fx:id="citta" layoutX="119.0" layoutY="346.0" prefHeight="35.0" prefWidth="203.0" style="-fx-background-radius: 20px;" />
+      <Text fill="#242038" layoutX="68.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#242038" layoutX="45.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cognome:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#242038" layoutX="73.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Città:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="mail" layoutX="119.0" layoutY="412.0" prefHeight="35.0" prefWidth="203.0" style="-fx-background-radius: 20px;" />
+      <PasswordField fx:id="password" layoutX="559.0" layoutY="207.0" prefHeight="35.0" prefWidth="203.0" style="-fx-background-radius: 20px;" />
+      <Text fill="#242038" layoutX="77.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mail:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#242038" layoutX="481.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="descrizione" layoutX="559.0" layoutY="271.0" prefHeight="76.0" prefWidth="203.0" style="-fx-background-radius: 20px;" />
+      <Text fill="#242038" layoutX="439.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="RIGHT" wrappingWidth="102.84002685546875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#242038" layoutX="490.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#242038" layoutX="455.0" layoutY="413.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Opzioni visite:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#242038" layoutX="571.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In presenza">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <CheckBox fx:id="inPresenza" layoutX="598.0" layoutY="399.0" mnemonicParsing="false" />
+      <Text fill="#242038" layoutX="677.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Online">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <CheckBox fx:id="online" layoutX="689.0" layoutY="399.0" mnemonicParsing="false" />
+      <Button fx:id="salva" layoutX="582.0" layoutY="447.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6;" text="Salva" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Label fx:id="infoPAG" layoutX="598.0" layoutY="289.0" prefHeight="181.0" prefWidth="160.0" style="-fx-background-color: #ffffff; -fx-border-color: #111111; -fx-border-radius: 10px;" text="Aderendo al PA.G. (Programma di Assistenza Gratuita), potrai aiutare pazienti con problemi economici a ricevere il giusto supporto mentale a titolo gratuito. Aiutaci a rendere il mondo un posto migliore!" textAlignment="CENTER" visible="false" wrapText="true" />
+      <Label layoutX="422.0" layoutY="274.0" prefHeight="70.0" prefWidth="136.0" text="Indirizzo studio medico (obbligatorio solo se il box &quot;In presenza&quot; è spuntato)" textAlignment="RIGHT" wrapText="true" />
+      <Button fx:id="indietro" layoutX="735.0" layoutY="129.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+   </children>
+</AnchorPane>

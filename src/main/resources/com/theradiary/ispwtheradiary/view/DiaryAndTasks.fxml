@@ -14,27 +14,27 @@
         <Button layoutX="351.0" layoutY="173.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="200.0" style="-fx-border-color: #9067C6; -fx-background-color: transparent; -fx-border-image-width: 16px; -fx-border-radius: 16px;" text="Button" />
         <ImageView fitHeight="60.0" fitWidth="70.0" layoutX="88.0" layoutY="190.0">
                 <image>
-                        <Image url="@images/commonPanel/diario.png" />
+                        <Image url="@img/diario.png" />
                 </image>
         </ImageView>
         <ImageView fitHeight="68.0" fitWidth="62.0" layoutX="361.0" layoutY="333.0">
                 <image>
-                        <Image url="@images/commonPanel/todo.png" />
+                        <Image url="@img/todo.png" />
                 </image>
         </ImageView>
         <ImageView fitHeight="77.0" fitWidth="70.0" layoutX="361.0" layoutY="180.0">
                 <image>
-                        <Image url="@images/commonPanel/pc.png" />
+                        <Image url="@img/pc.png" />
                 </image>
         </ImageView>
         <ImageView fitHeight="77.0" fitWidth="70.0" layoutX="88.0" layoutY="329.0">
                 <image>
-                        <Image url="@images/commonPanel/psicologo.png" />
+                        <Image url="@img/psicologo.png" />
                 </image>
         </ImageView>
         <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="611.0" layoutY="184.0">
                 <image>
-                        <Image url="@images/commonPanel/post.png" />
+                        <Image url="@img/post.png" />
                 </image>
         </ImageView>
 </AnchorPane>

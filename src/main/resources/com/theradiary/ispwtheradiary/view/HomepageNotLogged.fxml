@@ -11,17 +11,17 @@
     <fx:include source="CommonPanel.fxml" />
     <ImageView fitHeight="106.0" fitWidth="106.0" layoutX="143.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@images/homepageNotLogged/psychologistHome.png" />
+            <Image url="@img/psychologistHome.png" />
         </image>
     </ImageView>
     <ImageView fitHeight="106.0" fitWidth="106.0" layoutX="384.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@images/homepageNotLogged/therapy.png" />
+            <Image url="@img/therapy.png" />
         </image>
     </ImageView>
     <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="660.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@images/homepageNotLogged/exam.png" />
+            <Image url="@img/exam.png" />
         </image>
     </ImageView>
     <Text fill="#242038" layoutX="114.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TheraDiary: un sostegno nel tuo cammino verso il benessere mentale" textAlignment="CENTER" wrappingWidth="647.0048704147339">

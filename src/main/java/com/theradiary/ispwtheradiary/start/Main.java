@@ -23,7 +23,7 @@ public class Main extends Application {
         //ATTENZIONE: VA AGGIUNTA LA SCELTA DELLE INTERFACCE A RIGA DI COMANDO
         //VERSIONE COERENTE CON SCORSO ANNO, VA RIVISTA
         Session session = new Session(false);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/HomepageNotLogged.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/HomepageNotLogged.fxml"));
         loader.setControllerFactory(c -> new HomepageController(session)); //Controller homepage
         Parent rootParent = loader.load();
         Scene scene = new Scene(rootParent);

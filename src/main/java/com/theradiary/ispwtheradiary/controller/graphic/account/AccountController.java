@@ -68,7 +68,7 @@ public abstract class AccountController extends CommonController {
     @FXML
     protected void logout(MouseEvent event) throws IOException {
         session.setUser(null);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/Login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
         loader.setControllerFactory(c -> new LoginController(session));
         Parent root = loader.load();
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();

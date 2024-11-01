@@ -17,37 +17,37 @@
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9067c6" height="86.0" stroke="#9067c6" strokeType="INSIDE" width="876.0" />
             <ImageView fx:id="logo" fitHeight="161.0" fitWidth="254.0" layoutX="622.0" layoutY="-34.0" onMouseClicked="#goToHomepage">
                 <image>
-                    <Image url="@images/commonPanel/WhiteLogo.png" />
+                    <Image url="@img/WhiteLogo.png" />
                 </image>
             </ImageView>
             <ImageView fx:id="home" fitHeight="38.0" fitWidth="38.0" layoutX="26.0" layoutY="20.0" onMouseClicked="#goToHomepage" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@images/commonPanel/home.png" />
+                    <Image url="@img/home.png" />
                 </image>
             </ImageView>
             <ImageView fx:id="account" fitHeight="38.0" fitWidth="38.0" layoutX="115.0" layoutY="23.0" onMouseClicked="#goToAccountPage" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@images/commonPanel/account.png" />
+                    <Image url="@img/account.png" />
                 </image>
             </ImageView>
             <ImageView fx:id="diaryTasks" fitHeight="44.0" fitWidth="52.0" layoutX="205.0" layoutY="21.0" onMouseClicked="#goToTasks" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@images/commonPanel/diarioTask.png" />
+                    <Image url="@img/diarioTask.png" />
                 </image>
             </ImageView>
             <ImageView fx:id="dashboard" fitHeight="52.0" fitWidth="35.0" layoutX="295.0" layoutY="24.0" onMouseClicked="#goToDashboard" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@images/commonPanel/bacheca.png" />
+                    <Image url="@img/bacheca.png" />
                 </image>
             </ImageView>
             <ImageView fx:id="PAG" fitHeight="38.0" fitWidth="38.0" layoutX="470.0" layoutY="24.0" onMouseClicked="#goToPAG" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@images/commonPanel/pag.png" />
+                    <Image url="@img/pag.png" />
                 </image>
             </ImageView>
             <ImageView fx:id="Appointment" fitHeight="40.0" fitWidth="40.0" layoutX="550.0" layoutY="23.0" onMouseClicked="#goToAppointment" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@images/commonPanel/calendario.png" />
+                    <Image url="@img/calendario.png" />
                 </image>
             </ImageView>
             <Text fill="WHITE" layoutX="28.0" layoutY="74.0" onMouseClicked="#goToHomepage" strokeType="OUTSIDE" strokeWidth="0.0" text="Home">
@@ -87,7 +87,7 @@
             </Text>
             <ImageView fx:id="Search" fitHeight="38.0" fitWidth="38.0" layoutX="386.0" layoutY="22.0" onMouseClicked="#goToSearch" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@images/commonPanel/office.png" />
+                    <Image url="@img/office.png" />
                 </image>
             </ImageView>
         </children>
@@ -97,17 +97,17 @@
     <Line endX="514.800048828125" layoutX="285.0" layoutY="533.0" startX="-210.80001831054688" stroke="#242038" strokeWidth="1.2" />
     <ImageView fitHeight="35.0" fitWidth="38.0" layoutX="231.0" layoutY="542.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@images/commonPanel/mail.png" />
+            <Image url="@img/mail.png" />
         </image>
     </ImageView>
     <ImageView fitHeight="54.0" fitWidth="52.0" layoutX="411.0" layoutY="533.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@images/commonPanel/stars.png" />
+            <Image url="@img/stars.png" />
         </image>
     </ImageView>
     <ImageView fitHeight="47.0" fitWidth="38.0" layoutX="597.0" layoutY="541.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@images/commonPanel/faq.png" />
+            <Image url="@img/faq.png" />
         </image>
     </ImageView>
     <Text fill="#9067c6" layoutX="219.0" layoutY="589.0" strokeType="OUTSIDE" text="Contattaci">

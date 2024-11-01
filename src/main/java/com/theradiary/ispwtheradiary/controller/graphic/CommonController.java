@@ -1,6 +1,5 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
-import com.theradiary.ispwtheradiary.controller.graphic.account.LoginController;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
@@ -52,19 +51,19 @@ public abstract class CommonController {
             FXMLLoader loader;
             if(session.getUser() == null){
                 // Carica la nuova pagina FXML
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/HomepageNotLogged.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/HomepageNotLogged.fxml"));
                 // Imposta il controller per la nuova pagina
                 loader.setControllerFactory(c -> new HomepageController(session));
             }
             else if(session.getUser().getRole().toString().equals("PATIENT")){
                 // Carica la nuova pagina FXML
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/HomepageLoggedPt.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/HomepageLoggedPt.fxml"));
                 // Imposta il controller per la nuova pagina
                 loader.setControllerFactory(c -> new HomepagePtController(session));
             }
             else{
                 // Carica la nuova pagina FXML
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/HomepageLoggedPs.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/HomepageLoggedPs.fxml"));
                 // Imposta il controller per la nuova pagina
                 loader.setControllerFactory(c -> new HomepagePsController(session));
             }
@@ -81,13 +80,13 @@ public abstract class CommonController {
         try {
             FXMLLoader loader=null;
             if (session.getUser() == null) {
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/Login.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
                 loader.setControllerFactory(c -> new LoginController(session));
             } else if (session.getUser().getRole().toString().equals("PATIENT")) {
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/PatientAccount.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PatientAccount.fxml"));
                 loader.setControllerFactory(c -> new PatientAccountController(session));
             } else if (session.getUser().getRole().toString().equals("PSYCHOLOGIST")) {
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/PsychologistAccount.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PsychologistAccount.fxml"));
                 loader.setControllerFactory(c -> new PsychologistAccountController(session));
             }
             if (loader != null) { // Ensure loader is not null before using it
@@ -107,11 +106,11 @@ public abstract class CommonController {
         try {
             FXMLLoader loader;
             if(session.getUser()==null){
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/Login.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
                 loader.setControllerFactory(c -> new LoginController(session));
             }
             else{
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/DiaryAndTasks.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/DiaryAndTasks.fxml"));
                 loader.setControllerFactory(c -> new DiaryAndTasksController(session));
             }
             Parent root = loader.load();
@@ -127,11 +126,11 @@ public abstract class CommonController {
         try {
             FXMLLoader loader;
             if(session.getUser()==null){
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/Login.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
                 loader.setControllerFactory(c -> new LoginController(session));
             }
             else{
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/Dashboard.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Dashboard.fxml"));
                 loader.setControllerFactory(c -> new DashboardController(session));
             }
             Parent root = loader.load();
@@ -146,11 +145,11 @@ public abstract class CommonController {
         try {
             FXMLLoader loader;
             if(session.getUser()==null){
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/Login.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
                 loader.setControllerFactory(c -> new LoginController(session));
             }
             else{
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/PAG.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PAG.fxml"));
                 loader.setControllerFactory(c -> new PAGController(session));
             }
             Parent root = loader.load();
@@ -166,16 +165,16 @@ public abstract class CommonController {
         try {
             FXMLLoader loader;
             if(session.getUser()==null){
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/Login.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
                 loader.setControllerFactory(c -> new LoginController(session));
             }
 
             else if(session.getUser().getRole().toString().equals("PATIENT")){
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/Search.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Search.fxml"));
                 loader.setControllerFactory(c -> new SearchController(session));
             }
             else{
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/MedicalOffice.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/MedicalOffice.fxml"));
                 loader.setControllerFactory(c -> new MedicalOfficeController(session));
             }
             Parent root = loader.load();
@@ -205,14 +204,14 @@ public abstract class CommonController {
                 // Se l'utente non è loggato, lo reindirizzo alla pagina di login
 
                 // Carico il file FXML per la pagina di login
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/Login.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
                 // Specifico il controller per gestire gli elementi della pagina di login
                 loader.setControllerFactory(c -> new LoginController(session));
             } else {
                 // Se l'utente è loggato, lo reindirizzo alla pagina degli articoli
 
                 // Carico il file FXML per la pagina degli articoli
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/Appointment.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Appointment.fxml"));
                 // Specifico il controller per gestire gli elementi della pagina degli articoli
                 loader.setControllerFactory(c -> new AppointmentController(session));
             }
