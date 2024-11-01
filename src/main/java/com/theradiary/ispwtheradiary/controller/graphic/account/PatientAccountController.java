@@ -5,6 +5,7 @@ import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class PatientAccountController extends AccountController {
     public void initialize(){
         categoryCheckBoxMap=new EnumMap<>(Category.class);
         Category[] categories = Category.values();
-        for(int i=0;i<9;i++){
+        for(int i=0;i< categories.length;i++){
             CheckBox checkBox = (CheckBox) categoryVBox.getChildren().get(i);
             categoryCheckBoxMap.put(categories[i],checkBox);
         }
@@ -42,6 +43,10 @@ public class PatientAccountController extends AccountController {
         List<Category> selectedCategories = getSelectedCategories();
         String patientName=session.getUser().getMail();
         CategoryAndMajorDAO.saveSelectedCategories(selectedCategories,patientName);
+    }
+    @FXML
+    private void handleCheckBoxClickC(MouseEvent event) {
+        saveCategory();
     }
 }
 

@@ -23,7 +23,7 @@ public class PsychologistAccountController extends AccountController {
     public void initialize(){
         majorCheckBoxMap=new EnumMap<>(Major.class);
         Major[] major = Major.values();
-        for(int i=0;i<9;i++){
+        for(int i=0;i< major.length;i++){
             CheckBox checkBox = (CheckBox) categoryVBOXps.getChildren().get(i);
             majorCheckBoxMap.put(major[i],checkBox);
         }
@@ -44,6 +44,11 @@ public class PsychologistAccountController extends AccountController {
         String psychologistName=session.getUser().getMail();
         CategoryAndMajorDAO.saveSelectedMajor(selectedMajor,psychologistName);
     }
+    @FXML
+    private void handleCheckBoxClick(MouseEvent event) {
+        saveMajor();
+    }
+
     public void goToListPatients(MouseEvent event) {
     }
 }

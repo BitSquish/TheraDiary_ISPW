@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController">
    <children>
       <fx:include source="CommonPanel.fxml" />
       <ImageView fx:id="account" fitHeight="94.0" fitWidth="94.0" layoutX="31.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
@@ -37,12 +37,12 @@
       <Button fx:id="pazienti" layoutX="149.0" layoutY="266.0" mnemonicParsing="false" onMouseClicked="#goToListPatients" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Visualizza pazienti" textFill="WHITE" />
       <VBox fx:id="categoryVBOXps" layoutX="476.0" layoutY="192.0" prefHeight="318.0" prefWidth="306.0">
          <children>
-            <CheckBox fx:id="neuro" mnemonicParsing="false" text="Psicoterapia" textFill="#231f36">
+            <CheckBox fx:id="neuro" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClick" text="Psicoterapia" textFill="#231f36">
                <padding>
                   <Insets left="6.0" top="7.0" />
                </padding>
             </CheckBox>
-            <CheckBox fx:id="ansia" mnemonicParsing="false" text="Psicologia infantile" textFill="#231f36">
+            <CheckBox fx:id="ansia" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClick" text="Psicologia infantile" textFill="#231f36">
                <padding>
                   <Insets left="6.0" top="10.0" />
                </padding>
@@ -50,37 +50,37 @@
                   <Insets right="10.0" />
                </VBox.margin>
             </CheckBox>
-            <CheckBox fx:id="dissociativi" mnemonicParsing="false" text="Psicologia della salute" textFill="#231f36">
+            <CheckBox fx:id="dissociativi" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClick" text="Psicologia della salute" textFill="#231f36">
                <padding>
                   <Insets left="6.0" top="10.0" />
                </padding>
             </CheckBox>
-            <CheckBox fx:id="pstd" mnemonicParsing="false" text="Neuropsicologia clinica" textFill="#231f36">
+            <CheckBox fx:id="pstd" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClick" text="Neuropsicologia clinica" textFill="#231f36">
                <padding>
                   <Insets left="6.0" top="10.0" />
                </padding>
             </CheckBox>
-            <CheckBox fx:id="schizofrenia" mnemonicParsing="false" text="Psicologia del trauma" textFill="#231f36">
+            <CheckBox fx:id="schizofrenia" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClick" text="Psicologia del trauma" textFill="#231f36">
                <padding>
                   <Insets left="6.0" top="10.0" />
                </padding>
             </CheckBox>
-            <CheckBox fx:id="depressione" mnemonicParsing="false" text="Psicologia geriatrica" textFill="#231f36">
+            <CheckBox fx:id="depressione" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClick" text="Psicologia geriatrica" textFill="#231f36">
                <padding>
                   <Insets left="6.0" top="10.0" />
                </padding>
             </CheckBox>
-            <CheckBox fx:id="bipolare" lineSpacing="10.0" mnemonicParsing="false" text="Psicologia forense" textFill="#231f36">
+            <CheckBox fx:id="bipolare" lineSpacing="10.0" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClick" text="Psicologia forense" textFill="#231f36">
                <padding>
                   <Insets left="6.0" top="10.0" />
                </padding>
             </CheckBox>
-            <CheckBox fx:id="alimentare" mnemonicParsing="false" text="Psicologia delle dipendenze" textFill="#231f36">
+            <CheckBox fx:id="alimentare" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClick" text="Psicologia delle dipendenze" textFill="#231f36">
                <padding>
                   <Insets left="6.0" top="10.0" />
                </padding>
             </CheckBox>
-            <CheckBox fx:id="altro" mnemonicParsing="false" text="Altro" textFill="#231f36">
+            <CheckBox fx:id="altro" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClick" text="Altro" textFill="#231f36">
                <padding>
                   <Insets bottom="7.0" left="6.0" top="10.0" />
                </padding>
