@@ -71,10 +71,10 @@ public class LoginController extends CommonController {
     private void goToHomepage(MouseEvent event, Role role) throws IOException {
         FXMLLoader loader;
         if (role.equals(Role.PATIENT)) {
-            loader = new FXMLLoader(getClass().getResource("/com/example/res/view/HomepageLoggedPt.fxml"));
+            loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/HomepageLoggedPt.fxml"));
             loader.setControllerFactory(c -> new HomepagePtController(session));
         } else {
-            loader = new FXMLLoader(getClass().getResource("/com/example/res/view/HomepageLoggedPs.fxml"));
+            loader = new FXMLLoader(getClass().getResource("/com/example/theradiary/ispwtheradiary/HomepageLoggedPs.fxml"));
             loader.setControllerFactory(c -> new HomepagePsController(session));
         }
         Parent root = loader.load();
@@ -85,7 +85,7 @@ public class LoginController extends CommonController {
     @FXML
     private void goToPatientRegistration(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/res/view/PatientRegistration.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PatientRegistration.fxml"));
             loader.setControllerFactory(c -> new PatientRegistrationController(session));
             Parent root = loader.load();
             changeScene(root, event);
@@ -97,7 +97,7 @@ public class LoginController extends CommonController {
     @FXML
     private void goToPsychologistRegistration(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/res/view/PsychologistRegistration.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PsychologistRegistration.fxml"));
             loader.setControllerFactory(c -> new PsychologistRegistrationController(session));
             Parent root = loader.load();
             changeScene(root, event);

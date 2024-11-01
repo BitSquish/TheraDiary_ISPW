@@ -13,6 +13,10 @@ module com.theradiary.ispwtheradiary {
     opens com.theradiary.ispwtheradiary.controller.graphic to javafx.fxml;
     exports com.theradiary.ispwtheradiary.controller.graphic.account;
     opens com.theradiary.ispwtheradiary.controller.graphic.account to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.controller.graphic.login;
+    opens com.theradiary.ispwtheradiary.controller.graphic.login to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.controller.graphic.modify;
+    opens com.theradiary.ispwtheradiary.controller.graphic.modify to javafx.fxml;
     //Controller applicativi
     exports com.theradiary.ispwtheradiary.controller.application;
     opens com.theradiary.ispwtheradiary.controller.application to javafx.fxml;
@@ -20,8 +24,9 @@ module com.theradiary.ispwtheradiary {
     exports com.theradiary.ispwtheradiary.engineering.enums;
     opens com.theradiary.ispwtheradiary.engineering.enums to javafx.fxml;
     //Model
-    exports com.theradiary.ispwtheradiary.model.beans;
-    opens com.theradiary.ispwtheradiary.model.beans to javafx.fxml;
     exports com.theradiary.ispwtheradiary.model;
     opens com.theradiary.ispwtheradiary.model to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.model.beans;
+    opens com.theradiary.ispwtheradiary.model.beans to javafx.fxml;
+
 }

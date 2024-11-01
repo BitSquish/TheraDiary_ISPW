@@ -16,6 +16,7 @@ import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public abstract class CommonController {
     protected Session session;
@@ -185,9 +186,9 @@ public abstract class CommonController {
             changeScene(root, event);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } /*catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
-        }*/
+        }
     }
 
 
