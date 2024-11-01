@@ -25,10 +25,14 @@ module com.theradiary.ispwtheradiary {
     opens com.theradiary.ispwtheradiary.engineering.enums to javafx.fxml;
     exports com.theradiary.ispwtheradiary.engineering.exceptions;
     opens com.theradiary.ispwtheradiary.engineering.exceptions to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.engineering.others;
+    opens com.theradiary.ispwtheradiary.engineering.others to javafx.fxml;
     //Model
     exports com.theradiary.ispwtheradiary.model;
     opens com.theradiary.ispwtheradiary.model to javafx.fxml;
     exports com.theradiary.ispwtheradiary.model.beans;
     opens com.theradiary.ispwtheradiary.model.beans to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.controller.graphic.homepage;
+    opens com.theradiary.ispwtheradiary.controller.graphic.homepage to javafx.fxml;
 
 }

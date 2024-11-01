@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.start;
 
-import com.theradiary.ispwtheradiary.controller.graphic.HomepageController;
+import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepageController;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import javafx.application.Application;
 import javafx.application.Platform;

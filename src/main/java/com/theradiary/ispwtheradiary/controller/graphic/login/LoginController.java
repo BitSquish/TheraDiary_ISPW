@@ -2,8 +2,8 @@ package com.theradiary.ispwtheradiary.controller.graphic.login;
 
 import com.theradiary.ispwtheradiary.controller.application.Login;
 import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
-import com.theradiary.ispwtheradiary.controller.graphic.HomepagePsController;
-import com.theradiary.ispwtheradiary.controller.graphic.HomepagePtController;
+import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePsController;
+import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtController;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
@@ -58,10 +58,11 @@ public class LoginController extends CommonController {
 
     }
 
-    private Connection getConnection() throws SQLException { //Mai usato???
+    //UN METODO DEL GENERE NON PUO ANDARE SU UN CONTROLLER GRAFICO
+    /*private Connection getConnection() throws SQLException { //Mai usato???
         // Abstracted database connection method
         return ConnectionFactory.getConnection();
-    }
+    }*/
     private void validateFields() throws EmptyFieldException {
         if (mail.getText().isEmpty() || password.getText().isEmpty()) {
             throw new EmptyFieldException("Compila tutti campi.");
@@ -74,7 +75,7 @@ public class LoginController extends CommonController {
             loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/HomepageLoggedPt.fxml"));
             loader.setControllerFactory(c -> new HomepagePtController(session));
         } else {
-            loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/HomepageLoggedPs.fxml"));
+            loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/HomepageLoggedPs.fxml"));
             loader.setControllerFactory(c -> new HomepagePsController(session));
         }
         Parent root = loader.load();

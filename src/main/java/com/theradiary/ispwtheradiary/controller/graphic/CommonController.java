@@ -2,6 +2,9 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController;
+import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepageController;
+import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePsController;
+import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import javafx.fxml.FXML;
@@ -91,13 +94,14 @@ public abstract class CommonController {
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PsychologistAccount.fxml"));
                 loader.setControllerFactory(c -> new PsychologistAccountController(session));
             }
-            if (loader != null) { // Ensure loader is not null before using it
+            if (loader != null) {
                 Parent root = loader.load();
                 changeScene(root, event);
             } else {
-                throw new RuntimeException("Loader not initialized. User role might be undefined.");
+                throw new RuntimeException("Loader non inizializzato. Lo user potrebbe essere null.");
             }
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -184,17 +188,10 @@ public abstract class CommonController {
                 medicalOfficeController.initializeTextFields(); // Chiamata al metodo per caricare i dati
             }
             changeScene(root, event);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
-
-    /////////////////////////////////////////
-    ////IMPLEMENTATO FINO A QUI///////////
-    /////////////////////////////////////
 
     @FXML
     private void goToAppointment(MouseEvent event) {

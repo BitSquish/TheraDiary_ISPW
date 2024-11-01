@@ -2,8 +2,8 @@ package com.theradiary.ispwtheradiary.controller.graphic.account;
 
 
 import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
-import com.theradiary.ispwtheradiary.controller.graphic.HomepagePsController;
-import com.theradiary.ispwtheradiary.controller.graphic.HomepagePtController;
+import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePsController;
+import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPatientController;
 import com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPsychologistController;
@@ -17,10 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
-import java.util.Properties;
 
 public abstract class AccountController extends CommonController {
 
