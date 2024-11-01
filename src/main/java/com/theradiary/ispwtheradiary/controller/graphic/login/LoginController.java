@@ -74,7 +74,7 @@ public class LoginController extends CommonController {
             loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/HomepageLoggedPt.fxml"));
             loader.setControllerFactory(c -> new HomepagePtController(session));
         } else {
-            loader = new FXMLLoader(getClass().getResource("/com/example/theradiary/ispwtheradiary/HomepageLoggedPs.fxml"));
+            loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/HomepageLoggedPs.fxml"));
             loader.setControllerFactory(c -> new HomepagePsController(session));
         }
         Parent root = loader.load();

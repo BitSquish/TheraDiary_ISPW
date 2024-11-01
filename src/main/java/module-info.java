@@ -23,6 +23,8 @@ module com.theradiary.ispwtheradiary {
     //Engineering classes
     exports com.theradiary.ispwtheradiary.engineering.enums;
     opens com.theradiary.ispwtheradiary.engineering.enums to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.engineering.exceptions;
+    opens com.theradiary.ispwtheradiary.engineering.exceptions to javafx.fxml;
     //Model
     exports com.theradiary.ispwtheradiary.model;
     opens com.theradiary.ispwtheradiary.model to javafx.fxml;
