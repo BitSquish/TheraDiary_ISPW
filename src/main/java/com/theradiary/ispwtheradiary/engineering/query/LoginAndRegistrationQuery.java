@@ -7,6 +7,8 @@ import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
+import javafx.fxml.FXML;
+import javafx.scene.input.MouseEvent;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -87,6 +89,13 @@ public class LoginAndRegistrationQuery {
         ResultSet result = pstmt.executeQuery();
         result.next();
         return result.getInt(1);
+    }
+    public static void joinPag(Connection conn,String mail) throws SQLException {
+        String query = "UPDATE users SET isPag = TRUE WHERE email = ?";
+        PreparedStatement statement = conn.prepareStatement(query); {
+            statement.setString(1,mail);
+            statement.executeUpdate();
+        }
     }
 
 

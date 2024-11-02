@@ -7,6 +7,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtContr
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPatientController;
 import com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPsychologistController;
+import com.theradiary.ispwtheradiary.engineering.dao.RegistrationDAO;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public abstract class AccountController extends CommonController {
 
@@ -51,9 +53,15 @@ public abstract class AccountController extends CommonController {
     }
 
     @FXML
-    protected void joinPag(MouseEvent event){
-        session.getUser().setPag(true);
-    }//continuare serve salvare il pag nel db
+    protected void joinPag(MouseEvent event) {
+        try {
+            RegistrationDAO.joinPag(session.getUser().getMail());
+            session.getUser().setPag(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+                    // Gestire l'eccezione in modo appropriato
+        }
+    }
 
     @FXML
     protected void logout(MouseEvent event) throws IOException {
@@ -66,10 +74,6 @@ public abstract class AccountController extends CommonController {
         stage.show();
     }
 
-    @FXML
-    protected void handleCheckBoxSave(CheckBox checkBox) {
-        // Implementa la logica per salvare lo stato della CheckBox
-    }
 
     @FXML
     protected void goBack(MouseEvent event) throws IOException {

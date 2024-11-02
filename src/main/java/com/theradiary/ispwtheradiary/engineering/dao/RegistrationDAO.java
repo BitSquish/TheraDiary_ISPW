@@ -77,6 +77,11 @@ public class RegistrationDAO {
             throw new SQLException(e.getMessage());
         }
     }
+    public static void joinPag(String email) throws SQLException {
+        try (Connection conn = ConnectionFactory.getConnection()) {
+            LoginAndRegistrationQuery.joinPag(conn, email);
+        }
+    }
 
 
 }
