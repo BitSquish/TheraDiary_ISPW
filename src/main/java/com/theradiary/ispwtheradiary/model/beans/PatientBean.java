@@ -12,13 +12,7 @@ public class PatientBean extends LoggedUserBean{
         this.categories = (categories != null) ? categories : new ArrayList<>();
     }
 
-    public List<Category> getCategories() {
-        return categories;
-    }
 
-    public void addCategory(Category category){
-        this.categories.add(category);
-    }
 
 }
 

@@ -2,14 +2,13 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPatientController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPatientController">
     <children>
         <fx:include source="CommonPanel.fxml" />
         <Text fill="#242038" layoutX="312.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modica i tuoi dati">
@@ -80,12 +79,11 @@
             </font>
         </Text>
         <CheckBox fx:id="online" layoutX="689.0" layoutY="399.0" mnemonicParsing="false" />
-        <Button fx:id="salva" layoutX="582.0" layoutY="447.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6;" text="Salva" textFill="WHITE">
+        <Button fx:id="salva" layoutX="582.0" layoutY="447.0" mnemonicParsing="false" onMouseClicked="#registerPatient" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-        <Label fx:id="infoPAG" layoutX="598.0" layoutY="289.0" prefHeight="181.0" prefWidth="160.0" style="-fx-background-color: #ffffff; -fx-border-color: #111111; -fx-border-radius: 10px;" text="Aderendo al PA.G. (Programma di Assistenza Gratuita), potrai aiutare pazienti con problemi economici a ricevere il giusto supporto mentale a titolo gratuito. Aiutaci a rendere il mondo un posto migliore!" textAlignment="CENTER" visible="false" wrapText="true" />
       <Button fx:id="indietro" layoutX="735.0" layoutY="129.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
     </children>
 </AnchorPane>

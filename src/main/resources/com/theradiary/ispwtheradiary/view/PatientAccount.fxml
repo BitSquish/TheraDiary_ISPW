@@ -13,110 +13,106 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountController">
-   <children>
-      <fx:include source="CommonPanel.fxml" />
-      <ImageView fx:id="account" fitHeight="94.0" fitWidth="94.0" layoutX="31.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@img/account.png" />
-         </image></ImageView>
-      <VBox fx:id="categoryVBox" layoutX="477.0" layoutY="204.0" prefHeight="318.0" prefWidth="306.0">
-         <children>
-            <CheckBox fx:id="neuro" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClickC" text="Disturbo del neurosviluppo" textFill="#231f36">
-               <padding>
-                  <Insets left="6.0" top="7.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox fx:id="ansia" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClickC" text="Disturbi d'ansia" textFill="#231f36">
-               <padding>
-                  <Insets left="6.0" top="10.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets right="10.0" />
-               </VBox.margin>
-            </CheckBox>
-            <CheckBox fx:id="dissociativi" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClickC" text="Disturbi dissociativi" textFill="#231f36">
-               <padding>
-                  <Insets left="6.0" top="10.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox fx:id="pstd" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClickC" text="PSTD e CPTSD" textFill="#231f36">
-               <padding>
-                  <Insets left="6.0" top="10.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox fx:id="schizofrenia" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClickC" text="Schizofrenia" textFill="#231f36">
-               <padding>
-                  <Insets left="6.0" top="10.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox fx:id="depressione" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClickC" text="Depressione" textFill="#231f36">
-               <padding>
-                  <Insets left="6.0" top="10.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox fx:id="bipolare" lineSpacing="10.0" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClickC" text="Disturbo bipolare" textFill="#231f36">
-               <padding>
-                  <Insets left="6.0" top="10.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox fx:id="alimentare" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClickC" text="Disturbi alimentari" textFill="#231f36">
-               <padding>
-                  <Insets left="6.0" top="10.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox fx:id="altro" mnemonicParsing="false" onMouseClicked="#handleCheckBoxClickC" text="Altro" textFill="#231f36">
-               <padding>
-                  <Insets bottom="7.0" left="6.0" top="10.0" />
-               </padding>
-            </CheckBox>
-            <Button fx:id="saveCategory" mnemonicParsing="false" onMouseClicked="#saveCategory" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="90.0" />
-               </VBox.margin>
-            </Button>
-         </children>
-      </VBox>
-      <Text fill="#231f36" layoutX="477.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Categorie:" wrappingWidth="283.20001220703125">
-         <font>
-            <Font name="System Italic" size="16.0" />
-         </font>
-      </Text>
-      <Text layoutX="38.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Il tuo psicologo:" wrappingWidth="152.79999999999995">
-         <font>
-            <Font name="System Italic" size="16.0" />
-         </font>
-      </Text>
-      <Button fx:id="pag" layoutX="150.0" layoutY="363.0" mnemonicParsing="false" onMouseClicked="#joinPag" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Aderisci al P.A.G." textFill="WHITE" />
-      <Line endX="99.99996948242188" endY="-95.00001525878906" layoutX="336.0" layoutY="288.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
-      <Text layoutX="359.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account" wrappingWidth="152.7999999999999">
-         <font>
-            <Font name="System Bold" size="35.0" />
-         </font>
-      </Text>
-      <Button fx:id="modify" layoutX="149.0" layoutY="170.0" mnemonicParsing="false" onMouseClicked="#goToModifyScreen" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Modifica dati personali" textAlignment="CENTER" textFill="WHITE" />
-      <Text fx:id="schermatapag" fill="#9067c6" layoutX="163.0" layoutY="434.0" onMouseClicked="#goToPAG" strokeType="OUTSIDE" strokeWidth="0.0" text="Scopri di più sul P.A.G." textAlignment="CENTER" wrappingWidth="167.20000000000005">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font></Text>
-      <Button fx:id="log" layoutX="174.0" layoutY="464.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Logout" textFill="WHITE" />
-      <Button fx:id="indietro" layoutX="725.0" layoutY="119.0" mnemonicParsing="false" onMouseClicked="#goBack" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
-      <HBox layoutX="31.0" layoutY="295.0" prefHeight="56.0" prefWidth="398.0" spacing="20.0">
-         <children>
-            <Label fx:id="psychologist" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #9067C6; -fx-background-radius: 20px; -fx-border-radius: 20px;" textFill="#231f36">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </Label>
-            <Button fx:id="searchPsychologist" mnemonicParsing="false" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Cerca" textFill="WHITE">
-               <opaqueInsets>
-                  <Insets top="20.0" />
-               </opaqueInsets>
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </Button>
-         </children>
-      </HBox>
-   </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountController">
+   <fx:include source="CommonPanel.fxml" />
+   <ImageView fx:id="account" fitHeight="94.0" fitWidth="94.0" layoutX="31.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@img/account.png" />
+   </ImageView>
+   <VBox fx:id="categoryVBox" layoutX="477.0" layoutY="192.0" prefHeight="318.0" prefWidth="306.0">
+      <children>
+         <CheckBox mnemonicParsing="false" text="Disturbo del neurosviluppo" textFill="#231f36">
+            <padding>
+               <Insets left="6.0" top="7.0" />
+            </padding>
+         </CheckBox>
+         <CheckBox mnemonicParsing="false" text="Disturbi d'ansia" textFill="#231f36">
+            <padding>
+               <Insets left="6.0" top="10.0" />
+            </padding>
+            <VBox.margin>
+               <Insets right="10.0" />
+            </VBox.margin>
+         </CheckBox>
+         <CheckBox mnemonicParsing="false" text="Disturbi dissociativi" textFill="#231f36">
+            <padding>
+               <Insets left="6.0" top="10.0" />
+            </padding>
+         </CheckBox>
+         <CheckBox mnemonicParsing="false" text="PSTD e CPTSD" textFill="#231f36">
+            <padding>
+               <Insets left="6.0" top="10.0" />
+            </padding>
+         </CheckBox>
+         <CheckBox mnemonicParsing="false" text="Schizofrenia" textFill="#231f36">
+            <padding>
+               <Insets left="6.0" top="10.0" />
+            </padding>
+         </CheckBox>
+         <CheckBox mnemonicParsing="false" text="Depressione" textFill="#231f36">
+            <padding>
+               <Insets left="6.0" top="10.0" />
+            </padding>
+         </CheckBox>
+         <CheckBox lineSpacing="10.0" mnemonicParsing="false" text="Disturbo bipolare" textFill="#231f36">
+            <padding>
+               <Insets left="6.0" top="10.0" />
+            </padding>
+         </CheckBox>
+         <CheckBox mnemonicParsing="false" text="Disturbi alimentari" textFill="#231f36">
+            <padding>
+               <Insets left="6.0" top="10.0" />
+            </padding>
+         </CheckBox>
+         <CheckBox mnemonicParsing="false" text="Altro" textFill="#231f36">
+            <padding>
+               <Insets bottom="7.0" left="6.0" top="10.0" />
+            </padding>
+         </CheckBox>
+         <Button fx:id="saveCategory" mnemonicParsing="false" onMouseClicked="#saveCategory" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE">
+            <VBox.margin>
+               <Insets bottom="5.0" left="90.0" />
+            </VBox.margin>
+         </Button>
+        </children>
+   </VBox>
+   <Text fill="#231f36" layoutX="477.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Categorie:" wrappingWidth="283.20001220703125">
+      <font>
+         <Font name="System Italic" size="16.0" />
+      </font>
+   </Text>
+   <Text layoutX="38.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Il tuo psicologo:" wrappingWidth="152.79999999999995">
+      <font>
+         <Font name="System Italic" size="16.0" />
+      </font>
+   </Text>
+   <Button layoutX="150.0" layoutY="363.0" mnemonicParsing="false" onMouseClicked="#joinPag" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Aderisci al P.A.G." textFill="WHITE" />
+   <Line endX="99.99996948242188" endY="-95.00001525878906" layoutX="336.0" layoutY="288.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
+   <Text layoutX="359.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account" wrappingWidth="152.7999999999999">
+      <font>
+         <Font name="System Bold" size="35.0" />
+      </font>
+   </Text>
+   <Button layoutX="149.0" layoutY="170.0" mnemonicParsing="false" onMouseClicked="#goToModifyScreen" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Modifica dati personali" textAlignment="CENTER" textFill="WHITE" />
+   <Text fill="#9067c6" layoutX="163.0" layoutY="434.0" onMouseClicked="#goToPAG" strokeType="OUTSIDE" strokeWidth="0.0" text="Scopri di più sul P.A.G." textAlignment="CENTER" wrappingWidth="167.20000000000005">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </Text>
+   <Button layoutX="174.0" layoutY="464.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Logout" textFill="WHITE" />
+   <Button layoutX="725.0" layoutY="119.0" mnemonicParsing="false" onMouseClicked="#goBack" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+   <HBox layoutX="31.0" layoutY="295.0" prefHeight="56.0" prefWidth="398.0" spacing="20.0">
+      <Label prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #9067C6; -fx-background-radius: 20px; -fx-border-radius: 20px;" textFill="#231f36">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Label>
+      <Button fx:id="searchPsychologist" mnemonicParsing="false" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Cerca" textFill="WHITE">
+         <opaqueInsets>
+            <Insets top="20.0" />
+         </opaqueInsets>
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </Button>
+   </HBox>
 </AnchorPane>

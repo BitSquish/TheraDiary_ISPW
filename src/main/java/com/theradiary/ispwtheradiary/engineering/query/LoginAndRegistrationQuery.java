@@ -6,6 +6,7 @@ import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsExc
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
+import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -87,5 +88,8 @@ public class LoginAndRegistrationQuery {
         result.next();
         return result.getInt(1);
     }
+
+
 }
+
 

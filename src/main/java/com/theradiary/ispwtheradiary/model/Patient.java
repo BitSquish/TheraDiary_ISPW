@@ -13,11 +13,5 @@ public class Patient extends LoggedUser {
         this.categories = new ArrayList<>();
         this.psychologist = null;
     }
-    public List<Category> getCategories() {
-        return categories;
-    }
 
-    public void addCategory(Category category){
-        this.categories.add(category);
-    }
 }

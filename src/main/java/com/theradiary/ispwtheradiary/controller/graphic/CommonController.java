@@ -83,23 +83,26 @@ public abstract class CommonController {
     @FXML
     protected void goToAccountPage(MouseEvent event) {
         try {
-            FXMLLoader loader=null;
+            FXMLLoader loader;
             if (session.getUser() == null) {
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
                 loader.setControllerFactory(c -> new LoginController(session));
-            } else if (session.getUser().getRole().toString().equals("PATIENT")) {
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PatientAccount.fxml"));
-                loader.setControllerFactory(c -> new PatientAccountController(session));
-            } else if (session.getUser().getRole().toString().equals("PSYCHOLOGIST")) {
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PsychologistAccount.fxml"));
-                loader.setControllerFactory(c -> new PsychologistAccountController(session));
-            }
-            if (loader != null) {
-                Parent root = loader.load();
-                changeScene(root, event);
             } else {
-                throw new RuntimeException("Loader non inizializzato. Lo user potrebbe essere null.");
+                switch(session.getUser().getRole().toString()){
+                    case "PATIENT":
+                        loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PatientAccount.fxml"));
+                        loader.setControllerFactory(c -> new PatientAccountController(session));
+                        break;
+                    case "PSYCHOLOGIST":
+                        loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PsychologistAccount.fxml"));
+                        loader.setControllerFactory(c -> new PsychologistAccountController(session));
+                        break;
+                    default:
+                        throw new RuntimeException("Ruolo utente non riconosciuto.");
+                }
             }
+            Parent root = loader.load();
+            changeScene(root, event);
         } catch (IOException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
