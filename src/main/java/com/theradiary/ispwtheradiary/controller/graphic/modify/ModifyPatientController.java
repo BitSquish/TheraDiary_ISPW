@@ -1,9 +1,9 @@
 package com.theradiary.ispwtheradiary.controller.graphic.modify;
 
-import com.theradiary.ispwtheradiary.engineering.dao.RegistrationDAO;
+
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
-import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
+
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -18,11 +18,11 @@ public class ModifyPatientController extends ModifyController {
     }
 
     @FXML
-    private TextField nome, cognome, citta, mail, descrizione;
+    TextField nome, cognome, citta, mail, descrizione;
     @FXML
-    private PasswordField password;
+    PasswordField password;
     @FXML
-    private CheckBox isInPerson, isOnline;
+    CheckBox isInPerson, isOnline;
     @FXML
     public void initialize() {
         // Carica i dati del paziente nei campi di input

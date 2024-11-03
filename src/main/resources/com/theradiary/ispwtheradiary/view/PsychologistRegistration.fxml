@@ -88,7 +88,7 @@
             <Font size="14.0" />
         </font>
     </Text>
-    <Button fx:id="registratiPs" layoutX="593.0" layoutY="463.0" mnemonicParsing="false" onMouseClicked="#registerPsychologist" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6;" text="Registrati" textFill="WHITE">
+    <Button fx:id="registratiPs" layoutX="593.0" layoutY="463.0" mnemonicParsing="false" onMouseClicked="#registerPsychologist" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067c6;" text="Registrati" textFill="WHITE">
         <font>
             <Font size="18.0" />
         </font>

@@ -9,6 +9,7 @@ import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.MedicalOffice;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
+import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 
 import java.sql.Connection;
@@ -85,4 +86,5 @@ public class RegistrationDAO {
 
 
 }
+
 
