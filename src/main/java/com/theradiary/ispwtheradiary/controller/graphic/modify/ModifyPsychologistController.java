@@ -16,43 +16,10 @@ public class ModifyPsychologistController extends ModifyController {
     public ModifyPsychologistController(Session session) {
         super(session);
     }
-
-    @FXML
-    private TextField nome, cognome, citta, mail, descrizione;
-    @FXML
-    private PasswordField password;
-    @FXML
-    private CheckBox inPresenza, isOnline;
-
     @FXML
     public void initialize() {
         // Carica i dati del psicologo nei campi di input
-        loadPsychologistData();
-    }
-
-    private void loadPsychologistData() {
-        // Popola i campi con i dati esistenti nel PsychologistBean
-        LoggedUserBean loggedUserBean = session.getUser();
-        PsychologistBean psychologistBean = new PsychologistBean(
-                new CredentialsBean("", "", null),
-                "",
-                "",
-                "",
-                "",
-                false,
-                false,
-                false,
-                null,
-                null
-        );
-        nome.setText(psychologistBean.getName());
-        cognome.setText(psychologistBean.getSurname());
-        citta.setText(psychologistBean.getCity());
-        mail.setText(psychologistBean.getCredentialsBean().getMail());
-        password.setText(psychologistBean.getCredentialsBean().getPassword());
-        descrizione.setText(psychologistBean.getDescription());
-        inPresenza.setSelected(psychologistBean.isInPerson());
-        online.setSelected(psychologistBean.isOnline());
+        loadUserData();
     }
 
     @FXML
