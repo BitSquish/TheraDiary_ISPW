@@ -2,9 +2,10 @@ package com.theradiary.ispwtheradiary.engineering.others;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
+import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 
 public class Session {
-    private CredentialsBean user;
+    private LoggedUserBean user;
     private Role role;
     private String homepage;
 
@@ -31,11 +32,11 @@ public class Session {
         //Assegna homepage a seconda del ruolo
     }
 
-    public CredentialsBean getUser(){
+    public LoggedUserBean getUser(){
         return this.user;
     }
 
-    public void setUser(CredentialsBean user){
+    public void setUser(LoggedUserBean user){
         this.user = user;
     }
 

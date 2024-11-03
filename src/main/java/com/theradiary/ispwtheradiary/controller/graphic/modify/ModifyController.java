@@ -34,7 +34,7 @@ public abstract class ModifyController extends CommonController {
             if(session.getUser()==null){
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
                 loader.setControllerFactory(c -> new LoginController(session));
-            }else if (session.getUser().getRole().toString().equals("PATIENT")) {
+            }else if (session.getUser().getCredentialsBean().getRole().toString().equals("PATIENT")) {
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PatientAccount.fxml"));
                 loader.setControllerFactory(c -> new PatientAccountController(session));
             } else {

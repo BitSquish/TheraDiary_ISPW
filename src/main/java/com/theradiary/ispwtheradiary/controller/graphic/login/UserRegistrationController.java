@@ -54,7 +54,7 @@ public abstract class UserRegistrationController extends CommonController {
             // Se la registrazione va a buon fine, effettua automaticamente il login
             Login login = new Login();
             login.log(credentialsBean);
-            session.setUser(credentialsBean);
+            session.setUser(loggedUserBean);
             goToHomepage(event);
         } catch (MailAlreadyExistsException | WrongEmailOrPasswordException | EmptyFieldException exception){
             errorMessage.setText(exception.getMessage());

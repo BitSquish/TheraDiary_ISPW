@@ -60,7 +60,7 @@ public abstract class CommonController {
                 // Imposta il controller per la nuova pagina
                 loader.setControllerFactory(c -> new HomepageController(session));
             }
-            else if(session.getUser().getRole().toString().equals("PATIENT")){
+            else if(session.getUser().getCredentialsBean().getRole().toString().equals("PATIENT")){
                 // Carica la nuova pagina FXML
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/HomepageLoggedPt.fxml"));
                 // Imposta il controller per la nuova pagina
@@ -88,7 +88,7 @@ public abstract class CommonController {
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
                 loader.setControllerFactory(c -> new LoginController(session));
             } else {
-                switch(session.getUser().getRole().toString()){
+                switch(session.getUser().getCredentialsBean().getRole().toString()){
                     case "PATIENT":
                         loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PatientAccount.fxml"));
                         loader.setControllerFactory(c -> new PatientAccountController(session));
@@ -178,7 +178,7 @@ public abstract class CommonController {
                 loader.setControllerFactory(c -> new LoginController(session));
             }
 
-            else if(session.getUser().getRole().toString().equals("PATIENT")){
+            else if(session.getUser().getCredentialsBean().getRole().toString().equals("PATIENT")){
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Search.fxml"));
                 loader.setControllerFactory(c -> new SearchController(session));
             }

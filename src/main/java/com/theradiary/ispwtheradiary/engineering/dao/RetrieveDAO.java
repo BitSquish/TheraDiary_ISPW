@@ -7,6 +7,7 @@ import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.RetrieveQuery;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.MedicalOffice;
+import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 
 import java.sql.Connection;
@@ -62,5 +63,39 @@ public class RetrieveDAO {
             throw new RuntimeException(e); //DA VERIFICARE ECCEZIONE
         }
 
+    }
+
+    public static void retrievePatient(Patient patient) {
+        try(Connection conn = ConnectionFactory.getConnection();
+        ResultSet rs = RetrieveQuery.retrievePatient(conn, patient.getMail())){
+            if(rs.next()){
+                patient.setName(rs.getString("name"));
+                patient.setSurname(rs.getString("surname"));
+                patient.setCity(rs.getString("city"));
+                patient.setDescription(rs.getString("description"));
+                patient.setInPerson(rs.getBoolean("inPerson"));
+                patient.setOnline(rs.getBoolean("online"));
+                patient.setPag(rs.getBoolean("pag"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void retrievePsychologist(Psychologist psychologist) {
+        try(Connection conn = ConnectionFactory.getConnection();
+            ResultSet rs = RetrieveQuery.retrievePsychologist(conn, psychologist.getMail())){
+            if(rs.next()){
+                psychologist.setName(rs.getString("name"));
+                psychologist.setSurname(rs.getString("surname"));
+                psychologist.setCity(rs.getString("city"));
+                psychologist.setDescription(rs.getString("description"));
+                psychologist.setInPerson(rs.getBoolean("inPerson"));
+                psychologist.setOnline(rs.getBoolean("online"));
+                psychologist.setPag(rs.getBoolean("pag"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

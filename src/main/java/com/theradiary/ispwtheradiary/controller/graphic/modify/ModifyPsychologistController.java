@@ -4,6 +4,7 @@ import com.theradiary.ispwtheradiary.engineering.others.Session;
 
 import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
 
+import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -31,9 +32,9 @@ public class ModifyPsychologistController extends ModifyController {
 
     private void loadPsychologistData() {
         // Popola i campi con i dati esistenti nel PsychologistBean
-        CredentialsBean credentialsBean = session.getUser();
+        LoggedUserBean loggedUserBean = session.getUser();
         PsychologistBean psychologistBean = new PsychologistBean(
-                credentialsBean,
+                new CredentialsBean("", "", null),
                 "",
                 "",
                 "",
@@ -58,7 +59,7 @@ public class ModifyPsychologistController extends ModifyController {
     private void registerPsychologist(MouseEvent event) {
         // Aggiorna il PsychologistBean con i dati modificati dall'utente
         PsychologistBean psychologistBean = new PsychologistBean(
-                session.getUser(),
+                session.getUser().getCredentialsBean(),
                 nome.getText(),
                 cognome.getText(),
                 citta.getText(),

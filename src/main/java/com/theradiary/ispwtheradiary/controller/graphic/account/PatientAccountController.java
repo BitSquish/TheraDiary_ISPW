@@ -67,7 +67,7 @@ public class PatientAccountController extends AccountController {
         if (!selectedCategories.isEmpty()) {
             try {
                 // Salva le categorie selezionate
-                CategoryAndMajorDAO.saveSelectedCategories(selectedCategories, session.getUser ().getMail());
+                CategoryAndMajorDAO.saveSelectedCategories(selectedCategories, session.getUser ().getCredentialsBean().getMail());
             } catch (Exception e) {
                 System.err.println("Error saving categories: " + e.getMessage());
             }

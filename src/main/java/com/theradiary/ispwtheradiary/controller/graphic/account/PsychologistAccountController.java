@@ -74,7 +74,7 @@ public class PsychologistAccountController extends AccountController {
         if (!selectedMajors.isEmpty()) {
             try {
                 // Salva le specializzazioni selezionate
-                CategoryAndMajorDAO.saveSelectedMajors(selectedMajors, session.getUser().getMail());
+                CategoryAndMajorDAO.saveSelectedMajors(selectedMajors, session.getUser().getCredentialsBean().getMail());
             } catch (Exception e) {
                 System.err.println("Error saving categories: " + e.getMessage());
             }

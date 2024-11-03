@@ -4,6 +4,7 @@ package com.theradiary.ispwtheradiary.controller.graphic.modify;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
 
+import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -30,9 +31,9 @@ public class ModifyPatientController extends ModifyController {
     }
     private void loadPatientData() {
         // Popola i campi con i dati esistenti nel PatientBean
-        CredentialsBean credentialsBean =  session.getUser();
+        LoggedUserBean loggedUserBean =  session.getUser();
         PatientBean patientBean = new PatientBean(
-                credentialsBean,
+                new CredentialsBean("", "", null),
                 "",
                 "",
                 "",
@@ -56,7 +57,7 @@ public class ModifyPatientController extends ModifyController {
     private void registerPatient(MouseEvent event) {
         // Aggiorna il PatientBean con i dati modificati dall'utente
         PatientBean patientBean = new PatientBean(
-                session.getUser(),
+                session.getUser().getCredentialsBean(),
                 nome.getText(),
                 cognome.getText(),
                 citta.getText(),

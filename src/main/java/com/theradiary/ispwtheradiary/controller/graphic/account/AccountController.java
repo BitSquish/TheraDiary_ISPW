@@ -38,7 +38,7 @@ public abstract class AccountController extends CommonController {
             if(session.getUser()==null){
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
                 loader.setControllerFactory(c -> new LoginController(session));
-            }else if (session.getUser().getRole().toString().equals("PATIENT")) {
+            }else if (session.getUser().getCredentialsBean().getRole().toString().equals("PATIENT")) {
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/ModifyPatient.fxml"));
                 loader.setControllerFactory(c -> new ModifyPatientController(session));
             } else  {
@@ -56,7 +56,7 @@ public abstract class AccountController extends CommonController {
     protected void joinPag(MouseEvent event, Object bean) {
         try {
 
-            RegistrationDAO.joinPag(session.getUser().getMail());
+            RegistrationDAO.joinPag(session.getUser().getCredentialsBean().getMail());
             session.getUser().setPag(true);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -83,7 +83,7 @@ public abstract class AccountController extends CommonController {
             if(session.getUser()==null){
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
                 loader.setControllerFactory(c -> new LoginController(session));
-            }else if (session.getUser().getRole().toString().equals("PATIENT")) {
+            }else if (session.getUser().getCredentialsBean().getRole().toString().equals("PATIENT")) {
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/HomepageLoggedPt.fxml"));
                 loader.setControllerFactory(c -> new HomepagePtController(session));
             } else {

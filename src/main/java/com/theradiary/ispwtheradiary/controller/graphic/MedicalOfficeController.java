@@ -26,7 +26,7 @@ public class MedicalOfficeController extends CommonController{
     //Questo metodo fa sì che le textfield siano inizializzate con i dati dello studio medico se esso è già stato inserito
     @FXML
     protected void initializeTextFields() throws SQLException {
-        MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(session.getUser().getMail(), null, null, null, null);
+        MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(session.getUser().getCredentialsBean().getMail(), null, null, null, null);
         MedicalOfficeRegistration medicalOfficeRegistration = new MedicalOfficeRegistration();
         if (medicalOfficeRegistration.retrieveMedicalOffice(medicalOfficeBean)) {
             medOffAlreadyInserted = true;
@@ -47,7 +47,7 @@ public class MedicalOfficeController extends CommonController{
         try{
             TextField[] fields = {citta, cap, via};
             checkFields(fields);
-            MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(session.getUser().getMail(), citta.getText(), cap.getText(), via.getText(), altreInfo.getText());
+            MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(session.getUser().getCredentialsBean().getMail(), citta.getText(), cap.getText(), via.getText(), altreInfo.getText());
             MedicalOfficeRegistration medicalOfficeRegistration = new MedicalOfficeRegistration();
             if(medOffAlreadyInserted)
                 medicalOfficeRegistration.modify(medicalOfficeBean);

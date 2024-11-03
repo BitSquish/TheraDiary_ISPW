@@ -58,15 +58,14 @@ public class RetrieveQuery {
     }
 
     public static ResultSet retrievePsychologist(Connection conn, String mail) throws SQLException {
-
-        String query = "SELECT name, surname, city, description, inPerson, online, pag FROM psychologist WHERE mail = ?";
+        String query = "SELECT mail, name, surname, city, description, inPerson, online, pag FROM psychologist WHERE mail = ?";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, mail);
         return pstmt.executeQuery();
     }
 
     public static ResultSet retrievePatient(Connection conn, String mail) throws SQLException {
-        String query = "SELECT name, surname, city, description, inPerson, online, pag FROM patient WHERE mail = ?";
+        String query = "SELECT mail, name, surname, city, description, inPerson, online, pag FROM patient WHERE mail = ?";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, mail);
         return pstmt.executeQuery();

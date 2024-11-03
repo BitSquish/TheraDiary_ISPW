@@ -6,10 +6,11 @@ import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePsContr
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtController;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
-import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
+import com.theradiary.ispwtheradiary.model.beans.PatientBean;
+import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,8 +20,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 
 public class LoginController extends CommonController {
 
@@ -43,19 +42,22 @@ public class LoginController extends CommonController {
             CredentialsBean credentialsBean = new CredentialsBean(mail.getText(), password.getText(), null);
             Login login = new Login();
             login.log(credentialsBean);
-            if(credentialsBean.getRole() != null){
-                session.setUser(credentialsBean);
-                goToHomepage(event, credentialsBean.getRole());
-            }
-            else{
+            if(credentialsBean.getRole() == null){
                 throw new WrongEmailOrPasswordException("Mail o password errati");
             }
+            if(credentialsBean.getRole().equals(Role.PATIENT)){
+                PatientBean patientBean = new PatientBean(credentialsBean, null, null, null, null, false, false, false, null, null);
+                session.setUser(login.retrievePatient(patientBean));
+            }
+            else if(credentialsBean.getRole().equals(Role.PSYCHOLOGIST)){
+                PsychologistBean psychologistBean = new PsychologistBean(credentialsBean, null, null, null, null, false, false, false, null, null);
+                session.setUser(login.retrievePsychologist(psychologistBean));
+            }
+            goToHomepage(event, credentialsBean.getRole());
         }catch(WrongEmailOrPasswordException | EmptyFieldException exception){
             errorMessage.setText(exception.getMessage());
             errorMessage.setVisible(true);
         }
-
-
     }
 
     //UN METODO DEL GENERE NON PUO ANDARE SU UN CONTROLLER GRAFICO

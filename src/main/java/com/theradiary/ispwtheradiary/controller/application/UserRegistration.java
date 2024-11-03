@@ -19,7 +19,6 @@ public class UserRegistration {
     //VEDERE QUALE DELLE DUE SOLUZIONI È MIGLIORE
 
     public UserRegistration(LoggedUserBean loggedUserBean) throws MailAlreadyExistsException {
-        System.out.println("Ruolo: " + loggedUserBean.getCredentialsBean().getRole().toString());
         if(loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT)){
             registerPatient(new PatientBean(loggedUserBean.getCredentialsBean(), loggedUserBean.getName(), loggedUserBean.getSurname(), loggedUserBean.getCity(), loggedUserBean.getDescription(), loggedUserBean.isInPerson(), loggedUserBean.isOnline(), false, null, null));
         }
