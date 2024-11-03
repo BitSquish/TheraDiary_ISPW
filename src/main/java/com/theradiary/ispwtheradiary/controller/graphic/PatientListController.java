@@ -1,6 +1,9 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
-public class PatientListController {/*In JavaFX, la ListView è un controllo utile per visualizzare un elenco di elementi in modo interattivo. Consente agli utenti di selezionare uno o più elementi da un elenco, ed è molto flessibile per varie applicazioni. Ecco una panoramica su come funzionano le ListView, compresi gli aspetti principali come la creazione, l'aggiunta di elementi e la gestione degli eventi.
+import com.theradiary.ispwtheradiary.engineering.others.Session;
+
+public class PatientListController extends CommonController {
+    public PatientListController (Session session){super(session);}/*In JavaFX, la ListView è un controllo utile per visualizzare un elenco di elementi in modo interattivo. Consente agli utenti di selezionare uno o più elementi da un elenco, ed è molto flessibile per varie applicazioni. Ecco una panoramica su come funzionano le ListView, compresi gli aspetti principali come la creazione, l'aggiunta di elementi e la gestione degli eventi.
 
 Creazione di una ListView
 Importare le Librerie Necessarie: Assicurati di importare le classi necessarie in JavaFX.

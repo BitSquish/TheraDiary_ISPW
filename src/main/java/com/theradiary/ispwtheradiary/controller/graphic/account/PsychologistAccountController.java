@@ -1,15 +1,22 @@
 package com.theradiary.ispwtheradiary.controller.graphic.account;
 
+import com.theradiary.ispwtheradiary.controller.graphic.PatientListController;
+import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
+import com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPatientController;
+import com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPsychologistController;
 import com.theradiary.ispwtheradiary.engineering.dao.CategoryAndMajorDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,8 +50,10 @@ public class PsychologistAccountController extends AccountController {
 
     @FXML
     private void initialize() {
-        // Imposta l'evento per il pulsante di salvataggio
-        saveMajorButton.setOnMouseClicked(event -> saveSelectedMajor());
+        if(saveMajorButton!=null) {
+            saveMajorButton.setOnMouseClicked(event -> saveSelectedMajor());
+        }
+        System.out.println("ERRORE è null");
     }
 
     private void saveSelectedMajor() {
@@ -65,7 +74,7 @@ public class PsychologistAccountController extends AccountController {
         if (!selectedMajors.isEmpty()) {
             try {
                 // Salva le specializzazioni selezionate
-                CategoryAndMajorDAO.saveSelectedMajors(selectedMajors, session.getUser ().getMail());
+                CategoryAndMajorDAO.saveSelectedMajors(selectedMajors, session.getUser().getMail());
             } catch (Exception e) {
                 System.err.println("Error saving categories: " + e.getMessage());
             }
@@ -74,7 +83,21 @@ public class PsychologistAccountController extends AccountController {
         }
     }
 
-
+    @FXML
     public void goToListPatients(MouseEvent event) {
+        try {
+            FXMLLoader loader;
+            if (session.getUser() == null) {
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
+                loader.setControllerFactory(c -> new LoginController(session));
+            } else {
+                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PatientList.fxml"));
+                loader.setControllerFactory(c -> new PatientListController(session));
+            }
+            Parent root = loader.load();
+            changeScene(root, event);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

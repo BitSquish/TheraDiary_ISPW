@@ -26,7 +26,7 @@
     </Button>
     <ImageView fitHeight="57.0" fitWidth="53.0" layoutX="74.0" layoutY="233.0" onMouseClicked="#goToAccountPage" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@images/commonPanel/account.png" />
+            <Image url="@img/account.png" />
         </image>
     </ImageView>
     <Button fx:id="iniziamo11" layoutX="328.0" layoutY="358.0" mnemonicParsing="false" onMouseClicked="#goToSearch" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: #9067C6; -fx-background-radius: 15px;" textFill="WHITE">
@@ -51,7 +51,7 @@
     </Text>
     <ImageView fitHeight="60.0" fitWidth="58.0" layoutX="336.0" layoutY="229.0" onMouseClicked="#goToTasks" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@images/commonPanel/diarioTask.png" />
+            <Image url="@img/diarioTask.png" />
         </image>
     </ImageView>
     <Text fill="WHITE" layoutX="404.0" layoutY="244.0" onMouseClicked="#goToTasks" strokeType="OUTSIDE" strokeWidth="0.0" text="Visualizza o assegna task ai tuoi pazienti o leggi i loro diari" wrappingWidth="124.5367431640625">
@@ -116,22 +116,22 @@
     </Text>
     <ImageView fitHeight="48.0" fitWidth="45.0" layoutX="620.0" layoutY="237.0" onMouseClicked="#goToDashboard" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@images/commonPanel/bacheca.png" />
+            <Image url="@img/bacheca.png" />
         </image>
     </ImageView>
     <ImageView fitHeight="57.0" fitWidth="53.0" layoutX="74.0" layoutY="396.0" onMouseClicked="#goToPAG" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@images/commonPanel/pag.png" />
+            <Image url="@img/pag.png" />
         </image>
     </ImageView>
     <ImageView fitHeight="57.0" fitWidth="53.0" layoutX="336.0" layoutY="396.0" onMouseClicked="#goToSearch" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@images/commonPanel/office.png" />
+            <Image url="@img/office.png" />
         </image>
     </ImageView>
     <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="617.0" layoutY="397.0" onMouseClicked="#goToAppointment" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@images/commonPanel/calendario.png" />
+            <Image url="@img/calendario.png" />
         </image>
     </ImageView>
 
