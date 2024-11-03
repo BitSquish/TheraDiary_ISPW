@@ -41,6 +41,7 @@ public class ModifyPsychologistController extends ModifyController {
                 false,
                 false,
                 false,
+                null,
                 null
         );
         nome.setText(psychologistBean.getName());
@@ -65,6 +66,7 @@ public class ModifyPsychologistController extends ModifyController {
                 inPresenza.isSelected(),
                 online.isSelected(),
                 false,
+                null,
                 null
         );
         psychologistBean.setName(nome.getText());

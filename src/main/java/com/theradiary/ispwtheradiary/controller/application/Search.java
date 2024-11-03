@@ -17,7 +17,7 @@ public class Search {
         RetrieveDAO.searchPsychologists(psychologists, nomeP.getText(), cognomeP.getText(), cittaP.getText(), inPresenza.isSelected(), online.isSelected(), pag.isSelected());
         for(Psychologist psychologist : psychologists){
             CredentialsBean credentialsBean = new CredentialsBean(psychologist.getCredentials().getMail(), psychologist.getCredentials().getPassword(), psychologist.getCredentials().getRole());
-            PsychologistBean psychologistBean = new PsychologistBean(credentialsBean, psychologist.getName(),psychologist.getSurname(), psychologist.getCity(), psychologist.getDescription(), psychologist.isInPerson(), psychologist.isOnline(), psychologist.isPag(), null);
+            PsychologistBean psychologistBean = new PsychologistBean(credentialsBean, psychologist.getName(),psychologist.getSurname(), psychologist.getCity(), psychologist.getDescription(), psychologist.isInPerson(), psychologist.isOnline(), psychologist.isPag(), null, null);
             psychologistBeans.add(psychologistBean);
         }
     }

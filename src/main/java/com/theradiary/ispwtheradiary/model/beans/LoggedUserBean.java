@@ -10,7 +10,7 @@ public abstract class LoggedUserBean {
     private boolean pag;
 
 
-    protected LoggedUserBean(CredentialsBean credentialsBean, String name, String surname, String city, String description, Boolean isInPerson, Boolean isOnline, Boolean isPAG) {
+    protected LoggedUserBean(CredentialsBean credentialsBean, String name, String surname, String city, String description, Boolean isInPerson, Boolean isOnline, boolean pag) {
         this.credentialsBean = credentialsBean;
         this.name = name;
         this.surname = surname;
@@ -18,7 +18,7 @@ public abstract class LoggedUserBean {
         this.description = description;
         this.inPerson = isInPerson;
         this.online = isOnline;
-        this.pag = isPAG;
+        this.pag = pag;
     }
 
     public CredentialsBean getCredentialsBean() {

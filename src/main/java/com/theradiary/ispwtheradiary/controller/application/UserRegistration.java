@@ -7,6 +7,7 @@ import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsExc
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
+import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 
@@ -17,17 +18,20 @@ public class UserRegistration {
     //NOTA: Su registrazione il metodo è privato e viene chiamato dal costruttore. Su login il metodo è statico e non serve istanziare la classe.
     //VEDERE QUALE DELLE DUE SOLUZIONI È MIGLIORE
 
-    public UserRegistration(Object bean) throws MailAlreadyExistsException {
-        if(bean instanceof PatientBean)
-            registerPatient((PatientBean) bean);
-        else if (bean instanceof PsychologistBean)
-            registerPsychologist((PsychologistBean) bean);
+    public UserRegistration(LoggedUserBean loggedUserBean) throws MailAlreadyExistsException {
+        System.out.println("Ruolo: " + loggedUserBean.getCredentialsBean().getRole().toString());
+        if(loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT)){
+            registerPatient(new PatientBean(loggedUserBean.getCredentialsBean(), loggedUserBean.getName(), loggedUserBean.getSurname(), loggedUserBean.getCity(), loggedUserBean.getDescription(), loggedUserBean.isInPerson(), loggedUserBean.isOnline(), false, null, null));
+        }
+        else if (loggedUserBean.getCredentialsBean().getRole().equals(Role.PSYCHOLOGIST)){
+            registerPsychologist(new PsychologistBean(loggedUserBean.getCredentialsBean(), loggedUserBean.getName(), loggedUserBean.getSurname(), loggedUserBean.getCity(), loggedUserBean.getDescription(), loggedUserBean.isInPerson(), loggedUserBean.isOnline(), false, null, null));
+        }
+
     }
 
 
     private void registerPatient(PatientBean patientBean) throws MailAlreadyExistsException {//metodo per registrare un paziente nel database
-        Credentials credentials = new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT);
-        Patient patient = new Patient(credentials, patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline(), false);
+        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline(), false);
         try {
             RegistrationDAO.registerPatient(patient);
         } catch (SQLException exception) {
@@ -39,8 +43,7 @@ public class UserRegistration {
     }
 
     private void registerPsychologist(PsychologistBean psychologistBean) throws MailAlreadyExistsException {
-        Credentials credentials = new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST);
-        Psychologist psychologist = new Psychologist(credentials, psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline(), psychologistBean.isPag(), null);
+        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST) ,psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline(), psychologistBean.isPag(), null, null);
         try {
             RegistrationDAO.registerPsychologist(psychologist);
         } catch (SQLException exception) {

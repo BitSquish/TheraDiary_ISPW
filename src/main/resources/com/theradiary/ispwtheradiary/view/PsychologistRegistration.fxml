@@ -5,8 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
@@ -60,7 +58,6 @@
             <Font size="14.0" />
         </font>
     </Text>
-    <CheckBox fx:id="pag" layoutX="735.0" layoutY="390.0" mnemonicParsing="false" />
     <Text fill="#242038" layoutX="490.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0">
         <font>
             <Font size="14.0" />
@@ -71,38 +68,28 @@
             <Font size="14.0" />
         </font>
     </Text>
-    <Text fill="#242038" layoutX="558.0" layoutY="380.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In presenza">
+    <Text fill="#242038" layoutX="578.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In presenza">
         <font>
             <Font size="14.0" />
         </font>
     </Text>
-    <CheckBox fx:id="inPresenza" layoutX="585.0" layoutY="390.0" mnemonicParsing="false" />
-    <Text fill="#242038" layoutX="649.0" layoutY="379.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Online">
+    <CheckBox fx:id="inPresenza" layoutX="605.0" layoutY="390.0" mnemonicParsing="false" />
+    <Text fill="#242038" layoutX="681.0" layoutY="379.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Online">
         <font>
             <Font size="14.0" />
         </font>
     </Text>
-    <CheckBox fx:id="online" layoutX="661.0" layoutY="390.0" mnemonicParsing="false" />
-    <Text fill="#242038" layoutX="726.0" layoutY="379.0" strokeType="OUTSIDE" strokeWidth="0.0" text="P.A.G.">
-        <font>
-            <Font size="14.0" />
-        </font>
-    </Text>
+    <CheckBox fx:id="online" layoutX="697.0" layoutY="390.0" mnemonicParsing="false" />
     <Button fx:id="registratiPs" layoutX="593.0" layoutY="463.0" mnemonicParsing="false" onMouseClicked="#registerPsychologist" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067c6;" text="Registrati" textFill="WHITE">
         <font>
             <Font size="18.0" />
         </font>
     </Button>
-    <ImageView fx:id="infoButton" fitHeight="18.0" fitWidth="17.0" layoutX="773.0" layoutY="365.0"
-               onMouseClicked="#clickInfoButton" pickOnBounds="true" preserveRatio="true">
-        <Image url="@img/info.png"/>
-    </ImageView>
    <Label fx:id="infoPAG" layoutX="701.0" layoutY="180.0" prefHeight="181.0" prefWidth="160.0" style="-fx-background-color: #ffffff; -fx-border-color: #111111; -fx-border-radius: 10px;" text="Aderendo al PA.G. (Programma di Assistenza Gratuita), potrai aiutare pazienti con problemi economici a ricevere il giusto supporto mentale a titolo gratuito. Aiutaci a rendere il mondo un posto migliore!" textAlignment="CENTER" visible="false" wrapText="true" />
     <HBox alignment="CENTER" layoutX="576.0" layoutY="429.0" spacing="10" style="-fx-alignment: center;">
-        <Label fx:id="errorMessage" layoutX="140.0" layoutY="342.0" prefHeight="18.0" prefWidth="170.0"
-               style="-fx-alignment: center;" text="   " textFill="#ec4747">
+        <Label fx:id="errorMessage" layoutX="140.0" layoutY="342.0" prefHeight="18.0" prefWidth="170.0" style="-fx-alignment: center;" text="   " textFill="#ec4747">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
     </HBox>

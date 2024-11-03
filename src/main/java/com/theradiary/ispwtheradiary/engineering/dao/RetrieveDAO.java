@@ -35,6 +35,7 @@ public class RetrieveDAO {
                         rs.getBoolean("inPerson"),
                         rs.getBoolean("online"),
                         rs.getBoolean("pag"),
+                        null,
                         null
                 );
                 psychologists.add(psychologist);

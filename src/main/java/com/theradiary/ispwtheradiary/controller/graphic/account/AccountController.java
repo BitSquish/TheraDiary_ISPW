@@ -53,8 +53,9 @@ public abstract class AccountController extends CommonController {
     }
 
     @FXML
-    protected void joinPag(MouseEvent event) {
+    protected void joinPag(MouseEvent event, Object bean) {
         try {
+
             RegistrationDAO.joinPag(session.getUser().getMail());
             session.getUser().setPag(true);
         } catch (SQLException e) {
