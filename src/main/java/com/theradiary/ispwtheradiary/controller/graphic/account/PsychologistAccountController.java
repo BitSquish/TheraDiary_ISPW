@@ -5,54 +5,72 @@ import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
-import java.util.EnumMap;
+import java.util.ArrayList;
 import java.util.List;
 
+
 public class PsychologistAccountController extends AccountController {
+
     public PsychologistAccountController(Session session) {
         super(session);
     }
+
     @FXML
-    VBox categoryVBOXps; //Box del file fxml
-    public EnumMap<Major, CheckBox> majorCheckBoxMap;
+    CheckBox checkbox1;
     @FXML
-    public void initialize(){
-        if(categoryVBOXps==null){
-            System.err.println("Error: categoryVBOXps is null");
-            return;
-        }
-        majorCheckBoxMap=new EnumMap<>(Major.class);
-        List<Node> children = categoryVBOXps.getChildren();
-        Major[] major = Major.values();
-        for(int i=0;i< major.length && i< children.size();i++){
-            if(children.get(i) instanceof CheckBox ) {
-                CheckBox checkBox = (CheckBox) children.get(i);
-                majorCheckBoxMap.put(major[i], checkBox);
+    CheckBox checkbox2;
+    @FXML
+    CheckBox checkbox3;
+    @FXML
+    CheckBox checkbox4;
+    @FXML
+    CheckBox checkbox5;
+    @FXML
+    CheckBox checkbox6;
+    @FXML
+    CheckBox checkbox7;
+    @FXML
+    CheckBox checkbox8;
+    @FXML
+    CheckBox checkbox9;
+    @FXML
+    Button saveMajorButton;
+
+    @FXML
+    private void initialize() {
+        // Imposta l'evento per il pulsante di salvataggio
+        saveMajorButton.setOnMouseClicked(event -> saveSelectedMajor());
+    }
+
+    private void saveSelectedMajor() {
+        List<Major> selectedMajors = new ArrayList<>();
+        CheckBox[] checkboxes = {checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6, checkbox7, checkbox8, checkbox9};
+
+        for (CheckBox checkbox : checkboxes) {
+            if (checkbox != null && checkbox.isSelected()) {
+                try {
+                    // l'ID della checkbox corrisponda a un valore di enum Major
+                    selectedMajors.add(Major.valueOf(checkbox.getId().toUpperCase()));
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Invalid category: " + checkbox.getId());
+                }
             }
         }
-    }
-    private List<Major> getSelectedMajor(){
-        List<Major> selectedMajor= new java.util.ArrayList<>();
-        for(Major major: Major.values()) {
-            CheckBox checkBox = majorCheckBoxMap.get(major);
-            if (checkBox != null && checkBox.isSelected()) {
-                selectedMajor.add(major);
+
+        if (!selectedMajors.isEmpty()) {
+            try {
+                // Salva le specializzazioni selezionate
+                CategoryAndMajorDAO.saveSelectedMajors(selectedMajors, session.getUser ().getMail());
+            } catch (Exception e) {
+                System.err.println("Error saving categories: " + e.getMessage());
             }
-        }
-        return selectedMajor;
-    }
-    @FXML
-    private void saveMajor(){
-        List<Major> selectedMajor = getSelectedMajor();
-        String psychologistName=session.getUser().getMail();
-        try{
-            CategoryAndMajorDAO.saveSelectedMajor(selectedMajor,psychologistName);
-        }catch (Exception e) {
-            System.err.println("Errore nel salvataggio delle specializzazioni");
+        } else {
+            System.out.println("Nessuna categoria selezionata.");
         }
     }
 

@@ -22,7 +22,7 @@ public class ModifyPatientController extends ModifyController {
     @FXML
     private PasswordField password;
     @FXML
-    private CheckBox inPresenza, isOnline;
+    private CheckBox isInPerson, isOnline;
     @FXML
     public void initialize() {
         // Carica i dati del paziente nei campi di input
@@ -49,8 +49,8 @@ public class ModifyPatientController extends ModifyController {
         mail.setText(patientBean.getCredentialsBean().getMail());
         password.setText(patientBean.getCredentialsBean().getPassword());
         descrizione.setText(patientBean.getDescription());
-        inPresenza.setSelected(patientBean.isInPerson());
-        online.setSelected(patientBean.isOnline());
+        isInPerson.setSelected(patientBean.isInPerson());
+        isOnline.setSelected(patientBean.isOnline());
     }
     @FXML
     private void registerPatient(MouseEvent event) {
@@ -61,7 +61,7 @@ public class ModifyPatientController extends ModifyController {
                 cognome.getText(),
                 citta.getText(),
                 descrizione.getText(),
-                inPresenza.isSelected(),
+                isInPerson.isSelected(),
                 isOnline.isSelected(),
                 false,
                 null,
@@ -73,8 +73,8 @@ public class ModifyPatientController extends ModifyController {
         patientBean.getCredentialsBean().setMail(mail.getText());
         patientBean.getCredentialsBean().setPassword(password.getText());
         patientBean.setDescription(descrizione.getText());
-        patientBean.setInPerson(inPresenza.isSelected());
-        patientBean.setOnline(online.isSelected());
+        patientBean.setInPerson(isInPerson.isSelected());
+        patientBean.setOnline(isOnline.isSelected());
 
         // Salva i dati aggiornati nel database
     }

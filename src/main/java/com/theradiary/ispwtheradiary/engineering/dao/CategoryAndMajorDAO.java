@@ -17,12 +17,13 @@ public class CategoryAndMajorDAO {
             throw new RuntimeException(e);
         }
     }
-    public static void saveSelectedMajor(List<Major> majors,String psychologistName) {
+    public static void saveSelectedMajors(List<Major> majors,String psychologistName) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             Account.saveSelectedMajor(conn, majors,psychologistName);
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
     }
+
 
 }

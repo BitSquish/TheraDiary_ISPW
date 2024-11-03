@@ -6,7 +6,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -34,66 +33,55 @@
    <Button layoutX="174.0" layoutY="464.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Logout" textFill="WHITE" />
    <Button layoutX="725.0" layoutY="119.0" mnemonicParsing="false" onMouseClicked="#goBack" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
    <Button layoutX="149.0" layoutY="266.0" mnemonicParsing="false" onMouseClicked="#goToListPatients" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Visualizza pazienti" textFill="WHITE" />
-   <VBox fx:id="categoryVBOXps" layoutX="476.0" layoutY="192.0" prefHeight="318.0" prefWidth="306.0">
-      <children>
-         <CheckBox mnemonicParsing="false" text="Psicoterapia" textFill="#231f36">
-            <padding>
-               <Insets left="6.0" top="7.0" />
-            </padding>
-         </CheckBox>
-         <CheckBox mnemonicParsing="false" text="Psicologia infantile" textFill="#231f36">
-            <padding>
-               <Insets left="6.0" top="10.0" />
-            </padding>
-            <VBox.margin>
-               <Insets right="10.0" />
-            </VBox.margin>
-         </CheckBox>
-         <CheckBox mnemonicParsing="false" text="Psicologia della salute" textFill="#231f36">
-            <padding>
-               <Insets left="6.0" top="10.0" />
-            </padding>
-         </CheckBox>
-         <CheckBox mnemonicParsing="false" text="Neuropsicologia clinica" textFill="#231f36">
-            <padding>
-               <Insets left="6.0" top="10.0" />
-            </padding>
-         </CheckBox>
-         <CheckBox mnemonicParsing="false" text="Psicologia del trauma" textFill="#231f36">
-            <padding>
-               <Insets left="6.0" top="10.0" />
-            </padding>
-         </CheckBox>
-         <CheckBox mnemonicParsing="false" text="Psicologia geriatrica" textFill="#231f36">
-            <padding>
-               <Insets left="6.0" top="10.0" />
-            </padding>
-         </CheckBox>
-         <CheckBox lineSpacing="10.0" mnemonicParsing="false" text="Psicologia forense" textFill="#231f36">
-            <padding>
-               <Insets left="6.0" top="10.0" />
-            </padding>
-         </CheckBox>
-         <CheckBox mnemonicParsing="false" text="Psicologia delle dipendenze" textFill="#231f36">
-            <padding>
-               <Insets left="6.0" top="10.0" />
-            </padding>
-         </CheckBox>
-         <CheckBox mnemonicParsing="false" text="Altro" textFill="#231f36">
-            <padding>
-               <Insets bottom="7.0" left="6.0" top="10.0" />
-            </padding>
-         </CheckBox>
-         <Button mnemonicParsing="false" onMouseClicked="#saveMajor" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE">
-            <VBox.margin>
-               <Insets bottom="5.0" left="90.0" />
-            </VBox.margin>
-         </Button>
-      </children>
-   </VBox>
    <Text layoutX="476.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Specializzazioni:" wrappingWidth="179.33477783203125">
       <font>
          <Font name="System Italic" size="16.0" />
       </font>
    </Text>
+   <CheckBox fx:id="checkbox1" layoutX="477.0" layoutY="193.0" mnemonicParsing="false" onMouseClicked="#initialize" text="Psicoterapia" textFill="#231f36">
+      <padding>
+         <Insets left="6.0" top="7.0" />
+      </padding>
+   </CheckBox>
+   <CheckBox fx:id="checkbox3" layoutX="477.0" layoutY="247.0" mnemonicParsing="false" onMouseClicked="#initialize" text="Psicologia della salute" textFill="#231f36">
+      <padding>
+         <Insets left="6.0" top="10.0" />
+      </padding>
+   </CheckBox>
+   <CheckBox fx:id="checkbox2" layoutX="477.0" layoutY="220.0" mnemonicParsing="false" onMouseClicked="#initialize" text="Psicologia infantile" textFill="#231f36">
+      <padding>
+         <Insets left="6.0" top="10.0" />
+      </padding>
+   </CheckBox>
+   <CheckBox fx:id="checkbox4" layoutX="477.0" layoutY="274.0" mnemonicParsing="false" onMouseClicked="#initialize" text="Neuropsicologia clinica" textFill="#231f36">
+      <padding>
+         <Insets left="6.0" top="10.0" />
+      </padding>
+   </CheckBox>
+   <CheckBox fx:id="checkbox5" layoutX="477.0" layoutY="301.0" mnemonicParsing="false" onMouseClicked="#initialize" text="Psicologia del trauma" textFill="#231f36">
+      <padding>
+         <Insets left="6.0" top="10.0" />
+      </padding>
+   </CheckBox>
+   <CheckBox fx:id="checkbox6" layoutX="477.0" layoutY="328.0" mnemonicParsing="false" onMouseClicked="#initialize" text="Psicologia geriatrica" textFill="#231f36">
+      <padding>
+         <Insets left="6.0" top="10.0" />
+      </padding>
+   </CheckBox>
+   <CheckBox fx:id="checkbox7" layoutX="477.0" layoutY="355.0" lineSpacing="10.0" mnemonicParsing="false" onMouseClicked="#initialize" text="Psicologia forense" textFill="#231f36">
+      <padding>
+         <Insets left="6.0" top="10.0" />
+      </padding>
+   </CheckBox>
+   <CheckBox fx:id="checkbox8" layoutX="477.0" layoutY="382.0" mnemonicParsing="false" onMouseClicked="#initialize" text="Psicologia delle dipendenze" textFill="#231f36">
+      <padding>
+         <Insets left="6.0" top="10.0" />
+      </padding>
+   </CheckBox>
+   <CheckBox fx:id="checkbox9" layoutX="477.0" layoutY="409.0" mnemonicParsing="false" onMouseClicked="#initialize" text="Altro" textFill="#231f36">
+      <padding>
+         <Insets bottom="7.0" left="6.0" top="10.0" />
+      </padding>
+   </CheckBox>
+   <Button layoutX="535.0" layoutY="456.0" mnemonicParsing="false"  prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE" />
 </AnchorPane>

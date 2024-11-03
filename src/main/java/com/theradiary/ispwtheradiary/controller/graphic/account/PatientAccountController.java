@@ -1,63 +1,80 @@
 package com.theradiary.ispwtheradiary.controller.graphic.account;
 
+
 import com.theradiary.ispwtheradiary.engineering.dao.CategoryAndMajorDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.layout.VBox;
+
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
 
 public class PatientAccountController extends AccountController {
+
     public PatientAccountController(Session session) {
         super(session);
     }
 
     @FXML
-    VBox categoryVBox; //Box del file fxml
-    public EnumMap<Category, CheckBox> categoryCheckBoxMap;
+    private CheckBox checkbox1;
+    @FXML
+    private CheckBox checkbox2;
+    @FXML
+    private CheckBox checkbox3;
+    @FXML
+    private CheckBox checkbox4;
+    @FXML
+    private CheckBox checkbox5;
+    @FXML
+    private CheckBox checkbox6;
+    @FXML
+    private CheckBox checkbox7;
+    @FXML
+    private CheckBox checkbox8;
+    @FXML
+    private CheckBox checkbox9;
+    @FXML
+    Button saveCategoryButton;
 
     @FXML
-    public void initialize() { //la funzione adesso controlla il numero preciso di checkbox
-       if(categoryVBox==null){
-           System.err.println("Error: categoryVBox is null");
-           return;
-       }
-       categoryCheckBoxMap = new EnumMap<>(Category.class);
-       List<Node> children = categoryVBox.getChildren();
-       Category[] categories = Category.values();
-       for (int i = 0; i < categories.length && i < children.size(); i++) {
-            if (children.get(i) instanceof CheckBox) {
-                CheckBox checkBox = (CheckBox) children.get(i);
-                categoryCheckBoxMap.put(categories[i], checkBox);
-            }
-
-       }
+    private void initialize() {
+        if(saveCategoryButton!=null){
+            // Imposta l'evento per il pulsante di salvataggio
+            saveCategoryButton.setOnMouseClicked(event -> saveSelectedCategories());
+        }else{
+            System.out.println("saveCategoryButton is null");
+        }
     }
 
-    private List<Category> getSelectedCategories() {
+    private void saveSelectedCategories() {
         List<Category> selectedCategories = new ArrayList<>();
-        for (Category category : Category.values()) {
-            CheckBox checkBox = categoryCheckBoxMap.get(category);
-            if (checkBox != null && checkBox.isSelected()) {
-                selectedCategories.add(category);
+        CheckBox[] checkboxes = {checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6, checkbox7, checkbox8, checkbox9};
+
+        for (CheckBox checkbox : checkboxes) {
+            if (checkbox != null && checkbox.isSelected()) {
+                try {
+                    // l'ID della checkbox corrisponda a un valore di enum Category
+                    selectedCategories.add(Category.valueOf(checkbox.getId().toUpperCase()));
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Invalid category: " + checkbox.getId());
+                }
             }
         }
-        return selectedCategories;
-    }
 
-    @FXML
-    private void saveCategory() {
-        List<Category> selectedCategories = getSelectedCategories();
-        String patientName = session.getUser().getMail();
-        try {
-            CategoryAndMajorDAO.saveSelectedCategories(selectedCategories, patientName);
-        } catch (Exception e) {
-            System.err.println("Errore nel salvataggio delle categorie");
+        if (!selectedCategories.isEmpty()) {
+            try {
+                // Salva le categorie selezionate
+                CategoryAndMajorDAO.saveSelectedCategories(selectedCategories, session.getUser ().getMail());
+            } catch (Exception e) {
+                System.err.println("Error saving categories: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Nessuna categoria selezionata.");
         }
     }
+
+
 }
