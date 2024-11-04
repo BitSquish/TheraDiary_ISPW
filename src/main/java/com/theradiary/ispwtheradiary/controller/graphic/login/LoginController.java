@@ -47,11 +47,13 @@ public class LoginController extends CommonController {
             }
             if(credentialsBean.getRole().equals(Role.PATIENT)){
                 PatientBean patientBean = new PatientBean(credentialsBean, null, null, null, null, false, false, false, null, null);
-                session.setUser(login.retrievePatient(patientBean));
+                login.retrievePatient(patientBean);
+                session.setUser(patientBean);
             }
             else if(credentialsBean.getRole().equals(Role.PSYCHOLOGIST)){
                 PsychologistBean psychologistBean = new PsychologistBean(credentialsBean, null, null, null, null, false, false, false, null, null);
-                session.setUser(login.retrievePsychologist(psychologistBean));
+                login.retrievePsychologist(psychologistBean);
+                session.setUser(psychologistBean);
             }
             goToHomepage(event, credentialsBean.getRole());
         }catch(WrongEmailOrPasswordException | EmptyFieldException exception){

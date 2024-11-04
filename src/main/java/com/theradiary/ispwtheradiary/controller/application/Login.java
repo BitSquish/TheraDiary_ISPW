@@ -20,7 +20,6 @@ public class Login {
             Credentials credentials = new Credentials(credentialsBean.getMail(), credentialsBean.getPassword(), credentialsBean.getRole());
             LoginDAO.login(credentials);
             credentialsBean.setRole(credentials.getRole());
-            //return cred;
         } catch(SQLException e) { //CONTROLLARE ECCEZIONI
             System.out.println("Errore: " + e.getMessage());
             throw new RuntimeException(e);
@@ -30,7 +29,7 @@ public class Login {
         }
     }
 
-    public LoggedUserBean retrievePatient(PatientBean patientBean) {
+    public void retrievePatient(PatientBean patientBean) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), null, null, null, null, false, false, false);
         RetrieveDAO.retrievePatient(patient);
         patientBean.setName(patient.getName());
@@ -40,10 +39,10 @@ public class Login {
         patientBean.setInPerson(patient.isInPerson());
         patientBean.setOnline(patient.isOnline());
         patientBean.setPag(patient.isPag());
-        return patientBean;
+        System.out.println("Prova 2 di Login: " + patientBean.getSurname());
     }
 
-    public LoggedUserBean retrievePsychologist(PsychologistBean psychologistBean) {
+    public void retrievePsychologist(PsychologistBean psychologistBean) {
         Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), null, null, null, null, false, false, false, null, null);
         RetrieveDAO.retrievePsychologist(psychologist);
         psychologistBean.setName(psychologist.getName());
@@ -53,6 +52,5 @@ public class Login {
         psychologistBean.setInPerson(psychologist.isInPerson());
         psychologistBean.setOnline(psychologist.isOnline());
         psychologistBean.setPag(psychologist.isPag());
-        return psychologistBean;
     }
 }

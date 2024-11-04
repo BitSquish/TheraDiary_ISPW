@@ -53,7 +53,8 @@ public class PsychologistAccountController extends AccountController {
         if(saveMajorButton!=null) {
             saveMajorButton.setOnMouseClicked(event -> saveSelectedMajor());
         }
-        System.out.println("ERRORE è null");
+        else
+            System.out.println("ERRORE è null");
     }
 
     private void saveSelectedMajor() {

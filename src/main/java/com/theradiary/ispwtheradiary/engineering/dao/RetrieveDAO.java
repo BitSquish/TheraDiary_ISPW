@@ -66,9 +66,12 @@ public class RetrieveDAO {
     }
 
     public static void retrievePatient(Patient patient) {
+        //Viene passato un patient vuoto
+        System.out.println(patient.getCredentials().getMail());
         try(Connection conn = ConnectionFactory.getConnection();
-        ResultSet rs = RetrieveQuery.retrievePatient(conn, patient.getMail())){
+        ResultSet rs = RetrieveQuery.retrievePatient(conn, patient.getCredentials().getMail())){
             if(rs.next()){
+                System.out.println("ResultSet non vuoto");
                 patient.setName(rs.getString("name"));
                 patient.setSurname(rs.getString("surname"));
                 patient.setCity(rs.getString("city"));

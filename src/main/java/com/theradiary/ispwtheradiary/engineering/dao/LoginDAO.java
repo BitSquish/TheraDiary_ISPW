@@ -16,8 +16,6 @@ import java.sql.SQLException;
 
 public class LoginDAO {
 
-    private LoginDAO(){}
-
     public static void login(Credentials credentials) throws SQLException, WrongEmailOrPasswordException {
         try (Connection conn = ConnectionFactory.getConnection();
              ResultSet rs = LoginAndRegistrationQuery.logQuery(conn, credentials)) {

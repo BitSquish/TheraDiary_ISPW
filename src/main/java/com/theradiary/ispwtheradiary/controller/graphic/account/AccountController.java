@@ -7,19 +7,16 @@ import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtContr
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPatientController;
 import com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPsychologistController;
-import com.theradiary.ispwtheradiary.engineering.dao.RegistrationDAO;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 public abstract class AccountController extends CommonController {
 
@@ -32,7 +29,8 @@ public abstract class AccountController extends CommonController {
 
 
     @FXML
-    protected void goToModifyScreen(MouseEvent event) throws IOException {
+    protected void goToModifyScreen(MouseEvent event) {
+        System.out.println("Prova su AccountController: " + session.getUser().getDescription());
         try {
             FXMLLoader loader;
             if(session.getUser()==null){
@@ -71,7 +69,7 @@ public abstract class AccountController extends CommonController {
 
 
     @FXML
-    protected void goBack(MouseEvent event) throws IOException {
+    protected void goBack(MouseEvent event) {
         try {
             FXMLLoader loader;
             if(session.getUser()==null){
