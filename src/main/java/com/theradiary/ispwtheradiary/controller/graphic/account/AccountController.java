@@ -5,8 +5,10 @@ import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePsController;
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
+import com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyController;
 import com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPatientController;
 import com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPsychologistController;
+import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,22 +32,24 @@ public abstract class AccountController extends CommonController {
 
     @FXML
     protected void goToModifyScreen(MouseEvent event) {
-        System.out.println("Prova su AccountController: " + session.getUser().getDescription());
         try {
             FXMLLoader loader;
             if(session.getUser()==null){
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
                 loader.setControllerFactory(c -> new LoginController(session));
-            }else if (session.getUser().getCredentialsBean().getRole().toString().equals("PATIENT")) {
+            }else if (session.getUser().getCredentialsBean().getRole().equals(Role.PATIENT)) {
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/ModifyPatient.fxml"));
                 loader.setControllerFactory(c -> new ModifyPatientController(session));
-            } else  {
+                ((ModifyPatientController)loader.getController()).loadUserData();
+            }else{
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/ModifyPsychologist.fxml"));
                 loader.setControllerFactory(c -> new ModifyPsychologistController(session));
+                ((ModifyPsychologistController)loader.getController()).loadUserData();
             }
             Parent root = loader.load();
             changeScene(root,event);
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }

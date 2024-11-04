@@ -49,21 +49,16 @@ public abstract class ModifyController extends CommonController {
         }
     }
 
-    protected void loadUserData() {
-        //ERRORE: NOME E COGNOME NON VENGONO CARICATI
-        System.out.println("Nome: " + session.getUser().getName());
-        System.out.println("Cognome: " + session.getUser().getSurname());
-        System.out.println("Mail" + session.getUser().getCredentialsBean().getMail());
+    public void loadUserData() {
         // Popola i campi con i dati esistenti dalla sessione
-        LoggedUserBean loggedUserBean =  session.getUser();
-        nome.setText(loggedUserBean.getName());
-        cognome.setText(loggedUserBean.getSurname());
-        citta.setText(loggedUserBean.getCity());
-        mail.setText(loggedUserBean.getCredentialsBean().getMail());
-        password.setText(loggedUserBean.getCredentialsBean().getPassword());
-        descrizione.setText(loggedUserBean.getDescription());
-        inPresenza.setSelected(loggedUserBean.isInPerson());
-        online.setSelected(loggedUserBean.isOnline());
+        nome.setText(session.getUser().getName());
+        cognome.setText(session.getUser().getSurname());
+        citta.setText(session.getUser().getCity());
+        mail.setText(session.getUser().getCredentialsBean().getMail());
+        password.setText(session.getUser().getCredentialsBean().getPassword());
+        descrizione.setText(session.getUser().getDescription());
+        inPresenza.setSelected(session.getUser().isInPerson());
+        online.setSelected(session.getUser().isOnline());
     }
 
 }

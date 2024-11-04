@@ -66,12 +66,9 @@ public class RetrieveDAO {
     }
 
     public static void retrievePatient(Patient patient) {
-        //Viene passato un patient vuoto
-        System.out.println(patient.getCredentials().getMail());
         try(Connection conn = ConnectionFactory.getConnection();
         ResultSet rs = RetrieveQuery.retrievePatient(conn, patient.getCredentials().getMail())){
             if(rs.next()){
-                System.out.println("ResultSet non vuoto");
                 patient.setName(rs.getString("name"));
                 patient.setSurname(rs.getString("surname"));
                 patient.setCity(rs.getString("city"));
@@ -87,7 +84,7 @@ public class RetrieveDAO {
 
     public static void retrievePsychologist(Psychologist psychologist) {
         try(Connection conn = ConnectionFactory.getConnection();
-            ResultSet rs = RetrieveQuery.retrievePsychologist(conn, psychologist.getMail())){
+            ResultSet rs = RetrieveQuery.retrievePsychologist(conn, psychologist.getCredentials().getMail())){
             if(rs.next()){
                 psychologist.setName(rs.getString("name"));
                 psychologist.setSurname(rs.getString("surname"));

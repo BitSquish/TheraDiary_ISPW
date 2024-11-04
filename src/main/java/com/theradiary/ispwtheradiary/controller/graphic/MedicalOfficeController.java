@@ -20,7 +20,7 @@ public class MedicalOfficeController extends CommonController{
     TextField citta, cap, via, altreInfo;
     @FXML
     Label errorMessage, successMessage;
-    Boolean medOffAlreadyInserted;
+    boolean medOffAlreadyInserted;
 
 
     //Questo metodo fa sì che le textfield siano inizializzate con i dati dello studio medico se esso è già stato inserito

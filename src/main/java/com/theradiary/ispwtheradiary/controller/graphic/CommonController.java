@@ -185,11 +185,12 @@ public abstract class CommonController {
             else{
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/MedicalOffice.fxml"));
                 loader.setControllerFactory(c -> new MedicalOfficeController(session));
+                ((MedicalOfficeController)loader.getController()).initializeTextFields(); // Chiamata al metodo per caricare i dati
+                Parent root = loader.load();
+                changeScene(root, event);
+                return;
             }
             Parent root = loader.load();
-            if (loader.getController() instanceof MedicalOfficeController medicalOfficeController) {
-                medicalOfficeController.initializeTextFields(); // Chiamata al metodo per caricare i dati
-            }
             changeScene(root, event);
         } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
