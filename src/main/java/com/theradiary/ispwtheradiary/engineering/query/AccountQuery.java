@@ -18,6 +18,7 @@ public class AccountQuery {
                 pstmt.setString(1, category.name());
                 pstmt.setString(2, mail);
                 pstmt.addBatch();
+
             }
             pstmt.executeBatch();
         } catch (SQLException e) {
@@ -34,7 +35,7 @@ public class AccountQuery {
                 pstmt.setString(2, mail);
                 pstmt.addBatch();
             }
-            pstmt.executeUpdate();
+            pstmt.executeBatch();
         }catch (SQLException e){
             e.printStackTrace();
         }

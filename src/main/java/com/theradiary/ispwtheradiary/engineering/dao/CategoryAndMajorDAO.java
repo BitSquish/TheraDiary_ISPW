@@ -15,14 +15,14 @@ import java.util.List;
 public class CategoryAndMajorDAO {
     public static void addCategory(Patient patient) {
         try(Connection conn= ConnectionFactory.getConnection()) {
-            AccountQuery.addCategory(conn,patient.getCategories(), patient.getMail());
+            AccountQuery.addCategory(conn,patient.getCategories(), patient.getCredentials().getMail());
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
     }
     public static void addMajor(Psychologist psychologist) {
         try(Connection conn= ConnectionFactory.getConnection()) {
-            AccountQuery.addMajor(conn,psychologist.getMajors(), psychologist.getMail());
+            AccountQuery.addMajor(conn,psychologist.getMajors(), psychologist.getCredentials().getMail());
         }catch (SQLException e){
             throw new RuntimeException(e);
         }

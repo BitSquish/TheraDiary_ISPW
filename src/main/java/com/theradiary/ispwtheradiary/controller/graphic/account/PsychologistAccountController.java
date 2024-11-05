@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.input.MouseEvent;
@@ -69,6 +70,12 @@ public class PsychologistAccountController extends AccountController {
         if (!psychologistBean.getMajors().isEmpty()) {
            Account account = new Account();
            account.addMajor(psychologistBean);
+           //pop up di conferma
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Salvataggio specializzazioni");
+            alert.setHeaderText(null);
+            alert.setContentText("Salvate con successo");
+            alert.showAndWait();
         } else {
             System.out.println("Nessuna categoria selezionata.");
         }

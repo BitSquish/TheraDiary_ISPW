@@ -7,6 +7,7 @@ import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -46,15 +47,6 @@ public class PatientAccountController extends AccountController {
     Label psychologist;
 
 
-    @FXML
-    private void initialize() {
-        if(saveCategoryButton!=null){
-            // Imposta l'evento per il pulsante di salvataggio
-            saveCategoryButton.setOnMouseClicked(event -> saveSelectedCategories());
-        }else{
-            System.out.println("saveCategoryButton is null");
-        }
-    }
 
     @FXML
     private void yourPsychologist(MouseEvent event) {
@@ -66,10 +58,11 @@ public class PatientAccountController extends AccountController {
             System.out.println("Hai uno psicologo");
     }
 
+    @FXML
     private void saveSelectedCategories() {
         PatientBean patientBean = new PatientBean(session.getUser().getCredentialsBean(), session.getUser().getName(), session.getUser().getSurname(), session.getUser().getCity(), session.getUser().getDescription(), session.getUser().isInPerson(), session.getUser().isOnline(), session.getUser().isPag(), null, null);
         CheckBox[] checkbox = {checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6, checkbox7, checkbox8, checkbox9};
-        for (int i = 1; i < checkbox.length; i++) {
+        for (int i =0; i < checkbox.length; i++) {
             if (checkbox[i] != null && checkbox[i].isSelected()) {
                 Category category = Category.convertIntToCategory(i);
                 if (category != null) {
@@ -80,6 +73,12 @@ public class PatientAccountController extends AccountController {
         if(!patientBean.getCategories().isEmpty()) {
             Account account=new Account();
             account.addCategory(patientBean);
+            //popup di conferma
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Salavataggio categorie");
+            alert.setHeaderText(null);
+            alert.setContentText("Salvate con successo");
+            alert.showAndWait();
         }else{
             System.out.println("No category selected");
         }
