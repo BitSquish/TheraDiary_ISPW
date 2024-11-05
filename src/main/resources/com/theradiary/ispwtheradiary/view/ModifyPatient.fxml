@@ -2,9 +2,11 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -79,11 +81,29 @@
             </font>
         </Text>
         <CheckBox fx:id="online" layoutX="689.0" layoutY="399.0" mnemonicParsing="false" />
-        <Button fx:id="salva" layoutX="582.0" layoutY="447.0" mnemonicParsing="false" onMouseClicked="#modifyPatient" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE">
+        <Button fx:id="salva" layoutX="585.0" layoutY="462.0" mnemonicParsing="false" onMouseClicked="#modifyPatient" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
       <Button fx:id="indietro" layoutX="735.0" layoutY="129.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+      <HBox alignment="CENTER" layoutX="535.0" layoutY="429.0" prefHeight="18.0" prefWidth="250.0" spacing="10" style="-fx-alignment: center;">
+         <children>
+            <Label fx:id="errorMessage" layoutX="140.0" layoutY="342.0" prefHeight="18.0" prefWidth="508.0" style="-fx-alignment: center;" text="   " textFill="#ec4747" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="535.0" layoutY="436.0" prefHeight="18.0" prefWidth="250.0" spacing="10" style="-fx-alignment: center;">
+         <children>
+            <Label fx:id="successMessage" layoutX="140.0" layoutY="342.0" prefHeight="18.0" prefWidth="508.0" style="-fx-alignment: center;" text="Modifica avvenuta con successo!" textFill="#31a639" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
     </children>
 </AnchorPane>

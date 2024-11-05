@@ -1,5 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic.modify;
 
+import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
@@ -17,7 +18,7 @@ public class ModifyPsychologistController extends ModifyController {
     }*/
 
     @FXML
-    private void modifyPsychologist(MouseEvent event) {
+    private void modifyPsychologist(MouseEvent event) throws EmptyFieldException {
         // Aggiorna il PsychologistBean con i dati modificati dall'utente
         PsychologistBean psychologistBean = new PsychologistBean(
                 session.getUser().getCredentialsBean(),
@@ -31,15 +32,6 @@ public class ModifyPsychologistController extends ModifyController {
                 null,
                 null
         );
-        psychologistBean.setName(nome.getText());
-        psychologistBean.setSurname(cognome.getText());
-        psychologistBean.setCity(citta.getText());
-        psychologistBean.getCredentialsBean().setMail(mail.getText());
-        psychologistBean.getCredentialsBean().setPassword(password.getText());
-        psychologistBean.setDescription(descrizione.getText());
-        psychologistBean.setInPerson(inPresenza.isSelected());
-        psychologistBean.setOnline(online.isSelected());
-
-        // Salva i dati aggiornati nel database
+        modifyGenericUser(event, psychologistBean);
     }
 }

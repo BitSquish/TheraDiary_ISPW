@@ -11,9 +11,6 @@ public class LoggedUser {
     private boolean inPerson;
     private boolean online;
     private boolean pag;
-    private String mail;
-    private String password;
-    private Role role;
 
     public LoggedUser(Credentials credentials, String name, String surname, String city, String description, Boolean isInPerson, Boolean isOnline, Boolean isPAG) {
         this.credentials = credentials;
@@ -28,29 +25,6 @@ public class LoggedUser {
     public LoggedUser() {
     }
     //getter e setter per i nuovi campi
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
 
     public Credentials getCredentials() {
         return credentials;

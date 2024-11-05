@@ -41,7 +41,6 @@ public class MedicalOfficeController extends CommonController{
 
     @FXML
     private void register(MouseEvent event){
-        //VA GESTITO IL CASO DI MODIFICA DEI DATI
         errorMessage.setVisible(false);
         successMessage.setVisible(false);
         try{
