@@ -17,6 +17,6 @@ public class PatientRegistrationController extends UserRegistrationController {
     private void registerPatient(MouseEvent event) {
         CredentialsBean credentialsBean = new CredentialsBean(mail.getText(), password.getText(), Role.valueOf("PATIENT"));
         PatientBean patientBean = new PatientBean(credentialsBean, nome.getText(), cognome.getText(), citta.getText(), descrizione.getText(), inPresenza.isSelected(), online.isSelected(), false, null, null);
-        registerGenericUser(event, credentialsBean, patientBean);
+        registerGenericUser(event, patientBean);
     }
 }

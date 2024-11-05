@@ -39,7 +39,7 @@ public abstract class UserRegistrationController extends CommonController {
 
 
     @FXML
-    protected void registerGenericUser(MouseEvent event, CredentialsBean credentialsBean, LoggedUserBean loggedUserBean) {
+    protected void registerGenericUser(MouseEvent event, LoggedUserBean loggedUserBean) {
         try{
             TextField[] fields = {nome, cognome, citta, mail, descrizione};
             checkFields(fields);
@@ -53,7 +53,7 @@ public abstract class UserRegistrationController extends CommonController {
 
             // Se la registrazione va a buon fine, effettua automaticamente il login
             Login login = new Login();
-            login.log(credentialsBean);
+            login.log(loggedUserBean.getCredentialsBean());
             session.setUser(loggedUserBean);
             goToHomepage(event);
         } catch (MailAlreadyExistsException | WrongEmailOrPasswordException | EmptyFieldException exception){

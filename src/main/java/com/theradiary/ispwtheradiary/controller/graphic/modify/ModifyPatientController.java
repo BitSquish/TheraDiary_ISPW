@@ -12,11 +12,11 @@ public class ModifyPatientController extends ModifyController {
     public ModifyPatientController(Session session) {
         super(session);
     }
-    @FXML
+   /* @FXML
     public void initialize() {
         // Carica i dati del paziente nei campi di input
         loadUserData();
-    }
+    }*/
 
     @FXML
     private void modifyPatient(MouseEvent event) {

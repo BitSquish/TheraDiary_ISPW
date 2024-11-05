@@ -2,28 +2,22 @@ package com.theradiary.ispwtheradiary.controller.graphic.modify;
 
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 
-import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
-
-import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 public class ModifyPsychologistController extends ModifyController {
     public ModifyPsychologistController(Session session) {
         super(session);
     }
-    @FXML
+   /* @FXML
     public void initialize() {
         // Carica i dati del psicologo nei campi di input
         loadUserData();
-    }
+    }*/
 
     @FXML
-    private void registerPsychologist(MouseEvent event) {
+    private void modifyPsychologist(MouseEvent event) {
         // Aggiorna il PsychologistBean con i dati modificati dall'utente
         PsychologistBean psychologistBean = new PsychologistBean(
                 session.getUser().getCredentialsBean(),

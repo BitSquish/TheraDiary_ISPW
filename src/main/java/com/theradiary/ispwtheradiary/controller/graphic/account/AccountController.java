@@ -34,19 +34,22 @@ public abstract class AccountController extends CommonController {
     protected void goToModifyScreen(MouseEvent event) {
         try {
             FXMLLoader loader;
+            Parent root;
             if(session.getUser()==null){
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
                 loader.setControllerFactory(c -> new LoginController(session));
+                root = loader.load();
             }else if (session.getUser().getCredentialsBean().getRole().equals(Role.PATIENT)) {
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/ModifyPatient.fxml"));
                 loader.setControllerFactory(c -> new ModifyPatientController(session));
+                root = loader.load();
                 ((ModifyPatientController)loader.getController()).loadUserData();
             }else{
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/ModifyPsychologist.fxml"));
                 loader.setControllerFactory(c -> new ModifyPsychologistController(session));
+                root = loader.load();
                 ((ModifyPsychologistController)loader.getController()).loadUserData();
             }
-            Parent root = loader.load();
             changeScene(root,event);
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -69,6 +72,7 @@ public abstract class AccountController extends CommonController {
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
+
     }
 
 

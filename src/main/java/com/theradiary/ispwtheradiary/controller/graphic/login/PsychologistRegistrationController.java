@@ -17,6 +17,6 @@ public class PsychologistRegistrationController extends UserRegistrationControll
     private void registerPsychologist(MouseEvent event) {
         CredentialsBean credentialsBean = new CredentialsBean(mail.getText(), password.getText(), Role.PSYCHOLOGIST);
         PsychologistBean psychologistBean = new PsychologistBean(credentialsBean, nome.getText(), cognome.getText(), citta.getText(), descrizione.getText(), inPresenza.isSelected(), online.isSelected(), false, null, null);
-        registerGenericUser(event, credentialsBean, psychologistBean);
+        registerGenericUser(event, psychologistBean);
     }
 }

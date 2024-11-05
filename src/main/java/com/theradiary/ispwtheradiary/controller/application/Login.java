@@ -30,7 +30,7 @@ public class Login {
     }
 
     public void retrievePatient(PatientBean patientBean) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), null, null, null, null, false, false, false);
+        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), null, null, null, null, false, false, false, null, null);
         RetrieveDAO.retrievePatient(patient);
         patientBean.setName(patient.getName());
         patientBean.setSurname(patient.getSurname());
@@ -39,7 +39,6 @@ public class Login {
         patientBean.setInPerson(patient.isInPerson());
         patientBean.setOnline(patient.isOnline());
         patientBean.setPag(patient.isPag());
-        System.out.println("Prova 2 di Login: " + patientBean.getSurname());
     }
 
     public void retrievePsychologist(PsychologistBean psychologistBean) {

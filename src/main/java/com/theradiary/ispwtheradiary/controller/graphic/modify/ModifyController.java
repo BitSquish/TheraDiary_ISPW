@@ -4,6 +4,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
+import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import javafx.fxml.FXML;
@@ -49,6 +50,15 @@ public abstract class ModifyController extends CommonController {
         }
     }
 
+    @FXML
+    protected void checkFields(TextField[] fields) throws EmptyFieldException {
+        for (TextField field : fields) {
+            if (field.getText().isEmpty()) {
+                throw new EmptyFieldException("Compila tutti i campi");
+            }
+        }
+    }
+
     public void loadUserData() {
         // Popola i campi con i dati esistenti dalla sessione
         nome.setText(session.getUser().getName());
@@ -59,6 +69,13 @@ public abstract class ModifyController extends CommonController {
         descrizione.setText(session.getUser().getDescription());
         inPresenza.setSelected(session.getUser().isInPerson());
         online.setSelected(session.getUser().isOnline());
+    }
+
+    @FXML
+    protected void modifyGenericUser(MouseEvent event, LoggedUserBean loggedUserBean) throws EmptyFieldException {
+        TextField[] fields = {nome, cognome, citta, mail, descrizione};
+        checkFields(fields);
+        //Chiamata all'applicativo
     }
 
 }
