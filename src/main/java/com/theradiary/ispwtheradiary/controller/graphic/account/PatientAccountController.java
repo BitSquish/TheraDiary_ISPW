@@ -1,9 +1,11 @@
 package com.theradiary.ispwtheradiary.controller.graphic.account;
 
 
+import com.theradiary.ispwtheradiary.controller.application.Account;
 import com.theradiary.ispwtheradiary.engineering.dao.CategoryAndMajorDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
+import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -50,29 +52,21 @@ public class PatientAccountController extends AccountController {
     }
 
     private void saveSelectedCategories() {
-        List<Category> selectedCategories = new ArrayList<>();
-        CheckBox[] checkboxes = {checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6, checkbox7, checkbox8, checkbox9};
-
-        for (CheckBox checkbox : checkboxes) {
-            if (checkbox != null && checkbox.isSelected()) {
-                try {
-                    // l'ID della checkbox corrisponda a un valore di enum Category
-                    selectedCategories.add(Category.valueOf(checkbox.getId().toUpperCase()));
-                } catch (IllegalArgumentException e) {
-                    System.err.println("Invalid category: " + checkbox.getId());
+        PatientBean patientBean = new PatientBean(session.getUser().getCredentialsBean(), session.getUser().getName(), session.getUser().getSurname(), session.getUser().getCity(), session.getUser().getDescription(), session.getUser().isInPerson(), session.getUser().isOnline(), session.getUser().isPag(), null, null);
+        CheckBox[] checkbox = {checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6, checkbox7, checkbox8, checkbox9};
+        for (int i = 1; i < checkbox.length; i++) {
+            if (checkbox[i] != null && checkbox[i].isSelected()) {
+                Category category = Category.convertIntToCategory(i);
+                if (category != null) {
+                    patientBean.addCategory(category);
                 }
             }
         }
-
-        if (!selectedCategories.isEmpty()) {
-            try {
-                // Salva le categorie selezionate
-                CategoryAndMajorDAO.saveSelectedCategories(selectedCategories, session.getUser ().getCredentialsBean().getMail());
-            } catch (Exception e) {
-                System.err.println("Error saving categories: " + e.getMessage());
-            }
-        } else {
-            System.out.println("Nessuna categoria selezionata.");
+        if(!patientBean.getCategories().isEmpty()) {
+            Account account=new Account();
+            account.addCategory(patientBean);
+        }else{
+            System.out.println("No category selected");
         }
     }
 
