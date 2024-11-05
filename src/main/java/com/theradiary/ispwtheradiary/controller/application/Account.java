@@ -4,7 +4,9 @@ import com.theradiary.ispwtheradiary.engineering.dao.CategoryAndMajorDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
+import com.theradiary.ispwtheradiary.model.Psychologist;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
+import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 
 public class Account {
     public void addCategory(PatientBean patientBean) {
@@ -13,5 +15,13 @@ public class Account {
             patient.addCategory(patientBean.getCategories().get(i));
         }
         CategoryAndMajorDAO.addCategory(patient);
+    }
+
+    public void addMajor(PsychologistBean psychologistBean) {
+        Psychologist psychologist= new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline(), psychologistBean.isPag(), null, psychologistBean.getMajors());
+        for(int i=0;i<psychologistBean.getMajors().size();i++){
+            psychologist.addMajor(psychologistBean.getMajors().get(i));
+        }
+        CategoryAndMajorDAO.addMajor(psychologist);
     }
 }

@@ -41,16 +41,8 @@ public class PatientAccountController extends AccountController {
     @FXML
     Button saveCategoryButton;
 
-    @FXML
-    private void initialize() {
-        if(saveCategoryButton!=null){
-            // Imposta l'evento per il pulsante di salvataggio
-            saveCategoryButton.setOnMouseClicked(event -> saveSelectedCategories());
-        }else{
-            System.out.println("saveCategoryButton is null");
-        }
-    }
 
+    @FXML
     private void saveSelectedCategories() {
         PatientBean patientBean = new PatientBean(session.getUser().getCredentialsBean(), session.getUser().getName(), session.getUser().getSurname(), session.getUser().getCity(), session.getUser().getDescription(), session.getUser().isInPerson(), session.getUser().isOnline(), session.getUser().isPag(), null, null);
         CheckBox[] checkbox = {checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6, checkbox7, checkbox8, checkbox9};

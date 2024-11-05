@@ -31,5 +31,8 @@ public class Psychologist extends LoggedUser {
     public void addMajor(Major major){this.majors.add(major);}
 
     public void removeMajor(Major major){this.majors.remove(major);}
+
+    public List<Major> getMajors() {return majors;
+    }
 }
 

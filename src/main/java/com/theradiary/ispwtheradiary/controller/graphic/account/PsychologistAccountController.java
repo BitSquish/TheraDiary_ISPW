@@ -1,12 +1,16 @@
 package com.theradiary.ispwtheradiary.controller.graphic.account;
 
+import com.theradiary.ispwtheradiary.controller.application.Account;
 import com.theradiary.ispwtheradiary.controller.graphic.PatientListController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPatientController;
 import com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPsychologistController;
 import com.theradiary.ispwtheradiary.engineering.dao.CategoryAndMajorDAO;
+import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
+import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -46,39 +50,25 @@ public class PsychologistAccountController extends AccountController {
     @FXML
     CheckBox checkbox9;
     @FXML
-    Button saveMajorButton;
+    Button saveMajor;
+
 
     @FXML
-    private void initialize() {
-        if(saveMajorButton!=null) {
-            saveMajorButton.setOnMouseClicked(event -> saveSelectedMajor());
-        }
-        else
-            System.out.println("ERRORE è null");
-    }
-
     private void saveSelectedMajor() {
-        List<Major> selectedMajors = new ArrayList<>();
-        CheckBox[] checkboxes = {checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6, checkbox7, checkbox8, checkbox9};
-
-        for (CheckBox checkbox : checkboxes) {
-            if (checkbox != null && checkbox.isSelected()) {
-                try {
-                    // l'ID della checkbox corrisponda a un valore di enum Major
-                    selectedMajors.add(Major.valueOf(checkbox.getId().toUpperCase()));
-                } catch (IllegalArgumentException e) {
-                    System.err.println("Invalid category: " + checkbox.getId());
+        PsychologistBean psychologistBean= new PsychologistBean(session.getUser().getCredentialsBean(), session.getUser().getName(), session.getUser().getSurname(), session.getUser().getCity(), session.getUser().getDescription(), session.getUser().isInPerson(), session.getUser().isOnline(), session.getUser().isPag(), null, null);
+        CheckBox[] checkbox = {checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6, checkbox7, checkbox8, checkbox9};
+        for (int i=0;i<checkbox.length;i++) {
+            if (checkbox[i] != null && checkbox[i].isSelected()) {
+                Major major= Major.convertIntToMajor(i);
+                if (major != null) {
+                    psychologistBean.addMajor(major);
                 }
             }
         }
 
-        if (!selectedMajors.isEmpty()) {
-            try {
-                // Salva le specializzazioni selezionate
-                CategoryAndMajorDAO.saveSelectedMajors(selectedMajors, session.getUser().getCredentialsBean().getMail());
-            } catch (Exception e) {
-                System.err.println("Error saving categories: " + e.getMessage());
-            }
+        if (!psychologistBean.getMajors().isEmpty()) {
+           Account account = new Account();
+           account.addMajor(psychologistBean);
         } else {
             System.out.println("Nessuna categoria selezionata.");
         }
@@ -101,4 +91,6 @@ public class PsychologistAccountController extends AccountController {
             throw new RuntimeException(e);
         }
     }
+
+
 }
