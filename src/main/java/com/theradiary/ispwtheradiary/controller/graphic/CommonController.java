@@ -170,7 +170,7 @@ public abstract class CommonController {
 
 
     @FXML
-    private void goToSearch(MouseEvent event){
+    protected void goToSearch(MouseEvent event){
         try {
             FXMLLoader loader;
             if(session.getUser()==null){

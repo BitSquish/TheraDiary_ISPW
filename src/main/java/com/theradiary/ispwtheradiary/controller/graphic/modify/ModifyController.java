@@ -1,5 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic.modify;
 
+import com.theradiary.ispwtheradiary.controller.application.UserModify;
 import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController;
@@ -11,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -28,6 +30,8 @@ public abstract class ModifyController extends CommonController {
     PasswordField password;
     @FXML
     CheckBox inPresenza, online;
+    @FXML
+    Label errorMessage, successMessage;
 
     @FXML
     protected void back(MouseEvent event) {
@@ -73,9 +77,19 @@ public abstract class ModifyController extends CommonController {
 
     @FXML
     protected void modifyGenericUser(MouseEvent event, LoggedUserBean loggedUserBean) throws EmptyFieldException {
-        TextField[] fields = {nome, cognome, citta, mail, descrizione};
-        checkFields(fields);
-        //Chiamata all'applicativo
+        errorMessage.setVisible(false);
+        successMessage.setVisible(false);
+        try{
+            TextField[] fields = {nome, cognome, citta, mail, descrizione};
+            checkFields(fields);
+            UserModify userModify = new UserModify(loggedUserBean);
+            session.setUser(loggedUserBean);
+            successMessage.setVisible(true);
+        } catch (EmptyFieldException exception){
+            errorMessage.setText(exception.getMessage());
+            errorMessage.setVisible(true);
+        }
+
     }
 
 }

@@ -9,6 +9,8 @@ import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
 
 import java.util.ArrayList;
@@ -40,9 +42,30 @@ public class PatientAccountController extends AccountController {
     private CheckBox checkbox9;
     @FXML
     Button saveCategoryButton;
+    @FXML
+    Label psychologist;
 
 
     @FXML
+    private void initialize() {
+        if(saveCategoryButton!=null){
+            // Imposta l'evento per il pulsante di salvataggio
+            saveCategoryButton.setOnMouseClicked(event -> saveSelectedCategories());
+        }else{
+            System.out.println("saveCategoryButton is null");
+        }
+    }
+
+    @FXML
+    private void yourPsychologist(MouseEvent event) {
+        //Va inizializzata la label psychologist
+        if(psychologist.getText().isEmpty()){
+            goToSearch(event);
+        }
+        else
+            System.out.println("Hai uno psicologo");
+    }
+
     private void saveSelectedCategories() {
         PatientBean patientBean = new PatientBean(session.getUser().getCredentialsBean(), session.getUser().getName(), session.getUser().getSurname(), session.getUser().getCity(), session.getUser().getDescription(), session.getUser().isInPerson(), session.getUser().isOnline(), session.getUser().isPag(), null, null);
         CheckBox[] checkbox = {checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6, checkbox7, checkbox8, checkbox9};

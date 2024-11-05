@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.controller.graphic.modify;
 
 
+import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
@@ -19,7 +20,7 @@ public class ModifyPatientController extends ModifyController {
     }*/
 
     @FXML
-    private void modifyPatient(MouseEvent event) {
+    private void modifyPatient(MouseEvent event) throws EmptyFieldException {
         // Aggiorna il PatientBean con i dati modificati dall'utente
         PatientBean patientBean = new PatientBean(
                 session.getUser().getCredentialsBean(),
@@ -33,8 +34,7 @@ public class ModifyPatientController extends ModifyController {
                 null,
                 null
         );
-
-        // Salva i dati aggiornati nel database
+        modifyGenericUser(event, patientBean);
     }
 }
 

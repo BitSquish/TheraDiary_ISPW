@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController">
    <fx:include source="CommonPanel.fxml" />
    <ImageView fx:id="account" fitHeight="94.0" fitWidth="94.0" layoutX="31.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@img/account.png" />
       </image>
    </ImageView>
-   <Button layoutX="150.0" layoutY="363.0" mnemonicParsing="false" onMouseClicked="#joinPag" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Aderisci al P.A.G." textFill="WHITE" />
+   <Button fx:id="aderisci" layoutX="150.0" layoutY="363.0" mnemonicParsing="false" onMouseClicked="#goToPAG" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Aderisci al P.A.G." textFill="WHITE" />
    <Line endX="99.99996948242188" endY="-95.00001525878906" layoutX="336.0" layoutY="288.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
    <Text layoutX="359.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account" wrappingWidth="152.7999999999999">
       <font>
@@ -25,12 +22,7 @@
       </font>
    </Text>
    <Button layoutX="150.0" layoutY="169.0" mnemonicParsing="false" onMouseClicked="#goToModifyScreen" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Modifica dati personali" textAlignment="CENTER" textFill="WHITE" />
-   <Text fill="#9067c6" layoutX="163.0" layoutY="434.0" onMouseClicked="#goToPAG" strokeType="OUTSIDE" strokeWidth="0.0" text="Scopri di più sul P.A.G." textAlignment="CENTER" wrappingWidth="167.20000000000005">
-      <font>
-         <Font name="System Bold" size="12.0" />
-      </font>
-   </Text>
-   <Button layoutX="174.0" layoutY="464.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Logout" textFill="WHITE" />
+   <Button layoutX="173.0" layoutY="456.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Logout" textFill="WHITE" />
    <Button layoutX="725.0" layoutY="119.0" mnemonicParsing="false" onMouseClicked="#goBack" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
    <Button layoutX="149.0" layoutY="266.0" mnemonicParsing="false" onMouseClicked="#goToListPatients" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Visualizza pazienti" textFill="WHITE" />
    <Text layoutX="476.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Specializzazioni:" wrappingWidth="179.33477783203125">
