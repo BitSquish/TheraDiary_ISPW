@@ -9,7 +9,7 @@ public class Patient extends LoggedUser {
     private ArrayList<Category> categories;
     private Psychologist psychologist;
     public Patient(Credentials credentials, String name, String surname, String city, String description, boolean isInPerson, boolean isOnline, boolean isPAG, ArrayList<Category> categories, Psychologist psychologist) {
-        super(credentials, name, surname, city, description, isInPerson, isOnline, false);
+        super(credentials, name, surname, city, description, isInPerson, isOnline, isPAG);
         this.categories = new ArrayList<>();
         this.psychologist = null;
     }

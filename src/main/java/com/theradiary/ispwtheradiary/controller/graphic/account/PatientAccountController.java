@@ -7,6 +7,8 @@ import com.theradiary.ispwtheradiary.engineering.others.Session;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
 
 import java.util.ArrayList;
@@ -38,6 +40,8 @@ public class PatientAccountController extends AccountController {
     private CheckBox checkbox9;
     @FXML
     Button saveCategoryButton;
+    @FXML
+    Label psychologist;
 
     @FXML
     private void initialize() {
@@ -47,6 +51,16 @@ public class PatientAccountController extends AccountController {
         }else{
             System.out.println("saveCategoryButton is null");
         }
+    }
+
+    @FXML
+    private void yourPsychologist(MouseEvent event) {
+        //Va inizializzata la label psychologist
+        if(psychologist.getText().isEmpty()){
+            goToSearch(event);
+        }
+        else
+            System.out.println("Hai uno psicologo");
     }
 
     private void saveSelectedCategories() {

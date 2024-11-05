@@ -1,15 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.theradiary.ispwtheradiary.controller.graphic.PAGController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.PAGController">
     <fx:include source="CommonPanel.fxml" />
+   <ImageView fitHeight="225.0" fitWidth="335.0" layoutX="30.0" layoutY="162.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@img/pag2.png" />
+      </image>
+   </ImageView>
+   <Text fill="#242038" layoutX="197.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Programma di Assistenza Gratuita">
+      <font>
+         <Font name="System Bold" size="30.0" />
+      </font>
+   </Text>
+   <Text fill="#231f36cc" layoutX="392.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TheraDiary nasce per aiutare le persone nel loro viaggio verso il benessere mentale." wrappingWidth="436.0000366210937">
+      <font>
+         <Font name="System Italic" size="17.0" />
+      </font>
+   </Text>
+   <Text fill="#231f36cc" layoutX="392.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crediamo fortemente che chiunque debba avere il diritto di prendersi cura di sè, a prescindere dalla situazione economica. È per questo che TheraDiary permette a psicologi e pazienti di aderire al Programma di Assistenza Gratuita (P.A.G), per poter ricevere supporto psicologico gratuitamente." wrappingWidth="436.0000366210937">
+      <font>
+         <Font name="System Italic" size="17.0" />
+      </font>
+   </Text>
+   <Text fill="#231f36cc" layoutX="42.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Se sei un paziente e hai un ISEE inferiore a €20.000, basta premere sul pulsante aderisci e seguire la procedura che ti verrà descritta via mail." wrappingWidth="788.8000244140625">
+      <font>
+         <Font name="System Italic" size="17.0" />
+      </font>
+   </Text>
+   <Text fill="#231f36cc" layoutX="41.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Se sei uno psiologo, cliccando su aderisci potrai aiutare i pazienti che avranno diritto al P.A.G." wrappingWidth="788.8000244140625">
+      <font>
+         <Font name="System Italic" size="17.0" />
+      </font>
+   </Text>
+   <Button fx:id="aderisci" layoutX="338.0" layoutY="471.0" mnemonicParsing="false" onMouseClicked="#joinPag" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Aderisci al P.A.G." textFill="WHITE" />
+   <Label fx:id="successMessage" layoutX="274.0" layoutY="443.0" prefHeight="18.0" prefWidth="321.0" style="-fx-alignment: center;" text="Grazie per aver aderito al P.A.G.!" textFill="#31a639" visible="false">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </Label>
 
 </AnchorPane>

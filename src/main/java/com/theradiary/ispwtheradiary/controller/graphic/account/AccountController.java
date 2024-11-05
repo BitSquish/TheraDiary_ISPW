@@ -58,12 +58,6 @@ public abstract class AccountController extends CommonController {
     }
 
     @FXML
-    protected void joinPag(MouseEvent event) {
-
-        session.getUser().setPag(true);
-    }
-
-    @FXML
     protected void logout(MouseEvent event) throws IOException {
         session.setUser(null);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
