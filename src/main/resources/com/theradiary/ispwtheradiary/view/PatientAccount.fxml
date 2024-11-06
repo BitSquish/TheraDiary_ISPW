@@ -98,6 +98,6 @@
          <Insets bottom="7.0" left="6.0" top="10.0" />
       </padding>
    </CheckBox>
-   <Button fx:id="saveCategoryButton" layoutX="535.0" layoutY="456.0" mnemonicParsing="false" onAction="#saveSelectedCategories" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE" />
+   <Button fx:id="saveCategoryButton" layoutX="535.0" layoutY="456.0" mnemonicParsing="false" onAction="#updateCategories" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE" />
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ebcef070" height="88.0" layoutX="85.0" stroke="#00000003" strokeType="INSIDE" width="87.0" />
 </AnchorPane>

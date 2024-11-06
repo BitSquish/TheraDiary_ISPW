@@ -27,4 +27,21 @@ public class CategoryAndMajorDAO {
             throw new RuntimeException(e);
         }
     }
+
+
+    public static void removeCategory(Patient patient) {
+        try(Connection conn= ConnectionFactory.getConnection()) {
+            AccountQuery.removeCategory(conn,patient.getCategories(), patient.getCredentials().getMail());
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void removeMajor(Psychologist psychologist) {
+        try(Connection conn= ConnectionFactory.getConnection()) {
+            AccountQuery.removeMajor(conn,psychologist.getMajors(), psychologist.getCredentials().getMail());
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
 }

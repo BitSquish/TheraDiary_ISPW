@@ -1,6 +1,8 @@
 package com.theradiary.ispwtheradiary.engineering.dao;
 
 
+import com.theradiary.ispwtheradiary.engineering.enums.Category;
+import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
@@ -13,6 +15,7 @@ import com.theradiary.ispwtheradiary.model.Psychologist;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RetrieveDAO {
@@ -94,6 +97,48 @@ public class RetrieveDAO {
                 psychologist.setOnline(rs.getBoolean("online"));
                 psychologist.setPag(rs.getBoolean("pag"));
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean retrieveCategories(Patient patient) {
+        try(Connection conn = ConnectionFactory.getConnection();
+            ResultSet rs = RetrieveQuery.retrieveCategories(conn, patient.getCredentials().getMail())){
+            ArrayList<Category> categories=new ArrayList<>();
+            while(rs.next()) {
+                String categoryName=rs.getString("category");
+                try{
+                    Category category=Category.valueOf(categoryName);
+                    categories.add(category);
+                }catch(IllegalArgumentException e){
+                    System.err.println("Categoria non valida:"+categoryName);
+                    continue;
+                }
+            }
+            patient.setCategories(new ArrayList<>(categories));
+            return !categories.isEmpty();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean retrieveMajors(Psychologist psychologist) {
+        try(Connection conn = ConnectionFactory.getConnection();
+            ResultSet rs = RetrieveQuery.retrieveMajors(conn, psychologist.getCredentials().getMail())){
+            ArrayList<Major> majors=new ArrayList<>();
+            while(rs.next()) {
+                String majorName=rs.getString("major");
+                try{
+                    Major major=Major.valueOf(majorName);
+                    majors.add(major);
+                }catch(IllegalArgumentException e){
+                    System.err.println("Specializzazione non valida:"+majorName);
+                    continue;
+                }
+            }
+            psychologist.setMajors(new ArrayList<>(majors));
+            return !majors.isEmpty();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -21,5 +21,8 @@ public class PatientBean extends LoggedUserBean{
     public void removeCategory(Category category){
         categories.remove(category);
     }
+    public void setCategories(ArrayList<Category> categories) {
+        this.categories = categories;
+    }
 }
 
