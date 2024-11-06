@@ -28,7 +28,10 @@ public class Psychologist extends LoggedUser {
     public void removePatient(Patient patient){
         this.patients.remove(patient);
     }
-    public void addMajor(Major major){majors.add(major);}
+    public void addMajor(Major major){
+        if(major!=null)
+            this.majors.add(major);
+    }
 
     public void removeMajor(Major major){this.majors.remove(major);}
 

@@ -2,7 +2,6 @@ package com.theradiary.ispwtheradiary.controller.graphic.account;
 
 
 import com.theradiary.ispwtheradiary.controller.application.Account;
-import com.theradiary.ispwtheradiary.engineering.dao.CategoryAndMajorDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
@@ -14,10 +13,10 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+
 
 public class PatientAccountController extends AccountController {
 
@@ -62,7 +61,6 @@ public class PatientAccountController extends AccountController {
     @FXML
     private void initialize(){
         checkboxes = new CheckBox[]{checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6, checkbox7, checkbox8, checkbox9};
-        System.out.println("Checkbox array initialized: " + Arrays.toString(checkboxes));
         patientBean = new PatientBean(session.getUser().getCredentialsBean(), session.getUser().getName(), session.getUser().getSurname(), session.getUser().getCity(), session.getUser().getDescription(), session.getUser().isInPerson(), session.getUser().isOnline(), session.getUser().isPag(), new ArrayList<>(), null);
         account = new Account();
         initializeCategories();
@@ -81,35 +79,46 @@ public class PatientAccountController extends AccountController {
         }
 
     }
-
     @FXML
-    private void saveSelectedCategories() {
+    private void updateCategories(){
         account.retrieveCategories(patientBean);
-        ArrayList<Category> selectedCategories = new ArrayList<>();
-        for (int i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i] != null && checkboxes[i].isSelected()) {
-                Category category = Category.convertIntToCategory(i + 1);
-                if (category != null && !patientBean.getCategories().contains(category)) {
-                    selectedCategories.add(category);
+        ArrayList<Category> categoriesToAdd= new ArrayList<>();
+        ArrayList<Category> categoriesToRemove= new ArrayList<>();
+
+        for(int i=0;i<checkboxes.length;i++){
+            if(checkboxes[i]!=null){
+                Category category= Category.convertIntToCategory(i+1);
+                if(checkboxes[i].isSelected()&& !patientBean.getCategories().contains(category)){
+                    categoriesToAdd.add(category);
+                }else if(!checkboxes[i].isSelected()&& patientBean.getCategories().contains(category)){
+                    categoriesToRemove.add(category);
                 }
             }
         }
-        if (!selectedCategories.isEmpty() ) {
-            patientBean.setCategories(selectedCategories);
+        boolean modified=false;
+        if(!categoriesToAdd.isEmpty()){
+            patientBean.getCategories().addAll(categoriesToAdd);
             account.addCategory(patientBean);
-            //popup di conferma
+            modified=true;
+        }
+        if(!categoriesToRemove.isEmpty()){
+            patientBean.getCategories().removeAll(categoriesToRemove);
+            account.removeCategory(patientBean);
+            modified=true;
+        }
+        if(modified){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Salavataggio categorie");
+            alert.setTitle("Salvataggio categorie");
             alert.setHeaderText(null);
             alert.setContentText("Salvate con successo");
             alert.showAndWait();
-        } else {
+        }else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Salvataggio categorie");
             alert.setHeaderText(null);
             alert.setContentText("Nessuna nuova categoria selezionata.");
             alert.showAndWait();
         }
-
     }
+
 }

@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountController">
    <fx:include source="CommonPanel.fxml" />
    <ImageView fx:id="account" fitHeight="94.0" fitWidth="94.0" layoutX="31.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@img/account.png" />
@@ -52,17 +52,17 @@
          </HBox.margin>
       </Button>
    </HBox>
-   <CheckBox fx:id="checkbox1" layoutX="477.0" layoutY="193.0" mnemonicParsing="false"  text="Disturbo del neurosviluppo" textFill="#231f36">
+   <CheckBox fx:id="checkbox1" layoutX="477.0" layoutY="193.0" mnemonicParsing="false" text="Disturbo del neurosviluppo" textFill="#231f36">
       <padding>
          <Insets left="6.0" top="7.0" />
       </padding>
    </CheckBox>
-   <CheckBox fx:id="checkbox2" layoutX="477.0" layoutY="220.0" mnemonicParsing="false"  text="Disturbi d'ansia" textFill="#231f36">
+   <CheckBox fx:id="checkbox2" layoutX="477.0" layoutY="220.0" mnemonicParsing="false" text="Disturbi d'ansia" textFill="#231f36">
       <padding>
          <Insets left="6.0" top="10.0" />
       </padding>
    </CheckBox>
-   <CheckBox fx:id="checkbox3" layoutX="477.0" layoutY="247.0" mnemonicParsing="false"  text="Disturbi dissociativi" textFill="#231f36">
+   <CheckBox fx:id="checkbox3" layoutX="477.0" layoutY="247.0" mnemonicParsing="false" text="Disturbi dissociativi" textFill="#231f36">
       <padding>
          <Insets left="6.0" top="10.0" />
       </padding>
@@ -77,25 +77,25 @@
          <Insets left="6.0" top="10.0" />
       </padding>
    </CheckBox>
-   <CheckBox fx:id="checkbox6" layoutX="477.0" layoutY="328.0" mnemonicParsing="false"  text="Depressione" textFill="#231f36">
+   <CheckBox fx:id="checkbox6" layoutX="477.0" layoutY="328.0" mnemonicParsing="false" text="Depressione" textFill="#231f36">
       <padding>
          <Insets left="6.0" top="10.0" />
       </padding>
    </CheckBox>
-   <CheckBox fx:id="checkbox7" layoutX="477.0" layoutY="355.0" lineSpacing="10.0" mnemonicParsing="false"  text="Disturbo bipolare" textFill="#231f36">
+   <CheckBox fx:id="checkbox7" layoutX="477.0" layoutY="355.0" lineSpacing="10.0" mnemonicParsing="false" text="Disturbo bipolare" textFill="#231f36">
       <padding>
          <Insets left="6.0" top="10.0" />
       </padding>
    </CheckBox>
-   <CheckBox fx:id="checkbox8" layoutX="477.0" layoutY="382.0" mnemonicParsing="false"  text="Disturbi alimentari" textFill="#231f36">
+   <CheckBox fx:id="checkbox8" layoutX="477.0" layoutY="382.0" mnemonicParsing="false" text="Disturbi alimentari" textFill="#231f36">
       <padding>
          <Insets left="6.0" top="10.0" />
       </padding>
    </CheckBox>
-   <CheckBox fx:id="checkbox9" layoutX="477.0" layoutY="409.0" mnemonicParsing="false"  text="Altro" textFill="#231f36">
+   <CheckBox fx:id="checkbox9" layoutX="477.0" layoutY="409.0" mnemonicParsing="false" text="Altro" textFill="#231f36">
       <padding>
          <Insets bottom="7.0" left="6.0" top="10.0" />
       </padding>
    </CheckBox>
-   <Button fx:id="saveCategoryButton" layoutX="535.0" layoutY="456.0" mnemonicParsing="false" onAction="#saveSelectedCategories" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE" />
+   <Button fx:id="saveCategoryButton" layoutX="535.0" layoutY="456.0" mnemonicParsing="false" onAction="#updateCategories" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE" />
 </AnchorPane>
