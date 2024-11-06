@@ -4,6 +4,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -20,76 +21,108 @@
                     <Image url="@img/WhiteLogo.png" />
                 </image>
             </ImageView>
-            <ImageView fx:id="home" fitHeight="38.0" fitWidth="38.0" layoutX="26.0" layoutY="20.0" onMouseClicked="#goToHomepage" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@img/home.png" />
-                </image>
-            </ImageView>
-            <ImageView fx:id="account" fitHeight="38.0" fitWidth="38.0" layoutX="115.0" layoutY="23.0" onMouseClicked="#goToAccountPage" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@img/account.png" />
-                </image>
-            </ImageView>
-            <ImageView fx:id="diaryTasks" fitHeight="44.0" fitWidth="52.0" layoutX="205.0" layoutY="21.0" onMouseClicked="#goToTasks" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@img/diarioTask.png" />
-                </image>
-            </ImageView>
-            <ImageView fx:id="dashboard" fitHeight="52.0" fitWidth="35.0" layoutX="295.0" layoutY="24.0" onMouseClicked="#goToDashboard" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@img/bacheca.png" />
-                </image>
-            </ImageView>
-            <ImageView fx:id="PAG" fitHeight="38.0" fitWidth="38.0" layoutX="470.0" layoutY="24.0" onMouseClicked="#goToPAG" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@img/pag.png" />
-                </image>
-            </ImageView>
-            <ImageView fx:id="Appointment" fitHeight="40.0" fitWidth="40.0" layoutX="550.0" layoutY="23.0" onMouseClicked="#goToAppointment" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@img/calendario.png" />
-                </image>
-            </ImageView>
-            <Text fill="WHITE" layoutX="28.0" layoutY="74.0" onMouseClicked="#goToHomepage" strokeType="OUTSIDE" strokeWidth="0.0" text="Home">
-                <font>
-                    <Font name="System Bold" size="12.0" />
-                </font>
-            </Text>
-            <Text fill="WHITE" layoutX="111.0" layoutY="74.0" onMouseClicked="#goToAccountPage" strokeType="OUTSIDE" strokeWidth="0.0" text="Account">
-                <font>
-                    <Font name="System Bold" size="12.0" />
-                </font>
-            </Text>
-            <Text fill="WHITE" layoutX="191.0" layoutY="76.0" onMouseClicked="#goToTasks" strokeType="OUTSIDE" strokeWidth="0.0" text="Task e diario">
-                <font>
-                    <Font name="System Bold" size="12.0" />
-                </font>
-            </Text>
-            <Text fill="WHITE" layoutX="290.0" layoutY="74.0" onMouseClicked="#goToDashboard" strokeType="OUTSIDE" strokeWidth="0.0" text="Bacheca">
-                <font>
-                    <Font name="System Bold" size="12.0" />
-                </font>
-            </Text>
-            <Text fill="WHITE" layoutX="363.0" layoutY="74.0" onMouseClicked="#goToSearch" strokeType="OUTSIDE" strokeWidth="0.0" text="Studio medico">
-                <font>
-                    <Font name="System Bold" size="12.0" />
-                </font>
-            </Text>
-            <Text fill="WHITE" layoutX="529.0" layoutY="76.0" onMouseClicked="#goToAppointment" strokeType="OUTSIDE" strokeWidth="0.0" text="Appuntamenti">
-                <font>
-                    <Font name="System Bold" size="12.0" />
-                </font>
-            </Text>
-            <Text fill="WHITE" layoutX="472.0" layoutY="75.0" onMouseClicked="#goToPAG" strokeType="OUTSIDE" strokeWidth="0.0" text="P.A.G.">
-                <font>
-                    <Font name="System Bold" size="12.0" />
-                </font>
-            </Text>
-            <ImageView fx:id="Search" fitHeight="38.0" fitWidth="38.0" layoutX="386.0" layoutY="22.0" onMouseClicked="#goToSearch" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@img/office.png" />
-                </image>
-            </ImageView>
+            <HBox prefHeight="86.0" prefWidth="610.0">
+                <children>
+                    <AnchorPane fx:id="anchorHome" prefHeight="86.0" prefWidth="87.0">
+                        <children>
+                            <ImageView fx:id="home" fitHeight="38.0" fitWidth="38.0" layoutX="24.0" layoutY="16.0" onMouseClicked="#goToHomepage" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@img/home.png" />
+                                </image>
+                            </ImageView>
+                            <Text fill="WHITE" layoutX="25.0" layoutY="73.0" onMouseClicked="#goToHomepage" strokeType="OUTSIDE" strokeWidth="0.0" text="Home">
+                                <font>
+                                    <Font name="System Bold" size="12.0" />
+                                </font>
+                            </Text>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane fx:id="anchorAccount" prefHeight="86.0" prefWidth="87.0">
+                        <children>
+                            <ImageView fx:id="account" fitHeight="38.0" fitWidth="38.0" layoutX="25.0" layoutY="19.0" onMouseClicked="#goToAccountPage" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@img/account.png" />
+                                </image>
+                            </ImageView>
+                            <Text fill="WHITE" layoutX="21.0" layoutY="73.0" onMouseClicked="#goToAccountPage" strokeType="OUTSIDE" strokeWidth="0.0" text="Account">
+                                <font>
+                                    <Font name="System Bold" size="12.0" />
+                                </font>
+                            </Text>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane fx:id="anchorTask" prefHeight="86.0" prefWidth="87.0">
+                        <children>
+                            <ImageView fx:id="diaryTasks" fitHeight="40.0" fitWidth="46.0" layoutX="24.0" layoutY="19.0" onMouseClicked="#goToTasks" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@img/diarioTask.png" />
+                                </image>
+                            </ImageView>
+                            <Text fill="WHITE" layoutX="8.0" layoutY="73.0" onMouseClicked="#goToTasks" strokeType="OUTSIDE" strokeWidth="0.0" text="Task e diario">
+                                <font>
+                                    <Font name="System Bold" size="12.0" />
+                                </font>
+                            </Text>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane fx:id="anchorDashboard" prefHeight="86.0" prefWidth="87.0">
+                        <children>
+                            <ImageView fx:id="dashboard" fitHeight="52.0" fitWidth="35.0" layoutX="25.0" layoutY="23.0" onMouseClicked="#goToDashboard" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@img/bacheca.png" />
+                                </image>
+                            </ImageView>
+                            <Text fill="WHITE" layoutX="20.0" layoutY="73.0" onMouseClicked="#goToDashboard" strokeType="OUTSIDE" strokeWidth="0.0" text="Bacheca">
+                                <font>
+                                    <Font name="System Bold" size="12.0" />
+                                </font>
+                            </Text>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane fx:id="anchorSearch" prefHeight="86.0" prefWidth="87.0">
+                        <children>
+                            <ImageView fx:id="Search" fitHeight="38.0" fitWidth="38.0" layoutX="24.0" layoutY="20.0" onMouseClicked="#goToSearch" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@img/office.png" />
+                                </image>
+                            </ImageView>
+                            <Text fill="WHITE" layoutX="5.0" layoutY="73.0" onMouseClicked="#goToSearch" strokeType="OUTSIDE" strokeWidth="0.0" text="Studio medico">
+                                <font>
+                                    <Font name="System Bold" size="12.0" />
+                                </font>
+                            </Text>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane fx:id="anchorPAG" prefHeight="86.0" prefWidth="87.0">
+                        <children>
+                            <ImageView fx:id="PAG" fitHeight="38.0" fitWidth="38.0" layoutX="25.0" layoutY="20.0" onMouseClicked="#goToPAG" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@img/pag.png" />
+                                </image>
+                            </ImageView>
+                            <Text fill="WHITE" layoutX="27.0" layoutY="73.0" onMouseClicked="#goToPAG" strokeType="OUTSIDE" strokeWidth="0.0" text="P.A.G.">
+                                <font>
+                                    <Font name="System Bold" size="12.0" />
+                                </font>
+                            </Text>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane fx:id="anchorAppointment" prefHeight="86.0" prefWidth="87.0">
+                        <children>
+                            <ImageView fx:id="Appointment" fitHeight="40.0" fitWidth="40.0" layoutX="22.0" layoutY="19.0" onMouseClicked="#goToAppointment" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@img/calendario.png" />
+                                </image>
+                            </ImageView>
+                            <Text fill="WHITE" layoutX="1.0" layoutY="73.0" onMouseClicked="#goToAppointment" strokeType="OUTSIDE" strokeWidth="0.0" text="Appuntamenti">
+                                <font>
+                                    <Font name="System Bold" size="12.0" />
+                                </font>
+                            </Text>
+                        </children>
+                    </AnchorPane>
+                </children>
+            </HBox>
         </children>
 
         <!-- Footer -->

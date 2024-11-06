@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
@@ -49,7 +50,6 @@ public abstract class CommonController {
 
     @FXML
     private Label faqLabel;
-
     @FXML
     protected void goToHomepage(MouseEvent event){
         try{
@@ -223,6 +223,7 @@ public abstract class CommonController {
             Parent root = loader.load();
             // Cambio la scena passando gli elementi grafici e l'evento che ha chiamato questo metodo
             changeScene(root, event);
+            // Imposto il colore dell'AnchorPane attivo
         } catch (IOException e) {
             // Lancio un'eccezione runtime se si verifica un errore durante il caricamento del file FXML
             throw new RuntimeException(e);
@@ -236,6 +237,7 @@ public abstract class CommonController {
         stage.setScene(scene);
         stage.show();
     }
+
 
 
 }

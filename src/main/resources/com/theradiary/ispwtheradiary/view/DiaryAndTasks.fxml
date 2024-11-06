@@ -4,8 +4,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.DiaryAndTasksController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.DiaryAndTasksController">
         <fx:include source="CommonPanel.fxml" />
         <Button layoutX="81.0" layoutY="322.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: #9067C6; -fx-border-image-width: 16px; -fx-border-radius: 16px;" text="Button" />
         <Button layoutX="598.0" layoutY="173.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: #9067C6; -fx-border-image-width: 16px; -fx-border-radius: 16px;" text="Button" />
@@ -37,4 +38,5 @@
                         <Image url="@img/post.png" />
                 </image>
         </ImageView>
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ebcef070" height="88.0" layoutX="172.0" stroke="#00000003" strokeType="INSIDE" width="87.0" />
 </AnchorPane>

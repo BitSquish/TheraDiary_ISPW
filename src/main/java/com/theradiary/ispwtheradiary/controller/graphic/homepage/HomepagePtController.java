@@ -7,4 +7,6 @@ public class HomepagePtController extends CommonController {
     public HomepagePtController(Session session) {
         super(session);
     }
+
+
 }
