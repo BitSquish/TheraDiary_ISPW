@@ -14,7 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PatientAccountController extends AccountController {
@@ -45,33 +47,55 @@ public class PatientAccountController extends AccountController {
     Button saveCategoryButton;
     @FXML
     Label psychologist;
-
-
-
+    @FXML
+    private CheckBox[] checkboxes;
+    private PatientBean patientBean;
+    private Account account;
     @FXML
     private void yourPsychologist(MouseEvent event) {
         //Va inizializzata la label psychologist
-        if(psychologist.getText().isEmpty()){
+        if (psychologist.getText().isEmpty()) {
             goToSearch(event);
-        }
-        else
+        } else
             System.out.println("Hai uno psicologo");
+    }
+    @FXML
+    private void initialize(){
+        checkboxes = new CheckBox[]{checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6, checkbox7, checkbox8, checkbox9};
+        System.out.println("Checkbox array initialized: " + Arrays.toString(checkboxes));
+        patientBean = new PatientBean(session.getUser().getCredentialsBean(), session.getUser().getName(), session.getUser().getSurname(), session.getUser().getCity(), session.getUser().getDescription(), session.getUser().isInPerson(), session.getUser().isOnline(), session.getUser().isPag(), new ArrayList<>(), null);
+        account = new Account();
+        initializeCategories();
+    }
+
+    @FXML
+    private void initializeCategories()  {
+        if (account.retrieveCategories(patientBean)) {
+            for (int i = 0; i < checkboxes.length; i++) {
+                if(checkboxes[i]!=null) {
+                    Category category = Category.convertIntToCategory(i + 1);
+                    checkboxes[i].setSelected(patientBean.getCategories().contains(category));
+                }
+            }
+
+        }
+
     }
 
     @FXML
     private void saveSelectedCategories() {
-        PatientBean patientBean = new PatientBean(session.getUser().getCredentialsBean(), session.getUser().getName(), session.getUser().getSurname(), session.getUser().getCity(), session.getUser().getDescription(), session.getUser().isInPerson(), session.getUser().isOnline(), session.getUser().isPag(), null, null);
-        CheckBox[] checkbox = {checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6, checkbox7, checkbox8, checkbox9};
-        for (int i =0; i < checkbox.length; i++) {
-            if (checkbox[i] != null && checkbox[i].isSelected()) {
-                Category category = Category.convertIntToCategory(i);
-                if (category != null) {
-                    patientBean.addCategory(category);
+        account.retrieveCategories(patientBean);
+        ArrayList<Category> selectedCategories = new ArrayList<>();
+        for (int i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i] != null && checkboxes[i].isSelected()) {
+                Category category = Category.convertIntToCategory(i + 1);
+                if (category != null && !patientBean.getCategories().contains(category)) {
+                    selectedCategories.add(category);
                 }
             }
         }
-        if(!patientBean.getCategories().isEmpty()) {
-            Account account=new Account();
+        if (!selectedCategories.isEmpty() ) {
+            patientBean.setCategories(selectedCategories);
             account.addCategory(patientBean);
             //popup di conferma
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -79,10 +103,13 @@ public class PatientAccountController extends AccountController {
             alert.setHeaderText(null);
             alert.setContentText("Salvate con successo");
             alert.showAndWait();
-        }else{
-            System.out.println("No category selected");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Salvataggio categorie");
+            alert.setHeaderText(null);
+            alert.setContentText("Nessuna nuova categoria selezionata.");
+            alert.showAndWait();
         }
+
     }
-
-
 }

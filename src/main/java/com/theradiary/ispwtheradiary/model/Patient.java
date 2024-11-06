@@ -24,4 +24,8 @@ public class Patient extends LoggedUser {
     public void removeCategory(Category category){
         categories.remove(category);
     }
+
+    public void setCategories(ArrayList<Category> categories) {
+        this.categories = categories;
+    }
 }

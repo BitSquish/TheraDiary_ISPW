@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.model.beans;
 
 
+import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 
 import java.util.ArrayList;
@@ -26,8 +27,12 @@ public class PsychologistBean extends LoggedUserBean{
         this.patientsBean.remove(patientBean);
     }
 
-    public void addMajor(Major major){this.majors.add(major);}
+    public void addMajor(Major major){majors.add(major);}
 
     public void removeMajor(Major major){this.majors.remove(major);}
+
+    public void setMajor(ArrayList<Major> majors) {
+        this.majors = majors;
+    }
 }
 

@@ -27,4 +27,6 @@ public class CategoryAndMajorDAO {
             throw new RuntimeException(e);
         }
     }
+
+
 }

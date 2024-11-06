@@ -52,24 +52,46 @@ public class PsychologistAccountController extends AccountController {
     CheckBox checkbox9;
     @FXML
     Button saveMajor;
-
-
     @FXML
-    private void saveSelectedMajor() {
-        PsychologistBean psychologistBean= new PsychologistBean(session.getUser().getCredentialsBean(), session.getUser().getName(), session.getUser().getSurname(), session.getUser().getCity(), session.getUser().getDescription(), session.getUser().isInPerson(), session.getUser().isOnline(), session.getUser().isPag(), null, null);
-        CheckBox[] checkbox = {checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6, checkbox7, checkbox8, checkbox9};
-        for (int i=0;i<checkbox.length;i++) {
-            if (checkbox[i] != null && checkbox[i].isSelected()) {
-                Major major= Major.convertIntToMajor(i);
-                if (major != null) {
-                    psychologistBean.addMajor(major);
+    private CheckBox[] checkboxes;
+    private Account account;
+    private PsychologistBean psychologistBean;
+    @FXML
+    private void initialize() {
+        checkboxes = new CheckBox[]{checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6, checkbox7, checkbox8, checkbox9};
+        psychologistBean = new PsychologistBean(session.getUser().getCredentialsBean(), session.getUser().getName(), session.getUser().getSurname(), session.getUser().getCity(), session.getUser().getDescription(), session.getUser().isInPerson(), session.getUser().isOnline(), session.getUser().isPag(), null, null);
+        account=new Account();
+        initializeMajors();
+    }
+    @FXML
+    private void initializeMajors(){
+        if(account.retrieveMajors(psychologistBean)){
+            for (int i = 0; i < checkboxes.length; i++) {
+                if(checkboxes[i]!=null) {
+                    Major major = Major.convertIntToMajor(i + 1);
+                    checkboxes[i].setSelected(psychologistBean.getMajors().contains(major));
                 }
             }
         }
 
-        if (!psychologistBean.getMajors().isEmpty()) {
-           Account account = new Account();
-           account.addMajor(psychologistBean);
+    }
+
+    @FXML
+    private void saveSelectedMajor() {
+        account.retrieveMajors(psychologistBean);
+        ArrayList<Major> selectedMajors = new ArrayList<>();
+        for (int i=0;i<checkboxes.length;i++) {
+            if (checkboxes[i] != null && checkboxes[i].isSelected()) {
+                Major major= Major.convertIntToMajor(i+1);
+                if (major != null && !psychologistBean.getMajors().contains(major)) {
+                    selectedMajors.add(major);
+                }
+            }
+        }
+
+        if (!selectedMajors.isEmpty()) {
+            psychologistBean.setMajor(selectedMajors);
+            account.addMajor(psychologistBean);
            //pop up di conferma
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Salvataggio specializzazioni");
@@ -77,7 +99,11 @@ public class PsychologistAccountController extends AccountController {
             alert.setContentText("Salvate con successo");
             alert.showAndWait();
         } else {
-            System.out.println("Nessuna categoria selezionata.");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Salvataggio specializzazioni");
+            alert.setHeaderText(null);
+            alert.setContentText("Nessuna nuova specializzazione selezionata.");
+            alert.showAndWait();
         }
     }
 

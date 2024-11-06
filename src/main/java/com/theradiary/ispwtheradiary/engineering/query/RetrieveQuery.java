@@ -77,4 +77,19 @@ public class RetrieveQuery {
         pstmt.setString(1, mail);
         return pstmt.executeQuery();
     }
+
+    public static ResultSet retrieveCategories(Connection conn, String mail) throws SQLException{
+        String query = "SELECT category FROM category WHERE patient = ?";
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setString(1, mail);
+        return pstmt.executeQuery();
+    }
+
+    public static ResultSet retrieveMajors(Connection conn, String mail) throws SQLException{
+        String query = "SELECT major FROM major WHERE psicologo = ?";
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setString(1, mail);
+        return pstmt.executeQuery();
+
+    }
 }
