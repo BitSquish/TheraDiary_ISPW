@@ -53,17 +53,17 @@
          </HBox.margin>
       </Button>
    </HBox>
-   <CheckBox fx:id="checkbox1" layoutX="477.0" layoutY="193.0" mnemonicParsing="false" text="Disturbo del neurosviluppo" textFill="#231f36">
+   <CheckBox fx:id="checkbox1" layoutX="477.0" layoutY="193.0" mnemonicParsing="false" text="Disturbi d'ansia" textFill="#231f36">
       <padding>
          <Insets left="6.0" top="7.0" />
       </padding>
    </CheckBox>
-   <CheckBox fx:id="checkbox2" layoutX="477.0" layoutY="220.0" mnemonicParsing="false" text="Disturbi d'ansia" textFill="#231f36">
+   <CheckBox fx:id="checkbox2" layoutX="477.0" layoutY="220.0" mnemonicParsing="false" text="Depressione" textFill="#231f36">
       <padding>
          <Insets left="6.0" top="10.0" />
       </padding>
    </CheckBox>
-   <CheckBox fx:id="checkbox3" layoutX="477.0" layoutY="247.0" mnemonicParsing="false" text="Disturbi dissociativi" textFill="#231f36">
+   <CheckBox fx:id="checkbox3" layoutX="477.0" layoutY="247.0" mnemonicParsing="false" text="Disturbo bipolare" textFill="#231f36">
       <padding>
          <Insets left="6.0" top="10.0" />
       </padding>
@@ -78,17 +78,17 @@
          <Insets left="6.0" top="10.0" />
       </padding>
    </CheckBox>
-   <CheckBox fx:id="checkbox6" layoutX="477.0" layoutY="328.0" mnemonicParsing="false" text="Depressione" textFill="#231f36">
+   <CheckBox fx:id="checkbox6" layoutX="477.0" layoutY="328.0" mnemonicParsing="false" text="Disturbi alimentari" textFill="#231f36">
       <padding>
          <Insets left="6.0" top="10.0" />
       </padding>
    </CheckBox>
-   <CheckBox fx:id="checkbox7" layoutX="477.0" layoutY="355.0" lineSpacing="10.0" mnemonicParsing="false" text="Disturbo bipolare" textFill="#231f36">
+   <CheckBox fx:id="checkbox7" layoutX="477.0" layoutY="355.0" lineSpacing="10.0" mnemonicParsing="false" text="Disturbi dissociativi" textFill="#231f36">
       <padding>
          <Insets left="6.0" top="10.0" />
       </padding>
    </CheckBox>
-   <CheckBox fx:id="checkbox8" layoutX="477.0" layoutY="382.0" mnemonicParsing="false" text="Disturbi alimentari" textFill="#231f36">
+   <CheckBox fx:id="checkbox8" layoutX="477.0" layoutY="382.0" mnemonicParsing="false" text="Disturbi del neurosviluppo" textFill="#231f36">
       <padding>
          <Insets left="6.0" top="10.0" />
       </padding>

@@ -1,6 +1,5 @@
 package com.theradiary.ispwtheradiary.start;
 
-import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepageController;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import javafx.application.Application;
@@ -10,7 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
+
 import javafx.stage.Stage;
 import java.io.IOException;
 

@@ -75,8 +75,8 @@ public class PsychologistAccountController extends AccountController {
     @FXML
     private void updateMajors(){
         account.retrieveMajors(psychologistBean);
-        ArrayList<Major> majorsToAdd= new ArrayList<>();
-        ArrayList<Major> majorsToRemove= new ArrayList<>();
+        ArrayList<Major> majorsToAdd= new ArrayList<>(9);
+        ArrayList<Major> majorsToRemove= new ArrayList<>(9);
 
         for (int i=0;i<checkboxes.length;i++) {
             if (checkboxes[i] != null) {

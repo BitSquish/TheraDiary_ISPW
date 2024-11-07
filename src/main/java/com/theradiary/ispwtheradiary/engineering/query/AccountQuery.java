@@ -46,6 +46,9 @@ public class AccountQuery {
 
     public static void removeCategory(Connection conn, ArrayList<Category> categories, String mail) throws SQLException {
         {
+            for(Category category:categories){
+                System.out.println(category.toString());
+            }
             String query = "DELETE FROM category WHERE category = ? AND patient = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(query)) {
                 for (Category category : categories) {
