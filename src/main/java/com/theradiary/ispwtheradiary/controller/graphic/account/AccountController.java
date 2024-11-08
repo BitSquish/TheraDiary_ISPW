@@ -21,17 +21,17 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Button;
+
 
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
+
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.HashSet;
-import java.util.List;
+
 import java.util.Set;
 
 public abstract class AccountController extends CommonController {
@@ -40,8 +40,7 @@ public abstract class AccountController extends CommonController {
         super(session);
     }
 
-    @FXML
-    ImageView photo;
+
     @FXML
     Label errorMessage;
     @FXML
@@ -99,24 +98,34 @@ public abstract class AccountController extends CommonController {
 
     @FXML
     protected void updateData() {
+        resetMessages();
 
-        // Reset messaggi di errore/successo
-        errorMessage.setVisible(false);
-        successMessage.setVisible(false);
 
         // Creazione dell'array di CheckBox
-        CheckBox[] checkboxes = new CheckBox[]{
-                checkbox1, checkbox2, checkbox3, checkbox4, checkbox5,
-                checkbox6, checkbox7, checkbox8, checkbox9
-        };
+        CheckBox[] checkboxes = createCheckBoxArray();
 
         // Recupera il bean utente loggato
         LoggedUserBean loggedUserBean = session.getUser();
         boolean isPatient = loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT);
 
-        // Ottieni le categorie o majors attuali
-        Iterable<?> currentItems = getItems(loggedUserBean);
+        Set<Integer> currentIds = getCurrentIds(loggedUserBean, isPatient);
+        boolean modified = updateItems(checkboxes, loggedUserBean, isPatient, currentIds);
+        showMessages(modified);
+    }
+    private void resetMessages(){
+        // Reset messaggi di errore/successo
+        errorMessage.setVisible(false);
+        successMessage.setVisible(false);
+    }
+    private CheckBox[] createCheckBoxArray() {
+        return new CheckBox[]{
+                checkbox1, checkbox2, checkbox3, checkbox4, checkbox5,
+                checkbox6, checkbox7, checkbox8, checkbox9
+        };
+    }
+    private Set<Integer> getCurrentIds(LoggedUserBean loggedUserBean, boolean isPatient) {
         Set<Integer> currentIds = new HashSet<>();
+        Iterable<?> currentItems = getItems(loggedUserBean);
 
         // Usa un Set per evitare duplicati e rendere più efficiente la ricerca
         if (currentItems != null) {
@@ -125,124 +134,51 @@ public abstract class AccountController extends CommonController {
                 currentIds.add(id);
             }
         }
-
+        return currentIds;
+    }
+    private boolean updateItems(CheckBox[] checkboxes, LoggedUserBean loggedUserBean, boolean isPatient, Set<Integer> currentIds) {
         boolean modified = false;
 
-        try {
-            // Gestione degli aggiornamenti in un'unica lista
-            for (int i = 0; i < checkboxes.length; i++) {
-                int id = i + 1;
-                boolean isSelected = checkboxes[i].isSelected();
-                Object item = isPatient ? Category.convertIntToCategory(id) : Major.convertIntToMajor(id);
-
-                if (isSelected && !currentIds.contains(id)) {
-                    // Aggiungi l'elemento se è selezionato ma non è già presente
-                    if (isPatient) {
-                        PatientAccountController.addCategory((PatientBean) loggedUserBean, (Category) item);
-                    } else {
-                        PsychologistAccountController.addMajor((PsychologistBean) loggedUserBean, (Major) item);
-                    }
-                    modified = true;
-                } else if (!isSelected && currentIds.contains(id)) {
-                    // Rimuovi l'elemento se non è selezionato ma è già presente
-                    if (isPatient) {
-                        PatientAccountController.removeCategory((PatientBean) loggedUserBean,(Category) item);
-                    } else {
-                        PsychologistAccountController.removeMajor((PsychologistBean) loggedUserBean, (Major) item);
-                    }
-                    modified = true;
-                }
-            }
-
-            // Mostra messaggi di successo o errore
-            if (modified) {
-                successMessage.setVisible(true);
-            } else {
-                errorMessage.setVisible(true);
-            }
-
-        } catch (Exception e) {
-            errorMessage.setVisible(true);
-        }
-    }
-
-
-        /*// Reset messaggi di errore/successo
-        errorMessage.setVisible(false);
-        successMessage.setVisible(false);
-
-        // Creazione dell'array di CheckBox
-        CheckBox[] checkboxes = new CheckBox[]{
-                checkbox1, checkbox2, checkbox3, checkbox4, checkbox5,
-                checkbox6, checkbox7, checkbox8, checkbox9
-        };
-
-        // Recupera il bean utente loggato
-        LoggedUserBean loggedUserBean = session.getUser();
-        boolean isPatient = loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT);
-
-        // Ottieni le categorie o majors attuali
-        Iterable<?> currentItems = getItems(loggedUserBean);
-        List<Integer> currentIds = new ArrayList<>();
-
-        if (currentItems != null) {
-            for (Object item : currentItems) {
-                int id = isPatient ? ((Category) item).getId() : ((Major) item).getId();
-                currentIds.add(id);
-            }
-        }
-
-        // Liste per aggiungere e rimuovere elementi
-        List<Object> itemsToAdd = new ArrayList<>();
-        List<Object> itemsToRemove = new ArrayList<>();
-
-        // Verifica le selezioni nei checkbox
+        // Gestione degli aggiornamenti in un'unica lista
         for (int i = 0; i < checkboxes.length; i++) {
             int id = i + 1;
             boolean isSelected = checkboxes[i].isSelected();
-            boolean isInCurrentItems = currentIds.contains(id);
-
             Object item = isPatient ? Category.convertIntToCategory(id) : Major.convertIntToMajor(id);
 
-            if (isSelected && !isInCurrentItems) {
-                itemsToAdd.add(item);
-            } else if (!isSelected && isInCurrentItems) {
-                itemsToRemove.add(item);
-            }
-        }
-
-        boolean modified = false;
-
-        try {
-            if (isPatient) {
-                List<Category> categoriesToAdd = (List<Category>) (List<?>) itemsToAdd;
-                List<Category> categoriesToRemove = (List<Category>) (List<?>) itemsToRemove;
-                PatientAccountController.updateCategories((PatientBean) loggedUserBean, categoriesToAdd, categoriesToRemove);
-            } else {
-                List<Major> majorsToAdd = (List<Major>) (List<?>) itemsToAdd;
-                List<Major> majorsToRemove = (List<Major>) (List<?>) itemsToRemove;
-                PsychologistAccountController.updateMajors((PsychologistBean) loggedUserBean, majorsToAdd, majorsToRemove);
-            }
-
-            if (!itemsToAdd.isEmpty() || !itemsToRemove.isEmpty()) {
+            if (isSelected && !currentIds.contains(id)) {
+                // Aggiungi l'elemento se è selezionato ma non è già presente
+                addItem(loggedUserBean, isPatient, item);
+                modified = true;
+            } else if (!isSelected && currentIds.contains(id)) {
+                // Rimuovi l'elemento se non è selezionato ma è presente
+                removeItem(loggedUserBean, isPatient, item);
                 modified = true;
             }
+        }
+        return modified;
+    }
+    private void addItem(LoggedUserBean loggedUserBean, boolean isPatient, Object item) {// Aggiunge l'elemento
 
-            // Mostra messaggi di successo o errore
-            if (modified) {
-
-                successMessage.setVisible(true);
-            } else {
-                errorMessage.setVisible(true);
-            }
-
-        } catch (Exception e) {
+        if (isPatient) {
+            PatientAccountController.addCategory((PatientBean) loggedUserBean, (Category) item);
+        }else{
+            PsychologistAccountController.addMajor((PsychologistBean) loggedUserBean, (Major) item);
+        }
+    }
+    private void removeItem(LoggedUserBean loggedUserBean, boolean isPatient, Object item) {// Rimuove l'elemento
+        if (isPatient) {
+            PatientAccountController.removeCategory((PatientBean) loggedUserBean, (Category) item);
+        }else{
+            PsychologistAccountController.removeMajor((PsychologistBean) loggedUserBean, (Major) item);
+        }
+    }
+    private void showMessages(boolean modified) {// Mostra messaggio di successo o errore
+        if (modified) {
+            successMessage.setVisible(true);
+        } else {
             errorMessage.setVisible(true);
         }
     }
-*/
-
-
 
 
     @FXML
