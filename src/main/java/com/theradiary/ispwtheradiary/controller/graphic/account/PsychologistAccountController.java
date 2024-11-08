@@ -5,7 +5,9 @@ import com.theradiary.ispwtheradiary.controller.graphic.PatientListController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
+import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
+import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 
 import javafx.fxml.FXML;
@@ -53,24 +55,20 @@ public class PsychologistAccountController extends AccountController {
     private CheckBox[] checkboxes;
     private Account account;
     private PsychologistBean psychologistBean;
-    @FXML
-    private void initialize() {
-        checkboxes = new CheckBox[]{checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6, checkbox7, checkbox8, checkbox9};
-        psychologistBean = new PsychologistBean(session.getUser().getCredentialsBean(), session.getUser().getName(), session.getUser().getSurname(), session.getUser().getCity(), session.getUser().getDescription(), session.getUser().isInPerson(), session.getUser().isOnline(), session.getUser().isPag(), null, null);
-        account=new Account();
-        initializeMajors();
+
+
+    @Override
+    protected void retrieveData(Account account, LoggedUserBean loggedUserBean) {
+        account.retrieveMajors((PsychologistBean) loggedUserBean);
+    }
+
+    @Override
+    protected Iterable<Major> getItems(LoggedUserBean loggedUserBean) {
+        return ((PsychologistBean) loggedUserBean).getMajors();
     }
     @FXML
-    private void initializeMajors(){
-        if(account.retrieveMajors(psychologistBean)){
-            for (int i = 0; i < checkboxes.length; i++) {
-                if(checkboxes[i]!=null) {
-                    Major major = Major.convertIntToMajor(i + 1);
-                    checkboxes[i].setSelected(psychologistBean.getMajors().contains(major));
-                }
-            }
-        }
-
+    public void initializeMajors(){
+        initializeItems(session.getUser());
     }
     @FXML
     private void updateMajors(){

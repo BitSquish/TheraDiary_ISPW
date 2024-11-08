@@ -25,13 +25,25 @@ public abstract class ModifyController extends CommonController {
     }
 
     @FXML
-    TextField nome, cognome, citta, mail, descrizione;
+    TextField nome;
+    @FXML
+    TextField cognome;
+    @FXML
+    TextField citta;
+    @FXML
+    TextField mail;
+    @FXML
+    TextField descrizione;
     @FXML
     PasswordField password;
     @FXML
-    CheckBox inPresenza, online;
+    CheckBox inPresenza;
     @FXML
-    Label errorMessage, successMessage;
+    CheckBox online;
+    @FXML
+    Label errorMessage;
+    @FXML
+    Label successMessage;
 
     @FXML
     protected void back(MouseEvent event) {
@@ -82,7 +94,7 @@ public abstract class ModifyController extends CommonController {
         try{
             TextField[] fields = {nome, cognome, citta, mail, descrizione};
             checkFields(fields);
-            UserModify userModify = new UserModify(loggedUserBean);
+            new UserModify(loggedUserBean);
             session.setUser(loggedUserBean);
             successMessage.setVisible(true);
         } catch (EmptyFieldException exception){

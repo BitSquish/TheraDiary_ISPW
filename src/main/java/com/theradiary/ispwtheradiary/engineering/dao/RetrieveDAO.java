@@ -133,7 +133,7 @@ public class RetrieveDAO {
                     Major major=Major.valueOf(majorName);
                     majors.add(major);
                 }catch(IllegalArgumentException e){
-                    System.err.println("Specializzazione non valida:"+majorName);
+                    System.err.println("Specializzazione non valida:" + majorName);
                     continue;
                 }
             }

@@ -78,12 +78,13 @@ public abstract class CommonController {
             System.out.println("Errore: " + e.getMessage());
         }
     }
-    //IMPORT FATTO
+
 
     @FXML
     protected void goToAccountPage(MouseEvent event) {
         try {
             FXMLLoader loader;
+            Parent root;
             if (session.getUser() == null) {
                 loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
                 loader.setControllerFactory(c -> new LoginController(session));
@@ -92,16 +93,22 @@ public abstract class CommonController {
                     case "PATIENT":
                         loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PatientAccount.fxml"));
                         loader.setControllerFactory(c -> new PatientAccountController(session));
-                        break;
+                        root = loader.load();
+                        ((PatientAccountController)loader.getController()).initializeCategories();
+                        changeScene(root, event);
+                        return;
                     case "PSYCHOLOGIST":
                         loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PsychologistAccount.fxml"));
                         loader.setControllerFactory(c -> new PsychologistAccountController(session));
-                        break;
+                        root = loader.load();
+                        ((PsychologistAccountController)loader.getController()).initializeMajors();
+                        changeScene(root, event);
+                        return;
                     default:
                         throw new RuntimeException("Ruolo utente non riconosciuto.");
                 }
             }
-            Parent root = loader.load();
+            root = loader.load();
             changeScene(root, event);
         } catch (IOException e) {
             System.out.println(e.getMessage());

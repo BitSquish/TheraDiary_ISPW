@@ -10,6 +10,7 @@ import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 
 public class Account {
+
     public void addCategory(PatientBean patientBean) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline(), patientBean.isPag(), patientBean.getCategories(), null);
         for (int i = 0; i < patientBean.getCategories().size(); i++) {
@@ -25,23 +26,20 @@ public class Account {
         }
         CategoryAndMajorDAO.addMajor(psychologist);
     }
-    public boolean retrieveCategories(PatientBean patientBean) {
+    public void retrieveCategories(PatientBean patientBean) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline(), patientBean.isPag(), patientBean.getCategories(), null);
         boolean categoriesAlreadyInserted = RetrieveDAO.retrieveCategories(patient);
         if(categoriesAlreadyInserted){
             patientBean.setCategories(patient.getCategories());
         }
-        return categoriesAlreadyInserted;
     }
 
-    public boolean retrieveMajors(PsychologistBean psychologistBean) {
+    public void retrieveMajors(PsychologistBean psychologistBean) {
         Psychologist psychologist= new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline(), psychologistBean.isPag(), null, psychologistBean.getMajors());
         boolean majorsAlreadyInserted = RetrieveDAO.retrieveMajors(psychologist);
         if(majorsAlreadyInserted){
             psychologistBean.setMajor(psychologist.getMajors());
         }
-        return majorsAlreadyInserted;
-
     }
 
     public void removeCategory(PatientBean patientBean) {
