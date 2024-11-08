@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountController">
    <fx:include source="CommonPanel.fxml" />
    <ImageView fx:id="account" fitHeight="94.0" fitWidth="94.0" layoutX="31.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@img/account.png" />
@@ -98,6 +98,16 @@
          <Insets bottom="7.0" left="6.0" top="10.0" />
       </padding>
    </CheckBox>
-   <Button fx:id="saveCategoryButton" layoutX="535.0" layoutY="456.0" mnemonicParsing="false" onAction="#updateCategories" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE" />
+   <Button fx:id="updateData" layoutX="535.0" layoutY="456.0" mnemonicParsing="false" onAction="#updateData" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE" />
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ebcef070" height="88.0" layoutX="85.0" stroke="#00000003" strokeType="INSIDE" width="87.0" />
+   <Label fx:id="successMessage" layoutX="514.0" layoutY="510.0" text="Modifiche salvate con successo" visible="false">
+      <font>
+         <Font name="System Bold" size="13.0" />
+      </font>
+   </Label>
+   <Label fx:id="errorMessage" layoutX="514.0" layoutY="510.0" text="Nessun campo selezionato" textAlignment="CENTER" textFill="RED" visible="false">
+      <font>
+         <Font name="System Bold" size="13.0" />
+      </font>
+   </Label>
 </AnchorPane>

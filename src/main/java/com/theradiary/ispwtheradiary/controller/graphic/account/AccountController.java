@@ -13,17 +13,26 @@ import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
+import com.theradiary.ispwtheradiary.model.beans.PatientBean;
+import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Button;
+
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public abstract class AccountController extends CommonController {
 
@@ -32,7 +41,11 @@ public abstract class AccountController extends CommonController {
     }
 
     @FXML
-    ImageView account;
+    ImageView photo;
+    @FXML
+    Label errorMessage;
+    @FXML
+    Label successMessage;
     @FXML
     CheckBox checkbox1;
     @FXML
@@ -51,6 +64,8 @@ public abstract class AccountController extends CommonController {
     CheckBox checkbox8;
     @FXML
     CheckBox checkbox9;
+
+
 
 
     // Metodo astratto per recuperare le categorie o majors
@@ -81,6 +96,153 @@ public abstract class AccountController extends CommonController {
             }
         }
     }
+
+    @FXML
+    protected void updateData() {
+
+        // Reset messaggi di errore/successo
+        errorMessage.setVisible(false);
+        successMessage.setVisible(false);
+
+        // Creazione dell'array di CheckBox
+        CheckBox[] checkboxes = new CheckBox[]{
+                checkbox1, checkbox2, checkbox3, checkbox4, checkbox5,
+                checkbox6, checkbox7, checkbox8, checkbox9
+        };
+
+        // Recupera il bean utente loggato
+        LoggedUserBean loggedUserBean = session.getUser();
+        boolean isPatient = loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT);
+
+        // Ottieni le categorie o majors attuali
+        Iterable<?> currentItems = getItems(loggedUserBean);
+        Set<Integer> currentIds = new HashSet<>();
+
+        // Usa un Set per evitare duplicati e rendere più efficiente la ricerca
+        if (currentItems != null) {
+            for (Object item : currentItems) {
+                int id = isPatient ? ((Category) item).getId() : ((Major) item).getId();
+                currentIds.add(id);
+            }
+        }
+
+        boolean modified = false;
+
+        try {
+            // Gestione degli aggiornamenti in un'unica lista
+            for (int i = 0; i < checkboxes.length; i++) {
+                int id = i + 1;
+                boolean isSelected = checkboxes[i].isSelected();
+                Object item = isPatient ? Category.convertIntToCategory(id) : Major.convertIntToMajor(id);
+
+                if (isSelected && !currentIds.contains(id)) {
+                    // Aggiungi l'elemento se è selezionato ma non è già presente
+                    if (isPatient) {
+                        PatientAccountController.addCategory((PatientBean) loggedUserBean, (Category) item);
+                    } else {
+                        PsychologistAccountController.addMajor((PsychologistBean) loggedUserBean, (Major) item);
+                    }
+                    modified = true;
+                } else if (!isSelected && currentIds.contains(id)) {
+                    // Rimuovi l'elemento se non è selezionato ma è già presente
+                    if (isPatient) {
+                        PatientAccountController.removeCategory((PatientBean) loggedUserBean,(Category) item);
+                    } else {
+                        PsychologistAccountController.removeMajor((PsychologistBean) loggedUserBean, (Major) item);
+                    }
+                    modified = true;
+                }
+            }
+
+            // Mostra messaggi di successo o errore
+            if (modified) {
+                successMessage.setVisible(true);
+            } else {
+                errorMessage.setVisible(true);
+            }
+
+        } catch (Exception e) {
+            errorMessage.setVisible(true);
+        }
+    }
+
+
+        /*// Reset messaggi di errore/successo
+        errorMessage.setVisible(false);
+        successMessage.setVisible(false);
+
+        // Creazione dell'array di CheckBox
+        CheckBox[] checkboxes = new CheckBox[]{
+                checkbox1, checkbox2, checkbox3, checkbox4, checkbox5,
+                checkbox6, checkbox7, checkbox8, checkbox9
+        };
+
+        // Recupera il bean utente loggato
+        LoggedUserBean loggedUserBean = session.getUser();
+        boolean isPatient = loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT);
+
+        // Ottieni le categorie o majors attuali
+        Iterable<?> currentItems = getItems(loggedUserBean);
+        List<Integer> currentIds = new ArrayList<>();
+
+        if (currentItems != null) {
+            for (Object item : currentItems) {
+                int id = isPatient ? ((Category) item).getId() : ((Major) item).getId();
+                currentIds.add(id);
+            }
+        }
+
+        // Liste per aggiungere e rimuovere elementi
+        List<Object> itemsToAdd = new ArrayList<>();
+        List<Object> itemsToRemove = new ArrayList<>();
+
+        // Verifica le selezioni nei checkbox
+        for (int i = 0; i < checkboxes.length; i++) {
+            int id = i + 1;
+            boolean isSelected = checkboxes[i].isSelected();
+            boolean isInCurrentItems = currentIds.contains(id);
+
+            Object item = isPatient ? Category.convertIntToCategory(id) : Major.convertIntToMajor(id);
+
+            if (isSelected && !isInCurrentItems) {
+                itemsToAdd.add(item);
+            } else if (!isSelected && isInCurrentItems) {
+                itemsToRemove.add(item);
+            }
+        }
+
+        boolean modified = false;
+
+        try {
+            if (isPatient) {
+                List<Category> categoriesToAdd = (List<Category>) (List<?>) itemsToAdd;
+                List<Category> categoriesToRemove = (List<Category>) (List<?>) itemsToRemove;
+                PatientAccountController.updateCategories((PatientBean) loggedUserBean, categoriesToAdd, categoriesToRemove);
+            } else {
+                List<Major> majorsToAdd = (List<Major>) (List<?>) itemsToAdd;
+                List<Major> majorsToRemove = (List<Major>) (List<?>) itemsToRemove;
+                PsychologistAccountController.updateMajors((PsychologistBean) loggedUserBean, majorsToAdd, majorsToRemove);
+            }
+
+            if (!itemsToAdd.isEmpty() || !itemsToRemove.isEmpty()) {
+                modified = true;
+            }
+
+            // Mostra messaggi di successo o errore
+            if (modified) {
+
+                successMessage.setVisible(true);
+            } else {
+                errorMessage.setVisible(true);
+            }
+
+        } catch (Exception e) {
+            errorMessage.setVisible(true);
+        }
+    }
+*/
+
+
 
 
     @FXML
@@ -115,7 +277,7 @@ public abstract class AccountController extends CommonController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
         loader.setControllerFactory(c -> new LoginController(session));
         Parent root = loader.load();
-        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
 
@@ -142,6 +304,9 @@ public abstract class AccountController extends CommonController {
             throw new RuntimeException(e);
         }
     }
+
 }
+
+
 
 

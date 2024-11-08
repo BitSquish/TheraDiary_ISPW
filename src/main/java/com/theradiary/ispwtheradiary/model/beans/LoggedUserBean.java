@@ -1,4 +1,8 @@
 package com.theradiary.ispwtheradiary.model.beans;
+
+import com.theradiary.ispwtheradiary.engineering.enums.Major;
+import javafx.collections.ObservableList;
+
 public abstract class LoggedUserBean {
     private CredentialsBean credentialsBean;
     private String name;
@@ -84,5 +88,6 @@ public abstract class LoggedUserBean {
     public void setPag(boolean pag) {
         this.pag = pag;
     }
+
 
 }

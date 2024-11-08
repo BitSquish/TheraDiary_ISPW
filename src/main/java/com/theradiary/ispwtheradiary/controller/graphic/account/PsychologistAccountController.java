@@ -22,7 +22,9 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
+import static java.util.Collections.addAll;
 
 
 public class PsychologistAccountController extends AccountController {
@@ -31,30 +33,10 @@ public class PsychologistAccountController extends AccountController {
         super(session);
     }
 
-    @FXML
-    CheckBox checkbox1;
-    @FXML
-    CheckBox checkbox2;
-    @FXML
-    CheckBox checkbox3;
-    @FXML
-    CheckBox checkbox4;
-    @FXML
-    CheckBox checkbox5;
-    @FXML
-    CheckBox checkbox6;
-    @FXML
-    CheckBox checkbox7;
-    @FXML
-    CheckBox checkbox8;
-    @FXML
-    CheckBox checkbox9;
-    @FXML
-    Button saveMajor;
-    @FXML
-    private CheckBox[] checkboxes;
-    private Account account;
-    private PsychologistBean psychologistBean;
+
+
+
+
 
 
     @Override
@@ -70,47 +52,23 @@ public class PsychologistAccountController extends AccountController {
     public void initializeMajors(){
         initializeItems(session.getUser());
     }
-    @FXML
-    private void updateMajors(){
-        account.retrieveMajors(psychologistBean);
-        ArrayList<Major> majorsToAdd= new ArrayList<>(9);
-        ArrayList<Major> majorsToRemove= new ArrayList<>(9);
+   @FXML
+   public static void addMajor(PsychologistBean psychologistBean,Major major){
+         psychologistBean.addMajor(major);
+         Account account=new Account();
+         account.addMajor(psychologistBean);
 
-        for (int i=0;i<checkboxes.length;i++) {
-            if (checkboxes[i] != null) {
-                Major major= Major.convertIntToMajor(i+1);
-                if(checkboxes[i].isSelected() && !psychologistBean.getMajors().contains(major)) {
-                    majorsToAdd.add(major);
-                } else if (!checkboxes[i].isSelected() && psychologistBean.getMajors().contains(major)) {
-                    majorsToRemove.add(major);
-                }
-            }
-        }
-        boolean modified=false;
-        if (!majorsToAdd.isEmpty()) {
-            psychologistBean.getMajors().addAll(majorsToAdd);
-            account.addMajor(psychologistBean);
-            modified=true;
-        }
-        if (!majorsToRemove.isEmpty()) {
-            psychologistBean.getMajors().removeAll(majorsToRemove);
-            account.removeMajor(psychologistBean);
-            modified=true;
-        }
-        if(modified){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Salvataggio specializzazioni");
-            alert.setHeaderText(null);
-            alert.setContentText("Modifiche salvate con successo");
-            alert.showAndWait();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Salvataggio specializzazioni");
-            alert.setHeaderText(null);
-            alert.setContentText("Nessuna modifica effettuata");
-            alert.showAndWait();
-        }
-    }
+
+
+   }
+   @FXML
+   public static void removeMajor(PsychologistBean psychologistBean,Major major){
+         psychologistBean.removeMajor(major);
+         Account account=new Account();
+         account.removeMajor(psychologistBean);
+
+   }
+
 
 
     @FXML
