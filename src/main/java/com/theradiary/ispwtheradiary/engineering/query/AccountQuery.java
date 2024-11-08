@@ -44,12 +44,8 @@ public class AccountQuery {
         }
     }
 
-    public static void removeCategory(Connection conn, ArrayList<Category> categories, String mail) throws SQLException {
-        {
-            for(Category category:categories){
-                System.out.println(category.toString());
-            }
-            String query = "DELETE FROM category WHERE category = ? AND patient = ?";
+    public static void removeCategory(Connection conn, List<Category> categories, String mail) throws SQLException {
+        String query = "DELETE FROM category WHERE category = ? AND patient = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(query)) {
                 for (Category category : categories) {
                     pstmt.setString(1, category.name());
@@ -60,10 +56,10 @@ public class AccountQuery {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
     }
 
-    public static void removeMajor(Connection conn, ArrayList<Major> majors, String mail) {
+
+    public static void removeMajor(Connection conn, List<Major> majors, String mail) {
         String query = "DELETE FROM major WHERE major = ? AND psicologo = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             for (Major major : majors) {

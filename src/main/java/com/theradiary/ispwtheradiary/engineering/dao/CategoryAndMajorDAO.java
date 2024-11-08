@@ -1,5 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.dao;
 
+
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
@@ -8,9 +9,10 @@ import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
 import java.util.List;
+
 
 public class CategoryAndMajorDAO {
     public static void addCategory(Patient patient) {
@@ -29,17 +31,17 @@ public class CategoryAndMajorDAO {
     }
 
 
-    public static void removeCategory(Patient patient) {
+    public static void removeCategory(List<Category> categories, String mail) {
         try(Connection conn= ConnectionFactory.getConnection()) {
-            AccountQuery.removeCategory(conn,patient.getCategories(), patient.getCredentials().getMail());
+            AccountQuery.removeCategory(conn,categories,mail);
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
     }
 
-    public static void removeMajor(Psychologist psychologist) {
+    public static void removeMajor(List<Major> majors, String mail) {
         try(Connection conn= ConnectionFactory.getConnection()) {
-            AccountQuery.removeMajor(conn,psychologist.getMajors(), psychologist.getCredentials().getMail());
+            AccountQuery.removeMajor(conn,majors,mail);
         }catch (SQLException e){
             throw new RuntimeException(e);
         }

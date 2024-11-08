@@ -96,10 +96,10 @@ public abstract class AccountController extends CommonController {
         }
     }
 
+
     @FXML
     protected void updateData() {
         resetMessages();
-
 
         // Creazione dell'array di CheckBox
         CheckBox[] checkboxes = createCheckBoxArray();
@@ -108,26 +108,36 @@ public abstract class AccountController extends CommonController {
         LoggedUserBean loggedUserBean = session.getUser();
         boolean isPatient = loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT);
 
+        // Ottieni gli ID degli elementi attualmente presenti
         Set<Integer> currentIds = getCurrentIds(loggedUserBean, isPatient);
+
+        // Aggiorna gli elementi basandosi sulle selezioni delle checkbox
         boolean modified = updateItems(checkboxes, loggedUserBean, isPatient, currentIds);
+
+        // Mostra i messaggi di successo o errore
         showMessages(modified);
     }
-    private void resetMessages(){
-        // Reset messaggi di errore/successo
+
+    // Metodo per resettare i messaggi di errore/successo
+    private void resetMessages() {
         errorMessage.setVisible(false);
         successMessage.setVisible(false);
     }
+
+    // Metodo per creare un array di checkbox
     private CheckBox[] createCheckBoxArray() {
         return new CheckBox[]{
                 checkbox1, checkbox2, checkbox3, checkbox4, checkbox5,
                 checkbox6, checkbox7, checkbox8, checkbox9
         };
     }
+
+    // Metodo per ottenere gli ID correnti
     private Set<Integer> getCurrentIds(LoggedUserBean loggedUserBean, boolean isPatient) {
         Set<Integer> currentIds = new HashSet<>();
         Iterable<?> currentItems = getItems(loggedUserBean);
 
-        // Usa un Set per evitare duplicati e rendere più efficiente la ricerca
+        // Usa un Set per evitare duplicati
         if (currentItems != null) {
             for (Object item : currentItems) {
                 int id = isPatient ? ((Category) item).getId() : ((Major) item).getId();
@@ -136,49 +146,62 @@ public abstract class AccountController extends CommonController {
         }
         return currentIds;
     }
+
+    // Metodo per aggiornare gli elementi selezionati
     private boolean updateItems(CheckBox[] checkboxes, LoggedUserBean loggedUserBean, boolean isPatient, Set<Integer> currentIds) {
         boolean modified = false;
 
-        // Gestione degli aggiornamenti in un'unica lista
+        // Itera sulle checkbox e aggiorna gli elementi
         for (int i = 0; i < checkboxes.length; i++) {
-            int id = i + 1;
+            
             boolean isSelected = checkboxes[i].isSelected();
-            Object item = isPatient ? Category.convertIntToCategory(id) : Major.convertIntToMajor(id);
 
-            if (isSelected && !currentIds.contains(id)) {
-                // Aggiungi l'elemento se è selezionato ma non è già presente
+            // Recupera l'elemento corrispondente (Category o Major)
+            Object item = isPatient? Category.convertIntToCategory(i) : Major.convertIntToMajor(i);
+
+            // Verifica se è necessario aggiungere o rimuovere l'elemento
+            if (isSelected && !currentIds.contains(i)) {
                 addItem(loggedUserBean, isPatient, item);
                 modified = true;
-            } else if (!isSelected && currentIds.contains(id)) {
-                // Rimuovi l'elemento se non è selezionato ma è presente
+            } else if (!isSelected && currentIds.contains(i)) {
                 removeItem(loggedUserBean, isPatient, item);
                 modified = true;
             }
         }
+
         return modified;
     }
-    private void addItem(LoggedUserBean loggedUserBean, boolean isPatient, Object item) {// Aggiunge l'elemento
 
+    // Metodo per ottenere un oggetto `Category` o `Major` in base all'ID
+
+
+    // Metodo per aggiungere un elemento
+    private void addItem(LoggedUserBean loggedUserBean, boolean isPatient, Object item) {
         if (isPatient) {
             PatientAccountController.addCategory((PatientBean) loggedUserBean, (Category) item);
-        }else{
+        } else {
             PsychologistAccountController.addMajor((PsychologistBean) loggedUserBean, (Major) item);
         }
     }
-    private void removeItem(LoggedUserBean loggedUserBean, boolean isPatient, Object item) {// Rimuove l'elemento
+
+    // Metodo per rimuovere un elemento
+    private void removeItem(LoggedUserBean loggedUserBean, boolean isPatient, Object item) {
         if (isPatient) {
             PatientAccountController.removeCategory((PatientBean) loggedUserBean, (Category) item);
-        }else{
+        } else {
             PsychologistAccountController.removeMajor((PsychologistBean) loggedUserBean, (Major) item);
         }
     }
-    private void showMessages(boolean modified) {// Mostra messaggio di successo o errore
+
+    // Metodo per mostrare i messaggi di successo o errore
+    private void showMessages(boolean modified) {
         if (modified) {
             successMessage.setVisible(true);
         } else {
             errorMessage.setVisible(true);
         }
     }
+
 
 
     @FXML
@@ -209,15 +232,21 @@ public abstract class AccountController extends CommonController {
 
     @FXML
     protected void logout(MouseEvent event) throws IOException {
-        session.setUser(null);
+        //rimuove l'utente dalla sessione
+        if(session!=null) {
+            session.setUser(null);
+        }
+        //carica la schermata di login
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
         loader.setControllerFactory(c -> new LoginController(session));
         Parent root = loader.load();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //cambia scena
+        Stage stage=(Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
 
     }
+
 
 
     @FXML
