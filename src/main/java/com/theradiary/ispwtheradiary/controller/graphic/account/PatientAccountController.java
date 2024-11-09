@@ -3,22 +3,12 @@ package com.theradiary.ispwtheradiary.controller.graphic.account;
 
 import com.theradiary.ispwtheradiary.controller.application.Account;
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
-import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-
-
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-
 public class PatientAccountController extends AccountController {
 
     public PatientAccountController(Session session) {
@@ -57,13 +47,12 @@ public class PatientAccountController extends AccountController {
     public static void addCategory(PatientBean patientBean, Category category) {
         patientBean.addCategory(category);
         Account account=new Account();
-        account.addCategory(patientBean);
+        account.addCategory(patientBean, category);
     }
     @FXML
     public static void removeCategory(PatientBean patientBean, Category category) {
-        patientBean.removeCategory(category);
         Account account=new Account();
-        account.removeCategory(patientBean);
+        account.removeCategory(patientBean, category);
+        patientBean.removeCategory(category);
     }
-
 }

@@ -86,7 +86,7 @@ public class RetrieveQuery {
     }
 
     public static ResultSet retrieveMajors(Connection conn, String mail) throws SQLException{
-        String query = "SELECT major FROM major WHERE psicologo = ?";
+        String query = "SELECT major FROM major WHERE psychologist = ?";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, mail);
         return pstmt.executeQuery();

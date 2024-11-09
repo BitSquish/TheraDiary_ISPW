@@ -14,7 +14,7 @@ public enum Category {
     private final int id;
 
     //costruttore di Role
-    private Category(int id) {
+    Category(int id) {
         this.id = id;
     }
 

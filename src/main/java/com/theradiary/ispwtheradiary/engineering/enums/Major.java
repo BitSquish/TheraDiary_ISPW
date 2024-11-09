@@ -1,17 +1,17 @@
 package com.theradiary.ispwtheradiary.engineering.enums;
 
 public enum Major {
-    PSICOTERAPIA(1),
-    PSICOLOGIA_INFANTILE(2),
-    PSICOLOGIA_DELLA_SALUTE(3),
-    NEUROPSICOLOGIA_CLINICA(4),
-    PSICOLOGIA_DEL_TRAUMA(5),
-    PSICOLOGIA_GERIATRICA(6),
-    PSICOLOGIA_FORENSE(7),
-    PSICOLOGIA_DELLE_DIPENDENZE(8),
+    PSYCHOTHERAPY(1),
+    CHILD_PSYCHOLOGY(2),
+    HEALTH_PSYCHOLOGY(3),
+    CLINICAL_NEUROPSYCHOLOGY(4),
+    TRAUMA_PSYCHOLOGY(5),
+    GERIATRIC_PSYCHOLOGY(6),
+    FORENSIC_PSYCHOLOGY(7),
+    ADDICTION_PSYCHOLOGY(8),
     OTHER(9);
     private final int id;
-    private Major(int id) {
+    Major(int id) {
         this.id = id;
     }
     public static Major convertIntToMajor(int id) {

@@ -54,19 +54,15 @@ public class PsychologistAccountController extends AccountController {
     }
    @FXML
    public static void addMajor(PsychologistBean psychologistBean,Major major){
-         psychologistBean.addMajor(major);
          Account account=new Account();
-         account.addMajor(psychologistBean);
-
-
-
+         account.addMajor(psychologistBean, major);
+         psychologistBean.addMajor(major);
    }
    @FXML
    public static void removeMajor(PsychologistBean psychologistBean,Major major){
-         psychologistBean.removeMajor(major);
          Account account=new Account();
-         account.removeMajor(psychologistBean);
-
+         account.removeMajor(psychologistBean, major);
+         psychologistBean.removeMajor(major);
    }
 
 

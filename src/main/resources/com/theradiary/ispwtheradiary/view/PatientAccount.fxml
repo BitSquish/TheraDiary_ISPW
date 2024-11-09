@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountController">
    <fx:include source="CommonPanel.fxml" />
    <ImageView fx:id="account" fitHeight="94.0" fitWidth="94.0" layoutX="31.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@img/account.png" />
@@ -36,7 +36,7 @@
       </font>
    </Text>
    <Button layoutX="149.0" layoutY="170.0" mnemonicParsing="false" onMouseClicked="#goToModifyScreen" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Modifica dati personali" textAlignment="CENTER" textFill="WHITE" />
-   <Button layoutX="174.0" layoutY="456.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Logout" textFill="WHITE" />
+   <Button layoutX="174.0" layoutY="474.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Logout" textFill="WHITE" />
    <Button layoutX="724.0" layoutY="113.0" mnemonicParsing="false" onMouseClicked="#goBack" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
    <HBox layoutX="31.0" layoutY="295.0" prefHeight="56.0" prefWidth="398.0" spacing="20.0">
       <Label fx:id="psychologist" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #9067C6; -fx-background-radius: 20px; -fx-border-radius: 20px;" textFill="#231f36">
@@ -98,14 +98,14 @@
          <Insets bottom="7.0" left="6.0" top="10.0" />
       </padding>
    </CheckBox>
-   <Button fx:id="updateData" layoutX="535.0" layoutY="456.0" mnemonicParsing="false" onAction="#updateData" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE" />
+   <Button fx:id="updateData" layoutX="535.0" layoutY="474.0" mnemonicParsing="false" onAction="#updateData" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE" />
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ebcef070" height="88.0" layoutX="85.0" stroke="#00000003" strokeType="INSIDE" width="87.0" />
-   <Label fx:id="successMessage" layoutX="514.0" layoutY="510.0" text="Modifiche salvate con successo" textFill="#31a639" visible="false">
+   <Label fx:id="successMessage" layoutX="513.0" layoutY="446.0" text="Modifiche salvate con successo" textFill="#31a639" visible="false">
       <font>
          <Font name="System Bold" size="13.0" />
       </font>
    </Label>
-   <Label fx:id="errorMessage" layoutX="514.0" layoutY="510.0" text="Nessun campo selezionato" textAlignment="CENTER" textFill="#ec4747" visible="false">
+   <Label fx:id="errorMessage" layoutX="527.0" layoutY="446.0" text="Nessun campo selezionato" textAlignment="CENTER" textFill="#ec4747" visible="false">
       <font>
          <Font name="System Bold" size="13.0" />
       </font>

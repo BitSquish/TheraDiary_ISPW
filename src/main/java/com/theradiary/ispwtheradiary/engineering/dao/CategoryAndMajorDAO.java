@@ -15,33 +15,39 @@ import java.util.List;
 
 
 public class CategoryAndMajorDAO {
-    public static void addCategory(Patient patient) {
+    public static void addCategory(Patient patient, Category category) {
         try(Connection conn= ConnectionFactory.getConnection()) {
-            AccountQuery.addCategory(conn,patient.getCategories(), patient.getCredentials().getMail());
+            boolean success = AccountQuery.addCategory(conn, category.toString(), patient.getCredentials().getMail());
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
     }
-    public static void addMajor(Psychologist psychologist) {
+    public static void addMajor(Psychologist psychologist, Major major) {
         try(Connection conn= ConnectionFactory.getConnection()) {
-            AccountQuery.addMajor(conn,psychologist.getMajors(), psychologist.getCredentials().getMail());
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public static void removeCategory(List<Category> categories, String mail) {
-        try(Connection conn= ConnectionFactory.getConnection()) {
-            AccountQuery.removeCategory(conn,categories,mail);
+            boolean success = AccountQuery.addMajor(conn,major.toString(), psychologist.getCredentials().getMail());
+            if(success)
+                psychologist.getMajors().add(major);
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
     }
 
-    public static void removeMajor(List<Major> majors, String mail) {
+
+    public static void removeCategory(Patient patient, Category category) {
         try(Connection conn= ConnectionFactory.getConnection()) {
-            AccountQuery.removeMajor(conn,majors,mail);
+            boolean success = AccountQuery.removeCategory(conn,patient.getCredentials().getMail(), category.toString());
+            if(success)
+                patient.getCategories().remove(category);
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void removeMajor(Psychologist psychologist, Major major) {
+        try(Connection conn= ConnectionFactory.getConnection()) {
+            boolean success = AccountQuery.removeMajor(conn,psychologist.getCredentials().getMail(),major.toString());
+            if(success)
+                psychologist.getMajors().remove(major);
         }catch (SQLException e){
             throw new RuntimeException(e);
         }

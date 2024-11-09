@@ -63,6 +63,10 @@ public abstract class AccountController extends CommonController {
     CheckBox checkbox8;
     @FXML
     CheckBox checkbox9;
+    @FXML
+    protected static final String MODIFY_PATIENT_PATH = "/com/theradiary/ispwtheradiary/view/ModifyPatient.fxml";
+    @FXML
+    protected static final String MODIFY_PSYCHOLOGIST_PATH = "/com/theradiary/ispwtheradiary/view/ModifyPsychologist.fxml";
 
 
 
@@ -71,7 +75,7 @@ public abstract class AccountController extends CommonController {
     protected abstract void retrieveData(Account account, LoggedUserBean loggedUserBean);
 
     // Metodo astratto per ottenere le categorie o majors dal bean utente
-    protected abstract Iterable<?> getItems(LoggedUserBean loggedUserBean);
+    protected abstract <T> Iterable<T> getItems(LoggedUserBean loggedUserBean);
 
     @FXML
     protected void initializeItems(LoggedUserBean loggedUserBean) {
@@ -82,7 +86,6 @@ public abstract class AccountController extends CommonController {
 
         // Recupera i dati necessari per l'utente (categorie o majors)
         retrieveData(new Account(), loggedUserBean);
-
         // Ottieni le categorie o majors dall'oggetto `LoggedUserBean`
         Iterable<?> items = getItems(loggedUserBean);
         if (items != null) {
@@ -211,16 +214,16 @@ public abstract class AccountController extends CommonController {
             FXMLLoader loader;
             Parent root;
             if(session.getUser()==null){
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
+                loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
                 loader.setControllerFactory(c -> new LoginController(session));
                 root = loader.load();
             }else if (session.getUser().getCredentialsBean().getRole().equals(Role.PATIENT)) {
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/ModifyPatient.fxml"));
+                loader = new FXMLLoader(getClass().getResource(MODIFY_PATIENT_PATH));
                 loader.setControllerFactory(c -> new ModifyPatientController(session));
                 root = loader.load();
                 ((ModifyPatientController)loader.getController()).loadUserData();
             }else{
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/ModifyPsychologist.fxml"));
+                loader = new FXMLLoader(getClass().getResource(MODIFY_PSYCHOLOGIST_PATH));
                 loader.setControllerFactory(c -> new ModifyPsychologistController(session));
                 root = loader.load();
                 ((ModifyPsychologistController)loader.getController()).loadUserData();
@@ -238,7 +241,7 @@ public abstract class AccountController extends CommonController {
             session.setUser(null);
         }
         //carica la schermata di login
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
         loader.setControllerFactory(c -> new LoginController(session));
         Parent root = loader.load();
         //cambia scena
@@ -255,13 +258,13 @@ public abstract class AccountController extends CommonController {
         try {
             FXMLLoader loader;
             if(session.getUser()==null){
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
+                loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
                 loader.setControllerFactory(c -> new LoginController(session));
-            }else if (session.getUser().getCredentialsBean().getRole().toString().equals("PATIENT")) {
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/HomepageLoggedPt.fxml"));
+            }else if (session.getUser().getCredentialsBean().getRole().equals(Role.PATIENT)) {
+                loader = new FXMLLoader(getClass().getResource(HOMEPAGE_LOGGED_PT_PATH));
                 loader.setControllerFactory(c -> new HomepagePtController(session));
             } else {
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/HomepageLoggedPs.fxml"));
+                loader = new FXMLLoader(getClass().getResource(HOMEPAGE_LOGGED_PS_PATH));
                 loader.setControllerFactory(c -> new HomepagePsController(session));
             }
             Parent root = loader.load();

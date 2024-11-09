@@ -1,75 +1,68 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
-import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AccountQuery {
     private AccountQuery() {
     }
 
-    public static void addCategory(Connection conn, List<Category> categories, String mail) throws SQLException {
+    public static boolean addCategory(Connection conn, String category, String mail) throws SQLException {
         String query = "INSERT INTO category (category,patient) VALUES (?,?)";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-            for (Category category : categories) {
-                pstmt.setString(1, category.name());
-                pstmt.setString(2, mail);
-                pstmt.addBatch();
-
-            }
-            pstmt.executeBatch();
+            pstmt.setString(1, category);
+            pstmt.setString(2, mail);
+            //restituisce il numero di righe aggiunte
+            return pstmt.executeUpdate() != 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
 
-    public static void addMajor(Connection conn, List<Major> majors, String mail) throws SQLException {
-        String query = "INSERT INTO major (major,psicologo) VALUES (?,?)";
+    public static boolean addMajor(Connection conn, String major, String mail) throws SQLException {
+        String query = "INSERT INTO major (major,psychologist) VALUES (?,?)";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-            for (Major major : majors) {
-                pstmt.setString(1, major.name());
-                pstmt.setString(2, mail);
-                pstmt.addBatch();
-            }
-            pstmt.executeBatch();
+            pstmt.setString(1, major);
+            pstmt.setString(2, mail);
+            //restituisce il numero di righe eliminate
+            return pstmt.executeUpdate() != 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
-    public static void removeCategory(Connection conn, List<Category> categories, String mail) throws SQLException {
+    public static boolean removeCategory(Connection conn, String mail, String category) throws SQLException {
         String query = "DELETE FROM category WHERE category = ? AND patient = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-                for (Category category : categories) {
-                    pstmt.setString(1, category.name());
-                    pstmt.setString(2, mail);
-                    pstmt.addBatch();
-                }
-                pstmt.executeBatch();
+                pstmt.setString(1, category);
+                pstmt.setString(2, mail);
+                //restituisce il numero di righe eliminate
+                return pstmt.executeUpdate() != 0;
             } catch (SQLException e) {
                 e.printStackTrace();
+                return false;
             }
     }
 
 
-    public static void removeMajor(Connection conn, List<Major> majors, String mail) {
-        String query = "DELETE FROM major WHERE major = ? AND psicologo = ?";
+    public static boolean removeMajor(Connection conn, String mail, String major) {
+        String query = "DELETE FROM major WHERE major = ? AND psychologist = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-            for (Major major : majors) {
-                pstmt.setString(1, major.name());
-                pstmt.setString(2, mail);
-                pstmt.addBatch();
-            }
-            pstmt.executeBatch();
+            pstmt.setString(1, major);
+            pstmt.setString(2, mail);
+            //restituisce il numero di righe eliminate
+            return pstmt.executeUpdate() != 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+
     }
 }
