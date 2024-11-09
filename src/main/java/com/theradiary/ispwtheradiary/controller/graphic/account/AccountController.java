@@ -153,17 +153,18 @@ public abstract class AccountController extends CommonController {
 
         // Itera sulle checkbox e aggiorna gli elementi
         for (int i = 0; i < checkboxes.length; i++) {
+            int id=i+1;
             
             boolean isSelected = checkboxes[i].isSelected();
 
             // Recupera l'elemento corrispondente (Category o Major)
-            Object item = isPatient? Category.convertIntToCategory(i) : Major.convertIntToMajor(i);
+            Object item = isPatient? Category.convertIntToCategory(id) : Major.convertIntToMajor(id);
 
             // Verifica se è necessario aggiungere o rimuovere l'elemento
-            if (isSelected && !currentIds.contains(i)) {
+            if (isSelected && !currentIds.contains(id)) {
                 addItem(loggedUserBean, isPatient, item);
                 modified = true;
-            } else if (!isSelected && currentIds.contains(i)) {
+            } else if (!isSelected && currentIds.contains(id)) {
                 removeItem(loggedUserBean, isPatient, item);
                 modified = true;
             }

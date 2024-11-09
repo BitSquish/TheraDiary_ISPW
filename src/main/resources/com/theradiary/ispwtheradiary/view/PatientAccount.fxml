@@ -100,12 +100,12 @@
    </CheckBox>
    <Button fx:id="updateData" layoutX="535.0" layoutY="456.0" mnemonicParsing="false" onAction="#updateData" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE" />
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ebcef070" height="88.0" layoutX="85.0" stroke="#00000003" strokeType="INSIDE" width="87.0" />
-   <Label fx:id="successMessage" layoutX="514.0" layoutY="510.0" text="Modifiche salvate con successo" visible="false">
+   <Label fx:id="successMessage" layoutX="514.0" layoutY="510.0" text="Modifiche salvate con successo" textFill="#31a639" visible="false">
       <font>
          <Font name="System Bold" size="13.0" />
       </font>
    </Label>
-   <Label fx:id="errorMessage" layoutX="514.0" layoutY="510.0" text="Nessun campo selezionato" textAlignment="CENTER" textFill="RED" visible="false">
+   <Label fx:id="errorMessage" layoutX="514.0" layoutY="510.0" text="Nessun campo selezionato" textAlignment="CENTER" textFill="#ec4747" visible="false">
       <font>
          <Font name="System Bold" size="13.0" />
       </font>
