@@ -1,7 +1,5 @@
 package com.theradiary.ispwtheradiary.model;
 
-import com.theradiary.ispwtheradiary.engineering.enums.Role;
-
 public class LoggedUser {
     private Credentials credentials;
     private String name;

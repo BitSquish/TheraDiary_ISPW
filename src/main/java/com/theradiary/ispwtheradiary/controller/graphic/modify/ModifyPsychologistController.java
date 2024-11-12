@@ -11,11 +11,6 @@ public class ModifyPsychologistController extends ModifyController {
     public ModifyPsychologistController(Session session) {
         super(session);
     }
-   /* @FXML
-    public void initialize() {
-        // Carica i dati del psicologo nei campi di input
-        loadUserData();
-    }*/
 
     @FXML
     private void modifyPsychologist(MouseEvent event) throws EmptyFieldException {

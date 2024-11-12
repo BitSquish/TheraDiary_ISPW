@@ -16,6 +16,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class RegistrationDAO {
+    private RegistrationDAO() {
+    }
     //controllo se l'email è presente o meno
     private static boolean emailExists(String mail) throws SQLException {
         try (Connection conn = ConnectionFactory.getConnection()){

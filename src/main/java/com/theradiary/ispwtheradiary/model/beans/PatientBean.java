@@ -3,15 +3,25 @@ package com.theradiary.ispwtheradiary.model.beans;
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PatientBean extends LoggedUserBean{
     private ArrayList<Category> categories;
-    public PatientBean(CredentialsBean credentialsBean, String name, String surname, String city, String description, boolean inPerson, boolean online, boolean pag, ArrayList<Category> categories,PsychologistBean psychologistBean) {
+    private PsychologistBean psychologistBean;
+    public PatientBean(CredentialsBean credentialsBean, String name, String surname, String city, String description, boolean inPerson, boolean online, boolean pag, List<Category> categories,PsychologistBean psychologistBean) {
         super(credentialsBean, name, surname, city, description, inPerson, online, pag);
-        this.categories = (categories != null) ? categories : new ArrayList<>();
+        this.categories = (categories != null) ? (ArrayList<Category>) categories : new ArrayList<>();
+        this.psychologistBean = psychologistBean;
+    }
+    public PsychologistBean getPsychologistBean(){
+        return psychologistBean;
     }
 
-    public ArrayList<Category> getCategories() {
+    public void setPsychologistBean(PsychologistBean psychologistBean) {
+        this.psychologistBean = psychologistBean;
+    }
+
+    public List<Category> getCategories() {
         return categories;
     }
     public void addCategory(Category category){
@@ -21,8 +31,8 @@ public class PatientBean extends LoggedUserBean{
     public void removeCategory(Category category){
         categories.remove(category);
     }
-    public void setCategories(ArrayList<Category> categories) {
-        this.categories = categories;
+    public void setCategories(List<Category> categories) {
+        this.categories = (ArrayList<Category>) categories;
     }
 }
 

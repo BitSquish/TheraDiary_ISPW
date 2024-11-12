@@ -8,7 +8,6 @@ import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
-import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 
@@ -21,10 +20,8 @@ public class Login {
             LoginDAO.login(credentials);
             credentialsBean.setRole(credentials.getRole());
         } catch(SQLException e) { //CONTROLLARE ECCEZIONI
-            System.out.println("Errore: " + e.getMessage());
             throw new RuntimeException(e);
         } catch (WrongEmailOrPasswordException e) {
-            System.out.println("Errore: " + e.getMessage());
             throw new WrongEmailOrPasswordException(e.getMessage());
         }
     }

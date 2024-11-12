@@ -1,7 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.application;
 
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
-import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.model.Credentials;
@@ -43,6 +42,4 @@ public class Search {
         }
     }
 
-    public void searchMajors(PsychologistBean psychologistBean, ArrayList<Major> majors) {
-    }
 }

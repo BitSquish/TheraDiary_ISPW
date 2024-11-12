@@ -8,13 +8,13 @@ import java.util.List;
 public class Patient extends LoggedUser {
     private ArrayList<Category> categories;
     private Psychologist psychologist;
-    public Patient(Credentials credentials, String name, String surname, String city, String description, boolean isInPerson, boolean isOnline, boolean isPAG, ArrayList<Category> categories, Psychologist psychologist) {
+    public Patient(Credentials credentials, String name, String surname, String city, String description, boolean isInPerson, boolean isOnline, boolean isPAG, List<Category> categories, Psychologist psychologist) {
         super(credentials, name, surname, city, description, isInPerson, isOnline, isPAG);
-        this.categories = new ArrayList<>();
-        this.psychologist = null;
+        this.categories = (categories != null) ? (ArrayList<Category>) categories : new ArrayList<>();
+        this.psychologist = psychologist;
     }
 
-    public ArrayList<Category> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
     public void addCategory(Category category){
@@ -25,7 +25,15 @@ public class Patient extends LoggedUser {
         categories.remove(category);
     }
 
-    public void setCategories(ArrayList<Category> categories) {
-        this.categories = categories;
+    public void setCategories(List<Category> categories) {
+        this.categories = (ArrayList<Category>) categories;
+    }
+
+    public Psychologist getPsychologist() {
+        return psychologist;
+    }
+
+    public void setPsychologist(Psychologist psychologist) {
+        this.psychologist = psychologist;
     }
 }

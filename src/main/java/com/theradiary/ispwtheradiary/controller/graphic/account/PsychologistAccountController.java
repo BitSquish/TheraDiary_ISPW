@@ -5,7 +5,6 @@ import com.theradiary.ispwtheradiary.controller.graphic.PatientListController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
-import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
@@ -14,17 +13,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
+
 import javafx.scene.input.MouseEvent;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-import static java.util.Collections.addAll;
 
 
 public class PsychologistAccountController extends AccountController {

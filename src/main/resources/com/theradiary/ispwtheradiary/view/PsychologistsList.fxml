@@ -12,12 +12,12 @@
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ebcef070" height="88.0" layoutX="349.0" stroke="#00000003" strokeType="INSIDE" width="87.0" />
    <TableView fx:id="listPsychologist" editable="true" layoutX="38.0" layoutY="180.0" opacity="0.45" prefHeight="335.0" prefWidth="800.0">
      <columns>
-       <TableColumn fx:id="fullName" prefWidth="145.60000610351562" text="Nome e cognome" />
-       <TableColumn fx:id="city" prefWidth="131.20001220703125" text="Città" />
-         <TableColumn fx:id="inPerson" prefWidth="115.199951171875" text="Visite in presenza:" />
-         <TableColumn fx:id="online" prefWidth="111.99993896484375" text="Visite online:" />
-         <TableColumn fx:id="pag" prefWidth="125.5999755859375" text="Aderisce al P.A.G.:" />
-         <TableColumn fx:id="button" prefWidth="167.20000000000005" />
+       <TableColumn fx:id="fullNameColumn" prefWidth="145.60000610351562" text="Nome e cognome" />
+       <TableColumn fx:id="cityColumn" prefWidth="131.20001220703125" text="Città" />
+         <TableColumn fx:id="inPersonColumn" prefWidth="115.199951171875" text="Visite in presenza:" />
+         <TableColumn fx:id="onlineColumn" prefWidth="111.99993896484375" text="Visite online:" />
+         <TableColumn fx:id="pagColumn" prefWidth="125.5999755859375" text="Aderisce al P.A.G.:" />
+         <TableColumn fx:id="buttonColumn" prefWidth="167.20000000000005" />
      </columns>
    </TableView>
    <Text fill="#242038" layoutX="327.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Risultati ricerca">

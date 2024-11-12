@@ -34,7 +34,6 @@ public class UserRegistration {
         try {
             RegistrationDAO.registerPatient(patient);
         } catch (SQLException exception) {
-            System.out.println("Error:" + exception.getMessage()); //DA MODIFICARE
             throw new RuntimeException(exception);  //DA VERIFICARE IL TIPO DI ECCEZIONE
         } catch (MailAlreadyExistsException exception) {
             throw new MailAlreadyExistsException(exception.getMessage());
@@ -46,7 +45,6 @@ public class UserRegistration {
         try {
             RegistrationDAO.registerPsychologist(psychologist);
         } catch (SQLException exception) {
-            System.out.println("Error:" + exception.getMessage());
             throw new RuntimeException(exception);
         } catch (MailAlreadyExistsException exception){
             throw new MailAlreadyExistsException(exception.getMessage());

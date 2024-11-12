@@ -11,13 +11,13 @@ import com.theradiary.ispwtheradiary.model.Psychologist;
 import java.sql.Connection;
 
 import java.sql.SQLException;
-import java.util.List;
 
 
 public class CategoryAndMajorDAO {
+    private CategoryAndMajorDAO(){}
     public static void addCategory(Patient patient, Category category) {
         try(Connection conn= ConnectionFactory.getConnection()) {
-            boolean success = AccountQuery.addCategory(conn, category.toString(), patient.getCredentials().getMail());
+            AccountQuery.addCategory(conn, category.toString(), patient.getCredentials().getMail());
         }catch (SQLException e){
             throw new RuntimeException(e);
         }

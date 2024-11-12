@@ -10,10 +10,10 @@ public class Psychologist extends LoggedUser {
     private ArrayList<Major> majors;
 
 
-    public Psychologist(Credentials credentials, String name, String surname, String city, String description, boolean isInPerson, boolean isOnline, boolean isPag, ArrayList<Patient> patients, ArrayList<Major> majors) {
+    public Psychologist(Credentials credentials, String name, String surname, String city, String description, boolean isInPerson, boolean isOnline, boolean isPag, List<Patient> patients, List<Major> majors) {
         super(credentials, name, surname, city, description, isInPerson, isOnline, isPag);
-        this.patients = patients != null ? patients : new ArrayList<Patient>();
-        this.majors = majors != null ? majors : new ArrayList<Major>();
+        this.patients = patients != null ? (ArrayList<Patient>) patients : new ArrayList<>();
+        this.majors = majors != null ? (ArrayList<Major>) majors : new ArrayList<>();
 
     }
 
@@ -35,10 +35,10 @@ public class Psychologist extends LoggedUser {
 
     public void removeMajor(Major major){this.majors.remove(major);}
 
-    public ArrayList<Major> getMajors() {return majors;
+    public List<Major> getMajors() {return majors;
     }
-    public void setMajors(ArrayList<Major> majors) {
-        this.majors = majors;
+    public void setMajors(List<Major> majors) {
+        this.majors = (ArrayList<Major>) majors;
     }
 }
 

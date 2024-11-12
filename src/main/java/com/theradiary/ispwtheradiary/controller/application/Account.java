@@ -11,7 +11,7 @@ import com.theradiary.ispwtheradiary.model.Psychologist;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Account {
 
@@ -22,7 +22,7 @@ public class Account {
     }
 
     public void addMajor(PsychologistBean psychologistBean, Major major) {
-        Psychologist psychologist= new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline(), psychologistBean.isPag(), null, psychologistBean.getMajors());
+        Psychologist psychologist= new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline(), psychologistBean.isPag(), (ArrayList<Patient>) null, psychologistBean.getMajors());
         CategoryAndMajorDAO.addMajor(psychologist, major);
         psychologistBean.setMajor(psychologist.getMajors());
     }
@@ -35,7 +35,7 @@ public class Account {
     }
 
     public void retrieveMajors(PsychologistBean psychologistBean) {
-        Psychologist psychologist= new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline(), psychologistBean.isPag(), null, psychologistBean.getMajors());
+        Psychologist psychologist= new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline(), psychologistBean.isPag(), (ArrayList<Patient>) null, psychologistBean.getMajors());
         boolean majorsAlreadyInserted = RetrieveDAO.retrieveMajors(psychologist);
         if(majorsAlreadyInserted){
             psychologistBean.setMajor(psychologist.getMajors());

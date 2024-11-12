@@ -8,7 +8,6 @@ import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
-import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -20,11 +19,21 @@ public abstract class UserRegistrationController extends CommonController {
     }
 
     @FXML
-    TextField nome, cognome, citta, mail, descrizione;
+    TextField nome;
+    @FXML
+    TextField cognome;
+    @FXML
+    TextField citta;
+    @FXML
+    TextField mail;
+    @FXML
+    TextField descrizione;
     @FXML
     PasswordField password;
     @FXML
-    CheckBox inPresenza, online;
+    CheckBox inPresenza;
+    @FXML
+    CheckBox online;
     @FXML
     Label errorMessage;
 

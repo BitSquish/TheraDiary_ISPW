@@ -1,8 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.engineering.others.Session;
-import com.theradiary.ispwtheradiary.model.Psychologist;
-import com.theradiary.ispwtheradiary.model.beans.MedicalOfficeBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,8 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class PsychologistsListController extends CommonController{
@@ -24,37 +21,37 @@ public class PsychologistsListController extends CommonController{
     private TableView<PsychologistBean> listPsychologist;
     //Primo parametro: tipo tabella, secondo parametro: tipo colonna
     @FXML
-    private TableColumn<PsychologistBean, String> fullName;
+    private TableColumn<PsychologistBean, String> fullNameColumn;
     @FXML
-    private TableColumn<PsychologistBean, String> city;
+    private TableColumn<PsychologistBean, String> cityColumn;
     @FXML
-    private TableColumn<PsychologistBean, String> inPerson;
+    private TableColumn<PsychologistBean, String> inPersonColumn;
     @FXML
-    private TableColumn<PsychologistBean, String> online;
+    private TableColumn<PsychologistBean, String> onlineColumn;
     @FXML
-    private TableColumn<PsychologistBean, String> pag;
+    private TableColumn<PsychologistBean, String> pagColumn;
     @FXML
-    private TableColumn<PsychologistBean, Void> button;
+    private TableColumn<PsychologistBean, Void> buttonColumn;
 
 
     @FXML
     public void printPsychologists(MouseEvent event, List<PsychologistBean> psychologistBeans){
         ObservableList<PsychologistBean> psychologistsBeansList = FXCollections.observableArrayList(psychologistBeans);
-        fullName.setCellValueFactory(new PropertyValueFactory<PsychologistBean, String>("surname"));
-        city.setCellValueFactory(new PropertyValueFactory<PsychologistBean, String>("city"));
-        inPerson.setCellValueFactory(cellData -> {
+        fullNameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+        cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
+        inPersonColumn.setCellValueFactory(cellData -> {
             boolean presenza = cellData.getValue().isInPerson();
             return new javafx.beans.property.SimpleStringProperty(presenza ? "Sì" : "No");
         });
-        online.setCellValueFactory(cellData -> {
+        onlineColumn.setCellValueFactory(cellData -> {
             boolean online = cellData.getValue().isOnline();
             return new javafx.beans.property.SimpleStringProperty(online ? "Sì" : "No");
         });
-        pag.setCellValueFactory(cellData -> {
+        pagColumn.setCellValueFactory(cellData -> {
             boolean pag = cellData.getValue().isPag();
             return new javafx.beans.property.SimpleStringProperty(pag ? "Sì" : "No");
         });
-        button.setCellFactory(param -> new TableCell<PsychologistBean, Void>() {
+        buttonColumn.setCellFactory(param -> new TableCell<PsychologistBean, Void>() {
                     private final Button btn = new Button("Vedi psicologo");
                     {
                         btn.setOnAction(event -> {
@@ -78,7 +75,7 @@ public class PsychologistsListController extends CommonController{
     }
     @FXML
     private void goToPsychologistDescription(ActionEvent event, PsychologistBean psychologistBean) {
-        System.out.println("Il bottone funziona");
+        //TODO
     }
 }
 

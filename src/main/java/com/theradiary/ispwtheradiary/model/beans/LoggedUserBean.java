@@ -1,7 +1,5 @@
 package com.theradiary.ispwtheradiary.model.beans;
 
-import com.theradiary.ispwtheradiary.engineering.enums.Major;
-import javafx.collections.ObservableList;
 
 public abstract class LoggedUserBean {
     private CredentialsBean credentialsBean;
@@ -89,5 +87,7 @@ public abstract class LoggedUserBean {
         this.pag = pag;
     }
 
-
+    public String getFullName(){
+        return name + " " + surname;
+    }
 }
