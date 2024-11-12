@@ -7,6 +7,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
+import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 
 import javafx.fxml.FXML;
@@ -62,18 +63,13 @@ public class PsychologistAccountController extends AccountController {
 
 
     @FXML
-    public void goToListPatients(MouseEvent event) {
+    public void goToListPatients(List<PatientBean> patientBeans,MouseEvent event) {
         try {
-            FXMLLoader loader;
-            if (session.getUser() == null) {
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
-                loader.setControllerFactory(c -> new LoginController(session));
-            } else {
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PatientList.fxml"));
-                loader.setControllerFactory(c -> new PatientListController(session));
-            }
+            FXMLLoader loader=new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PatientList.fxml"));
+            loader.setControllerFactory(c -> new PatientListController(session));
             Parent root = loader.load();
-            changeScene(root, event);
+            ((PatientListController)loader.getController()).printPatient(event,patientBeans);
+            changeScene(root,event);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
