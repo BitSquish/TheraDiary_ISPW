@@ -63,12 +63,10 @@ public class SearchController extends CommonController{
             FXMLLoader loader = new FXMLLoader(getClass().getResource(PSYCHOLOGISTS_LIST));
             loader.setControllerFactory(c -> new PsychologistsListController(session));
             Parent root = loader.load();
-            ((PsychologistsListController) loader.getController()).printPsychologists(event, psychologistBeans, medicalOfficeBeans);
+            ((PsychologistsListController) loader.getController()).printPsychologists(event, psychologistBeans);
             changeScene(root, event);
         } catch (IOException e) {
             System.out.println(e.getMessage());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 

@@ -1,11 +1,15 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.engineering.others.Session;
+import com.theradiary.ispwtheradiary.model.Psychologist;
 import com.theradiary.ispwtheradiary.model.beans.MedicalOfficeBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.sql.SQLException;
@@ -17,36 +21,64 @@ public class PsychologistsListController extends CommonController{
         super(session);
     }
     @FXML
-    private ListView<String> listPsychologist;
+    private TableView<PsychologistBean> listPsychologist;
+    //Primo parametro: tipo tabella, secondo parametro: tipo colonna
+    @FXML
+    private TableColumn<PsychologistBean, String> fullName;
+    @FXML
+    private TableColumn<PsychologistBean, String> city;
+    @FXML
+    private TableColumn<PsychologistBean, String> inPerson;
+    @FXML
+    private TableColumn<PsychologistBean, String> online;
+    @FXML
+    private TableColumn<PsychologistBean, String> pag;
+    @FXML
+    private TableColumn<PsychologistBean, Void> button;
+
 
     @FXML
-    public void printPsychologists(MouseEvent event, List<PsychologistBean> psychologistBeans, ArrayList<MedicalOfficeBean> medicalOfficeBeans) throws SQLException {
-        List<String> psychologists = new ArrayList<>();
-        for (int i = 0; i < psychologistBeans.size(); i++) {
-            String psychologistInfo = "Dott./Dott.ssa " +
-                    psychologistBeans.get(i).getName() +
-                    " " +
-                    psychologistBeans.get(i).getSurname() +
-                    "\nCittà: " +
-                    psychologistBeans.get(i).getCity() +
-                    "\nDescrizione: " +
-                    psychologistBeans.get(i).getDescription() +
-                    "\nModalità di visita: " +
-                    (psychologistBeans.get(i).isInPerson() ? "In presenza" : "") +
-                    (psychologistBeans.get(i).isOnline() ? " Online" : "") +
-                    (psychologistBeans.get(i).isPag() ? " Aderisce al PAG" : " Non aderisce al PAG")
-                    + "\nStudio medico: " +
-                    medicalOfficeBeans.get(i).getCity() + ", " + "CAP: " + medicalOfficeBeans.get(i).getPostCode() + ", "
-                    + "\n Indirizzo: " +medicalOfficeBeans.get(i).getAddress() + ", " + medicalOfficeBeans.get(i).getOtherInfo();
-                    //MANCANO I MAJOR
-            psychologists.add(psychologistInfo);
+    public void printPsychologists(MouseEvent event, List<PsychologistBean> psychologistBeans){
+        ObservableList<PsychologistBean> psychologistsBeansList = FXCollections.observableArrayList(psychologistBeans);
+        fullName.setCellValueFactory(new PropertyValueFactory<PsychologistBean, String>("surname"));
+        city.setCellValueFactory(new PropertyValueFactory<PsychologistBean, String>("city"));
+        inPerson.setCellValueFactory(cellData -> {
+            boolean presenza = cellData.getValue().isInPerson();
+            return new javafx.beans.property.SimpleStringProperty(presenza ? "Sì" : "No");
+        });
+        online.setCellValueFactory(cellData -> {
+            boolean online = cellData.getValue().isOnline();
+            return new javafx.beans.property.SimpleStringProperty(online ? "Sì" : "No");
+        });
+        pag.setCellValueFactory(cellData -> {
+            boolean pag = cellData.getValue().isPag();
+            return new javafx.beans.property.SimpleStringProperty(pag ? "Sì" : "No");
+        });
+        button.setCellFactory(param -> new TableCell<PsychologistBean, Void>() {
+                    private final Button btn = new Button("Vedi psicologo");
+                    {
+                        btn.setOnAction(event -> {
+                            PsychologistBean psychologistBean = getTableView().getItems().get(getIndex());
+                            goToPsychologistDescription(event, psychologistBean);
+                        });
+                    }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
+            }
 
-            //retrieve informazioni studio medico se presenti
-        }
-        ObservableList<String> items = listPsychologist.getItems();
-        items.addAll(psychologists);
-        listPsychologist.setItems(items);
+        });
+        listPsychologist.setItems(psychologistsBeansList);
+
     }
-
-
+    @FXML
+    private void goToPsychologistDescription(ActionEvent event, PsychologistBean psychologistBean) {
+        System.out.println("Il bottone funziona");
+    }
 }
+
