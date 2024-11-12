@@ -11,10 +11,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPsychologistController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPsychologistController">
    <children>
       <fx:include source="CommonPanel.fxml" />
-      <Text fill="#242038" layoutX="312.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modica i tuoi dati">
+      <Text fill="#242038" layoutX="297.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modica i tuoi dati">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -83,8 +83,8 @@
          </font>
       </Button>
       <Label fx:id="infoPAG" layoutX="598.0" layoutY="289.0" prefHeight="181.0" prefWidth="160.0" style="-fx-background-color: #ffffff; -fx-border-color: #111111; -fx-border-radius: 10px;" text="Aderendo al PA.G. (Programma di Assistenza Gratuita), potrai aiutare pazienti con problemi economici a ricevere il giusto supporto mentale a titolo gratuito. Aiutaci a rendere il mondo un posto migliore!" textAlignment="CENTER" visible="false" wrapText="true" />
-      <Label layoutX="422.0" layoutY="274.0" prefHeight="70.0" prefWidth="136.0" text="Indirizzo studio medico (obbligatorio solo se il box &quot;In presenza&quot; è spuntato)" textAlignment="RIGHT" wrapText="true" />
-      <Button fx:id="indietro" layoutX="735.0" layoutY="129.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+      <Label layoutX="422.0" layoutY="274.0" prefHeight="70.0" prefWidth="136.0" text="Scrivi una descrizione per i tuoi futuri pazienti." textAlignment="RIGHT" wrapText="true" />
+      <Button fx:id="indietro" layoutX="60.0" layoutY="119.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
       <HBox alignment="CENTER" layoutX="530.0" layoutY="429.0" prefHeight="18.0" prefWidth="250.0" spacing="10" style="-fx-alignment: center;">
          <children>
             <Label fx:id="errorMessage" layoutX="140.0" layoutY="342.0" prefHeight="18.0" prefWidth="508.0" style="-fx-alignment: center;" text="   " textFill="#ec4747" visible="false">

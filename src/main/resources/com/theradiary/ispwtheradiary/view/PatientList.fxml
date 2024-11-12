@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #B39067C6;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.PsychologistListController">
    <children>
       <fx:include source="CommonPanel.fxml" />
-      <ListView fx:id="PatientList" layoutX="73.0" layoutY="113.0" prefHeight="390.0" prefWidth="726.0" style="-fx-background-color: transparent;" />
+      <TableView fx:id="patientTable" layoutX="38.0" layoutY="180.0" prefHeight="335.0" prefWidth="800.0">
+        <columns>
+          <TableColumn fx:id="fullName" prefWidth="127.0" text="Nome e Cognome" />
+          <TableColumn fx:id="cityName" prefWidth="127.0" text="Città" />
+            <TableColumn fx:id="description" prefWidth="150.0" text="Descrizione" />
+            <TableColumn fx:id="inPresenza" prefWidth="127.0" text="Visite in presenza:" />
+            <TableColumn fx:id="online" prefWidth="127.0" text="Visite online:" />
+            <TableColumn fx:id="checkProfile" minWidth="0.0" prefWidth="140.0" />
+        </columns>
+      </TableView>
+      <Text fill="#242038" layoutX="327.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I tuoi pazienti " textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Text>
+      <Button fx:id="indietro" layoutX="48.0" layoutY="122.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+      <Button fx:id="richieste" layoutX="750.0" layoutY="122.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Vedi richieste" textFill="WHITE" />
    </children>
 </AnchorPane>
