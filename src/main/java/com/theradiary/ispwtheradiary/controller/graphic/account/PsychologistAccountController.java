@@ -19,7 +19,8 @@ import javafx.scene.input.MouseEvent;
 
 
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class PsychologistAccountController extends AccountController {
@@ -28,10 +29,7 @@ public class PsychologistAccountController extends AccountController {
         super(session);
     }
 
-
-
-
-
+    private static final String PATIENT_LIST = "/com/theradiary/ispwtheradiary/view/PatientList.fxml";
 
 
     @Override
@@ -43,37 +41,45 @@ public class PsychologistAccountController extends AccountController {
     protected Iterable<Major> getItems(LoggedUserBean loggedUserBean) {
         return ((PsychologistBean) loggedUserBean).getMajors();
     }
+
     @FXML
-    public void initializeMajors(){
+    public void initializeMajors() {
         initializeItems(session.getUser());
     }
-   @FXML
-   public static void addMajor(PsychologistBean psychologistBean,Major major){
-         Account account=new Account();
-         account.addMajor(psychologistBean, major);
-         psychologistBean.addMajor(major);
-   }
-   @FXML
-   public static void removeMajor(PsychologistBean psychologistBean,Major major){
-         Account account=new Account();
-         account.removeMajor(psychologistBean, major);
-         psychologistBean.removeMajor(major);
-   }
 
+    @FXML
+    public static void addMajor(PsychologistBean psychologistBean, Major major) {
+        Account account = new Account();
+        account.addMajor(psychologistBean, major);
+        psychologistBean.addMajor(major);
+    }
+
+    @FXML
+    public static void removeMajor(PsychologistBean psychologistBean, Major major) {
+        Account account = new Account();
+        account.removeMajor(psychologistBean, major);
+        psychologistBean.removeMajor(major);
+    }
 
 
     @FXML
-    public void goToListPatients(List<PatientBean> patientBeans,MouseEvent event) {
+    private void goToListPatients(MouseEvent event) {
+
         try {
-            FXMLLoader loader=new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PatientList.fxml"));
+            //Recupero lo psicologo dalla sessione
+            PsychologistBean psychologistBean = (PsychologistBean) session.getUser();
+            //Recupero la lista dei pazienti
+            List<PatientBean> patientBeans= new Account().retrievePatientList(psychologistBean);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(PATIENT_LIST));
             loader.setControllerFactory(c -> new PatientListController(session));
             Parent root = loader.load();
-            ((PatientListController)loader.getController()).printPatient(event,patientBeans);
-            changeScene(root,event);
+            ((PatientListController) loader.getController()).printPatient(event, patientBeans);
+            changeScene(root, event);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
 
+    }
 
 }

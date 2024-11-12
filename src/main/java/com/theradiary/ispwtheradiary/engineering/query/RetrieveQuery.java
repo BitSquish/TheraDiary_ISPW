@@ -92,4 +92,18 @@ public class RetrieveQuery {
         return pstmt.executeQuery();
 
     }
+
+    public static ResultSet retrievePatientList(Connection conn, String mail) {
+        String query = "SELECT mail,name,surname,city,description,inPerson,online,pag FROM patient  WHERE psychologist = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, mail);
+            return pstmt.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
 }

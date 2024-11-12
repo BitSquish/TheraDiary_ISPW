@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #B39067C6;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.PsychologistListController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #B39067C6;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.PatientListController">
    <children>
       <fx:include source="CommonPanel.fxml" />
       <TableView fx:id="patientTable" layoutX="38.0" layoutY="180.0" prefHeight="335.0" prefWidth="800.0">
@@ -25,7 +25,7 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Text>
-      <Button fx:id="indietro" layoutX="48.0" layoutY="122.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
-      <Button fx:id="richieste" layoutX="750.0" layoutY="122.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Vedi richieste" textFill="WHITE" />
+      <Button fx:id="back" layoutX="48.0" layoutY="122.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+      <Button fx:id="goToRequest" layoutX="750.0" layoutY="122.0" mnemonicParsing="false" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Vedi richieste" textFill="WHITE" />
    </children>
 </AnchorPane>

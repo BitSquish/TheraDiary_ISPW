@@ -40,5 +40,7 @@ public class Psychologist extends LoggedUser {
     public void setMajors(List<Major> majors) {
         this.majors = (ArrayList<Major>) majors;
     }
+
+
 }
 

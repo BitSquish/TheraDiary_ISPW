@@ -70,7 +70,6 @@ public class SearchController extends CommonController{
         }
     }
 
-
     @FXML
     protected void checkFields(TextField[] fields) throws EmptyFieldException {
         for(TextField field:fields){
