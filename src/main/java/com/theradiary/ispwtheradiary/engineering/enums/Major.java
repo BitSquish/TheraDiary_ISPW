@@ -22,6 +22,21 @@ public enum Major {
         }
         return null;
     }
+
+    public static String translateMajor(int id){
+        return switch (id) {
+            case 1 -> "Psicoterapia";
+            case 2 -> "Psicologia infantile";
+            case 3 -> "Psicologia della salute";
+            case 4 -> "Neuropsicologia clinica";
+            case 5 -> "Psicologia del trauma";
+            case 6 -> "Psicologia geriatrica";
+            case 7 -> "Psicologia forense";
+            case 8 -> "Psicologia delle dipendenze";
+            case 9 -> "Altro";
+            default -> null;
+        };
+    }
     public int getId() {
         return id;
     }

@@ -1,6 +1,5 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
-import com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
@@ -42,9 +41,9 @@ public class PatientListController extends CommonController {
     @FXML
     public void printPatient(MouseEvent event, List<PatientBean> patientBeans){
         ObservableList<PatientBean> patientBeansList = FXCollections.observableArrayList(patientBeans);
-        fullName.setCellValueFactory(new PropertyValueFactory<PatientBean,String>("surname"));
-        cityName.setCellValueFactory(new PropertyValueFactory<PatientBean,String>("city"));
-        description.setCellValueFactory(new PropertyValueFactory<PatientBean,String>("description"));
+        fullName.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        cityName.setCellValueFactory(new PropertyValueFactory<>("city"));
+        description.setCellValueFactory(new PropertyValueFactory<>("description"));
         inPresenza.setCellValueFactory(cellData->{
             boolean presenza = cellData.getValue().isInPerson();
             return new javafx.beans.property.SimpleStringProperty(presenza ? "Sì" : "No");
@@ -85,11 +84,11 @@ public class PatientListController extends CommonController {
             // Verifica se l'utente è loggato
             if(session.getUser() == null) {
                 // Se non c'è un utente loggato, carica la schermata di login
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
+                loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
                 loader.setControllerFactory(c -> new LoginController(session)); // Imposta il controller per la login
             } else {
                 // Se l'utente è loggato, carica la schermata dell'account dello psicologo
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PsychologistAccount.fxml"));
+                loader = new FXMLLoader(getClass().getResource(PSYCHOLOGIST_ACCOUNT_PATH));
                 loader.setControllerFactory(c -> new PsychologistAccountController(session)); // Controller per l'account psicologo
             }
 

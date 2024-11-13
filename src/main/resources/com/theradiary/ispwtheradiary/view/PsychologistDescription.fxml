@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.PsychologistDescriptionController">
+    <fx:include source="CommonPanel.fxml" />
+   <Text fill="#242038" layoutX="276.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scheda dello psicologo">
+      <font>
+         <Font name="System Bold" size="30.0" />
+      </font>
+   </Text>
+   <Button fx:id="back" layoutX="48.0" layoutY="122.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+   <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#1f93ff00" height="279.0" layoutX="30.0" layoutY="183.0" stroke="#9067c6" strokeType="INSIDE" strokeWidth="3.0" width="813.0" />
+   <Button fx:id="request" layoutX="366.0" layoutY="473.0" mnemonicParsing="false" onMouseClicked="#sendRequest" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Invia richiesta" textFill="WHITE">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Button>
+   <ImageView fitHeight="136.0" fitWidth="136.0" layoutX="64.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@img/account.png" />
+      </image>
+   </ImageView>
+   <Label fx:id="medicalOfficeField" layoutX="396.0" layoutY="302.0" prefHeight="26.0" prefWidth="406.0" text="Studio medico presso: Via di una via molto lunga, 00100">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <Label fx:id="cityField" layoutX="567.0" layoutY="267.0" prefHeight="26.0" prefWidth="260.0" text="Città: Falconara Marittima">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <Label fx:id="otherInfoField" layoutX="225.0" layoutY="323.0" prefHeight="26.0" prefWidth="578.0" text="Inserire altre info su studio medico">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <Label fx:id="majorsField" layoutX="171.0" layoutY="360.0" prefHeight="26.0" prefWidth="661.0" text="Specializzazioni: inserire tante tante tante specializzazioni, ma proprio tantissime, ma tante eh">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <Label fx:id="descriptionField" layoutX="44.0" layoutY="387.0" prefHeight="60.0" prefWidth="791.0" text="Descrizione: inserire tante tante tante specializzazioni, ma proprio tantissime, ma tante eh, Specializzazioni: inserire tante tante tante specializzazioni, ma proprio tantissime, ma tante eh" wrapText="true">
+      <font>
+         <Font name="System Italic" size="16.0" />
+      </font>
+   </Label>
+   <Label layoutX="226.0" layoutY="240.0" prefHeight="26.0" prefWidth="50.0" text="Mail:">
+      <font>
+         <Font name="System Bold" size="16.0" />
+      </font>
+   </Label>
+   <Label fx:id="mailField" layoutX="276.0" layoutY="240.0" prefHeight="26.0" prefWidth="394.0" text="nome.cognome@dominio.com">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <Label layoutX="226.0" layoutY="267.0" prefHeight="26.0" prefWidth="117.0" text="Effettua visite:">
+      <font>
+         <Font name="System Bold" size="16.0" />
+      </font>
+   </Label>
+   <Label fx:id="modalityField" layoutX="341.0" layoutY="267.0" prefHeight="26.0" prefWidth="145.0" text="in presenza e online">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <Label layoutX="516.0" layoutY="267.0" prefHeight="26.0" prefWidth="58.0" text="Città:">
+      <font>
+         <Font name="System Bold" size="16.0" />
+      </font>
+   </Label>
+   <Label layoutX="225.0" layoutY="302.0" prefHeight="26.0" prefWidth="171.0" text="Studio medico presso:">
+      <font>
+         <Font name="System Bold" size="16.0" />
+      </font>
+   </Label>
+   <HBox layoutX="225.0" layoutY="192.0" prefHeight="48.0" prefWidth="570.0">
+      <children>
+         <Label prefHeight="38.0" prefWidth="136.0" text="Dott./Dott.ssa">
+            <font>
+               <Font name="System Bold" size="20.0" />
+            </font>
+         </Label>
+         <Label fx:id="fullNameField" prefHeight="38.0" prefWidth="378.0" text="Nome Cognome">
+            <font>
+               <Font name="System Bold" size="20.0" />
+            </font>
+         </Label>
+      </children>
+   </HBox>
+   <Label layoutX="44.0" layoutY="360.0" prefHeight="26.0" prefWidth="128.0" text="Specializzazioni:">
+      <font>
+         <Font name="System Bold" size="16.0" />
+      </font>
+   </Label>
+
+</AnchorPane>

@@ -28,6 +28,21 @@ public enum Category {
         return null;
     }
 
+    public static String traslateCategory(int id){
+        return switch (id) {
+            case 1 -> "Disturbi d'ansia";
+            case 2 -> "Depressione";
+            case 3 -> "Disturbo bipolare";
+            case 4 -> "PTSD e CPTSD";
+            case 5 -> "Schizofrenia";
+            case 6 -> "Disturbi alimentari";
+            case 7 -> "Disturbi dissociativi";
+            case 8 -> "Disturbi del neurosviluppo";
+            case 9 -> "Altro";
+            default -> null;
+        };
+    }
+
     public int getId() {
         return id;
     }
