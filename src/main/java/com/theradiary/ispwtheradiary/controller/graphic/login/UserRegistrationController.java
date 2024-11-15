@@ -38,11 +38,17 @@ public abstract class UserRegistrationController extends CommonController {
     Label errorMessage;
 
     @FXML
-    protected void checkFields(TextField[] fields) throws EmptyFieldException {
+    protected void checkFields(TextField[] fields,CheckBox[] checkBoxes, PasswordField password) throws EmptyFieldException {
         for (TextField field : fields) {
             if (field.getText().isEmpty()) {
                 throw new EmptyFieldException("Compila tutti i campi");
             }
+        }
+        if(!checkBoxes[0].isSelected() && !checkBoxes[1].isSelected()){
+            throw new EmptyFieldException("Seleziona almeno un tipo di terapia");
+        }
+        if(password.getText().isEmpty()){
+            throw new EmptyFieldException("Inserisci una password");
         }
     }
 
@@ -51,7 +57,9 @@ public abstract class UserRegistrationController extends CommonController {
     protected void registerGenericUser(MouseEvent event, LoggedUserBean loggedUserBean) {
         try{
             TextField[] fields = {nome, cognome, citta, mail, descrizione};
-            checkFields(fields);
+            CheckBox[] checkBoxes = {inPresenza, online};
+            PasswordField password = this.password;
+            checkFields(fields, checkBoxes,password);
             new UserRegistration(loggedUserBean);
             // Pop-up che segnala successo registrazione
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

@@ -67,11 +67,17 @@ public abstract class ModifyController extends CommonController {
     }
 
     @FXML
-    protected void checkFields(TextField[] fields) throws EmptyFieldException {
+    protected void checkFields(TextField[] fields,CheckBox[] checkBoxes, PasswordField password) throws EmptyFieldException {
         for (TextField field : fields) {
             if (field.getText().isEmpty()) {
                 throw new EmptyFieldException("Compila tutti i campi");
             }
+        }
+        if(!checkBoxes[0].isSelected() && !checkBoxes[1].isSelected()){
+            throw new EmptyFieldException("Seleziona almeno una modalità di visita");
+        }
+        if(password.getText().isEmpty()){
+            throw new EmptyFieldException("Inserisci la password");
         }
     }
 
@@ -93,7 +99,9 @@ public abstract class ModifyController extends CommonController {
         successMessage.setVisible(false);
         try{
             TextField[] fields = {nome, cognome, citta, mail, descrizione};
-            checkFields(fields);
+            CheckBox[] checkboxes = {inPresenza, online};
+            PasswordField password = this.password;
+            checkFields(fields,checkboxes,password);
             new UserModify(loggedUserBean);
             session.setUser(loggedUserBean);
             successMessage.setVisible(true);
