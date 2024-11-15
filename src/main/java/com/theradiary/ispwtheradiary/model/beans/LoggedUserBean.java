@@ -12,7 +12,7 @@ public abstract class LoggedUserBean {
     private boolean pag;
 
 
-    protected LoggedUserBean(CredentialsBean credentialsBean, String name, String surname, String city, String description, Boolean isInPerson, Boolean isOnline, boolean pag) {
+    protected LoggedUserBean(CredentialsBean credentialsBean, String name, String surname, String city, String description, boolean isInPerson, boolean isOnline) {
         this.credentialsBean = credentialsBean;
         this.name = name;
         this.surname = surname;
@@ -20,7 +20,19 @@ public abstract class LoggedUserBean {
         this.description = description;
         this.inPerson = isInPerson;
         this.online = isOnline;
-        this.pag = pag;
+        this.pag = false;
+    }
+
+    //Costruttore per login
+    protected LoggedUserBean(CredentialsBean credentialsBean) {
+        this.credentialsBean = credentialsBean;
+        this.name = "";
+        this.surname = "";
+        this.city = "";
+        this.description = "";
+        this.inPerson = false;
+        this.online = false;
+        this.pag = false;
     }
 
     public CredentialsBean getCredentialsBean() {

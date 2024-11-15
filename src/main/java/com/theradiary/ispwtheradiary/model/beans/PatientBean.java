@@ -8,11 +8,20 @@ import java.util.List;
 public class PatientBean extends LoggedUserBean{
     private ArrayList<Category> categories;
     private PsychologistBean psychologistBean;
-    public PatientBean(CredentialsBean credentialsBean, String name, String surname, String city, String description, boolean inPerson, boolean online, boolean pag, List<Category> categories,PsychologistBean psychologistBean) {
-        super(credentialsBean, name, surname, city, description, inPerson, online, pag);
-        this.categories = (categories != null) ? (ArrayList<Category>) categories : new ArrayList<>();
-        this.psychologistBean = psychologistBean;
+    public PatientBean(CredentialsBean credentialsBean, String name, String surname, String city, String description, boolean inPerson, boolean online) {
+        super(credentialsBean, name, surname, city, description, inPerson, online);
+        this.setPag(false);
+        this.categories = new ArrayList<>();
+        this.psychologistBean = null;
     }
+
+    public PatientBean(CredentialsBean credentialsBean) {
+        super(credentialsBean);
+        this.categories = new ArrayList<>();
+        this.psychologistBean = null;
+    }
+
+
     public PsychologistBean getPsychologistBean(){
         return psychologistBean;
     }

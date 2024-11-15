@@ -21,14 +21,16 @@ public class Search {
         List<Psychologist> psychologists = new ArrayList<>();
         RetrieveDAO.searchPsychologists(psychologists, nomeP.getText(), cognomeP.getText(), cittaP.getText(), inPresenza.isSelected(), online.isSelected(), pag.isSelected());
         for(Psychologist psychologist : psychologists){
+            RetrieveDAO.checkPag(psychologist);
             CredentialsBean credentialsBean = new CredentialsBean(psychologist.getCredentials().getMail(), psychologist.getCredentials().getPassword(), psychologist.getCredentials().getRole());
-            PsychologistBean psychologistBean = new PsychologistBean(credentialsBean, psychologist.getName(),psychologist.getSurname(), psychologist.getCity(), psychologist.getDescription(), psychologist.isInPerson(), psychologist.isOnline(), psychologist.isPag(), null, null);
+            PsychologistBean psychologistBean = new PsychologistBean(credentialsBean, psychologist.getName(),psychologist.getSurname(), psychologist.getCity(), psychologist.getDescription(), psychologist.isInPerson(), psychologist.isOnline());
+            psychologistBean.setPag(psychologist.isPag());
             psychologistBeans.add(psychologistBean);
         }
     }
 
     public void searchMedicalOffice(PsychologistBean psychologistBean, MedicalOfficeBean medicalOfficeBean) {
-        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline(), psychologistBean.isPag(), null, null);
+        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
         MedicalOffice medicalOffice = new MedicalOffice(psychologist.getCredentials().getMail(), null, null, null, null);
         try{
             boolean flag = RetrieveDAO.retrieveMedicalOffice(medicalOffice);

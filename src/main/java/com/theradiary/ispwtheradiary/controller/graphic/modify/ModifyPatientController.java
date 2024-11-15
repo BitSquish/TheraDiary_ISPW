@@ -24,10 +24,7 @@ public class ModifyPatientController extends ModifyController {
                 citta.getText(),
                 descrizione.getText(),
                 inPresenza.isSelected(),
-                online.isSelected(),
-                false,
-                null,
-                null
+                online.isSelected()
         );
         modifyGenericUser(event, patientBean);
     }

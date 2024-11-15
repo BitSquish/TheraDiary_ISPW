@@ -46,12 +46,12 @@ public class LoginController extends CommonController {
                 throw new WrongEmailOrPasswordException("Mail o password errati");
             }
             if(credentialsBean.getRole().equals(Role.PATIENT)){
-                PatientBean patientBean = new PatientBean(credentialsBean, null, null, null, null, false, false, false, null, null);
+                PatientBean patientBean = new PatientBean(credentialsBean);
                 login.retrievePatient(patientBean);
                 session.setUser(patientBean);
             }
             else if(credentialsBean.getRole().equals(Role.PSYCHOLOGIST)){
-                PsychologistBean psychologistBean = new PsychologistBean(credentialsBean, null, null, null, null, false, false, false, null, null);
+                PsychologistBean psychologistBean = new PsychologistBean(credentialsBean);
                 login.retrievePsychologist(psychologistBean);
                 session.setUser(psychologistBean);
             }

@@ -10,11 +10,17 @@ public class Psychologist extends LoggedUser {
     private ArrayList<Major> majors;
 
 
-    public Psychologist(Credentials credentials, String name, String surname, String city, String description, boolean isInPerson, boolean isOnline, boolean isPag, List<Patient> patients, List<Major> majors) {
-        super(credentials, name, surname, city, description, isInPerson, isOnline, isPag);
-        this.patients = patients != null ? (ArrayList<Patient>) patients : new ArrayList<>();
-        this.majors = majors != null ? (ArrayList<Major>) majors : new ArrayList<>();
+    public Psychologist(Credentials credentials, String name, String surname, String city, String description, boolean isInPerson, boolean isOnline) {
+        super(credentials, name, surname, city, description, isInPerson, isOnline);
+        this.setPag(false);
+        this.patients = new ArrayList<>();
+        this.majors = new ArrayList<>();
+    }
 
+    public Psychologist(Credentials credentials) {
+        super(credentials);
+        this.patients = new ArrayList<>();
+        this.majors = new ArrayList<>();
     }
 
     public List<Patient> getPatients() {

@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.model.beans;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.model.Credentials;
 
 public class CredentialsBean {
     //Le seguenti variabili sono dichiarate come final per garantire l'integrità dei dati dell'ogetto Credentials
@@ -14,6 +15,12 @@ public class CredentialsBean {
         this.mail = mail;
         this.password = password;
         this.role = role;
+    }
+
+    public CredentialsBean(String mail, Role role){
+            this.mail = mail;
+            this.password = null;
+            this.role = role;
     }
 
     //getters

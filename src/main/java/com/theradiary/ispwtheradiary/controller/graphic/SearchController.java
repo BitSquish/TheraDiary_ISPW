@@ -42,23 +42,14 @@ public class SearchController extends CommonController{
             List<PsychologistBean> psychologistBeans = new ArrayList<>();
             Search searchClass = new Search();
             searchClass.searchPsychologists(psychologistBeans,nomeP, cognomeP, cittaP, inPresenza, online, pag);
-            ArrayList<MedicalOfficeBean> medicalOfficeBeans = new ArrayList<>(psychologistBeans.size());
-            MedicalOfficeBean medicalOfficeBean;
-            ArrayList<Major> majors = new ArrayList<>(psychologistBeans.size());
-            for(int i = 0; i<psychologistBeans.size(); i++){
-                medicalOfficeBean = new MedicalOfficeBean(psychologistBeans.get(i).getCredentialsBean().getMail(), psychologistBeans.get(i).getCity(), null, null, null);
-                searchClass.searchMedicalOffice(psychologistBeans.get(i), medicalOfficeBean);
-                medicalOfficeBeans.add(medicalOfficeBean);
-                //searchClass.searchMajors(psychologistBeans.get(i), majors);
-            }
-            goToPsychologistsList(psychologistBeans, medicalOfficeBeans,event);
+            goToPsychologistsList(psychologistBeans,event);
         } catch (EmptyFieldException | NoResultException exception){
             errorMessage.setText(exception.getMessage());
             errorMessage.setVisible(true);
         }
     }
 
-    private void goToPsychologistsList(List<PsychologistBean> psychologistBeans, ArrayList<MedicalOfficeBean> medicalOfficeBeans, MouseEvent event){
+    private void goToPsychologistsList(List<PsychologistBean> psychologistBeans, MouseEvent event){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(PSYCHOLOGISTS_LIST));
             loader.setControllerFactory(c -> new PsychologistsListController(session));
@@ -66,7 +57,7 @@ public class SearchController extends CommonController{
             ((PsychologistsListController) loader.getController()).printPsychologists(event, psychologistBeans);
             changeScene(root, event);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
     }
 

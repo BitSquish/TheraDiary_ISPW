@@ -15,7 +15,7 @@ public class PsychologistRegistrationController extends UserRegistrationControll
 
     @FXML
     private void registerPsychologist(MouseEvent event) {
-        PsychologistBean psychologistBean = new PsychologistBean(new CredentialsBean(mail.getText(), password.getText(), Role.PSYCHOLOGIST), nome.getText(), cognome.getText(), citta.getText(), descrizione.getText(), inPresenza.isSelected(), online.isSelected(), false, null, null);
+        PsychologistBean psychologistBean = new PsychologistBean(new CredentialsBean(mail.getText(), password.getText(), Role.PSYCHOLOGIST), nome.getText(), cognome.getText(), citta.getText(), descrizione.getText(), inPresenza.isSelected(), online.isSelected());
         registerGenericUser(event, psychologistBean);
     }
 }

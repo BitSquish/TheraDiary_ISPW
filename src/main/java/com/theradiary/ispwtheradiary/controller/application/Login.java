@@ -27,7 +27,7 @@ public class Login {
     }
 
     public void retrievePatient(PatientBean patientBean) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), null, null, null, null, false, false, false, null, null);
+        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), null, null, null, null, false, false);
         RetrieveDAO.retrievePatient(patient);
         patientBean.setName(patient.getName());
         patientBean.setSurname(patient.getSurname());
@@ -39,7 +39,7 @@ public class Login {
     }
 
     public void retrievePsychologist(PsychologistBean psychologistBean) {
-        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), null, null, null, null, false, false, false, null, null);
+        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), null, null, null, null, false, false);
         RetrieveDAO.retrievePsychologist(psychologist);
         psychologistBean.setName(psychologist.getName());
         psychologistBean.setSurname(psychologist.getSurname());

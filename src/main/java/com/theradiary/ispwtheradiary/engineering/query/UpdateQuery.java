@@ -20,9 +20,9 @@ public class UpdateQuery {
         }//Possono esserci problemi da gestire?
     }
 
-    public static void modifyPsychologist(Connection conn, String mail, String name, String surname, String city, String description, boolean inPerson, boolean online, boolean pag) throws SQLException {
+    public static void modifyPsychologist(Connection conn, String mail, String name, String surname, String city, String description, boolean inPerson, boolean online) throws SQLException {
         System.out.println(mail); //Null
-        String query = "UPDATE psychologist SET name = ?, surname = ?, city = ?, description = ?, inPerson = ?, online = ?, pag = ? WHERE mail = ?";
+        String query = "UPDATE psychologist SET name = ?, surname = ?, city = ?, description = ?, inPerson = ?, online = ? WHERE mail = ?";
         try(PreparedStatement pstmt = conn.prepareStatement(query)){
             pstmt.setString(1, name);
             pstmt.setString(2, surname);
@@ -30,17 +30,15 @@ public class UpdateQuery {
             pstmt.setString(4, description);
             pstmt.setBoolean(5, inPerson);
             pstmt.setBoolean(6, online);
-            pstmt.setBoolean(7, pag);
-            pstmt.setString(8, mail);  // This is the parameter for the WHERE clause
+            pstmt.setString(7, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Errore: " + e.getMessage());
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 
-    public static void modifyPatient(Connection conn, String mail, String name, String surname, String city, String description, boolean inPerson, boolean online, boolean pag) {
-        String query = "UPDATE patient SET name = ?, surname = ?, city = ?, description = ?, inPerson = ?, online = ?, pag = ? WHERE mail = ?";
+    public static void modifyPatient(Connection conn, String mail, String name, String surname, String city, String description, boolean inPerson, boolean online) {
+        String query = "UPDATE patient SET name = ?, surname = ?, city = ?, description = ?, inPerson = ?, online = ? WHERE mail = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, name);
@@ -49,12 +47,33 @@ public class UpdateQuery {
             pstmt.setString(4, description);
             pstmt.setBoolean(5, inPerson);
             pstmt.setBoolean(6, online);
-            pstmt.setBoolean(7, pag);
-            pstmt.setString(8, mail);  // This is the parameter for the WHERE clause
+            pstmt.setString(7, mail);  // This is the parameter for the WHERE clause
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Errore: " + e.getMessage());
             throw new RuntimeException(e);
+        }
+    }
+
+    public static void joinPagPsychologist(Connection conn, String mail) {
+        String query = "UPDATE psychologist SET pag = ? WHERE mail = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setBoolean(1, true);
+            pstmt.setString(2, mail);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static void joinPagPatient(Connection conn, String mail) {
+        String query = "UPDATE patient SET pag = ? WHERE mail = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setBoolean(1, true);
+            pstmt.setString(2, mail);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

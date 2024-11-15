@@ -4,7 +4,9 @@ import com.theradiary.ispwtheradiary.controller.application.PsychologistDescript
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
+import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.model.beans.MedicalOfficeBean;
+import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -61,8 +63,11 @@ public class PsychologistDescriptionController extends CommonController {
             majorsString+=". ";
         }
         majorsField.setText(majorsString);
-        System.out.println(majorsString);
-        String medicalOffice = medicalOfficeBean.getAddress()+", "+medicalOfficeBean.getPostCode();
+        String medicalOffice = "";
+        if(medicalOfficeBean.getPostCode() == null)
+            medicalOffice = "Non specificato";
+        else
+            medicalOffice = medicalOfficeBean.getAddress()+", "+medicalOfficeBean.getPostCode();
         medicalOfficeField.setText(medicalOffice);
         otherInfoField.setText(medicalOfficeBean.getOtherInfo());
     }
@@ -94,7 +99,15 @@ public class PsychologistDescriptionController extends CommonController {
     }
 
     @FXML
-    protected void sendRequest(MouseEvent event){
-        System.out.println("Richiesta inviata");
+    protected void sendRequest(MouseEvent event) {
+/*
+        PatientBean patientBean = (PatientBean) session.getUser();
+        PsychologistDescription psychologistDescription = new PsychologistDescription();
+        if(patientBean.getPsychologistBean() == null){
+            //eccezione you already have a psychologist
+        }else{
+            ((PatientBean)session.getUser()).setPsychologistBean(psychologistBean);
+            psychologistDescription.sendRequest(patientBean, psychologistBean);
+        }*/
     }
 }

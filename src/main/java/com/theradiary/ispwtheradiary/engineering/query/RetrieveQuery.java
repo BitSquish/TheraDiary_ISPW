@@ -58,14 +58,14 @@ public class RetrieveQuery {
     }
 
     public static ResultSet retrievePsychologist(Connection conn, String mail) throws SQLException {
-        String query = "SELECT mail, name, surname, city, description, inPerson, online, pag FROM psychologist WHERE mail = ?";
+        String query = "SELECT mail, name, surname, city, description, inPerson, online FROM psychologist WHERE mail = ?";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, mail);
         return pstmt.executeQuery();
     }
 
     public static ResultSet retrievePatient(Connection conn, String mail) throws SQLException {
-        String query = "SELECT mail, name, surname, city, description, inPerson, online, pag FROM patient WHERE mail = ?";
+        String query = "SELECT mail, name, surname, city, description, inPerson, online FROM patient WHERE mail = ?";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, mail);
         return pstmt.executeQuery();
@@ -106,4 +106,25 @@ public class RetrieveQuery {
     }
 
 
+    public static ResultSet checkPatientPag(Connection conn, String mail) {
+        String query = "SELECT pag FROM patient WHERE mail = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, mail);
+            return pstmt.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static ResultSet checkPsychologistPag(Connection conn, String mail) {
+        String query = "SELECT pag FROM psychologist WHERE mail = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, mail);
+            return pstmt.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

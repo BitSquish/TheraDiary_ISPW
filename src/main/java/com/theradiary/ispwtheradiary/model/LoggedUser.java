@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.model;
 
-public class LoggedUser {
+public abstract class LoggedUser {
     private Credentials credentials;
     private String name;
     private String surname;
@@ -10,7 +10,7 @@ public class LoggedUser {
     private boolean online;
     private boolean pag;
 
-    public LoggedUser(Credentials credentials, String name, String surname, String city, String description, Boolean isInPerson, Boolean isOnline, Boolean isPAG) {
+    protected LoggedUser(Credentials credentials, String name, String surname, String city, String description, boolean isInPerson, boolean isOnline) {
         this.credentials = credentials;
         this.name = name;
         this.surname = surname;
@@ -18,9 +18,17 @@ public class LoggedUser {
         this.description = description;
         this.inPerson = isInPerson;
         this.online = isOnline;
-        this.pag = isPAG;
+        this.pag = false;
     }
-    public LoggedUser() {
+    protected  LoggedUser(Credentials credentials){
+        this.credentials = credentials;
+        this.name = null;
+        this.surname = null;
+        this.city = null;
+        this.description = null;
+        this.inPerson = false;
+        this.online = false;
+        this.pag = false;
     }
     //getter e setter per i nuovi campi
 

@@ -7,10 +7,7 @@ import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.RetrieveQuery;
-import com.theradiary.ispwtheradiary.model.Credentials;
-import com.theradiary.ispwtheradiary.model.MedicalOffice;
-import com.theradiary.ispwtheradiary.model.Patient;
-import com.theradiary.ispwtheradiary.model.Psychologist;
+import com.theradiary.ispwtheradiary.model.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -23,14 +20,13 @@ public class RetrieveDAO {
     }
 
     public static void searchPsychologists(List<Psychologist> psychologists, String name, String surname, String city, boolean inPerson, boolean online, boolean pag) throws NoResultException {
-
         try (Connection conn = ConnectionFactory.getConnection();
              ResultSet rs = RetrieveQuery.searchPsychologist(conn, name, surname, city, inPerson, online, pag)) {
             if (!rs.next())
                 throw new NoResultException("La ricerca non ha prodotto risultati");
             do {
                 //Passare la password come null o creare nuovo costruttore solo con la mail?
-                Credentials credentials = new Credentials(rs.getString("mail"), null, Role.PSYCHOLOGIST);
+                Credentials credentials = new Credentials(rs.getString("mail"), Role.PSYCHOLOGIST);
                 Psychologist psychologist = new Psychologist(
                         credentials,
                         rs.getString("name"),
@@ -38,11 +34,9 @@ public class RetrieveDAO {
                         rs.getString("city"),
                         rs.getString("description"),
                         rs.getBoolean("inPerson"),
-                        rs.getBoolean("online"),
-                        rs.getBoolean("pag"),
-                        null,
-                        null
+                        rs.getBoolean("online")
                 );
+                psychologist.setPag(rs.getBoolean("pag"));
                 psychologists.add(psychologist);
             } while (rs.next());
         } catch (SQLException e) {
@@ -77,7 +71,6 @@ public class RetrieveDAO {
                 patient.setDescription(rs.getString("description"));
                 patient.setInPerson(rs.getBoolean("inPerson"));
                 patient.setOnline(rs.getBoolean("online"));
-                patient.setPag(rs.getBoolean("pag"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -94,7 +87,6 @@ public class RetrieveDAO {
                 psychologist.setDescription(rs.getString("description"));
                 psychologist.setInPerson(rs.getBoolean("inPerson"));
                 psychologist.setOnline(rs.getBoolean("online"));
-                psychologist.setPag(rs.getBoolean("pag"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -156,11 +148,10 @@ public class RetrieveDAO {
                         rs.getString("city"),
                         rs.getString("description"),
                         rs.getBoolean("inPerson"),
-                        rs.getBoolean("online"),
-                        rs.getBoolean("pag"),
-                        null,
-                        null
+                        rs.getBoolean("online")
+
                 );
+                patient.setPag(rs.getBoolean("pag"));
                 patients.add(patient);
 
                 // Aggiungi il paziente alla lista
@@ -172,5 +163,19 @@ public class RetrieveDAO {
         return patients;
     }
 
+    public static void checkPag(LoggedUser loggedUser) {
+        try (Connection conn = ConnectionFactory.getConnection()){
+            ResultSet rs;
+             if(loggedUser.getCredentials().getRole().equals(Role.PATIENT))
+                rs = RetrieveQuery.checkPatientPag(conn, loggedUser.getCredentials().getMail());
+            else
+                rs = RetrieveQuery.checkPsychologistPag(conn, loggedUser.getCredentials().getMail());
+            if (rs.next()) {
+                loggedUser.setPag(rs.getBoolean("pag"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 

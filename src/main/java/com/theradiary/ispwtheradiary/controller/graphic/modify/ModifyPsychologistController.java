@@ -22,10 +22,7 @@ public class ModifyPsychologistController extends ModifyController {
                 citta.getText(),
                 descrizione.getText(),
                 inPresenza.isSelected(),
-                online.isSelected(),
-                false,
-                null,
-                null
+                online.isSelected()
         );
         modifyGenericUser(event, psychologistBean);
     }

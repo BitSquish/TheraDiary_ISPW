@@ -21,19 +21,19 @@ public class Account {
 
 
     public void addCategory(PatientBean patientBean, Category category) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline(), patientBean.isPag(), patientBean.getCategories(), null);
+        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
         CategoryAndMajorDAO.addCategory(patient, category);
         patientBean.setCategories(patient.getCategories());
     }
 
     public void addMajor(PsychologistBean psychologistBean, Major major) {
-        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline(), psychologistBean.isPag(), (ArrayList<Patient>) null, psychologistBean.getMajors());
+        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
         CategoryAndMajorDAO.addMajor(psychologist, major);
         psychologistBean.setMajor(psychologist.getMajors());
     }
 
     public void retrieveCategories(PatientBean patientBean) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline(), patientBean.isPag(), patientBean.getCategories(), null);
+        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
         boolean categoriesAlreadyInserted = RetrieveDAO.retrieveCategories(patient);
         if (categoriesAlreadyInserted) {
             patientBean.setCategories(patient.getCategories());
@@ -41,7 +41,7 @@ public class Account {
     }
 
     public void retrieveMajors(PsychologistBean psychologistBean) {
-        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline(), psychologistBean.isPag(), (ArrayList<Patient>) null, psychologistBean.getMajors());
+        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
         boolean majorsAlreadyInserted = RetrieveDAO.retrieveMajors(psychologist);
         if (majorsAlreadyInserted) {
             psychologistBean.setMajor(psychologist.getMajors());
@@ -49,14 +49,14 @@ public class Account {
     }
 
     public void removeCategory(PatientBean patientBean, Category category) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline(), patientBean.isPag(), patientBean.getCategories(), null);
+        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
         CategoryAndMajorDAO.removeCategory(patient, category);
         patientBean.setCategories(patient.getCategories());
 
     }
 
     public void removeMajor(PsychologistBean psychologistBean, Major major) {
-        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline(), psychologistBean.isPag(), null, psychologistBean.getMajors());
+        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
         CategoryAndMajorDAO.removeMajor(psychologist, major);
         psychologistBean.setMajor(psychologist.getMajors());
     }
@@ -74,10 +74,7 @@ public class Account {
                 psychologistBean.getCity(),
                 psychologistBean.getDescription(),
                 psychologistBean.isInPerson(),
-                psychologistBean.isOnline(),
-                psychologistBean.isPag(),
-                null,
-                psychologistBean.getMajors()
+                psychologistBean.isOnline()
         );
 
         List<PatientBean> patientBeans = new ArrayList<>();
@@ -98,10 +95,7 @@ public class Account {
                     patient.getCity(),
                     patient.getDescription(),
                     patient.isInPerson(),
-                    patient.isOnline(),
-                    patient.isPag(),
-                    patient.getCategories(),
-                    null
+                    patient.isOnline()
             );
 
             patientBeans.add(patientBean);

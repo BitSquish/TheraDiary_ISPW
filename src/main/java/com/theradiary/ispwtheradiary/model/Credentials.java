@@ -16,6 +16,12 @@ public class Credentials {
         this.role = role;
     }
 
+    public Credentials(String mail, Role role){
+        this.mail = mail;
+        this.password = null;
+        this.role = role;
+    }
+
     //getters
     public String getMail(){
         return mail;

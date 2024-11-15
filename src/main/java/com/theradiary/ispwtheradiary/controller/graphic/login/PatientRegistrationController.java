@@ -15,7 +15,7 @@ public class PatientRegistrationController extends UserRegistrationController {
 
     @FXML
     private void registerPatient(MouseEvent event) {
-        PatientBean patientBean = new PatientBean(new CredentialsBean(mail.getText(), password.getText(), Role.PATIENT), nome.getText(), cognome.getText(), citta.getText(), descrizione.getText(), inPresenza.isSelected(), online.isSelected(), false, null, null);
+        PatientBean patientBean = new PatientBean(new CredentialsBean(mail.getText(), password.getText(), Role.PATIENT), nome.getText(), cognome.getText(), citta.getText(), descrizione.getText(), inPresenza.isSelected(), online.isSelected());
         registerGenericUser(event, patientBean);
     }
 }

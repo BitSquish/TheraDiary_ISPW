@@ -11,10 +11,17 @@ public class PsychologistBean extends LoggedUserBean {
     private ArrayList<PatientBean> patientsBean;
     private ArrayList<Major> majors;
 
-    public PsychologistBean(CredentialsBean credentialsBean, String name, String surname, String city, String description, boolean inPerson, boolean online, boolean pag, List<PatientBean> patientsBean, List<Major> majors) {
-        super(credentialsBean, name, surname, city, description, inPerson, online, pag);
-        this.patientsBean = patientsBean != null ? (ArrayList<PatientBean>) patientsBean : new ArrayList<>();
-        this.majors = majors != null ? (ArrayList<Major>) majors : new ArrayList<>();
+    public PsychologistBean(CredentialsBean credentialsBean, String name, String surname, String city, String description, boolean inPerson, boolean online) {
+        super(credentialsBean, name, surname, city, description, inPerson, online);
+        this.setPag(false);
+        this.patientsBean = new ArrayList<>();
+        this.majors = new ArrayList<>();
+    }
+
+    public PsychologistBean(CredentialsBean credentialsBean) {
+        super(credentialsBean);
+        this.patientsBean = new ArrayList<>();
+        this.majors = new ArrayList<>();
     }
 
     public List<PatientBean> getPatientsBean() {
@@ -44,6 +51,7 @@ public class PsychologistBean extends LoggedUserBean {
     public void setMajor(List<Major> majors) {
         this.majors = (ArrayList<Major>) majors;
     }
+
 }
 
 
