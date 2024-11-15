@@ -50,13 +50,13 @@ public abstract class ModifyController extends CommonController {
         try {
             FXMLLoader loader;
             if(session.getUser()==null){
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/Login.fxml"));
+                loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
                 loader.setControllerFactory(c -> new LoginController(session));
             }else if (session.getUser().getCredentialsBean().getRole().toString().equals("PATIENT")) {
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PatientAccount.fxml"));
+                loader = new FXMLLoader(getClass().getResource(PATIENT_ACCOUNT_PATH));
                 loader.setControllerFactory(c -> new PatientAccountController(session));
             } else {
-                loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PsychologistAccount.fxml"));
+                loader = new FXMLLoader(getClass().getResource(PSYCHOLOGIST_ACCOUNT_PATH));
                 loader.setControllerFactory(c -> new PsychologistAccountController(session));
             }
             Parent root = loader.load();

@@ -55,7 +55,7 @@ public class PatientListController extends CommonController {
         checkProfile.setCellFactory(param -> new TableCell<PatientBean, Void>() {
             private final Button btn = new Button("Vedi profilo");
             {
-                btn.setOnAction(event -> {
+                btn.setOnMouseClicked(event -> {
                     PatientBean patientBean = getTableView().getItems().get(getIndex());
                     goToPatientProfile(event, patientBean);
                 });
@@ -73,8 +73,16 @@ public class PatientListController extends CommonController {
         patientTable.setItems(patientBeansList);
     }
     @FXML
-    private void goToPatientProfile(ActionEvent event, PatientBean patientBean) {
-        //TODO
+    private void goToPatientProfile(MouseEvent event, PatientBean patientBean) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(PATIENT_PROFILE_PATH));
+            loader.setControllerFactory(c -> new PatientProfileController(session));
+            Parent root = loader.load();
+            changeScene(root, event);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
+        }
     }
     @FXML
     protected void back(MouseEvent event) {

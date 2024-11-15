@@ -75,6 +75,10 @@ public abstract class CommonController {
     @FXML
     protected static final String APPOINTMENT_PATH = "/com/theradiary/ispwtheradiary/view/Appointment.fxml";
     @FXML
+    protected static final String PATIENT_PROFILE_PATH = "/com/theradiary/ispwtheradiary/view/PatientProfile.fxml";
+    @FXML
+    protected static final String PATIENT_LIST_PATH = "/com/theradiary/ispwtheradiary/view/PatientList.fxml";
+    @FXML
     protected void goToHomepage(MouseEvent event){
         try{
             FXMLLoader loader;
