@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.login.LoginController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.login.LoginController">
     <fx:include source="CommonPanel.fxml" />
    <Line endX="99.99996948242188" endY="-95.00001525878906" layoutX="338.0" layoutY="261.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
    <Text fill="#242038" layoutX="178.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Accedi">
@@ -25,7 +25,7 @@
       </font>
    </Text>
    <TextField fx:id="mail" layoutX="98.0" layoutY="219.0" prefHeight="35.0" prefWidth="254.0" style="-fx-background-radius: 20px;" />
-   <Button fx:id="accedi" layoutX="157.0" layoutY="418.0" mnemonicParsing="false" onMouseClicked="#setCredentials" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6;" text="Accedi" textFill="WHITE">
+   <Button fx:id="accedi" layoutX="157.0" layoutY="418.0" mnemonicParsing="false" onMouseClicked="#setCredentials" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Accedi" textFill="WHITE">
       <font>
          <Font size="18.0" />
       </font>
@@ -45,12 +45,12 @@
          <Font name="System Italic" size="18.0" />
       </font>
    </Text>
-   <Button fx:id="patientRegistration" layoutX="584.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#goToPatientRegistration" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6;" text="Paziente" textFill="WHITE">
+   <Button fx:id="patientRegistration" layoutX="584.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#goToPatientRegistration" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Paziente" textFill="WHITE">
       <font>
          <Font size="18.0" />
       </font>
    </Button>
-   <Button fx:id="psychologistRegistration" layoutX="584.0" layoutY="433.0" mnemonicParsing="false" onMouseClicked="#goToPsychologistRegistration" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6;" text="Psicologo" textFill="WHITE">
+   <Button fx:id="psychologistRegistration" layoutX="584.0" layoutY="433.0" mnemonicParsing="false" onMouseClicked="#goToPsychologistRegistration" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Psicologo" textFill="WHITE">
       <font>
          <Font size="18.0" />
       </font>

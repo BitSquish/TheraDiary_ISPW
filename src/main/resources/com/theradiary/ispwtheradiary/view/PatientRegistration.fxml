@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.login.PatientRegistrationController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.login.PatientRegistrationController">
     <fx:include source="CommonPanel.fxml" />
    <Text fill="#242038" layoutX="264.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrati come paziente">
       <font>
@@ -81,7 +81,7 @@
       </font>
    </Text>
    <CheckBox fx:id="online" layoutX="690.0" layoutY="389.0" mnemonicParsing="false" />
-   <Button fx:id="registratiPt" layoutX="593.0" layoutY="462.0" mnemonicParsing="false" onMouseClicked="#registerPatient" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6;" text="Registrati" textFill="WHITE">
+   <Button fx:id="registratiPt" layoutX="593.0" layoutY="462.0" mnemonicParsing="false" onMouseClicked="#registerPatient" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Registrati" textFill="WHITE">
       <font>
          <Font size="18.0" />
       </font>

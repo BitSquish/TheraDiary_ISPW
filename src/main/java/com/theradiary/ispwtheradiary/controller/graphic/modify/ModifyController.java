@@ -7,6 +7,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAcco
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
+import com.theradiary.ispwtheradiary.engineering.others.Validator;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -102,6 +103,9 @@ public abstract class ModifyController extends CommonController {
             CheckBox[] checkboxes = {inPresenza, online};
             PasswordField password = this.password;
             checkFields(fields,checkboxes,password);
+            if (!Validator.isValidMail(mail.getText(), errorMessage) || !Validator.isValidPassword(password.getText(), errorMessage)) {
+                return;
+            }
             new UserModify(loggedUserBean);
             session.setUser(loggedUserBean);
             successMessage.setVisible(true);

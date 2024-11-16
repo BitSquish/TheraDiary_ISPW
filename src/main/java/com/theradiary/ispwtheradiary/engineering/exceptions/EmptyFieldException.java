@@ -7,11 +7,4 @@ public class EmptyFieldException extends Exception {
         super(message);
     }
 
-    public void showAlert() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Errore");
-        alert.setHeaderText(null);
-        alert.setContentText("Compila tutti i campi");
-        alert.showAndWait();
-    }
 }

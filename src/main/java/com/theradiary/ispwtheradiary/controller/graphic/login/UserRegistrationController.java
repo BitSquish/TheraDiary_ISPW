@@ -8,6 +8,7 @@ import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
+import com.theradiary.ispwtheradiary.engineering.others.Validator;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -38,7 +39,7 @@ public abstract class UserRegistrationController extends CommonController {
     Label errorMessage;
 
     @FXML
-    protected void checkFields(TextField[] fields,CheckBox[] checkBoxes, PasswordField password) throws EmptyFieldException {
+    protected void checkFields(TextField[] fields,CheckBox[] checkBoxes, PasswordField password,Label errorMessage) throws EmptyFieldException {
         for (TextField field : fields) {
             if (field.getText().isEmpty()) {
                 throw new EmptyFieldException("Compila tutti i campi");
@@ -50,6 +51,7 @@ public abstract class UserRegistrationController extends CommonController {
         if(password.getText().isEmpty()){
             throw new EmptyFieldException("Inserisci una password");
         }
+
     }
 
 
@@ -59,7 +61,10 @@ public abstract class UserRegistrationController extends CommonController {
             TextField[] fields = {nome, cognome, citta, mail, descrizione};
             CheckBox[] checkBoxes = {inPresenza, online};
             PasswordField password = this.password;
-            checkFields(fields, checkBoxes,password);
+            checkFields(fields, checkBoxes,password,errorMessage);
+            if (!Validator.isValidMail(mail.getText(), errorMessage) || !Validator.isValidPassword(password.getText(), errorMessage)) {
+                return;
+            }
             new UserRegistration(loggedUserBean);
             // Pop-up che segnala successo registrazione
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
