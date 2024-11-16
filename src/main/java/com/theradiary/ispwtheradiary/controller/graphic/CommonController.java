@@ -85,6 +85,8 @@ public abstract class CommonController {
     @FXML
     protected static final String PATIENT_LIST = "/com/theradiary/ispwtheradiary/view/PatientList.fxml";
     @FXML
+    protected static final String PSYCHOLOGIST_LIST_PATH="/com/theradiary/ispwtheradiary/view/PsychologistList.fxml";
+    @FXML
     protected void goToHomepage(MouseEvent event){
         try{
             FXMLLoader loader;

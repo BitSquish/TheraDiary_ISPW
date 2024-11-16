@@ -1,5 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
+import com.theradiary.ispwtheradiary.controller.application.Account;
 import com.theradiary.ispwtheradiary.controller.application.PsychologistDescription;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
@@ -16,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.StringJoiner;
 
 public class PsychologistDescriptionController extends CommonController {
     public PsychologistDescriptionController(Session session) {
@@ -48,21 +50,26 @@ public class PsychologistDescriptionController extends CommonController {
         cityField.setText(psychologistBean.getCity());
         mailField.setText(psychologistBean.getCredentialsBean().getMail());
         String modality = "";
-        if(psychologistBean.isInPerson() && psychologistBean.isOnline())
-            modality+="In presenza e online";
-        else if (psychologistBean.isInPerson())
-            modality+="In presenza";
-        else
-            modality+="Online";
-        modalityField.setText(modality);
-        String description = "\""+psychologistBean.getDescription()+"\"";
-        descriptionField.setText(description);
-        String majorsString = "";
-        for(Major major: psychologistBean.getMajors()){
-            majorsString+=Major.translateMajor(major.getId());
-            majorsString+=". ";
+        if(psychologistBean.isInPerson() && psychologistBean.isOnline()) {
+            modality += "In presenza e online";
+        }else if (psychologistBean.isInPerson()) {
+            modality += "In presenza";
+        }else {
+            modality += "Online";
         }
-        majorsField.setText(majorsString);
+        modalityField.setText(modality);
+        StringJoiner majorString= new StringJoiner(",");
+        Account account = new Account();
+        account.retrieveMajors(psychologistBean);
+        if(psychologistBean.getMajors() != null && !psychologistBean.getMajors().isEmpty()) {
+            for (Major m : psychologistBean.getMajors()) {
+                String translatedMajor = Major.translateMajor(m.getId());
+                majorString.add(translatedMajor);
+            }
+            majorsField.setText(majorString.toString());
+        }else{
+            majorsField.setText("Non specificate");
+        }
         String medicalOffice = "";
         if(medicalOfficeBean.getPostCode() == null)
             medicalOffice = "Non specificato";
@@ -70,6 +77,7 @@ public class PsychologistDescriptionController extends CommonController {
             medicalOffice = medicalOfficeBean.getAddress()+", "+medicalOfficeBean.getPostCode();
         medicalOfficeField.setText(medicalOffice);
         otherInfoField.setText(medicalOfficeBean.getOtherInfo());
+        descriptionField.setText(psychologistBean.getDescription());
     }
 
     @FXML

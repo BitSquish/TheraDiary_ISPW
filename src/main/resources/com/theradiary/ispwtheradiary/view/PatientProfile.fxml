@@ -24,7 +24,7 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Text>
-      <Button fx:id="task" layoutX="366.0" layoutY="473.0" mnemonicParsing="false" onMouseClicked="#goToTasks" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="AffidaTask" textFill="WHITE">
+      <Button fx:id="task" layoutX="366.0" layoutY="473.0" mnemonicParsing="false" onMouseClicked="#goToTasksAndDiary" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="AffidaTask" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
