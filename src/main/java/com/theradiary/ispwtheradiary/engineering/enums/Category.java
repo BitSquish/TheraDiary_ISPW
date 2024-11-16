@@ -28,7 +28,7 @@ public enum Category {
         return null;
     }
 
-    public static String traslateCategory(int id){
+    public static String translateCategory(int id){
         return switch (id) {
             case 1 -> "Disturbi d'ansia";
             case 2 -> "Depressione";

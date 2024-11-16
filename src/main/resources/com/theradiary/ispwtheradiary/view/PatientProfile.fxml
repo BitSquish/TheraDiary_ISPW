@@ -9,7 +9,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.PatientProfileController">
    <children>
       <fx:include source="CommonPanel.fxml" />
@@ -35,12 +34,12 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="mailField" layoutX="276.0" layoutY="240.0" prefHeight="26.0" prefWidth="394.0" text="nome.cognome@dominio.com">
+      <Label fx:id="mail" layoutX="276.0" layoutY="240.0" prefHeight="26.0" prefWidth="394.0" text="nome.cognome@dominio.com">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="fullNameField" layoutX="225.0" layoutY="192.0" prefHeight="38.0" prefWidth="378.0" text="Nome Cognome">
+      <Label fx:id="fullName" layoutX="225.0" layoutY="192.0" prefHeight="38.0" prefWidth="378.0" text="Nome Cognome">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -50,7 +49,7 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="modalityField" layoutX="360.0" layoutY="267.0" prefHeight="26.0" prefWidth="145.0" text="in presenza e online">
+      <Label fx:id="meet" layoutX="360.0" layoutY="267.0" prefHeight="26.0" prefWidth="145.0" text="in presenza e online">
          <font>
             <Font size="16.0" />
          </font>
@@ -60,7 +59,7 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="cityField" layoutX="267.0" layoutY="302.0" prefHeight="26.0" prefWidth="260.0" text="Città: Falconara Marittima">
+      <Label fx:id="city" layoutX="267.0" layoutY="302.0" prefHeight="26.0" prefWidth="260.0" text="Città: Falconara Marittima">
          <font>
             <Font size="16.0" />
          </font>
@@ -70,12 +69,12 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="majorsField" layoutX="192.0" layoutY="360.0" prefHeight="26.0" prefWidth="650.0" text=": tante tante tante categorie, ma proprio tantissime, ma tante eh">
+      <Label fx:id="category" layoutX="192.0" layoutY="360.0" prefHeight="26.0" prefWidth="650.0" text=": tante tante tante categorie, ma proprio tantissime, ma tante eh">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="descriptionField" layoutX="44.0" layoutY="387.0" prefHeight="60.0" prefWidth="791.0" text="Descrizione: inserire tante tante tante specializzazioni, ma proprio tantissime, ma tante eh, Specializzazioni: inserire tante tante tante specializzazioni, ma proprio tantissime, ma tante eh" wrapText="true">
+      <Label fx:id="description" layoutX="44.0" layoutY="387.0" prefHeight="60.0" prefWidth="791.0" text="Descrizione: inserire tante tante tante specializzazioni, ma proprio tantissime, ma tante eh, Specializzazioni: inserire tante tante tante specializzazioni, ma proprio tantissime, ma tante eh" wrapText="true">
          <font>
             <Font name="System Italic" size="16.0" />
          </font>

@@ -29,7 +29,7 @@ public class PsychologistAccountController extends AccountController {
         super(session);
     }
 
-    private static final String PATIENT_LIST = "/com/theradiary/ispwtheradiary/view/PatientList.fxml";
+
 
 
     @Override
@@ -60,26 +60,37 @@ public class PsychologistAccountController extends AccountController {
         account.removeMajor(psychologistBean, major);
         psychologistBean.removeMajor(major);
     }
-
-
     @FXML
     private void goToListPatients(MouseEvent event) {
 
         try {
-            //Recupero lo psicologo dalla sessione
-            PsychologistBean psychologistBean = (PsychologistBean) session.getUser();
-            //Recupero la lista dei pazienti
-            List<PatientBean> patientBeans= new Account().retrievePatientList(psychologistBean);
+            FXMLLoader loader;
+            Parent root;
+            if(session.getUser()==null){
+                loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
+                loader.setControllerFactory(c -> new LoginController(session));
+                root = loader.load();
+                changeScene(root, event);
+                return;
+            }else {
+                //Recupero lo psicologo dalla sessione
+                PsychologistBean psychologistBean = (PsychologistBean) session.getUser();
+                //Recupero la lista dei pazienti
+                List<PatientBean> patientBeans = new Account().retrievePatientList(psychologistBean);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(PATIENT_LIST));
-            loader.setControllerFactory(c -> new PatientListController(session));
-            Parent root = loader.load();
-            ((PatientListController) loader.getController()).printPatient(event, patientBeans);
+                loader = new FXMLLoader(getClass().getResource(PATIENT_LIST));
+                loader.setControllerFactory(c -> new PatientListController(session));
+                root = loader.load();
+                ((PatientListController) loader.getController()).printPatient(event, patientBeans);
+            }
             changeScene(root, event);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
     }
+
+
+
 
 }

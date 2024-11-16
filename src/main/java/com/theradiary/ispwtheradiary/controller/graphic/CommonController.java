@@ -1,5 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
+import com.theradiary.ispwtheradiary.controller.application.Account;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepageController;
@@ -8,6 +9,8 @@ import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtContr
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
+import com.theradiary.ispwtheradiary.model.beans.PatientBean;
+import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -21,6 +24,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public abstract class CommonController {
     protected Session session;
@@ -78,6 +82,8 @@ public abstract class CommonController {
     protected static final String PATIENT_PROFILE_PATH = "/com/theradiary/ispwtheradiary/view/PatientProfile.fxml";
     @FXML
     protected static final String PATIENT_LIST_PATH = "/com/theradiary/ispwtheradiary/view/PatientList.fxml";
+    @FXML
+    protected static final String PATIENT_LIST = "/com/theradiary/ispwtheradiary/view/PatientList.fxml";
     @FXML
     protected void goToHomepage(MouseEvent event){
         try{
@@ -138,25 +144,38 @@ public abstract class CommonController {
         }
     }
 
-
     @FXML
     private void goToTasks(MouseEvent event){
         try {
             FXMLLoader loader;
+            Parent root;
             if(session.getUser()==null){
                 loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
                 loader.setControllerFactory(c -> new LoginController(session));
-            }
-            else{
+                root = loader.load();
+            } else if (session.getUser().getCredentialsBean().getRole().equals(Role.PATIENT)) {
                 loader = new FXMLLoader(getClass().getResource(DIARY_AND_TASKS_PATH));
                 loader.setControllerFactory(c -> new DiaryAndTasksController(session));
+                root = loader.load();
+            }else{
+                PsychologistBean psychologistBean = (PsychologistBean) session.getUser();
+                //Recupero la lista dei pazienti
+                List<PatientBean> patientBeans = new Account().retrievePatientList(psychologistBean);
+
+                loader = new FXMLLoader(getClass().getResource(PATIENT_LIST));
+                loader.setControllerFactory(c -> new PatientListController(session));
+                root = loader.load();
+                ((PatientListController) loader.getController()).printPatient(event, patientBeans);
+
             }
-            Parent root = loader.load();
             changeScene(root, event);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+
+
 
 
     @FXML
