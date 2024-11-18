@@ -102,12 +102,12 @@ public abstract class ModifyController extends CommonController {
         try{
             TextField[] fields = {nome, cognome, citta, mail, descrizione};
             CheckBox[] checkboxes = {inPresenza, online};
-            PasswordField password = this.password;
             checkFields(fields,checkboxes,password);
             if (!Validator.isValidMail(mail.getText(), errorMessage)){//!Validator.isValidPassword(password.getText(), errorMessage)) {
-                return;
+                return; //Lanciare eccezione apposita
             }
-            new UserModify(loggedUserBean,session.getUser().getCredentialsBean());
+            UserModify userModify = new UserModify();
+            userModify.userModify(loggedUserBean,session.getUser());  //session.getUser().getCredentialsBean() passa le vecchie credenziali
             session.setUser(loggedUserBean);
             successMessage.setVisible(true);
         } catch (MailAlreadyExistsException | EmptyFieldException exception) {

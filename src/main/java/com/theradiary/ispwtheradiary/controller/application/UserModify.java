@@ -14,38 +14,54 @@ import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 import java.sql.SQLException;
 
 public class UserModify {
-    public UserModify(LoggedUserBean loggedUserBean, CredentialsBean credentialsBean) throws MailAlreadyExistsException {
+    public void userModify(LoggedUserBean loggedUserBean, LoggedUserBean oldLoggedUserBean) throws MailAlreadyExistsException {
         try{
-            UpdateDAO.modifyMail(loggedUserBean.getCredentialsBean().getMail(), credentialsBean.getMail());
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
-        }try{
-            UpdateDAO.modifyPassword(loggedUserBean.getCredentialsBean().getPassword(), credentialsBean.getPassword());
-        }catch (SQLException e){
-            throw new RuntimeException(e);
+            if(loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT)){
+                PatientBean patientBean = (PatientBean) loggedUserBean;
+                modifyPatient(patientBean, oldLoggedUserBean);
+            }
+            else if (loggedUserBean.getCredentialsBean().getRole().equals(Role.PSYCHOLOGIST)){
+                PsychologistBean psychologistBean = (PsychologistBean) loggedUserBean;
+                modifyPsychologist(psychologistBean, oldLoggedUserBean);
+            }
+        } catch (MailAlreadyExistsException e){
+            throw new MailAlreadyExistsException(e.getMessage());
         }
-        if(loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT)){
-            modifyPatient(new PatientBean(loggedUserBean.getCredentialsBean(), loggedUserBean.getName(), loggedUserBean.getSurname(), loggedUserBean.getCity(), loggedUserBean.getDescription(), loggedUserBean.isInPerson(), loggedUserBean.isOnline()));
-        }
-        else if (loggedUserBean.getCredentialsBean().getRole().equals(Role.PSYCHOLOGIST)){
-            modifyPsychologist(new PsychologistBean(loggedUserBean.getCredentialsBean(), loggedUserBean.getName(), loggedUserBean.getSurname(), loggedUserBean.getCity(), loggedUserBean.getDescription(), loggedUserBean.isInPerson(), loggedUserBean.isOnline()));
-        }
+
     }
 
-    private void modifyPsychologist(PsychologistBean psychologistBean) {
+    private void modifyPsychologist(PsychologistBean psychologistBean, LoggedUserBean oldLoggedUserBean) throws MailAlreadyExistsException {
         Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), psychologistBean.getCredentialsBean().getRole()), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
         try{
+            UpdateDAO.modifyCredentials(psychologist.getCredentials(), new Credentials(oldLoggedUserBean.getCredentialsBean().getMail(), oldLoggedUserBean.getCredentialsBean().getPassword(), oldLoggedUserBean.getCredentialsBean().getRole()));
             UpdateDAO.modifyPsychologist(psychologist);
-        }catch (Exception e){
+            psychologistBean.setCredentialsBean(new CredentialsBean(psychologist.getCredentials().getMail(), psychologist.getCredentials().getPassword(), psychologist.getCredentials().getRole()));
+            psychologistBean.setName(psychologist.getName());
+            psychologistBean.setSurname(psychologist.getSurname());
+            psychologistBean.setCity(psychologist.getCity());
+            psychologistBean.setDescription(psychologist.getDescription());
+            psychologistBean.setInPerson(psychologist.isInPerson());
+            psychologistBean.setOnline(psychologist.isOnline());
+        }catch (MailAlreadyExistsException e){
+            throw new MailAlreadyExistsException(e.getMessage());
+        }catch (SQLException e){
             //gestione dell'eccezione
         }
 
     }
 
-    private void modifyPatient(PatientBean patientBean) {
+    private void modifyPatient(PatientBean patientBean, LoggedUserBean oldLoggedUserBean) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), patientBean.getCredentialsBean().getRole()), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
         try {
+            UpdateDAO.modifyCredentials(patient.getCredentials(), new Credentials(oldLoggedUserBean.getCredentialsBean().getMail(), oldLoggedUserBean.getCredentialsBean().getPassword(), oldLoggedUserBean.getCredentialsBean().getRole()));
             UpdateDAO.modifyPatient(patient);
+            patientBean.setCredentialsBean(new CredentialsBean(patient.getCredentials().getMail(), patient.getCredentials().getPassword(), patient.getCredentials().getRole()));
+            patientBean.setName(patient.getName());
+            patientBean.setSurname(patient.getSurname());
+            patientBean.setCity(patient.getCity());
+            patientBean.setDescription(patient.getDescription());
+            patientBean.setInPerson(patient.isInPerson());
+            patientBean.setOnline(patient.isOnline());
         } catch (Exception e){
             //gestione dell'eccezione
         }

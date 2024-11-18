@@ -38,7 +38,19 @@ public class UpdateQuery {
             throw new RuntimeException(e.getMessage());
         }
     }
-    public static void modifyMail(Connection conn, String newMail, String oldMail)  {
+
+    public static void modifyCredentials(Connection conn, String mail, String password, String oldMail) {
+        String query = "UPDATE users SET mail = ?, password = ? WHERE mail = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, mail);
+            pstmt.setString(2, password);
+            pstmt.setString(3, oldMail);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+        /*public static void modifyMail(Connection conn, String newMail, String oldMail)  {
         String query = "UPDATE users SET mail = ? WHERE mail = ?";
         try(PreparedStatement pstmt = conn.prepareStatement(query)){
             pstmt.setString(1,newMail);
@@ -58,7 +70,7 @@ public class UpdateQuery {
         }catch (SQLException e){
             throw new RuntimeException(e.getMessage());
         }
-    }
+    }*/
 
     public static void modifyPatient(Connection conn, String mail, String name, String surname, String city, String description, boolean inPerson, boolean online) {
         String query = "UPDATE patient SET name = ?, surname = ?, city = ?, description = ?, inPerson = ?, online = ? WHERE mail = ?";

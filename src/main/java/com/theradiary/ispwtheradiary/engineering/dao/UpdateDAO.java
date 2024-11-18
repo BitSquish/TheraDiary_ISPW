@@ -2,17 +2,31 @@ package com.theradiary.ispwtheradiary.engineering.dao;
 
 
 
+import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
+import com.theradiary.ispwtheradiary.engineering.query.AccountQuery;
+import com.theradiary.ispwtheradiary.engineering.query.LoginAndRegistrationQuery;
 import com.theradiary.ispwtheradiary.engineering.query.UpdateQuery;
+import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.MedicalOffice;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class UpdateDAO {
     private UpdateDAO(){}
+
+    private static boolean emailExists(String mail) throws SQLException {
+        try (Connection conn = ConnectionFactory.getConnection()){
+            int rs = LoginAndRegistrationQuery.checkMail(conn, mail);
+            if (rs != 0)
+                return true;
+        }
+        return false;
+    }
     public static void modifyMedicalOffice(MedicalOffice medicalOffice) throws SQLException {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.modifyMedicalOffice(conn, medicalOffice.getMail(), medicalOffice.getCity(), medicalOffice.getPostCode(), medicalOffice.getAddress(), medicalOffice.getOtherInfo());
@@ -20,7 +34,20 @@ public class UpdateDAO {
             throw new SQLException(e.getMessage());
         }
     }
-    public static void modifyMail(String newMail, String oldMail) throws SQLException {
+
+    public static void modifyCredentials(Credentials newCredentials, Credentials oldCredentials) throws SQLException, MailAlreadyExistsException {
+        try(Connection conn = ConnectionFactory.getConnection()){
+            if(!Objects.equals(newCredentials.getMail(), oldCredentials.getMail()) && emailExists(newCredentials.getMail()))
+                throw new MailAlreadyExistsException(("Mail già registrata"));
+            UpdateQuery.modifyCredentials(conn, newCredentials.getMail(), newCredentials.getPassword(), oldCredentials.getMail());
+
+        } catch(SQLException e){
+            throw new SQLException(e.getMessage());
+        } catch (MailAlreadyExistsException e) {
+            throw new MailAlreadyExistsException(e.getMessage());
+        }
+    }
+    /*public static void modifyMail(String newMail, String oldMail) throws SQLException {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.modifyMail(conn, newMail, oldMail);
         } catch(SQLException e){
@@ -33,7 +60,7 @@ public class UpdateDAO {
         } catch(SQLException e){
             throw new SQLException(e.getMessage());
         }
-    }
+    }*/
     public static void modifyPsychologist(Psychologist psychologist) throws SQLException {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.modifyPsychologist(conn, psychologist.getCredentials().getMail(), psychologist.getName(), psychologist.getSurname(), psychologist.getCity(), psychologist.getDescription(), psychologist.isInPerson(), psychologist.isOnline());
