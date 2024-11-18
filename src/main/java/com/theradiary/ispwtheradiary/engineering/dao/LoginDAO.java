@@ -25,7 +25,6 @@ public class LoginDAO {
                 credentials.setRole(Role.valueOf(rs.getString("role")));
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             throw new WrongEmailOrPasswordException("Mail o password errati");
         }
     }
