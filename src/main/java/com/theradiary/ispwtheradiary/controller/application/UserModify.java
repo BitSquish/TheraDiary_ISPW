@@ -2,15 +2,26 @@ package com.theradiary.ispwtheradiary.controller.application;
 
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
+import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 
+import java.sql.SQLException;
+
 public class UserModify {
-    public UserModify(LoggedUserBean loggedUserBean) {
+    public UserModify(LoggedUserBean loggedUserBean, CredentialsBean credentialsBean) throws MailAlreadyExistsException {
+        try{
+            UpdateDAO.modifyUsers(loggedUserBean.getCredentialsBean().getMail(), credentialsBean.getMail(), credentialsBean.getPassword(),loggedUserBean.getCredentialsBean().getPassword());
+        } catch (SQLException e) {
+            if(e.getMessage().contains("Duplicate entry")){
+                throw new MailAlreadyExistsException("Mail già esistente");
+            }
+        }
         if(loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT)){
             modifyPatient(new PatientBean(loggedUserBean.getCredentialsBean(), loggedUserBean.getName(), loggedUserBean.getSurname(), loggedUserBean.getCity(), loggedUserBean.getDescription(), loggedUserBean.isInPerson(), loggedUserBean.isOnline()));
         }

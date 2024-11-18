@@ -20,7 +20,14 @@ public class UpdateDAO {
             throw new SQLException(e.getMessage());
         }
     }
+    public static void modifyUsers(String mail,String newMail,String newPassword,String password) throws SQLException{
 
+        try(Connection conn = ConnectionFactory.getConnection()){
+            UpdateQuery.modifyUser(conn, mail, newMail, newPassword, password);
+        } catch(SQLException e){
+            throw new SQLException(e.getMessage());
+        }
+    }
     public static void modifyPsychologist(Psychologist psychologist) throws SQLException {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.modifyPsychologist(conn, psychologist.getCredentials().getMail(), psychologist.getName(), psychologist.getSurname(), psychologist.getCity(), psychologist.getDescription(), psychologist.isInPerson(), psychologist.isOnline());

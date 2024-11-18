@@ -6,6 +6,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountCo
 import com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.Validator;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
@@ -103,14 +104,17 @@ public abstract class ModifyController extends CommonController {
             CheckBox[] checkboxes = {inPresenza, online};
             PasswordField password = this.password;
             checkFields(fields,checkboxes,password);
-            if (!Validator.isValidMail(mail.getText(), errorMessage) || !Validator.isValidPassword(password.getText(), errorMessage)) {
+            if (!Validator.isValidMail(mail.getText(), errorMessage)){//!Validator.isValidPassword(password.getText(), errorMessage)) {
                 return;
             }
-            new UserModify(loggedUserBean);
+            new UserModify(loggedUserBean,session.getUser().getCredentialsBean());
             session.setUser(loggedUserBean);
             successMessage.setVisible(true);
         } catch (EmptyFieldException exception){
             errorMessage.setText(exception.getMessage());
+            errorMessage.setVisible(true);
+        } catch (MailAlreadyExistsException e) {
+            errorMessage.setText(e.getMessage());
             errorMessage.setVisible(true);
         }
 

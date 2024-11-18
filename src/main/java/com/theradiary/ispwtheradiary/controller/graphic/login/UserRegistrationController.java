@@ -62,7 +62,7 @@ public abstract class UserRegistrationController extends CommonController {
             CheckBox[] checkBoxes = {inPresenza, online};
             PasswordField password = this.password;
             checkFields(fields, checkBoxes,password,errorMessage);
-            if (!Validator.isValidMail(mail.getText(), errorMessage) || !Validator.isValidPassword(password.getText(), errorMessage)) {
+            if (!Validator.isValidMail(mail.getText(), errorMessage) ){ //!Validator.isValidPassword(password.getText(), errorMessage)) {
                 return;
             }
             new UserRegistration(loggedUserBean);

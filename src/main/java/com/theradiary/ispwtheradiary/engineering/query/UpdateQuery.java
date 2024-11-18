@@ -1,5 +1,7 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
+import com.theradiary.ispwtheradiary.engineering.enums.Role;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -36,7 +38,16 @@ public class UpdateQuery {
             throw new RuntimeException(e.getMessage());
         }
     }
-
+    public static void modifyUser(Connection conn, String mail, String newMail, String newPassword,String password) throws SQLException {
+        String query = "UPDATE users SET mail = ?, password = ? WHERE mail = ?";
+        try(PreparedStatement pstmt = conn.prepareStatement(query)){
+            pstmt.setString(1, newMail);
+            pstmt.setString(2, newPassword);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
     public static void modifyPatient(Connection conn, String mail, String name, String surname, String city, String description, boolean inPerson, boolean online) {
         String query = "UPDATE patient SET name = ?, surname = ?, city = ?, description = ?, inPerson = ?, online = ? WHERE mail = ?";
         try {
