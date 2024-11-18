@@ -20,10 +20,16 @@ public class UpdateDAO {
             throw new SQLException(e.getMessage());
         }
     }
-    public static void modifyUsers(String mail,String newMail,String newPassword,String password) throws SQLException{
-
+    public static void modifyMail(String newMail, String oldMail) throws SQLException {
         try(Connection conn = ConnectionFactory.getConnection()){
-            UpdateQuery.modifyUser(conn, mail, newMail, newPassword, password);
+            UpdateQuery.modifyMail(conn, newMail, oldMail);
+        } catch(SQLException e){
+            throw new SQLException(e.getMessage());
+        }
+    }
+    public static void modifyPassword(String newPassword, String oldPassword) throws SQLException {
+        try(Connection conn = ConnectionFactory.getConnection()){
+            UpdateQuery.modifyPassword(conn, newPassword, oldPassword);
         } catch(SQLException e){
             throw new SQLException(e.getMessage());
         }

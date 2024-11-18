@@ -16,11 +16,13 @@ import java.sql.SQLException;
 public class UserModify {
     public UserModify(LoggedUserBean loggedUserBean, CredentialsBean credentialsBean) throws MailAlreadyExistsException {
         try{
-            UpdateDAO.modifyUsers(loggedUserBean.getCredentialsBean().getMail(), credentialsBean.getMail(), credentialsBean.getPassword(),loggedUserBean.getCredentialsBean().getPassword());
-        } catch (SQLException e) {
-            if(e.getMessage().contains("Duplicate entry")){
-                throw new MailAlreadyExistsException("Mail già esistente");
-            }
+            UpdateDAO.modifyMail(loggedUserBean.getCredentialsBean().getMail(), credentialsBean.getMail());
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }try{
+            UpdateDAO.modifyPassword(loggedUserBean.getCredentialsBean().getPassword(), credentialsBean.getPassword());
+        }catch (SQLException e){
+            throw new RuntimeException(e);
         }
         if(loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT)){
             modifyPatient(new PatientBean(loggedUserBean.getCredentialsBean(), loggedUserBean.getName(), loggedUserBean.getSurname(), loggedUserBean.getCity(), loggedUserBean.getDescription(), loggedUserBean.isInPerson(), loggedUserBean.isOnline()));

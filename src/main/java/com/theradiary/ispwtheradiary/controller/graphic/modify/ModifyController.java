@@ -110,11 +110,8 @@ public abstract class ModifyController extends CommonController {
             new UserModify(loggedUserBean,session.getUser().getCredentialsBean());
             session.setUser(loggedUserBean);
             successMessage.setVisible(true);
-        } catch (EmptyFieldException exception){
+        } catch (MailAlreadyExistsException | EmptyFieldException exception) {
             errorMessage.setText(exception.getMessage());
-            errorMessage.setVisible(true);
-        } catch (MailAlreadyExistsException e) {
-            errorMessage.setText(e.getMessage());
             errorMessage.setVisible(true);
         }
 
