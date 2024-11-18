@@ -103,9 +103,9 @@ public abstract class ModifyController extends CommonController {
             CheckBox[] checkboxes = {inPresenza, online};
             PasswordField password = this.password;
             checkFields(fields,checkboxes,password);
-            if (!Validator.isValidMail(mail.getText(), errorMessage) || !Validator.isValidPassword(password.getText(), errorMessage)) {
+            if (!Validator.isValidMail(mail.getText(), errorMessage))// || !Validator.isValidPassword(password.getText(), errorMessage)) {
                 return;
-            }
+            //}
             new UserModify(loggedUserBean);
             session.setUser(loggedUserBean);
             successMessage.setVisible(true);

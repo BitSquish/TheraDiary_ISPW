@@ -97,6 +97,25 @@ public abstract class LoggedUser {
         this.pag = pag;
     }
 
+    public String getModality() {
+        String modality = "";
+        if (this.isInPerson() && this.isOnline()) {
+            modality += "In presenza e online";
+        } else if (this.isInPerson()) {
+            modality += "In presenza";
+        } else {
+            modality += "Online";
+        }
+        return modality;
+    }
+
+    public boolean getInPersonFromModality(String modality){
+        return modality.equals("In presenza e online") || modality.equals("In presenza");
+    }
+
+    public boolean getOnlineFromModality(String modality){
+        return modality.equals("In presenza e online") || modality.equals("Online");
+    }
 
 }
 

@@ -4,11 +4,9 @@ import com.theradiary.ispwtheradiary.controller.application.Account;
 import com.theradiary.ispwtheradiary.controller.application.PsychologistDescription;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
+import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
-import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
-import com.theradiary.ispwtheradiary.model.beans.MedicalOfficeBean;
-import com.theradiary.ispwtheradiary.model.beans.PatientBean;
-import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
+import com.theradiary.ispwtheradiary.model.beans.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,7 +23,9 @@ public class PsychologistDescriptionController extends CommonController {
     }
 
     @FXML
-    private Label fullNameField;
+    private Label nameField;
+    @FXML
+    private Label surnameField;
     @FXML
     private Label cityField;
     @FXML
@@ -40,24 +40,19 @@ public class PsychologistDescriptionController extends CommonController {
     private Label medicalOfficeField;
     @FXML
     private Label otherInfoField;
+    @FXML
+    private Label message;
 
 
     public void printPsychologist(PsychologistBean psychologistBean) {
         MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCity(), null, null, null);
         PsychologistDescription psychologistDescription = new PsychologistDescription();
         psychologistDescription.searchPsychologistInfo(psychologistBean, medicalOfficeBean);
-        fullNameField.setText(psychologistBean.getFullName());
+        nameField.setText(psychologistBean.getName());
+        surnameField.setText(psychologistBean.getSurname());
         cityField.setText(psychologistBean.getCity());
         mailField.setText(psychologistBean.getCredentialsBean().getMail());
-        String modality = "";
-        if(psychologistBean.isInPerson() && psychologistBean.isOnline()) {
-            modality += "In presenza e online";
-        }else if (psychologistBean.isInPerson()) {
-            modality += "In presenza";
-        }else {
-            modality += "Online";
-        }
-        modalityField.setText(modality);
+        modalityField.setText(psychologistBean.getModality());
         StringJoiner majorString= new StringJoiner(",");
         Account account = new Account();
         account.retrieveMajors(psychologistBean);
@@ -108,14 +103,18 @@ public class PsychologistDescriptionController extends CommonController {
 
     @FXML
     protected void sendRequest(MouseEvent event) {
-/*
         PatientBean patientBean = (PatientBean) session.getUser();
         PsychologistDescription psychologistDescription = new PsychologistDescription();
-        if(patientBean.getPsychologistBean() == null){
-            //eccezione you already have a psychologist
+        if(patientBean.getPsychologistBean() != null){
+            message.setText("Hai già uno psicologo");
+            message.setVisible(true);
         }else{
-            ((PatientBean)session.getUser()).setPsychologistBean(psychologistBean);
+            PsychologistBean psychologistBean = new PsychologistBean(new CredentialsBean(mailField.getText(), Role.PSYCHOLOGIST), nameField.getText(), surnameField.getText(), cityField.getText(), descriptionField.getText(), false, false);
+            psychologistBean.setInPerson(psychologistBean.getInPersonFromModality(modalityField.getText()));
+            psychologistBean.setOnline(psychologistBean.getOnlineFromModality(modalityField.getText()));
             psychologistDescription.sendRequest(patientBean, psychologistBean);
-        }*/
+            message.setText("Richiesta inviata con successo");
+            message.setVisible(true);
+        }
     }
 }

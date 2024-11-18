@@ -32,13 +32,12 @@ public class PsychologistDescription {
     }
 
     public void sendRequest(PatientBean patientBean, PsychologistBean psychologistBean) {
-        /*Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), null, Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
-        //lista pazienti settata a null perchè dovrei ricavarla a parte ma non è necessaria per questo metodo
-        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), null, Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
+        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
         try{
             PtAndPsDAO.sendRequest(psychologist, patient, LocalDate.now());
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());
-        }*/
+        }
     }
 }
