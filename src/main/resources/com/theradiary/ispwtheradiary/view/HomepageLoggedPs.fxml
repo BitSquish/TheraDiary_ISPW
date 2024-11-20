@@ -80,7 +80,7 @@
             <Font name="System Bold" size="14.0" />
         </font>
     </Text>
-    <Text fill="WHITE" layoutX="681.0" layoutY="251.0" onMouseClicked="#goToDashboard" strokeType="OUTSIDE" strokeWidth="0.0" text="V" wrappingWidth="134.93685913085938">
+    <Text fill="WHITE" layoutX="681.0" layoutY="243.0" onMouseClicked="#goToDashboard" strokeType="OUTSIDE" strokeWidth="0.0" text="Dai un'occhiata ai messaggi scambiati dai pazienti di TheraDiary!" wrappingWidth="134.93685913085938">
         <font>
             <Font size="14.0" />
         </font>

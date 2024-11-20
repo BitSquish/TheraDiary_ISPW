@@ -1,12 +1,14 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
+import com.theradiary.ispwtheradiary.controller.application.PatientList;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
+import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
+import com.theradiary.ispwtheradiary.model.beans.RequestBean;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PatientListController extends CommonController {
@@ -38,6 +41,8 @@ public class PatientListController extends CommonController {
     private TableColumn<PatientBean,String> online;
     @FXML
     private TableColumn<PatientBean,Void> checkProfile;
+
+    private static final String REQUEST_PATH = "/com/theradiary/ispwtheradiary/view/Request.fxml";
     @FXML
     public void printPatient(MouseEvent event, List<PatientBean> patientBeans){
         ObservableList<PatientBean> patientBeansList = FXCollections.observableArrayList(patientBeans);
@@ -52,14 +57,16 @@ public class PatientListController extends CommonController {
             boolean online = cellData.getValue().isOnline();
             return new javafx.beans.property.SimpleStringProperty(online ? "Sì" : "No");
         });
-        checkProfile.setCellFactory(param -> new TableCell<PatientBean, Void>() {
+        checkProfile.setCellFactory(param -> new TableCell<>() {
             private final Button btn = new Button("Vedi profilo");
+
             {
                 btn.setOnMouseClicked(event -> {
                     PatientBean patientBean = getTableView().getItems().get(getIndex());
                     goToPatientProfile(event, patientBean);
                 });
             }
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -112,7 +119,28 @@ public class PatientListController extends CommonController {
         }
     }
 
+    //DA COMPLETARE
+    private void goToRequest(List<RequestBean> requestBeans, MouseEvent event){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(REQUEST_PATH));
+            loader.setControllerFactory(c -> new RequestController(session));
+            Parent root = loader.load();
+            ((RequestController)loader.getController()).loadRequest(requestBeans);
+            changeScene(root, event);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
+        }
+    }
 
 
+    //DA COMPLETARE
+    @FXML
+    public void seeRequest(MouseEvent event) {
+        ArrayList<RequestBean> requestBeans = new ArrayList<>();
+        PatientList patientList = new PatientList();
+        patientList.getRequests((PsychologistBean)session.getUser(), requestBeans);
+        goToRequest(requestBeans, event);
+    }
 }
 

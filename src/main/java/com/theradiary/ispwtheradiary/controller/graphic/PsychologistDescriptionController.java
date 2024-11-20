@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.StringJoiner;
 
@@ -112,7 +113,8 @@ public class PsychologistDescriptionController extends CommonController {
             PsychologistBean psychologistBean = new PsychologistBean(new CredentialsBean(mailField.getText(), Role.PSYCHOLOGIST), nameField.getText(), surnameField.getText(), cityField.getText(), descriptionField.getText(), false, false);
             psychologistBean.setInPerson(psychologistBean.getInPersonFromModality(modalityField.getText()));
             psychologistBean.setOnline(psychologistBean.getOnlineFromModality(modalityField.getText()));
-            psychologistDescription.sendRequest(patientBean, psychologistBean);
+            RequestBean requestBean = new RequestBean(patientBean, psychologistBean, LocalDate.now());
+            psychologistDescription.sendRequest(requestBean);
             message.setText("Richiesta inviata con successo");
             message.setVisible(true);
         }

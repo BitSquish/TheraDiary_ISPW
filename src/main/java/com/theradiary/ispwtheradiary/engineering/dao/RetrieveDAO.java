@@ -142,7 +142,7 @@ public class RetrieveDAO {
             // Itera sui risultati della query
             while (rs.next()) {
                 Patient patient = new Patient(
-                        new Credentials(rs.getString("mail"), null, Role.PATIENT),
+                        new Credentials(rs.getString("mail"), Role.PATIENT),
                         rs.getString("name"),
                         rs.getString("surname"),
                         rs.getString("city"),
@@ -153,7 +153,6 @@ public class RetrieveDAO {
                 );
                 patient.setPag(rs.getBoolean("pag"));
                 patients.add(patient);
-
                 // Aggiungi il paziente alla lista
             }
 
@@ -175,6 +174,30 @@ public class RetrieveDAO {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+
+    public static void retrievePatientsRequest(Psychologist psychologist, List<Request> requests) {
+        try(Connection conn = ConnectionFactory.getConnection()){
+            ResultSet rs = RetrieveQuery.retrieveRequests(conn, psychologist.getCredentials().getMail());
+            while(rs.next()){
+                Patient patient = new Patient(
+                        new Credentials(rs.getString("mail"), Role.PATIENT),
+                        rs.getString("name"),
+                        rs.getString("surname"),
+                        rs.getString("city"),
+                        rs.getString("description"),
+                        rs.getBoolean("inPerson"),
+                        rs.getBoolean("online")
+                );
+                patient.setPag(rs.getBoolean("pag"));
+                Request request = new Request(patient, psychologist, rs.getDate("date").toLocalDate());
+                requests.add(request);
+            }
+
+        }catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

@@ -15,6 +15,7 @@ import java.io.IOException;
 
 public class Main extends Application {
 
+    public static final String HOMEPAGENOTLOGGED_PATH = "/com/theradiary/ispwtheradiary/view/HomepageNotLogged.fxml";
     public static void main(String[] args) {
         launch(args);
     }
@@ -24,7 +25,7 @@ public class Main extends Application {
         //ATTENZIONE: VA AGGIUNTA LA SCELTA DELLE INTERFACCE A RIGA DI COMANDO
         //VERSIONE COERENTE CON SCORSO ANNO, VA RIVISTA
         Session session = new Session(false);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/HomepageNotLogged.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(HOMEPAGENOTLOGGED_PATH));
         loader.setControllerFactory(c -> new HomepageController(session)); //Controller homepage
         Parent rootParent = loader.load();
         Scene scene = new Scene(rootParent);

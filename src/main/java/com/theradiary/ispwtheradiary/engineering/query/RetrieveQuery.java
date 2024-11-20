@@ -127,4 +127,13 @@ public class RetrieveQuery {
             throw new RuntimeException(e);
         }
     }
+
+    public static ResultSet retrieveRequests(Connection conn, String mailPsychologist) throws SQLException {
+        //Mettere un order by date (da più a meno recente)
+        String query = "SELECT patient.mail,patient.name, patient.surname, patient.city, patient.description, patient.inPerson, patient.online, patient.pag, request.date " +
+                "FROM patient JOIN request ON patient.mail = request.patient WHERE request.psychologist = ?";
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setString(1, mailPsychologist);
+        return pstmt.executeQuery();
+    }
 }
