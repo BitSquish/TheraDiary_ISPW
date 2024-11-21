@@ -34,21 +34,24 @@ public class PatientListController extends CommonController {
     @FXML
     private TableColumn<PatientBean,String> cityName;
     @FXML
-    private TableColumn<PatientBean,String> description;
-    @FXML
     private TableColumn<PatientBean,String> inPresenza;
     @FXML
     private TableColumn<PatientBean,String> online;
     @FXML
+    private TableColumn<PatientBean,Void> checkTask;
+    @FXML
     private TableColumn<PatientBean,Void> checkProfile;
-
+    @FXML
     private static final String REQUEST_PATH = "/com/theradiary/ispwtheradiary/view/Request.fxml";
+    @FXML
+    private static final String PATIENT_TASK_PATH = "/com/theradiary/ispwtheradiary/view/PatientTask.fxml";
+
+
     @FXML
     public void printPatient(MouseEvent event, List<PatientBean> patientBeans){
         ObservableList<PatientBean> patientBeansList = FXCollections.observableArrayList(patientBeans);
         fullName.setCellValueFactory(new PropertyValueFactory<>("surname"));
         cityName.setCellValueFactory(new PropertyValueFactory<>("city"));
-        description.setCellValueFactory(new PropertyValueFactory<>("description"));
         inPresenza.setCellValueFactory(cellData->{
             boolean presenza = cellData.getValue().isInPerson();
             return new javafx.beans.property.SimpleStringProperty(presenza ? "Sì" : "No");
@@ -56,6 +59,26 @@ public class PatientListController extends CommonController {
         online.setCellValueFactory(cellData->{
             boolean online = cellData.getValue().isOnline();
             return new javafx.beans.property.SimpleStringProperty(online ? "Sì" : "No");
+        });
+        checkProfile.setCellFactory(param -> new TableCell<>() {
+            private final Button btn = new Button("Vedi Task");
+
+            {
+                btn.setOnMouseClicked(event -> {
+                    PatientBean patientBean = getTableView().getItems().get(getIndex());
+                    goToPatientTask(event, patientBean);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
+            }
         });
         checkProfile.setCellFactory(param -> new TableCell<>() {
             private final Button btn = new Button("Vedi profilo");
@@ -86,6 +109,19 @@ public class PatientListController extends CommonController {
             loader.setControllerFactory(c -> new PatientProfileController(session));
             Parent root = loader.load();
             ((PatientProfileController)loader.getController()).printPatient(patientBean);
+            changeScene(root, event);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
+        }
+    }
+    @FXML
+    private void goToPatientTask(MouseEvent event,PatientBean patientBean){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(PATIENT_TASK_PATH));
+            loader.setControllerFactory(c -> new PatientTaskController(session));
+            Parent root = loader.load();
+            ((PatientTaskController)loader.getController()).printPatientTask(patientBean);
             changeScene(root, event);
         } catch (IOException e) {
             e.printStackTrace();

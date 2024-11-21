@@ -7,17 +7,17 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #B39067C6;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.PatientListController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #B39067C6;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.PatientListController">
    <children>
       <fx:include source="CommonPanel.fxml" />
       <TableView fx:id="patientTable" layoutX="38.0" layoutY="180.0" prefHeight="335.0" prefWidth="800.0">
         <columns>
           <TableColumn fx:id="fullName" prefWidth="127.0" text="Nome e Cognome" />
           <TableColumn fx:id="cityName" prefWidth="127.0" text="Città" />
-            <TableColumn fx:id="description" prefWidth="150.0" text="Descrizione" />
             <TableColumn fx:id="inPresenza" prefWidth="127.0" text="Visite in presenza:" />
             <TableColumn fx:id="online" prefWidth="127.0" text="Visite online:" />
-            <TableColumn fx:id="checkProfile" minWidth="0.0" prefWidth="140.0" />
+            <TableColumn fx:id="checkTask" minWidth="0.0" prefWidth="145.0" />
+            <TableColumn fx:id="checkProfile" minWidth="0.0" prefWidth="145.0" />
         </columns>
       </TableView>
       <Text fill="#242038" layoutX="327.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I tuoi pazienti " textAlignment="CENTER">
