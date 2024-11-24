@@ -11,12 +11,15 @@ public class PatientBean extends LoggedUserBean{
     private PsychologistBean psychologistBean;
     private ObservableList<TaskBean> tasks;
     private String diary;
+    private ObservableList<ToDoItemBean> toDoList;
     public PatientBean(CredentialsBean credentialsBean, String name, String surname, String city, String description, boolean inPerson, boolean online) {
         super(credentialsBean, name, surname, city, description, inPerson, online);
         this.setPag(false);
         this.categories = new ArrayList<>();
         this.psychologistBean = null;
         this.tasks = null;
+        this.diary = "";
+        this.toDoList = null;
     }
 
     public PatientBean(CredentialsBean credentialsBean) {
@@ -24,7 +27,10 @@ public class PatientBean extends LoggedUserBean{
         this.categories = new ArrayList<>();
         this.psychologistBean = null;
         this.tasks = null;
+        this.diary = "";
+        this.toDoList = null;
     }
+    //Task
     public ObservableList<TaskBean> getTasks() {
         return tasks;
     }
@@ -34,6 +40,12 @@ public class PatientBean extends LoggedUserBean{
     public void setTasks(ObservableList<TaskBean> tasks) {
         this.tasks = tasks;
     }
+    public void removeTask(TaskBean task){tasks.remove(task);}
+    //To do
+    public ObservableList<ToDoItemBean> getToDoList() {return toDoList;}
+    public void addToDoItem(ToDoItemBean toDoItem){toDoList.add(toDoItem);}
+    public void setToDoList(ObservableList<ToDoItemBean> toDoList) {this.toDoList = toDoList;}
+    public void removeToDoItem(ToDoItemBean toDoItem){ toDoList.remove(toDoItem);}
 
     public PsychologistBean getPsychologistBean(){
         return psychologistBean;
