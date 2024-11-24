@@ -60,6 +60,26 @@ public class PatientListController extends CommonController {
             boolean online = cellData.getValue().isOnline();
             return new javafx.beans.property.SimpleStringProperty(online ? "Sì" : "No");
         });
+        checkTask.setCellFactory(param -> new TableCell<>() {
+            private final Button btn = new Button("Vedi Task");
+
+            {
+                btn.setOnMouseClicked(event -> {
+                    PatientBean patientBean = getTableView().getItems().get(getIndex());
+                    goToPatientTask(event, patientBean);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
+            }
+        });
         checkProfile.setCellFactory(param -> new TableCell<>() {
             private final Button btn = new Button("Vedi Task");
 
@@ -121,7 +141,7 @@ public class PatientListController extends CommonController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(PATIENT_TASK_PATH));
             loader.setControllerFactory(c -> new PatientTaskController(session));
             Parent root = loader.load();
-            ((PatientTaskController)loader.getController()).printPatientTask(patientBean);
+            ((PatientTaskController)loader.getController()).patientTask(patientBean);
             changeScene(root, event);
         } catch (IOException e) {
             e.printStackTrace();
