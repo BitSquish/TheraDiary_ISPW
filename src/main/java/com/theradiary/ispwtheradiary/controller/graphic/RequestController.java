@@ -4,6 +4,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import com.theradiary.ispwtheradiary.model.beans.RequestBean;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,17 +22,17 @@ public class RequestController extends CommonController{
     }
 
     @FXML
-    private TableView<PatientBean> patients;
+    private TableView<RequestBean> requestBean;
     @FXML
-    private TableColumn<PatientBean, String> fullName;
+    private TableColumn<RequestBean, String> fullName;
     @FXML
-    private TableColumn<PatientBean, String> cityName;
+    private TableColumn<RequestBean, String> cityName;
     @FXML
-    private TableColumn<PatientBean, LocalDate> requestDate;
+    private TableColumn<RequestBean, LocalDate> requestDate;
     @FXML
-    private TableColumn<PatientBean, Void> acceptButton;
+    private TableColumn<RequestBean, Void> acceptButton;
     @FXML
-    private TableColumn<PatientBean, Void> rejectButton;
+    private TableColumn<RequestBean, Void> rejectButton;
 
 
     @FXML
@@ -62,11 +63,7 @@ public class RequestController extends CommonController{
     }
 
     public void loadRequest(List<RequestBean> requestBeans) {
-        System.out.println("Caricamento richieste");
-        for (RequestBean requestBean : requestBeans) {
-            System.out.println(requestBean.getPatientBean().getFullName());
-            System.out.println(requestBean.getPsychologistBean().getFullName());
-            System.out.println(requestBean.getDate());
-        }
+        //DA IMPLEMENTARE CON L'OBSERVER
+
     }
 }
