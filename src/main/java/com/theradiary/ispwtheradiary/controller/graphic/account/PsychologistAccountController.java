@@ -5,6 +5,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.PatientListController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
+import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
@@ -19,16 +20,14 @@ import javafx.scene.input.MouseEvent;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class PsychologistAccountController extends AccountController {
 
-    public PsychologistAccountController(Session session) {
-        super(session);
+    public PsychologistAccountController(FXMLPathConfig fxmlPathConfig, Session session) {
+        super(fxmlPathConfig,session);
     }
-
 
 
 
@@ -67,8 +66,8 @@ public class PsychologistAccountController extends AccountController {
             FXMLLoader loader;
             Parent root;
             if(session.getUser()==null){
-                loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
-                loader.setControllerFactory(c -> new LoginController(session));
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
+                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
                 root = loader.load();
                 changeScene(root, event);
                 return;
@@ -78,8 +77,8 @@ public class PsychologistAccountController extends AccountController {
                 //Recupero la lista dei pazienti
                 List<PatientBean> patientBeans = new Account().retrievePatientList(psychologistBean);
 
-                loader = new FXMLLoader(getClass().getResource(PATIENT_LIST));
-                loader.setControllerFactory(c -> new PatientListController(session));
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_LIST_PATH)));
+                loader.setControllerFactory(c -> new PatientListController(fxmlPathConfig, session));
                 root = loader.load();
                 ((PatientListController) loader.getController()).printPatient(event, patientBeans);
             }

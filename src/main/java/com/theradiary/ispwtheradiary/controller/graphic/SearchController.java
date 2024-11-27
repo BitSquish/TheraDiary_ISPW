@@ -1,11 +1,10 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.application.Search;
-import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
+import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
-import com.theradiary.ispwtheradiary.model.beans.MedicalOfficeBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,14 +15,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchController extends CommonController{
     private static final String PSYCHOLOGISTS_LIST = "/com/theradiary/ispwtheradiary/view/PsychologistsList.fxml";
-    public SearchController(Session session) {
-        super(session);
+    public SearchController(FXMLPathConfig fxmlPathConfig, Session session) {
+        super(fxmlPathConfig,session);
     }
 
     @FXML
@@ -52,7 +50,7 @@ public class SearchController extends CommonController{
     private void goToPsychologistsList(List<PsychologistBean> psychologistBeans, MouseEvent event){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(PSYCHOLOGISTS_LIST));
-            loader.setControllerFactory(c -> new PsychologistsListController(session));
+            loader.setControllerFactory(c -> new PsychologistsListController(fxmlPathConfig,session));
             Parent root = loader.load();
             ((PsychologistsListController) loader.getController()).printPsychologists(event, psychologistBeans);
             changeScene(root, event);

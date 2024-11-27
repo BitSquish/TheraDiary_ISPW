@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.controller.graphic.modify;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
+import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 
 import com.theradiary.ispwtheradiary.engineering.others.Validator;
@@ -11,8 +12,8 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
 public class ModifyPsychologistController extends ModifyController {
-    public ModifyPsychologistController(Session session) {
-        super(session);
+    public ModifyPsychologistController(FXMLPathConfig fxmlPathConfig, Session session) {
+        super(fxmlPathConfig,session);
     }
 
     @FXML

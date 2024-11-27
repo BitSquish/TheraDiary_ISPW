@@ -3,6 +3,7 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 import com.theradiary.ispwtheradiary.controller.application.Account;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
+import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
@@ -17,8 +18,8 @@ import java.util.List;
 import java.util.StringJoiner;
 
 public class PatientProfileController extends CommonController {
-    public PatientProfileController(Session session) {
-        super(session);
+    public PatientProfileController(FXMLPathConfig fxmlPathConfig,Session session) {
+        super(fxmlPathConfig,session);
     }
 
     @FXML
@@ -69,14 +70,14 @@ public class PatientProfileController extends CommonController {
             Parent root;
             if (session.getUser() == null) {
                 loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
-                loader.setControllerFactory(c -> new LoginController(session));
+                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
                 root = loader.load();
             } else {
                 PsychologistBean psychologistBean = (PsychologistBean) session.getUser();
                 //Recupero la lista dei pazienti
                 List<PatientBean> patientBeans = new Account().retrievePatientList(psychologistBean);
                 loader = new FXMLLoader(getClass().getResource(PATIENT_LIST_PATH));
-                loader.setControllerFactory(c -> new PatientListController(session));
+                loader.setControllerFactory(c -> new PatientListController(fxmlPathConfig, session));
                 root = loader.load();
                 ((PatientListController) loader.getController()).printPatient(event, patientBeans);
             }
@@ -89,7 +90,7 @@ public class PatientProfileController extends CommonController {
     protected void goToTasksAndDiary(MouseEvent event){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(DIARY_AND_TASKS_PATH));
-            loader.setControllerFactory(c -> new DiaryAndTasksController(session));
+            loader.setControllerFactory(c -> new DiaryAndTasksController(fxmlPathConfig, session));
             Parent rootParent = loader.load();
             changeScene(rootParent, event);
         } catch (IOException e) {

@@ -5,6 +5,7 @@ import com.theradiary.ispwtheradiary.controller.application.PsychologistDescript
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.*;
 import javafx.fxml.FXML;
@@ -15,12 +16,11 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.StringJoiner;
 
 public class PsychologistDescriptionController extends CommonController {
-    public PsychologistDescriptionController(Session session) {
-        super(session);
+    public PsychologistDescriptionController(FXMLPathConfig fxmlPathConfig, Session session) {
+        super(fxmlPathConfig ,session);
     }
 
     @FXML
@@ -83,12 +83,12 @@ public class PsychologistDescriptionController extends CommonController {
             // Verifica se l'utente è loggato
             if (session.getUser() == null) {
                 // Se non c'è un utente loggato, carica la schermata di login
-                loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
-                loader.setControllerFactory(c -> new LoginController(session)); // Imposta il controller per la login
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
+                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session)); // Imposta il controller per la login
             } else {
                 // Se l'utente è loggato, carica la schermata dell'account dello psicologo
-                loader = new FXMLLoader(getClass().getResource(SEARCH_PATH));
-                loader.setControllerFactory(c -> new SearchController(session));
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(SEARCH_PATH)));
+                loader.setControllerFactory(c -> new SearchController(fxmlPathConfig, session));
             }
 
             // Carica e cambia scena

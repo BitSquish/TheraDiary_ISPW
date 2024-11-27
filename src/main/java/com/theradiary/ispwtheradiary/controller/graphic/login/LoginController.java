@@ -6,6 +6,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePsContr
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtController;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
+import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
@@ -23,8 +24,8 @@ import java.io.IOException;
 
 public class LoginController extends CommonController {
 
-    public LoginController(Session session) {
-        super(session);
+    public LoginController(FXMLPathConfig fxmlPathConfig, Session session) {
+        super(fxmlPathConfig,session);
     }
 
     @FXML
@@ -76,11 +77,11 @@ public class LoginController extends CommonController {
     private void goToHomepage(MouseEvent event, Role role) throws IOException {
         FXMLLoader loader;
         if (role.equals(Role.PATIENT)) {
-            loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/HomepageLoggedPt.fxml"));
-            loader.setControllerFactory(c -> new HomepagePtController(session));
+            loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(HOMEPAGE_LOGGED_PT_PATH)));
+            loader.setControllerFactory(c -> new HomepagePtController(fxmlPathConfig, session));
         } else {
-            loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/HomepageLoggedPs.fxml"));
-            loader.setControllerFactory(c -> new HomepagePsController(session));
+            loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(HOMEPAGE_LOGGED_PS_PATH)));
+            loader.setControllerFactory(c -> new HomepagePsController(fxmlPathConfig, session));
         }
         Parent root = loader.load();
         changeScene(root, event);
@@ -90,8 +91,8 @@ public class LoginController extends CommonController {
     @FXML
     private void goToPatientRegistration(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PatientRegistration.fxml"));
-            loader.setControllerFactory(c -> new PatientRegistrationController(session));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_REGISTRATION_PATH)));
+            loader.setControllerFactory(c -> new PatientRegistrationController(fxmlPathConfig,session));
             Parent root = loader.load();
             changeScene(root, event);
         } catch (IOException exception) {
@@ -102,8 +103,8 @@ public class LoginController extends CommonController {
     @FXML
     private void goToPsychologistRegistration(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/theradiary/ispwtheradiary/view/PsychologistRegistration.fxml"));
-            loader.setControllerFactory(c -> new PsychologistRegistrationController(session));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PSYCHOLOGIST_REGISTRATION_PATH)));
+            loader.setControllerFactory(c -> new PsychologistRegistrationController(fxmlPathConfig, session));
             Parent root = loader.load();
             changeScene(root, event);
         } catch (IOException e) {

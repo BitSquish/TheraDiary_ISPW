@@ -1,10 +1,9 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
+import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
-import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import com.theradiary.ispwtheradiary.model.beans.RequestBean;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,8 +16,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class RequestController extends CommonController{
-    public RequestController(Session session) {
-        super(session);
+
+    public RequestController(FXMLPathConfig fxmlPathConfig, Session session) {
+        super(fxmlPathConfig,session);
     }
 
     @FXML
@@ -43,12 +43,12 @@ public class RequestController extends CommonController{
             // Verifica se l'utente è loggato
             if(session.getUser() == null) {
                 // Se non c'è un utente loggato, carica la schermata di login
-                loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
-                loader.setControllerFactory(c -> new LoginController(session)); // Imposta il controller per la login
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
+                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session)); // Imposta il controller per la login
             } else {
                 // Se l'utente è loggato, carica la schermata dei pazienti
-                loader = new FXMLLoader(getClass().getResource(PATIENT_LIST));
-                loader.setControllerFactory(c -> new PatientListController(session));
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_LIST_PATH)));
+                loader.setControllerFactory(c -> new PatientListController(fxmlPathConfig, session));
             }
 
             // Carica e cambia scena

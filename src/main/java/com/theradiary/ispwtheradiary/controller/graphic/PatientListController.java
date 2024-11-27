@@ -3,6 +3,7 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 import com.theradiary.ispwtheradiary.controller.application.PatientList;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
+import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
@@ -24,8 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PatientListController extends CommonController {
-    public PatientListController(Session session) {
-        super(session);
+    public PatientListController(FXMLPathConfig fxmlPathConfig, Session session) {
+        super(fxmlPathConfig, session);
     }
     @FXML
     private TableView<PatientBean> patientTable;
@@ -41,10 +42,6 @@ public class PatientListController extends CommonController {
     private TableColumn<PatientBean,Void> checkTask;
     @FXML
     private TableColumn<PatientBean,Void> checkProfile;
-    @FXML
-    private static final String REQUEST_PATH = "/com/theradiary/ispwtheradiary/view/Request.fxml";
-    @FXML
-    private static final String PATIENT_TASK_PATH = "/com/theradiary/ispwtheradiary/view/PatientTask.fxml";
 
 
     @FXML
@@ -69,7 +66,6 @@ public class PatientListController extends CommonController {
                     goToPatientTask(event, patientBean);
                 });
             }
-
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -82,7 +78,6 @@ public class PatientListController extends CommonController {
         });
         checkProfile.setCellFactory(param -> new TableCell<>() {
             private final Button btn = new Button("Vedi Task");
-
             {
                 btn.setOnMouseClicked(event -> {
                     PatientBean patientBean = getTableView().getItems().get(getIndex());
@@ -109,7 +104,6 @@ public class PatientListController extends CommonController {
                     goToPatientProfile(event, patientBean);
                 });
             }
-
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -125,8 +119,8 @@ public class PatientListController extends CommonController {
     @FXML
     private void goToPatientProfile(MouseEvent event, PatientBean patientBean) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(PATIENT_PROFILE_PATH));
-            loader.setControllerFactory(c -> new PatientProfileController(session));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_PROFILE_PATH)));
+            loader.setControllerFactory(c -> new PatientProfileController(fxmlPathConfig, session));
             Parent root = loader.load();
             ((PatientProfileController)loader.getController()).printPatient(patientBean);
             changeScene(root, event);
@@ -138,8 +132,8 @@ public class PatientListController extends CommonController {
     @FXML
     private void goToPatientTask(MouseEvent event,PatientBean patientBean){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(PATIENT_TASK_PATH));
-            loader.setControllerFactory(c -> new PatientTaskController(session));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_TASK_PATH)));
+            loader.setControllerFactory(c -> new PatientTaskController(fxmlPathConfig, session));
             Parent root = loader.load();
             ((PatientTaskController)loader.getController()).patientTask(patientBean);
             changeScene(root, event);
@@ -156,12 +150,12 @@ public class PatientListController extends CommonController {
             // Verifica se l'utente è loggato
             if(session.getUser() == null) {
                 // Se non c'è un utente loggato, carica la schermata di login
-                loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
-                loader.setControllerFactory(c -> new LoginController(session)); // Imposta il controller per la login
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
+                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session)); // Imposta il controller per la login
             } else {
                 // Se l'utente è loggato, carica la schermata dell'account dello psicologo
-                loader = new FXMLLoader(getClass().getResource(PSYCHOLOGIST_ACCOUNT_PATH));
-                loader.setControllerFactory(c -> new PsychologistAccountController(session)); // Controller per l'account psicologo
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PSYCHOLOGIST_ACCOUNT_PATH)));
+                loader.setControllerFactory(c -> new PsychologistAccountController(fxmlPathConfig, session)); // Controller per l'account psicologo
             }
 
             // Carica e cambia scena
@@ -174,12 +168,11 @@ public class PatientListController extends CommonController {
             throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
         }
     }
-
     //DA COMPLETARE
     private void goToRequest(List<RequestBean> requestBeans, MouseEvent event){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(REQUEST_PATH));
-            loader.setControllerFactory(c -> new RequestController(session));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(REQUEST_PATH)));
+            loader.setControllerFactory(c -> new RequestController(fxmlPathConfig, session));
             Parent root = loader.load();
             ((RequestController)loader.getController()).loadRequest(requestBeans);
             changeScene(root, event);
@@ -188,8 +181,6 @@ public class PatientListController extends CommonController {
             throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
         }
     }
-
-
     //DA COMPLETARE
     @FXML
     public void seeRequest(MouseEvent event) {

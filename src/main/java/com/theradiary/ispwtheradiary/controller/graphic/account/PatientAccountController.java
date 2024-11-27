@@ -3,6 +3,7 @@ package com.theradiary.ispwtheradiary.controller.graphic.account;
 
 import com.theradiary.ispwtheradiary.controller.application.Account;
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
+import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
@@ -11,8 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 public class PatientAccountController extends AccountController {
 
-    public PatientAccountController(Session session) {
-        super(session);
+    public PatientAccountController(FXMLPathConfig fxmlPathConfig, Session session) {
+        super(fxmlPathConfig,session);
     }
 
 

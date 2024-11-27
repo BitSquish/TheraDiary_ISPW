@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 import com.theradiary.ispwtheradiary.controller.application.Account;
 import com.theradiary.ispwtheradiary.controller.application.TaskAndToDo;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
+import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
@@ -23,8 +24,8 @@ import java.util.Optional;
 
 public class PatientTaskController extends CommonController {
 
-    public PatientTaskController(Session session) {
-        super(session);
+    public PatientTaskController(FXMLPathConfig fxmlPathConfig, Session session) {
+        super(fxmlPathConfig,session);
     }
 
     @FXML
@@ -232,13 +233,13 @@ public class PatientTaskController extends CommonController {
             Parent root;
             if (session.getUser() == null) {
                 loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
-                loader.setControllerFactory(c -> new LoginController(session));
+                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
                 root = loader.load();
             } else {
                 PsychologistBean psychologistBean = (PsychologistBean) session.getUser();
                 List<PatientBean> patientBeans = new Account().retrievePatientList(psychologistBean);
-                loader = new FXMLLoader(getClass().getResource(PATIENT_LIST));
-                loader.setControllerFactory(c -> new PatientListController(session));
+                loader = new FXMLLoader(getClass().getResource(PATIENT_LIST_PATH));
+                loader.setControllerFactory(c -> new PatientListController(fxmlPathConfig, session));
                 root = loader.load();
                 ((PatientListController) loader.getController()).printPatient(event, patientBeans);
             }

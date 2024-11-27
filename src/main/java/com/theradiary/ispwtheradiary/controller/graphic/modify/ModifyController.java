@@ -5,8 +5,10 @@ import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
+import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
+import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.Validator;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
@@ -22,8 +24,8 @@ import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 
 public abstract class ModifyController extends CommonController {
-    protected ModifyController(Session session) {
-        super(session);
+    protected ModifyController(FXMLPathConfig fxmlPathConfig, Session session) {
+        super(fxmlPathConfig ,session);
     }
 
     @FXML
@@ -52,14 +54,14 @@ public abstract class ModifyController extends CommonController {
         try {
             FXMLLoader loader;
             if(session.getUser()==null){
-                loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
-                loader.setControllerFactory(c -> new LoginController(session));
-            }else if (session.getUser().getCredentialsBean().getRole().toString().equals("PATIENT")) {
-                loader = new FXMLLoader(getClass().getResource(PATIENT_ACCOUNT_PATH));
-                loader.setControllerFactory(c -> new PatientAccountController(session));
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
+                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
+            }else if (session.getUser().getCredentialsBean().getRole().equals(Role.PATIENT)) {
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_ACCOUNT_PATH)));
+                loader.setControllerFactory(c -> new PatientAccountController(fxmlPathConfig, session));
             } else {
-                loader = new FXMLLoader(getClass().getResource(PSYCHOLOGIST_ACCOUNT_PATH));
-                loader.setControllerFactory(c -> new PsychologistAccountController(session));
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PSYCHOLOGIST_ACCOUNT_PATH)));
+                loader.setControllerFactory(c -> new PsychologistAccountController(fxmlPathConfig, session));
             }
             Parent root = loader.load();
             changeScene(root,event);

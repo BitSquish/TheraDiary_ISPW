@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.application.MedicalOfficeRegistration;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
+import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.MedicalOfficeBean;
 import javafx.fxml.FXML;
@@ -12,8 +13,8 @@ import javafx.scene.input.MouseEvent;
 import java.sql.SQLException;
 
 public class MedicalOfficeController extends CommonController{
-    protected MedicalOfficeController(Session session) {
-        super(session);
+    protected MedicalOfficeController(FXMLPathConfig fxmlPathConfig, Session session) {
+        super(fxmlPathConfig,session);
     }
 
     @FXML

@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.application.PAG;
+import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import javafx.fxml.FXML;
@@ -8,8 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 public class PAGController extends CommonController{
-    protected PAGController(Session session) {
-        super(session);
+    protected PAGController(FXMLPathConfig fxmlPathConfig, Session session) {
+        super(fxmlPathConfig,session);
     }
 
     @FXML

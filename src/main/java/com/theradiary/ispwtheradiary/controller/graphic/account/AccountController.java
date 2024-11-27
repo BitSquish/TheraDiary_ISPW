@@ -11,6 +11,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPsychologis
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
@@ -36,8 +37,8 @@ import java.util.Set;
 
 public abstract class AccountController extends CommonController {
 
-    protected AccountController(Session session) {
-        super(session);
+    protected AccountController(FXMLPathConfig fxmlPathConfig, Session session) {
+        super(fxmlPathConfig,session);
     }
 
 
@@ -63,10 +64,7 @@ public abstract class AccountController extends CommonController {
     CheckBox checkbox8;
     @FXML
     CheckBox checkbox9;
-    @FXML
-    protected static final String MODIFY_PATIENT_PATH = "/com/theradiary/ispwtheradiary/view/ModifyPatient.fxml";
-    @FXML
-    protected static final String MODIFY_PSYCHOLOGIST_PATH = "/com/theradiary/ispwtheradiary/view/ModifyPsychologist.fxml";
+
 
 
 
@@ -214,17 +212,17 @@ public abstract class AccountController extends CommonController {
             FXMLLoader loader;
             Parent root;
             if(session.getUser()==null){
-                loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
-                loader.setControllerFactory(c -> new LoginController(session));
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
+                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
                 root = loader.load();
             }else if (session.getUser().getCredentialsBean().getRole().equals(Role.PATIENT)) {
-                loader = new FXMLLoader(getClass().getResource(MODIFY_PATIENT_PATH));
-                loader.setControllerFactory(c -> new ModifyPatientController(session));
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(MODIFY_PATIENT_PATH)));
+                loader.setControllerFactory(c -> new ModifyPatientController(fxmlPathConfig,session));
                 root = loader.load();
                 ((ModifyPatientController)loader.getController()).loadUserData();
             }else{
-                loader = new FXMLLoader(getClass().getResource(MODIFY_PSYCHOLOGIST_PATH));
-                loader.setControllerFactory(c -> new ModifyPsychologistController(session));
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(MODIFY_PSYCHOLOGIST_PATH)));
+                loader.setControllerFactory(c -> new ModifyPsychologistController(fxmlPathConfig,session));
                 root = loader.load();
                 ((ModifyPsychologistController)loader.getController()).loadUserData();
             }
@@ -241,8 +239,8 @@ public abstract class AccountController extends CommonController {
             session.setUser(null);
         }
         //carica la schermata di login
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
-        loader.setControllerFactory(c -> new LoginController(session));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
+        loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
         Parent root = loader.load();
         //cambia scena
         Stage stage=(Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -258,14 +256,14 @@ public abstract class AccountController extends CommonController {
         try {
             FXMLLoader loader;
             if(session.getUser()==null){
-                loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
-                loader.setControllerFactory(c -> new LoginController(session));
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
+                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
             }else if (session.getUser().getCredentialsBean().getRole().equals(Role.PATIENT)) {
-                loader = new FXMLLoader(getClass().getResource(HOMEPAGE_LOGGED_PT_PATH));
-                loader.setControllerFactory(c -> new HomepagePtController(session));
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(HOMEPAGE_LOGGED_PT_PATH)));
+                loader.setControllerFactory(c -> new HomepagePtController(fxmlPathConfig, session));
             } else {
-                loader = new FXMLLoader(getClass().getResource(HOMEPAGE_LOGGED_PS_PATH));
-                loader.setControllerFactory(c -> new HomepagePsController(session));
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(HOMEPAGE_LOGGED_PS_PATH)));
+                loader.setControllerFactory(c -> new HomepagePsController(fxmlPathConfig, session));
             }
             Parent root = loader.load();
             changeScene(root,event);

@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.start;
 
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepageController;
+import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -24,9 +25,10 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         //ATTENZIONE: VA AGGIUNTA LA SCELTA DELLE INTERFACCE A RIGA DI COMANDO
         //VERSIONE COERENTE CON SCORSO ANNO, VA RIVISTA
+        FXMLPathConfig fxmlPathConfig = new FXMLPathConfig("/viewPaths.properties");
         Session session = new Session(false);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(HOMEPAGENOTLOGGED_PATH));
-        loader.setControllerFactory(c -> new HomepageController(session)); //Controller homepage
+        loader.setControllerFactory(c -> new HomepageController(fxmlPathConfig, session)); //Controller homepage
         Parent rootParent = loader.load();
         Scene scene = new Scene(rootParent);
         stage.setTitle("Theradiary");

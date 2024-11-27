@@ -1,5 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic.login;
 
+import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
@@ -8,8 +9,8 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
 public class PatientRegistrationController extends UserRegistrationController {
-    public PatientRegistrationController(Session session) {
-        super(session);
+    public PatientRegistrationController(FXMLPathConfig fxmlPathConfig, Session session) {
+        super(fxmlPathConfig, session);
     }
 
 

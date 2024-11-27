@@ -7,6 +7,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
+import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.Validator;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
@@ -15,8 +16,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 public abstract class UserRegistrationController extends CommonController {
-    protected UserRegistrationController(Session session) {
-        super(session);
+    protected UserRegistrationController(FXMLPathConfig fxmlPathConfig, Session session) {
+        super(fxmlPathConfig ,session);
     }
 
     @FXML
