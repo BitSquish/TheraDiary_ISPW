@@ -26,6 +26,7 @@ public class DiaryAndTasksController extends CommonController{
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(DIARY_PATH)));
             loader.setControllerFactory(c -> new DiaryController(fxmlPathConfig, session));
             Parent root = loader.load();
+            ((DiaryController) loader.getController()).initializeDiary();
             changeScene(root, event);
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,6 +53,7 @@ public class DiaryAndTasksController extends CommonController{
             }else{
                 loader=new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(HOMEPAGE_LOGGED_PT_PATH)));
                 loader.setControllerFactory(c->new HomepagePtController(fxmlPathConfig,session));
+
             }
             Parent root=loader.load();
             changeScene(root,event);

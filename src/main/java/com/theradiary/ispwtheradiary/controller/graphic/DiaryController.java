@@ -25,7 +25,7 @@ public class DiaryController extends CommonController {
     private Text date;
 
     @FXML
-    public void initialize() {
+    public void initializeDiary() {
 
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

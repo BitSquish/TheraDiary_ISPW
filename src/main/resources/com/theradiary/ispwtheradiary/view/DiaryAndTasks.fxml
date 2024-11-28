@@ -17,54 +17,54 @@
          <Font name="System Italic" size="12.0" />
       </font></Button>
         <Button fx:id="toDo" layoutX="328.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#goToDo" prefHeight="130.0" prefWidth="219.0" style="-fx-border-color: #9067C6; -fx-background-color: transparent; -fx-border-image-width: 16px; -fx-border-radius: 16px;" />
-        <ImageView fitHeight="60.0" fitWidth="70.0" layoutX="68.0" layoutY="217.0">
+        <ImageView fitHeight="60.0" fitWidth="70.0" layoutX="68.0" layoutY="217.0" onMouseClicked="#goToDiary">
                 <image>
                         <Image url="@img/diario.png" />
                 </image>
         </ImageView>
-        <ImageView fitHeight="77.0" fitWidth="70.0" layoutX="68.0" layoutY="384.0">
+        <ImageView fitHeight="77.0" fitWidth="70.0" layoutX="68.0" layoutY="384.0" onMouseClicked="#goToTest">
                 <image>
                         <Image url="@img/pc.png" />
                 </image>
         </ImageView>
-        <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="621.0" layoutY="221.0">
+        <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="621.0" layoutY="221.0" onMouseClicked="#goToBacheca">
                 <image>
                         <Image url="@img/post.png" />
                 </image>
         </ImageView>
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ebcef070" height="88.0" layoutX="172.0" stroke="#00000003" strokeType="INSIDE" width="87.0" />
-        <ImageView fitHeight="68.0" fitWidth="62.0" layoutX="343.0" layoutY="221.0">
+        <ImageView fitHeight="68.0" fitWidth="62.0" layoutX="343.0" layoutY="221.0" onMouseClicked="#goToDo">
                 <image>
                         <Image url="@img/todo.png" />
                 </image>
         </ImageView>
-   <Text layoutX="150.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scrivi la pagina di diario giornaliera" wrappingWidth="130.52459716796875">
+   <Text layoutX="150.0" layoutY="255.0" onMouseClicked="#goToDiary" strokeType="OUTSIDE" strokeWidth="0.0" text="Scrivi la pagina di diario giornaliera" wrappingWidth="130.52459716796875">
       <font>
          <Font size="14.0" />
       </font>
    </Text>
-   <Text layoutX="416.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Compila elenco obiettivi per il prossimo mese" wrappingWidth="130.5245971679687">
+   <Text layoutX="416.0" layoutY="246.0" onMouseClicked="#goToDo" strokeType="OUTSIDE" strokeWidth="0.0" text="Compila elenco obiettivi per il prossimo mese" wrappingWidth="130.5245971679687">
       <font>
          <Font size="14.0" />
       </font>
    </Text>
-   <Text layoutX="705.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scrivi un post in bacheca" wrappingWidth="98.9302978515625">
+   <Text layoutX="705.0" layoutY="255.0" onMouseClicked="#goToBacheca" strokeType="OUTSIDE" strokeWidth="0.0" text="Scrivi un post in bacheca" wrappingWidth="98.9302978515625">
       <font>
          <Font size="14.0" />
       </font>
    </Text>
-   <Text layoutX="150.0" layoutY="407.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Compila il questionario valutativo " wrappingWidth="98.9302978515625">
+   <Text layoutX="150.0" layoutY="407.0" onMouseClicked="#goToTest" strokeType="OUTSIDE" strokeWidth="0.0" text="Compila il questionario valutativo " wrappingWidth="98.9302978515625">
       <font>
          <Font size="14.0" />
       </font>
    </Text>
-   <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="339.0" layoutY="389.0">
+   <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="339.0" layoutY="389.0" onMouseClicked="#goToTask">
       <image>
          <Image url="@img/psicologo.png" />
       </image>
    </ImageView>
    <Button layoutX="328.0" layoutY="357.0" mnemonicParsing="false" onMouseClicked="#goToTask" prefHeight="130.0" prefWidth="219.0" style="-fx-border-color: #9067C6; -fx-background-color: transparent; -fx-border-image-width: 16px; -fx-border-radius: 16px;" />
-   <Text layoutX="416.0" layoutY="410.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Compila il questionario del tuo psicologo" wrappingWidth="105.592529296875">
+   <Text layoutX="416.0" layoutY="410.0" onMouseClicked="#goToTask" strokeType="OUTSIDE" strokeWidth="0.0" text="Compila il questionario del tuo psicologo" wrappingWidth="105.592529296875">
       <font>
          <Font size="14.0" />
       </font>
