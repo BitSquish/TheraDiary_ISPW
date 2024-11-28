@@ -5,38 +5,74 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.DiaryAndTasksController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.DiaryAndTasksController">
         <fx:include source="CommonPanel.fxml" />
-        <Button layoutX="81.0" layoutY="322.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: #9067C6; -fx-border-image-width: 16px; -fx-border-radius: 16px;" text="Button" />
-        <Button layoutX="598.0" layoutY="173.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: #9067C6; -fx-border-image-width: 16px; -fx-border-radius: 16px;" text="Button" />
-        <Button layoutX="81.0" layoutY="173.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: #9067C6; -fx-border-image-width: 16px; -fx-border-radius: 16px;" text="Diario" textAlignment="RIGHT" />
-        <Button layoutX="351.0" layoutY="322.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="200.0" style="-fx-border-color: #9067C6; -fx-background-color: transparent; -fx-border-image-width: 16px; -fx-border-radius: 16px;" text="Button" />
-        <Button layoutX="351.0" layoutY="173.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="200.0" style="-fx-border-color: #9067C6; -fx-background-color: transparent; -fx-border-image-width: 16px; -fx-border-radius: 16px;" text="Button" />
-        <ImageView fitHeight="60.0" fitWidth="70.0" layoutX="88.0" layoutY="190.0">
+        <Button fx:id="bacheca" layoutX="606.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#goToBacheca" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: #9067C6; -fx-border-image-width: 16px; -fx-border-radius: 16px;" />
+        <Button fx:id="diary" layoutX="55.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#goToDiary" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: #9067C6; -fx-border-image-width: 16px; -fx-border-radius: 16px;" textAlignment="RIGHT" />
+        <Button layoutX="55.0" layoutY="357.0" mnemonicParsing="false" onMouseClicked="#goToTest" prefHeight="130.0" prefWidth="219.0" style="-fx-border-color: #9067C6; -fx-background-color: transparent; -fx-border-image-width: 16px; -fx-border-radius: 16px;" textAlignment="RIGHT" wrapText="true">
+      <font>
+         <Font name="System Italic" size="12.0" />
+      </font></Button>
+        <Button fx:id="toDo" layoutX="328.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#goToDo" prefHeight="130.0" prefWidth="219.0" style="-fx-border-color: #9067C6; -fx-background-color: transparent; -fx-border-image-width: 16px; -fx-border-radius: 16px;" />
+        <ImageView fitHeight="60.0" fitWidth="70.0" layoutX="68.0" layoutY="217.0">
                 <image>
                         <Image url="@img/diario.png" />
                 </image>
         </ImageView>
-        <ImageView fitHeight="68.0" fitWidth="62.0" layoutX="361.0" layoutY="333.0">
-                <image>
-                        <Image url="@img/todo.png" />
-                </image>
-        </ImageView>
-        <ImageView fitHeight="77.0" fitWidth="70.0" layoutX="361.0" layoutY="180.0">
+        <ImageView fitHeight="77.0" fitWidth="70.0" layoutX="68.0" layoutY="384.0">
                 <image>
                         <Image url="@img/pc.png" />
                 </image>
         </ImageView>
-        <ImageView fitHeight="77.0" fitWidth="70.0" layoutX="88.0" layoutY="329.0">
-                <image>
-                        <Image url="@img/psicologo.png" />
-                </image>
-        </ImageView>
-        <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="611.0" layoutY="184.0">
+        <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="621.0" layoutY="221.0">
                 <image>
                         <Image url="@img/post.png" />
                 </image>
         </ImageView>
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ebcef070" height="88.0" layoutX="172.0" stroke="#00000003" strokeType="INSIDE" width="87.0" />
+        <ImageView fitHeight="68.0" fitWidth="62.0" layoutX="343.0" layoutY="221.0">
+                <image>
+                        <Image url="@img/todo.png" />
+                </image>
+        </ImageView>
+   <Text layoutX="150.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scrivi la pagina di diario giornaliera" wrappingWidth="130.52459716796875">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Text>
+   <Text layoutX="416.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Compila elenco obiettivi per il prossimo mese" wrappingWidth="130.5245971679687">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Text>
+   <Text layoutX="705.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scrivi un post in bacheca" wrappingWidth="98.9302978515625">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Text>
+   <Text layoutX="150.0" layoutY="407.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Compila il questionario valutativo " wrappingWidth="98.9302978515625">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Text>
+   <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="339.0" layoutY="389.0">
+      <image>
+         <Image url="@img/psicologo.png" />
+      </image>
+   </ImageView>
+   <Button layoutX="328.0" layoutY="357.0" mnemonicParsing="false" onMouseClicked="#goToTask" prefHeight="130.0" prefWidth="219.0" style="-fx-border-color: #9067C6; -fx-background-color: transparent; -fx-border-image-width: 16px; -fx-border-radius: 16px;" />
+   <Text layoutX="416.0" layoutY="410.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Compila il questionario del tuo psicologo" wrappingWidth="105.592529296875">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Text>
+   <Text fill="#242038" layoutX="346.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Task e Diario">
+      <font>
+         <Font name="System Bold" size="30.0" />
+      </font>
+   </Text>
+   <Button layoutX="55.0" layoutY="130.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
 </AnchorPane>

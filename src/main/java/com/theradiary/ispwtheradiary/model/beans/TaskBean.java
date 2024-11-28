@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.model.beans;
 
-import javafx.beans.value.ObservableValue;
+
 
 public class TaskBean {
     private String taskName;
