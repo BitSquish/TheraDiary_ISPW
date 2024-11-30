@@ -19,11 +19,7 @@ public class PatientList {
         RetrieveDAO.retrievePatientsRequest(psychologist, requests);
         RequestBean requestBean;
         for(Request request:requests){
-            requestBean = new RequestBean(
-                    new PatientBean(new CredentialsBean(request.getPatient().getCredentials().getMail(), request.getPatient().getCredentials().getPassword(), request.getPatient().getCredentials().getRole()), request.getPatient().getName(), request.getPatient().getSurname(), request.getPatient().getCity(), request.getPatient().getDescription(), request.getPatient().isInPerson(), request.getPatient().isOnline()),
-                    psychologistBean,
-                    request.getDate()
-            );
+            requestBean = request.toBean();
             requestBeans.add(requestBean);
         }
     }

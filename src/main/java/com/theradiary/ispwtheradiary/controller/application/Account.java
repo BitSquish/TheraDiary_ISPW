@@ -82,23 +82,9 @@ public class Account {
 
         // Conversione da Patient (entità) a PatientBean
         for (Patient patient : patients) {
-            PatientBean patientBean = new PatientBean(
-                    new CredentialsBean(
-                            patient.getCredentials().getMail(),
-                            patient.getCredentials().getPassword(),
-                            patient.getCredentials().getRole()
-                    ),
-                    patient.getName(),
-                    patient.getSurname(),
-                    patient.getCity(),
-                    patient.getDescription(),
-                    patient.isInPerson(),
-                    patient.isOnline()
-            );
-
+            PatientBean patientBean = patient.toBean();
             patientBeans.add(patientBean);
         }
-
         return patientBeans;
     }
 }

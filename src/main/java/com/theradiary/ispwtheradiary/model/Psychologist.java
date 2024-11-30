@@ -2,7 +2,6 @@ package com.theradiary.ispwtheradiary.model;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
-import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 
 import java.util.ArrayList;
@@ -54,6 +53,7 @@ public class Psychologist extends LoggedUser {
     public PsychologistBean toBean() {
         return new PsychologistBean(getCredentials().toBean(), getName(), getSurname(), getCity(), getDescription(), isInPerson(), isOnline());
     }
+
 
 }
 

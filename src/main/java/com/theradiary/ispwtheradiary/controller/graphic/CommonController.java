@@ -147,7 +147,7 @@ public abstract class CommonController {
             } else {
                 PsychologistBean psychologistBean = (PsychologistBean) session.getUser();
                 List<PatientBean> patientBeans = new Account().retrievePatientList(psychologistBean);
-
+                ((PsychologistBean) session.getUser()).setPatientsBean(patientBeans);
                 loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_LIST_PATH)));
                 loader.setControllerFactory(c -> new PatientListController(fxmlPathConfig, session));
                 root = loader.load();

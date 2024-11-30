@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.model;
 
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
+import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 
 public abstract class LoggedUser {
     private Credentials credentials;
