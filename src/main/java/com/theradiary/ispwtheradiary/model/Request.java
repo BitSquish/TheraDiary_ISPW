@@ -1,9 +1,6 @@
 package com.theradiary.ispwtheradiary.model;
 
-import com.theradiary.ispwtheradiary.model.beans.PatientBean;
-import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.model.beans.RequestBean;
-
 import java.time.LocalDate;
 
 public class Request {
