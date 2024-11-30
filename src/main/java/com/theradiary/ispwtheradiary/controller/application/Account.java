@@ -1,6 +1,5 @@
 package com.theradiary.ispwtheradiary.controller.application;
 
-import com.theradiary.ispwtheradiary.controller.graphic.PatientListController;
 import com.theradiary.ispwtheradiary.engineering.dao.CategoryAndMajorDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
@@ -13,7 +12,6 @@ import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

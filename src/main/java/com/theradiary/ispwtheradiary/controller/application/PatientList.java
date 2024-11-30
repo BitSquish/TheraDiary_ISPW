@@ -2,7 +2,6 @@ package com.theradiary.ispwtheradiary.controller.application;
 
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.model.Credentials;
-import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 import com.theradiary.ispwtheradiary.model.Request;
 import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
@@ -28,5 +27,4 @@ public class PatientList {
             requestBeans.add(requestBean);
         }
     }
-
 }

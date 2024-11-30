@@ -1,5 +1,9 @@
 package com.theradiary.ispwtheradiary.model;
 
+import com.theradiary.ispwtheradiary.model.beans.PatientBean;
+import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
+import com.theradiary.ispwtheradiary.model.beans.RequestBean;
+
 import java.time.LocalDate;
 
 public class Request {
@@ -30,5 +34,10 @@ public class Request {
     }
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    //converte da model a bean
+    public RequestBean toBean(){
+        return new RequestBean(patient.toBean(), psychologist.toBean(), date);
     }
 }

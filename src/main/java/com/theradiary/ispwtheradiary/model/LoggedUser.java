@@ -1,5 +1,7 @@
 package com.theradiary.ispwtheradiary.model;
 
+import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
+
 public abstract class LoggedUser {
     private Credentials credentials;
     private String name;
@@ -116,6 +118,8 @@ public abstract class LoggedUser {
     public boolean getOnlineFromModality(String modality){
         return modality.equals("In presenza e online") || modality.equals("Online");
     }
+
+    public abstract LoggedUserBean toBean();
 
 }
 

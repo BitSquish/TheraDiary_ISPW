@@ -1,6 +1,8 @@
 package com.theradiary.ispwtheradiary.model;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
+import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
+import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
@@ -65,4 +67,10 @@ public class Patient extends LoggedUser {
     public void setPsychologist(Psychologist psychologist) {
         this.psychologist = psychologist;
     }
+
+    @Override
+    public PatientBean toBean() {
+        return new PatientBean(getCredentials().toBean(), getName(), getSurname(), getCity(), getDescription(), isInPerson(), isOnline());
+    }
+
 }

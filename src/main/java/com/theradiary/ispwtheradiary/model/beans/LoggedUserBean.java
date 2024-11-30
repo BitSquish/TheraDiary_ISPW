@@ -2,7 +2,7 @@ package com.theradiary.ispwtheradiary.model.beans;
 
 
 public abstract class LoggedUserBean {
-    private CredentialsBean credentialsBean;
+    private com.theradiary.ispwtheradiary.model.beans.CredentialsBean credentialsBean;
     private String name;
     private String surname;
     private String city;
