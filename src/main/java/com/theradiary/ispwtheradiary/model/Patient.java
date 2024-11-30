@@ -41,6 +41,10 @@ public class Patient extends LoggedUser {
     public void addToDoItem(ToDoItem toDoItem){toDoList.add(toDoItem);}
     public void setToDoList(ObservableList<ToDoItem> toDoList) {this.toDoList = toDoList;}
     public void removeToDoItem(ToDoItem toDoItem){ toDoList.remove(toDoItem);}
+    //Diary
+    public String Diary() {
+        return diary;
+    }
 
 
     public List<Category> getCategories() {
@@ -64,5 +68,9 @@ public class Patient extends LoggedUser {
 
     public void setPsychologist(Psychologist psychologist) {
         this.psychologist = psychologist;
+    }
+
+    public void setDiary(String contenuto) {
+        this.diary = contenuto;
     }
 }

@@ -1,11 +1,16 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
+import com.theradiary.ispwtheradiary.controller.application.TaskAndToDo;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
+import com.theradiary.ispwtheradiary.engineering.dao.TaskAndToDoDAO;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
+import com.theradiary.ispwtheradiary.model.Patient;
+import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -23,6 +28,8 @@ public class DiaryController extends CommonController {
     private TextArea diary;
     @FXML
     private Text date;
+    TaskAndToDo diaryEntry = new TaskAndToDo();
+    PatientBean patientBean = (PatientBean) session.getUser();
 
     @FXML
     public void initializeDiary() {
@@ -30,6 +37,8 @@ public class DiaryController extends CommonController {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         date.setText(currentDate.format(formatter));
+
+        loadDiaryContent();
     }
 
     @FXML
@@ -53,7 +62,51 @@ public class DiaryController extends CommonController {
     @FXML
     protected void saveDiary(MouseEvent event){
         String diaryContent = diary.getText();
-        System.out.println("Diario salvato:"+diaryContent);
+        int maxWords=5000;
+        int wordCount=countWords(diaryContent);
+        if(diaryContent.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Contenuto vuoto", "Inserisci del testo nel diario prima di salvare.");
+            return;
+        }
+        if(wordCount>maxWords) {
+            showAlert(Alert.AlertType.WARNING, "Contenuto troppo lungo", "Il diario non può superare le 1000 parole.");
+            return;
+        }
+        try{
+            diaryEntry.saveDiary(diaryContent,patientBean);
+            showAlert(Alert.AlertType.INFORMATION, "Salvataggio effettuato", "Il diario è stato salvato correttamente.");
+        }catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Errore", "Errore durante il salvataggio del diario.");
+            e.printStackTrace();
+        }
+    }
+    private void loadDiaryContent(){
+        try{
+            String diaryContent = diaryEntry.getDiaryForToday(patientBean);
+            if(diaryContent!=null) {
+                diary.setText(diaryContent);
+            }else{
+                diary.clear();
+                showAlert(Alert.AlertType.INFORMATION, "Nuovo Diario", "Puoi iniziare a scrivere il tuo diario per oggi.");
+            }
+        }catch(Exception e){
+            showAlert(Alert.AlertType.ERROR, "Errore durante il caricamento", "Impossibile caricare il diario.");
+            e.printStackTrace();
+        }
+    }
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private int countWords(String s) {
+        if (s == null || s.trim().isEmpty()) {
+            return 0;
+        }
+        String[] words = s.trim().split("\\s+");
+        return words.length;
     }
 
 }

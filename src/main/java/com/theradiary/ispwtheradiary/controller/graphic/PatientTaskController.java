@@ -75,135 +75,67 @@ public class PatientTaskController extends CommonController {
 
     @FXML
     private Button save;
+    private PatientBean patientBean;
 
-    private PatientBean currentPatientBean;
+
 
 
     @FXML
     public void patientTask(PatientBean patientBean) {
-        this.currentPatientBean = patientBean;
+        this.patientBean = patientBean;
 
         // Imposta il nome completo del paziente
         fullName.setText(patientBean.getFullName());
 
         // Configura la tabella dei Task
-        configureTaskTable(patientBean);
+        /*configureTaskTable(patientBean);*/
 
         // Configura la lista To-Do
-        configureToDoList(patientBean);
+       /* configureToDoList(patientBean);*/
 
         // Configura il diario
         configureDiary(patientBean);
     }
 
-    private void configureTaskTable(PatientBean patientBean) {
-        TaskAndToDo task = new TaskAndToDo();
-        task.retrieveTaskList(patientBean);
+   /* private void configureTaskTable(PatientBean patientBean) {
         taskNameColumn.setCellValueFactory(new PropertyValueFactory<>("taskName"));
         taskDeadlineColumn.setCellValueFactory(new PropertyValueFactory<>("taskDeadline"));
         taskStatusColumn.setCellValueFactory(new PropertyValueFactory<>("taskStatus"));
-        taskTableView.setItems(patientBean.getTasks());
+    }*/
+
+
+
+
+
+    private void configureDiary(PatientBean patientBean) {
+        TaskAndToDo taskAndToDo = new TaskAndToDo();
+        taskAndToDo.getDiaryForToday(patientBean);
+        String diaryText = patientBean.getDiary();
+        diaryTextArea.setText(diaryText == null || diaryText.isEmpty() ? "Diario vuoto" : diaryText);
     }
-
-    private void configureToDoList(PatientBean patientBean) {
+   /* private void configureToDoList(PatientBean patientBean) {
         toDoListItems = FXCollections.observableArrayList();
-        for (ToDoItemBean toDoItem : patientBean.getToDoList()) {
+        for (ToDoItemBean toDoItemBean : patientBean.getToDoList()) {
             CheckBox checkBox = new CheckBox();
-            checkBox.setSelected(toDoItem.isCompleted());
-
-            TextField textField = new TextField(toDoItem.getToDo());
+            checkBox.setSelected(toDoItemBean.isCompleted());
+            checkBox.setDisable(true);
+            TextField textField = new TextField(toDoItemBean.getToDo());
             textField.setEditable(false);
-
             HBox hBox = new HBox(checkBox, textField);
             toDoListItems.add(hBox);
         }
         toDoListView.setItems(toDoListItems);
-    }
-
-    private void configureDiary(PatientBean patientBean) {
-        String diaryText = patientBean.getDiary();
-        diaryTextArea.setText(diaryText == null || diaryText.isEmpty() ? "Diario vuoto" : diaryText);
-    }
-
+    }*/
 
     @FXML
-    public void modifyTask() {
-        TaskBean selectedTask = taskTableView.getSelectionModel().getSelectedItem();
-        if (selectedTask != null) {
-            TextInputDialog dialog = new TextInputDialog(selectedTask.getTaskName());
-            dialog.setTitle("Modifica Task");
-            dialog.setHeaderText("Modifica il nome del task selezionato:");
-            dialog.setContentText("Nuovo nome del task:");
-
-            Optional<String> result = dialog.showAndWait();
-            result.ifPresent(newTaskName -> {
-                selectedTask.setTaskName(newTaskName);
-                taskTableView.refresh();
-            });
-        } else {
-            showErrorMessage("Errore", "Seleziona un task da modificare.");
-        }
-    }
-
-    /**
-     * Elimina il task selezionato.
-     */
+    public void modifyTask() {}
     @FXML
-    public void deleteTask() {
-        TaskBean selectedTask = taskTableView.getSelectionModel().getSelectedItem();
-        if (selectedTask != null) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Conferma eliminazione");
-            alert.setHeaderText("Sei sicuro di voler eliminare il task?");
-            alert.setContentText("Task: " + selectedTask.getTaskName());
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                taskTableView.getItems().remove(selectedTask);
-                currentPatientBean.getTasks().remove(selectedTask);
-                System.out.println("Task eliminato: " + selectedTask.getTaskName());
-            }
-        } else {
-            showErrorMessage("Errore", "Seleziona un task da eliminare.");
-        }
-    }
-
-    /**
-     * Abilita la modifica degli elementi To-Do.
-     */
+    public void modifyToDo() {}
     @FXML
-    public void modifyToDo() {
-        for (HBox hBox : toDoListItems) {
-            CheckBox checkBox = (CheckBox) hBox.getChildren().get(0);
-            TextField textField = (TextField) hBox.getChildren().get(1);
-            textField.setEditable(true);
-            checkBox.setDisable(false);
-        }
-        save.setDisable(false);
-    }
+    public void deleteTask(){}
 
-    /**
-     * Salva le modifiche alla lista To-Do.
-     */
     @FXML
-    public void saveToDo() {
-        for (HBox hBox : toDoListItems) {
-            CheckBox checkBox = (CheckBox) hBox.getChildren().get(0);
-            TextField textField = (TextField) hBox.getChildren().get(1);
-
-            // Aggiorna lo stato e il contenuto dell'elemento To-Do
-            if (checkBox.isSelected()) {
-                System.out.println("Task completato: " + textField.getText());
-            }
-            textField.setEditable(false);
-            checkBox.setDisable(true);
-        }
-        save.setDisable(true);
-    }
-
-    /**
-     * Gestisce il cambiamento di selezione nei Tab.
-     */
+    public void saveToDo() {}
     @FXML
     private void handleTabSelectionChanged() {
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
@@ -211,13 +143,15 @@ public class PatientTaskController extends CommonController {
             String selectedTabText = selectedTab.getText();
             switch (selectedTabText) {
                 case "Task":
-                    configureTaskTable(currentPatientBean);
+                    System.out.println("Task");
+                    /*configureTaskTable(patientBean);*/
                     break;
                 case "To-do List":
-                    configureToDoList(currentPatientBean);
+                    System.out.println("To-do List");
+                   /* configureToDoList(patientBean);*/
                     break;
                 case "Diary":
-                    configureDiary(currentPatientBean);
+                    configureDiary(patientBean);
                     break;
                 default:
                     break;
@@ -225,20 +159,19 @@ public class PatientTaskController extends CommonController {
         }
     }
 
-
     @FXML
     protected void back(MouseEvent event) {
         try {
             FXMLLoader loader;
             Parent root;
             if (session.getUser() == null) {
-                loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
                 loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
                 root = loader.load();
             } else {
                 PsychologistBean psychologistBean = (PsychologistBean) session.getUser();
                 List<PatientBean> patientBeans = new Account().retrievePatientList(psychologistBean);
-                loader = new FXMLLoader(getClass().getResource(PATIENT_LIST_PATH));
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_LIST_PATH)));
                 loader.setControllerFactory(c -> new PatientListController(fxmlPathConfig, session));
                 root = loader.load();
                 ((PatientListController) loader.getController()).printPatient(event, patientBeans);
