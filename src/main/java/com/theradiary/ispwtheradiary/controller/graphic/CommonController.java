@@ -60,6 +60,7 @@ public abstract class CommonController {
     protected static final String PATIENT_DESCRIPTION_PATH = "PATIENT_DESCRIPTION_PATH";
     protected static final String PSYCHOLOGIST_LIST_PATH = "PSYCHOLOGIST_LIST_PATH";
     protected static final String DIARY_PATH="DIARY_PATH";
+    protected static final String DIARY_PAGE_PATH="DIARY_PAGE_PATH";
 
     @FXML
     private Line line1;

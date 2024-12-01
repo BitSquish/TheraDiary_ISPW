@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class TaskAndToDoQuery {
     private TaskAndToDoQuery(){}
@@ -29,5 +30,17 @@ public class TaskAndToDoQuery {
         pstmt.setString(1,mail);
         return pstmt.executeQuery();
 
+    }
+
+    public static ResultSet getDiaryEntry(Connection conn, LocalDate selectedDate, String mail) {
+        String query = "SELECT contenuto FROM diary WHERE data_creazione=? AND patient=?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setDate(1, java.sql.Date.valueOf(selectedDate));
+            pstmt.setString(2, mail);
+            return pstmt.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -6,6 +6,7 @@ import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 public class TaskAndToDo {
@@ -28,4 +29,13 @@ public class TaskAndToDo {
         patientBean.setDiary(diaryContent);
     }
 
+    public String getDiaryEntry(LocalDate selectedDate, PatientBean patientBean) {
+        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+        Optional<String> diaryContent = TaskAndToDoDAO.getDiaryEntry(selectedDate,patient);
+        if(diaryContent.isPresent()) {
+            return diaryContent.get();
+        } else {
+            return "";
+        }
+    }
 }

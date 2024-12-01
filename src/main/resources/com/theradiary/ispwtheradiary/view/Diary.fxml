@@ -41,5 +41,10 @@
             </AnchorPane>
         </content>
       </ScrollPane>
+      <Text fill="#9067c6" layoutX="272.0" layoutY="524.0" onMouseClicked="#goToPage" strokeType="OUTSIDE" strokeWidth="0.0" text="Visualizza le pagine di diario dei giorni precedenti">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

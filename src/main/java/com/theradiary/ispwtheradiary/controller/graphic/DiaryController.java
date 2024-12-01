@@ -2,10 +2,10 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.application.TaskAndToDo;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
-import com.theradiary.ispwtheradiary.engineering.dao.TaskAndToDoDAO;
+
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
-import com.theradiary.ispwtheradiary.model.Patient;
+
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,13 +32,27 @@ public class DiaryController extends CommonController {
     PatientBean patientBean = (PatientBean) session.getUser();
 
     @FXML
-    public void initializeDiary() {
+    public void initializeDiary(PatientBean patientBean) {
 
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         date.setText(currentDate.format(formatter));
 
-        loadDiaryContent();
+        loadDiaryContent(patientBean);
+    }
+    protected void loadDiaryContent(PatientBean patientBean){
+        try{
+            String diaryContent = diaryEntry.getDiaryForToday(patientBean);
+            if(diaryContent!=null) {
+                diary.setText(diaryContent);
+            }else{
+                diary.clear();
+                showAlert(Alert.AlertType.INFORMATION, "Nuovo Diario", "Puoi iniziare a scrivere il tuo diario per oggi.");
+            }
+        }catch(Exception e){
+            showAlert(Alert.AlertType.ERROR, "Errore durante il caricamento", "Impossibile caricare il diario.");
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -80,20 +94,7 @@ public class DiaryController extends CommonController {
             e.printStackTrace();
         }
     }
-    private void loadDiaryContent(){
-        try{
-            String diaryContent = diaryEntry.getDiaryForToday(patientBean);
-            if(diaryContent!=null) {
-                diary.setText(diaryContent);
-            }else{
-                diary.clear();
-                showAlert(Alert.AlertType.INFORMATION, "Nuovo Diario", "Puoi iniziare a scrivere il tuo diario per oggi.");
-            }
-        }catch(Exception e){
-            showAlert(Alert.AlertType.ERROR, "Errore durante il caricamento", "Impossibile caricare il diario.");
-            e.printStackTrace();
-        }
-    }
+
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -107,6 +108,19 @@ public class DiaryController extends CommonController {
         }
         String[] words = s.trim().split("\\s+");
         return words.length;
+    }
+    @FXML
+    public void goToPage(MouseEvent event){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(DIARY_PAGE_PATH)));
+            loader.setControllerFactory(c -> new DiaryPageController(fxmlPathConfig, session));
+            Parent root = loader.load();
+            changeScene(root, event);
+        }catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
+        }
+
     }
 
 }
