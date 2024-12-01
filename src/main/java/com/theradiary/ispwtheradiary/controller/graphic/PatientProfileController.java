@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.application.Account;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
+import com.theradiary.ispwtheradiary.controller.graphic.task.DiaryAndTasksController;
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
@@ -69,14 +70,14 @@ public class PatientProfileController extends CommonController {
             FXMLLoader loader;
             Parent root;
             if (session.getUser() == null) {
-                loader = new FXMLLoader(getClass().getResource(LOGIN_PATH));
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
                 loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
                 root = loader.load();
             } else {
                 PsychologistBean psychologistBean = (PsychologistBean) session.getUser();
                 //Recupero la lista dei pazienti
                 List<PatientBean> patientBeans = new Account().retrievePatientList(psychologistBean);
-                loader = new FXMLLoader(getClass().getResource(PATIENT_LIST_PATH));
+                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_LIST_PATH)));
                 loader.setControllerFactory(c -> new PatientListController(fxmlPathConfig, session));
                 root = loader.load();
                 ((PatientListController) loader.getController()).printPatient(event, patientBeans);

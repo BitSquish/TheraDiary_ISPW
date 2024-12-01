@@ -1,9 +1,9 @@
-package com.theradiary.ispwtheradiary.controller.graphic;
+package com.theradiary.ispwtheradiary.controller.graphic.task;
 
 import com.theradiary.ispwtheradiary.controller.application.TaskAndToDo;
+import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
-import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,8 +17,8 @@ import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import java.io.IOException;
 import java.time.LocalDate;
 
-public class DiaryPageController extends CommonController{
-   DiaryPageController(FXMLPathConfig fxmlPathConfig, Session session) {super(fxmlPathConfig, session);}
+public class DiaryPageController extends CommonController {
+   protected DiaryPageController(FXMLPathConfig fxmlPathConfig, Session session) {super(fxmlPathConfig, session);}
     @FXML
     private TextArea diaryPage;
    @FXML

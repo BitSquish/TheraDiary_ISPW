@@ -7,6 +7,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepageControl
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePsController;
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
+import com.theradiary.ispwtheradiary.controller.graphic.task.DiaryAndTasksController;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
@@ -61,6 +62,7 @@ public abstract class CommonController {
     protected static final String PSYCHOLOGIST_LIST_PATH = "PSYCHOLOGIST_LIST_PATH";
     protected static final String DIARY_PATH="DIARY_PATH";
     protected static final String DIARY_PAGE_PATH="DIARY_PAGE_PATH";
+    protected static final String TODO_PATH="TODO_PATH";
 
     @FXML
     private Line line1;

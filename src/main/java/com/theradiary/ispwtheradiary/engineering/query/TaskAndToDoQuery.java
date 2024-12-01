@@ -1,12 +1,14 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
 import com.theradiary.ispwtheradiary.model.Patient;
+import com.theradiary.ispwtheradiary.model.beans.ToDoItemBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class TaskAndToDoQuery {
     private TaskAndToDoQuery(){}
@@ -38,6 +40,33 @@ public class TaskAndToDoQuery {
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setDate(1, java.sql.Date.valueOf(selectedDate));
             pstmt.setString(2, mail);
+            return pstmt.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void ToDoList(Connection conn, List<ToDoItemBean> savedToDoItems, String mail) {
+        String query = "INSERT INTO todo (description,done,patient) VALUES (?,?,?)";
+        try {
+            for (ToDoItemBean toDoItemBean : savedToDoItems) {
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                pstmt.setString(1, toDoItemBean.getToDo());
+                pstmt.setBoolean(2, toDoItemBean.isCompleted());
+                pstmt.setString(3, mail);
+                pstmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static ResultSet getToDoList(Connection conn, String mail) {
+        String query = "SELECT description,done FROM todo WHERE patient=?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
             throw new RuntimeException(e);

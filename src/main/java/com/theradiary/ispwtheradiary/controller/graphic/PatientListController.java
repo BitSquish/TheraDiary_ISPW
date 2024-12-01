@@ -3,6 +3,7 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 import com.theradiary.ispwtheradiary.controller.application.PatientList;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
+import com.theradiary.ispwtheradiary.controller.graphic.task.PatientDetailsController;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.model.beans.PatientBean;
@@ -133,9 +134,9 @@ public class PatientListController extends CommonController {
     private void goToPatientTask(MouseEvent event,PatientBean patientBean){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_TASK_PATH)));
-            loader.setControllerFactory(c -> new PatientTaskController(fxmlPathConfig, session));
+            loader.setControllerFactory(c -> new PatientDetailsController(fxmlPathConfig, session));
             Parent root = loader.load();
-            ((PatientTaskController)loader.getController()).patientTask(patientBean);
+            ((PatientDetailsController)loader.getController()).patientTask(patientBean);
             changeScene(root, event);
         } catch (IOException e) {
             e.printStackTrace();

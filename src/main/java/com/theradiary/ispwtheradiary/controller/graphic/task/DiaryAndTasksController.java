@@ -1,6 +1,6 @@
-package com.theradiary.ispwtheradiary.controller.graphic;
+package com.theradiary.ispwtheradiary.controller.graphic.task;
 
-import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePsController;
+import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
@@ -13,8 +13,8 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
-public class DiaryAndTasksController extends CommonController{
-    protected DiaryAndTasksController(FXMLPathConfig fxmlPathConfig, Session session) {
+public class DiaryAndTasksController extends CommonController {
+     public DiaryAndTasksController(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig, session);
     }
     PatientBean patientBean = (PatientBean) session.getUser();
@@ -40,7 +40,18 @@ public class DiaryAndTasksController extends CommonController{
 
     }
     @FXML
-    protected void goToDo(MouseEvent event){}
+    protected void goToDo(MouseEvent event){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(TODO_PATH)));
+            loader.setControllerFactory(c -> new ToDoController(fxmlPathConfig, session));
+            Parent root = loader.load();
+            ((ToDoController) loader.getController()).initializeToDoList(patientBean);
+            changeScene(root, event);
+        }catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Errore nel caricamento della scena:" + e.getMessage(), e);
+        }
+    }
     @FXML
     protected void goToTask(MouseEvent event){
 

@@ -34,5 +34,7 @@ module com.theradiary.ispwtheradiary {
     opens com.theradiary.ispwtheradiary.model.beans to javafx.fxml;
     exports com.theradiary.ispwtheradiary.controller.graphic.homepage;
     opens com.theradiary.ispwtheradiary.controller.graphic.homepage to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.controller.graphic.task;
+    opens com.theradiary.ispwtheradiary.controller.graphic.task to javafx.fxml;
 
 }

@@ -9,42 +9,42 @@ import java.util.List;
 public class PatientBean extends LoggedUserBean{
     private ArrayList<Category> categories;
     private PsychologistBean psychologistBean;
-    private ObservableList<TaskBean> tasks;
+    private List<TaskBean> tasks;
     private String diary;
-    private ObservableList<ToDoItemBean> toDoList;
+    private List<ToDoItemBean> toDoList;
     public PatientBean(CredentialsBean credentialsBean, String name, String surname, String city, String description, boolean inPerson, boolean online) {
         super(credentialsBean, name, surname, city, description, inPerson, online);
         this.setPag(false);
         this.categories = new ArrayList<>();
         this.psychologistBean = null;
-        this.tasks = null;
+        this.tasks = new ArrayList<>();
         this.diary = "";
-        this.toDoList = null;
+        this.toDoList = new ArrayList<>();
     }
 
     public PatientBean(CredentialsBean credentialsBean) {
         super(credentialsBean);
         this.categories = new ArrayList<>();
         this.psychologistBean = null;
-        this.tasks = null;
+        this.tasks = new ArrayList<>();
         this.diary = "";
-        this.toDoList = null;
+        this.toDoList = new ArrayList<>();
     }
     //Task
-    public ObservableList<TaskBean> getTasks() {
+    public List<TaskBean> getTasks() {
         return tasks;
     }
     public void addTask(TaskBean task){
         tasks.add(task);
     }
-    public void setTasks(ObservableList<TaskBean> tasks) {
+    public void setTasks(List<TaskBean> tasks) {
         this.tasks = tasks;
     }
     public void removeTask(TaskBean task){tasks.remove(task);}
     //To do
-    public ObservableList<ToDoItemBean> getToDoList() {return toDoList;}
+    public List<ToDoItemBean> getToDoList() {return toDoList;}
     public void addToDoItem(ToDoItemBean toDoItem){toDoList.add(toDoItem);}
-    public void setToDoList(ObservableList<ToDoItemBean> toDoList) {this.toDoList = toDoList;}
+    public void setToDoList(List<ToDoItemBean> toDoList) {this.toDoList = toDoList;}
     public void removeToDoItem(ToDoItemBean toDoItem){ toDoList.remove(toDoItem);}
 
     public PsychologistBean getPsychologistBean(){

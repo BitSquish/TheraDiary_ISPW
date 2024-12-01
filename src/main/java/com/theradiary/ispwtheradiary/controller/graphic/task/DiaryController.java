@@ -1,8 +1,11 @@
-package com.theradiary.ispwtheradiary.controller.graphic;
+package com.theradiary.ispwtheradiary.controller.graphic.task;
 
 import com.theradiary.ispwtheradiary.controller.application.TaskAndToDo;
+import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 
+import com.theradiary.ispwtheradiary.controller.graphic.task.DiaryAndTasksController;
+import com.theradiary.ispwtheradiary.controller.graphic.task.DiaryPageController;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 
@@ -20,7 +23,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class DiaryController extends CommonController {
-    DiaryController(FXMLPathConfig fxmlPathConfig, Session session) {
+    protected DiaryController(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig, session);
     }
 
