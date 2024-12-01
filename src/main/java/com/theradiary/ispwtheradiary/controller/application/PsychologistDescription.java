@@ -5,12 +5,10 @@ import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.model.*;
 import com.theradiary.ispwtheradiary.model.beans.MedicalOfficeBean;
-import com.theradiary.ispwtheradiary.model.beans.PatientBean;
 import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.model.beans.RequestBean;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class PsychologistDescription {
 
@@ -33,7 +31,7 @@ public class PsychologistDescription {
     public void sendRequest(RequestBean requestBean) {
         Credentials credentialsPat = new Credentials(requestBean.getPatientBean().getCredentialsBean().getMail(), Role.PATIENT);
         Credentials credentialsPsy = new Credentials(requestBean.getPsychologistBean().getCredentialsBean().getMail(), Role.PSYCHOLOGIST);
-        Request request = new Request(new Patient(credentialsPat, requestBean.getPatientBean().getName(), requestBean.getPatientBean().getSurname(), requestBean.getPatientBean().getCity(), requestBean.getPatientBean().getDescription(), requestBean.getPatientBean().isInPerson(), requestBean.getPatientBean().isOnline()),
+        Request request= new Request(new Patient(credentialsPat, requestBean.getPatientBean().getName(), requestBean.getPatientBean().getSurname(), requestBean.getPatientBean().getCity(), requestBean.getPatientBean().getDescription(), requestBean.getPatientBean().isInPerson(), requestBean.getPatientBean().isOnline()),
                 new Psychologist(credentialsPsy, requestBean.getPsychologistBean().getName(), requestBean.getPsychologistBean().getSurname(), requestBean.getPsychologistBean().getCity(), requestBean.getPsychologistBean().getDescription(), requestBean.getPsychologistBean().isInPerson(), requestBean.getPsychologistBean().isOnline()),
                 requestBean.getDate());
         try{

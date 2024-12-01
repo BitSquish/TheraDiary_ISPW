@@ -9,14 +9,15 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.RequestController">
     <fx:include source="CommonPanel.fxml" />
-   <TableView fx:id="patientTable" layoutX="38.0" layoutY="180.0" prefHeight="335.0" prefWidth="800.0">
+   <TableView fx:id="requestBeanTableView" layoutX="38.0" layoutY="180.0" prefHeight="335.0" prefWidth="800.0">
       <columns>
-         <TableColumn fx:id="fullName" prefWidth="159.2000732421875" text="Nome e Cognome" />
-         <TableColumn fx:id="cityName" prefWidth="137.60003662109375" text="Città" />
-         <TableColumn fx:id="requestDate" prefWidth="122.39996337890625" text="Data Richiesta" />
-         <TableColumn fx:id="pagAdesion" prefWidth="127.20001220703125" text="Adesione P.A.G." />
-         <TableColumn fx:id="acceptButton" minWidth="0.0" prefWidth="127.2000732421875" />
-         <TableColumn fx:id="rejectButton" minWidth="0.0" prefWidth="127.2000732421875" />
+         <TableColumn fx:id="fullName" prefWidth="154.4000244140625" text="Nome e Cognome" />
+         <TableColumn fx:id="cityName" prefWidth="144.0" text="Città" />
+         <TableColumn fx:id="requestDate" prefWidth="99.99993896484375" text="Data Richiesta" />
+         <TableColumn fx:id="pagAdesion" prefWidth="76.0" text="P.A.G." />
+         <TableColumn fx:id="modality" minWidth="0.0" prefWidth="134.4000244140625" text="Visite:" />
+         <TableColumn fx:id="acceptButton" minWidth="0.0" prefWidth="99.2000732421875" />
+         <TableColumn fx:id="rejectButton" prefWidth="87.9998779296875" />
       </columns>
    </TableView>
    <Text fill="#242038" layoutX="332.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le tue richieste" textAlignment="CENTER">

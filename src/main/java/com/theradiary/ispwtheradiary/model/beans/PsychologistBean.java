@@ -39,6 +39,9 @@ public class PsychologistBean extends LoggedUserBean {
     public void removePatientBean(PatientBean patientBean) {
         this.patientsBean.remove(patientBean);
     }
+    public void setPatientsBean(List<PatientBean> patientsBean) {
+        this.patientsBean = (ArrayList<PatientBean>) patientsBean;
+    }
 
     public void addMajor(Major major) {
         majors.add(major);

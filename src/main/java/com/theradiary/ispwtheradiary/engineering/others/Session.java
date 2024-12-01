@@ -1,13 +1,12 @@
 package com.theradiary.ispwtheradiary.engineering.others;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
-import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
 import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
 
 public class Session {
     private LoggedUserBean user;
-    private Role role;
     private String homepage;
+
 
     private boolean commandLine;    //seconda interfaccia
 

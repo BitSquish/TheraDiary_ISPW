@@ -5,6 +5,7 @@ import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class UpdateQuery {
     public static void modifyMedicalOffice(Connection conn, String mail, String city, String postCode, String address, String otherInfo) throws SQLException {
@@ -106,6 +107,29 @@ public class UpdateQuery {
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setBoolean(1, true);
             pstmt.setString(2, mail);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static void deleteRequest(Connection conn, String mailPatient, String mailPsychologist, LocalDate date) {
+        String query = "DELETE FROM request WHERE patient = ? AND psychologist = ? AND date = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, mailPatient);
+            pstmt.setString(2, mailPsychologist);
+            pstmt.setDate(3, java.sql.Date.valueOf(date));
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static void setPatientsPsychologist(Connection conn, String patient, String psychologist) {
+        String query = "UPDATE patient SET psychologist = ? WHERE mail = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, psychologist);
+            pstmt.setString(2, patient);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());

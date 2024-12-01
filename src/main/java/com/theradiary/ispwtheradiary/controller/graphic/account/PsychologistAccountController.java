@@ -76,7 +76,7 @@ public class PsychologistAccountController extends AccountController {
                 PsychologistBean psychologistBean = (PsychologistBean) session.getUser();
                 //Recupero la lista dei pazienti
                 List<PatientBean> patientBeans = new Account().retrievePatientList(psychologistBean);
-
+                ((PsychologistBean) session.getUser()).setPatientsBean(patientBeans);
                 loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_LIST_PATH)));
                 loader.setControllerFactory(c -> new PatientListController(fxmlPathConfig, session));
                 root = loader.load();

@@ -7,10 +7,7 @@ import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.AccountQuery;
 import com.theradiary.ispwtheradiary.engineering.query.LoginAndRegistrationQuery;
 import com.theradiary.ispwtheradiary.engineering.query.UpdateQuery;
-import com.theradiary.ispwtheradiary.model.Credentials;
-import com.theradiary.ispwtheradiary.model.MedicalOffice;
-import com.theradiary.ispwtheradiary.model.Patient;
-import com.theradiary.ispwtheradiary.model.Psychologist;
+import com.theradiary.ispwtheradiary.model.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -88,6 +85,22 @@ public class UpdateDAO {
     public static void joinPagPatient(Patient patient) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.joinPagPatient(conn, patient.getCredentials().getMail());
+        } catch(SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static void deleteRequest(Request request) {
+        try(Connection conn = ConnectionFactory.getConnection()){
+            UpdateQuery.deleteRequest(conn, request.getPatient().getCredentials().getMail(), request.getPsychologist().getCredentials().getMail(), request.getDate());
+        } catch(SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static void setPatientsPsychologist(Patient patient) {
+        try(Connection conn = ConnectionFactory.getConnection()){
+            UpdateQuery.setPatientsPsychologist(conn, patient.getCredentials().getMail(), patient.getPsychologist().getCredentials().getMail());
         } catch(SQLException e){
             throw new RuntimeException(e.getMessage());
         }
