@@ -1,7 +1,7 @@
 package com.theradiary.ispwtheradiary.engineering.others;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
-import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 
 public class Session {
     private LoggedUserBean user;

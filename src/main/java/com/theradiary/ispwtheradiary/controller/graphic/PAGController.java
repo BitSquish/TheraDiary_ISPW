@@ -3,7 +3,7 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 import com.theradiary.ispwtheradiary.controller.application.PAG;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
-import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;

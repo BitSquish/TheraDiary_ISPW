@@ -1,11 +1,9 @@
 package com.theradiary.ispwtheradiary.engineering.dao;
 
 import com.theradiary.ispwtheradiary.engineering.query.PtAndPsQuery;
-import com.theradiary.ispwtheradiary.model.Patient;
-import com.theradiary.ispwtheradiary.model.Psychologist;
+
 import com.theradiary.ispwtheradiary.model.Request;
 
-import java.time.LocalDate;
 
 public class PtAndPsDAO {
     private PtAndPsDAO() {

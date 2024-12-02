@@ -10,7 +10,7 @@ import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPassword
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.Validator;
-import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;

@@ -9,9 +9,9 @@ import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPassword
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
-import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
-import com.theradiary.ispwtheradiary.model.beans.PatientBean;
-import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.CredentialsBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

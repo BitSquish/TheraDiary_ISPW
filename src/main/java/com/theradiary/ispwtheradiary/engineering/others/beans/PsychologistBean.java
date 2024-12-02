@@ -1,8 +1,7 @@
-package com.theradiary.ispwtheradiary.model.beans;
+package com.theradiary.ispwtheradiary.engineering.others.beans;
 
 
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
-import com.theradiary.ispwtheradiary.model.Patient;
 
 import java.util.ArrayList;
 import java.util.List;

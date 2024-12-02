@@ -6,9 +6,6 @@ import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsExc
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
-import com.theradiary.ispwtheradiary.model.beans.PatientBean;
-import javafx.fxml.FXML;
-import javafx.scene.input.MouseEvent;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

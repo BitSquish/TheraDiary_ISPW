@@ -1,8 +1,8 @@
-package com.theradiary.ispwtheradiary.model.beans;
+package com.theradiary.ispwtheradiary.engineering.others.beans;
 
 
 public abstract class LoggedUserBean {
-    private com.theradiary.ispwtheradiary.model.beans.CredentialsBean credentialsBean;
+    private CredentialsBean credentialsBean;
     private String name;
     private String surname;
     private String city;

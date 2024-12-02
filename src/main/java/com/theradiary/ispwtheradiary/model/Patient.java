@@ -1,8 +1,7 @@
 package com.theradiary.ispwtheradiary.model;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
-import com.theradiary.ispwtheradiary.model.beans.PatientBean;
-import com.theradiary.ispwtheradiary.model.beans.ToDoItemBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;

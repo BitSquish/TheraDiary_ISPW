@@ -1,11 +1,11 @@
 package com.theradiary.ispwtheradiary.engineering.patterns.observer;
 
-import com.theradiary.ispwtheradiary.model.beans.RequestBean;
+
 
 import java.util.ArrayList;
-import java.util.Iterator;
+
 import java.util.List;
-import java.util.Vector;
+
 
 public abstract class Subject{
 

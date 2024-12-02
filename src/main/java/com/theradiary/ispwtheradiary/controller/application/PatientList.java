@@ -4,10 +4,9 @@ import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 import com.theradiary.ispwtheradiary.model.Request;
-import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
-import com.theradiary.ispwtheradiary.model.beans.PatientBean;
-import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
-import com.theradiary.ispwtheradiary.model.beans.RequestBean;
+
+import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.RequestBean;
 
 import java.util.ArrayList;
 import java.util.List;

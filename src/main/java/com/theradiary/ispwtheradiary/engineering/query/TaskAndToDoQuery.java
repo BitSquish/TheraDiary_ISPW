@@ -1,7 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
-import com.theradiary.ispwtheradiary.model.Patient;
-import com.theradiary.ispwtheradiary.model.beans.ToDoItemBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

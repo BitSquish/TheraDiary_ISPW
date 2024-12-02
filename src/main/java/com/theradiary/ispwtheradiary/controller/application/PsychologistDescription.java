@@ -3,10 +3,11 @@ package com.theradiary.ispwtheradiary.controller.application;
 import com.theradiary.ispwtheradiary.engineering.dao.PtAndPsDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.RequestBean;
 import com.theradiary.ispwtheradiary.model.*;
-import com.theradiary.ispwtheradiary.model.beans.MedicalOfficeBean;
-import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
-import com.theradiary.ispwtheradiary.model.beans.RequestBean;
+import com.theradiary.ispwtheradiary.model.entity.*;
 
 import java.sql.SQLException;
 

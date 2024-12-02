@@ -5,7 +5,7 @@ import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
-import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 
 import java.sql.SQLException;
 

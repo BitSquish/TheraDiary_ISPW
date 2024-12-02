@@ -4,9 +4,9 @@ import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.TaskAndToDoQuery;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.ToDoItem;
-import com.theradiary.ispwtheradiary.model.beans.ToDoItemBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
 
-import javax.xml.transform.Result;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

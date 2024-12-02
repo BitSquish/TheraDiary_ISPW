@@ -1,4 +1,4 @@
-package com.theradiary.ispwtheradiary.model.beans;
+package com.theradiary.ispwtheradiary.engineering.others.beans;
 
 public class MedicalOfficeBean {
     private String mail;

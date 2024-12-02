@@ -1,7 +1,6 @@
-package com.theradiary.ispwtheradiary.model.beans;
+package com.theradiary.ispwtheradiary.engineering.others.beans;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
-import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.List;

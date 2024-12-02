@@ -4,10 +4,10 @@ package com.theradiary.ispwtheradiary.engineering.dao;
 
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
-import com.theradiary.ispwtheradiary.engineering.query.AccountQuery;
 import com.theradiary.ispwtheradiary.engineering.query.LoginAndRegistrationQuery;
 import com.theradiary.ispwtheradiary.engineering.query.UpdateQuery;
 import com.theradiary.ispwtheradiary.model.*;
+import com.theradiary.ispwtheradiary.model.entity.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;

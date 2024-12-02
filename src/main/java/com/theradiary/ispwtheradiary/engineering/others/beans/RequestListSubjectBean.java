@@ -1,4 +1,4 @@
-package com.theradiary.ispwtheradiary.model.beans;
+package com.theradiary.ispwtheradiary.engineering.others.beans;
 
 import com.theradiary.ispwtheradiary.engineering.patterns.observer.Observer;
 import com.theradiary.ispwtheradiary.engineering.patterns.observer.Subject;

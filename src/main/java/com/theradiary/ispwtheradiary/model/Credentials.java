@@ -1,7 +1,7 @@
 package com.theradiary.ispwtheradiary.model;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
-import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.CredentialsBean;
 
 public class Credentials {
     //Le seguenti variabili sono dichiarate come final per garantire l'integrità dei dati dell'ogetto Credentials

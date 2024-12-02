@@ -5,8 +5,8 @@ import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
-import com.theradiary.ispwtheradiary.model.beans.PatientBean;
-import com.theradiary.ispwtheradiary.model.beans.ToDoItemBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -30,7 +30,7 @@ public class ToDoController extends CommonController {
     @FXML
     public void initializeToDoList(PatientBean patientBean) {
         TaskAndToDo taskAndToDo = new TaskAndToDo();
-        taskAndToDo.ToDoList(patientBean);
+        taskAndToDo.toDoList(patientBean);
         List< ToDoItemBean > toDoItems = patientBean.getToDoList();
         if (toDoItems != null) {
             for (ToDoItemBean toDoItem : toDoItems) {

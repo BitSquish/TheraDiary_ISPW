@@ -5,7 +5,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtContr
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
-import com.theradiary.ispwtheradiary.model.beans.PatientBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

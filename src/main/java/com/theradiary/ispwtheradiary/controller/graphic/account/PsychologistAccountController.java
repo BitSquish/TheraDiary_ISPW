@@ -7,9 +7,9 @@ import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
-import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
-import com.theradiary.ispwtheradiary.model.beans.PatientBean;
-import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

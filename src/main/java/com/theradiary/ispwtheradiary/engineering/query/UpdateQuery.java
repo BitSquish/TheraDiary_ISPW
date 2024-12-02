@@ -1,6 +1,5 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
-import com.theradiary.ispwtheradiary.engineering.enums.Role;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

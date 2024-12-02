@@ -6,10 +6,10 @@ import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsExc
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
-import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
-import com.theradiary.ispwtheradiary.model.beans.LoggedUserBean;
-import com.theradiary.ispwtheradiary.model.beans.PatientBean;
-import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.CredentialsBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 
 import java.sql.SQLException;
 

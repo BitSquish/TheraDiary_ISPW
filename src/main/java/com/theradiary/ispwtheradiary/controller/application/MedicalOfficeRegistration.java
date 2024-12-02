@@ -4,7 +4,7 @@ import com.theradiary.ispwtheradiary.engineering.dao.RegistrationDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
 import com.theradiary.ispwtheradiary.model.MedicalOffice;
-import com.theradiary.ispwtheradiary.model.beans.MedicalOfficeBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
 
 import java.sql.SQLException;
 

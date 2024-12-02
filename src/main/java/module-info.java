@@ -30,11 +30,13 @@ module com.theradiary.ispwtheradiary {
     //Model
     exports com.theradiary.ispwtheradiary.model;
     opens com.theradiary.ispwtheradiary.model to javafx.fxml;
-    exports com.theradiary.ispwtheradiary.model.beans;
-    opens com.theradiary.ispwtheradiary.model.beans to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.engineering.others.beans;
+    opens com.theradiary.ispwtheradiary.engineering.others.beans to javafx.fxml;
     exports com.theradiary.ispwtheradiary.controller.graphic.homepage;
     opens com.theradiary.ispwtheradiary.controller.graphic.homepage to javafx.fxml;
     exports com.theradiary.ispwtheradiary.controller.graphic.task;
     opens com.theradiary.ispwtheradiary.controller.graphic.task to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.model;
+    opens com.theradiary.ispwtheradiary.model to javafx.fxml;
 
 }

@@ -5,9 +5,9 @@ import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 
-import com.theradiary.ispwtheradiary.engineering.others.Validator;
-import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
-import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
+
+import com.theradiary.ispwtheradiary.engineering.others.beans.CredentialsBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 

@@ -6,9 +6,9 @@ import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.MedicalOffice;
 import com.theradiary.ispwtheradiary.model.Psychologist;
-import com.theradiary.ispwtheradiary.model.beans.CredentialsBean;
-import com.theradiary.ispwtheradiary.model.beans.MedicalOfficeBean;
-import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
+
+import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 

@@ -4,7 +4,7 @@ import com.theradiary.ispwtheradiary.controller.application.MedicalOfficeRegistr
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
-import com.theradiary.ispwtheradiary.model.beans.MedicalOfficeBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;

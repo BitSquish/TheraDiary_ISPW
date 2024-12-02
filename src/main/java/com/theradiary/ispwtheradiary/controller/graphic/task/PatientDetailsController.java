@@ -6,10 +6,10 @@ import com.theradiary.ispwtheradiary.controller.graphic.PatientListController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
-import com.theradiary.ispwtheradiary.model.beans.PatientBean;
-import com.theradiary.ispwtheradiary.model.beans.PsychologistBean;
-import com.theradiary.ispwtheradiary.model.beans.TaskBean;
-import com.theradiary.ispwtheradiary.model.beans.ToDoItemBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.TaskBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -104,7 +104,7 @@ public class PatientDetailsController extends CommonController {
     }
     private void configureToDoList() {
         TaskAndToDo taskAndToDo=new TaskAndToDo();
-        taskAndToDo.ToDoList(patientBean);
+        taskAndToDo.toDoList(patientBean);
         List<ToDoItemBean> toDoItems=patientBean.getToDoList();
         for(ToDoItemBean item:toDoItems){
             HBox itemBox=createToDoItem(item.getToDo(),item.isCompleted());
@@ -117,7 +117,7 @@ public class PatientDetailsController extends CommonController {
         checkBox.setSelected(isCompleted);
         TextField textField=new TextField(taskDescription);
         textField.setPrefWidth(200);
-        Button deleteButton=new Button("Rimuovi");
+        Button deleteButton=new Button("Elimina");
         deleteButton.setOnAction(e->{
             toDoListItems.removeIf(hBox -> hBox.getChildren().contains(deleteButton));
             toDoListView.setItems(toDoListItems);
