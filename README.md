@@ -1,2 +1,2 @@
 # TheraDiary_ISPW
-Progetto di ingegneria software progettazione web, dell'anno accademico 2024/2025, a cura di Sofia Tosti e Emanuela Gallinelli
+TheraDiary è nata con l'idea di aiutare gli psicologi e i loro pazienti nel loro cammino verso il benessere mentale. Questa versione base dell'applicazione permette ai pazienti di scegliere il proprio psicologo, prenotare appuntamenti e svolgere task. Gli psicologi possono invece registrare il proprio studio medico, i propri orari di disponibilità e assegnare task ai propri pazienti. Progetto svolto per ISPW (Ingegneria del Software e Progettazione Web), anno accademico 2024/2025. Dall'idea di Emanuela Gallinelli e Sofia Tosti.
