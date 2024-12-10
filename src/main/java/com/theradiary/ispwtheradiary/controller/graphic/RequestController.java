@@ -34,7 +34,9 @@ public class RequestController extends CommonController implements Observer {
      */
 
     public RequestController(FXMLPathConfig fxmlPathConfig, Session session) {
-        super(fxmlPathConfig,session);
+        super(fxmlPathConfig, session);
+        // Recupero l'istanza del ConcreteSubject
+        this.requestManagerConcreteSubject = RequestManagerConcreteSubject.getInstance();
     }
 
     @FXML
@@ -57,6 +59,7 @@ public class RequestController extends CommonController implements Observer {
     private List<RequestBean> requestBeans = new ArrayList<>();
 
 
+    //Torna alla pagina precedente
     @FXML
     protected void back(MouseEvent event) {
         try {
@@ -85,10 +88,69 @@ public class RequestController extends CommonController implements Observer {
         }
     }
 
+    //Carica le richieste
+    /*public void loadRequest(List<RequestBean> requestBeans) {
+        setupTableView(); // Configura la tabella
+        requestBeanTableView.getItems().clear();
+        requestBeanTableView.getItems().addAll(requestBeans);
+    }
+
+    private void setupTableView() {
+        // Imposta le colonne della tabella
+        fullName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPatientBean().getFullName()));
+        cityName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPatientBean().getCity()));
+        requestDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        modality.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPatientBean().getModality()));
+        // Bottone per accettare la richiesta
+        acceptButton.setCellFactory(param -> new TableCell<>() {
+            private final Button btnAccept = new Button("Accetta");
+            {
+                btnAccept.setOnMouseClicked(event -> {
+                    RequestBean requestBean = getTableView().getItems().get(getIndex());
+                    try {
+                        manageRequest(event, requestBean, true);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btnAccept);
+                }
+            }
+        });
+        // Bottone per rifiutare la richiesta
+        rejectButton.setCellFactory(param -> new TableCell<>() {
+            private final Button btnReject = new Button("Rifiuta");
+            {
+                btnReject.setOnMouseClicked(event -> {
+                    RequestBean requestBean = getTableView().getItems().get(getIndex());
+                    try {
+                        manageRequest(event, requestBean, false);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btnReject);
+                }
+            }
+        });
+    }*/
+
+    @FXML
     public void loadRequest(List<RequestBean> requestBeans){
-        //Istanza del concreteSubject
-        requestManagerConcreteSubject = RequestManagerConcreteSubject.getInstance();
-        requestManagerConcreteSubject.addObserver(this);
         //Imposto valori della tabella
         fullName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPatientBean().getFullName()));
         cityName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPatientBean().getCity()));
@@ -103,7 +165,11 @@ public class RequestController extends CommonController implements Observer {
             {
                 btnAccept.setOnMouseClicked(event -> {
                     RequestBean requestBean = getTableView().getItems().get(getIndex());
-                    manageRequest(requestBean, true);
+                    try {
+                        manageRequest(event, requestBean, true);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
             }
             @Override
@@ -122,7 +188,11 @@ public class RequestController extends CommonController implements Observer {
             {
                 btnReject.setOnMouseClicked(event -> {
                     RequestBean requestBean = getTableView().getItems().get(getIndex());
-                    manageRequest(requestBean, false);
+                    try {
+                        manageRequest(event, requestBean, false);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
             }
             @Override
@@ -137,7 +207,8 @@ public class RequestController extends CommonController implements Observer {
         });
     }
 
-    private void manageRequest(RequestBean requestBean, boolean flag) {
+    //Metodo per eliminare la richiesta dalla lista. Se accettata, crea l'associazione psicologo-paziente.
+    private void manageRequest(MouseEvent event, RequestBean requestBean, boolean flag) throws IOException {
         //chiamo applicativo passandogli la richiesta da rimuovere
         RequestApplication requestApplication = new RequestApplication();
         requestApplication.deleteRequest(requestBean);
@@ -146,14 +217,14 @@ public class RequestController extends CommonController implements Observer {
             patientBean.setPsychologistBean(requestBean.getPsychologistBean());
             requestApplication.addPsychologistToPatient(patientBean);   //assegno lo psicologo al paziente
             ((PsychologistBean)session.getUser()).getPatientsBean().add(patientBean);    //aggiungo il paziente alla lista dei pazienti dello psicologo
-        }   //Servirebbe un refresh della tabella TODO
-
-        //valuta se aggiungere un messaggio di rifiuto richiesta
-
+        }
+        // Rimuove la richiesta dalla lista e notifica la tabella
+        requestBeans.remove(requestBean);
+        requestBeanTableView.getItems().remove(requestBean); // Sincronizza la tabella
     }
 
-
-    @Override
+    //Pattern observer
+   /* @Override
     public void update() {
         List <Request>requests = requestManagerConcreteSubject.getRequests();
         for(Request request:requests) {
@@ -163,5 +234,18 @@ public class RequestController extends CommonController implements Observer {
         //Aggiungo i nuovi elementi
         requestBeanTableView.getItems().clear();    //Svuota la tableview
         requestBeanTableView.getItems().addAll(requestBeans);
+    }*/
+
+    @Override
+    public void update() {
+        // Restituisce la lista aggiornata delle richieste
+        List<Request> requests = requestManagerConcreteSubject.getRequests();
+        // Aggiorna la lista dei RequestBean
+        List<RequestBean> updatedRequestBeans = new ArrayList<>();
+        for (Request request : requests) {
+            updatedRequestBeans.add(request.toBean());
+        }
+        // Aggiorna solo gli elementi cambiati
+        requestBeanTableView.getItems().setAll(updatedRequestBeans);
     }
 }

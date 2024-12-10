@@ -9,6 +9,7 @@ import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.RequestBean;
+import com.theradiary.ispwtheradiary.engineering.patterns.observer.RequestManagerConcreteSubject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -176,6 +177,7 @@ public class PatientListController extends CommonController {
             loader.setControllerFactory(c -> new RequestController(fxmlPathConfig, session));
             Parent root = loader.load();
             ((RequestController)loader.getController()).loadRequest(requestBeans);
+            RequestManagerConcreteSubject.getInstance().addObserver(loader.getController());
             changeScene(root, event);
         } catch (IOException e) {
             e.printStackTrace();
