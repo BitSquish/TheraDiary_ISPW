@@ -22,6 +22,7 @@ public class CredentialsBean {
             this.role = role;
     }
 
+
     //getters
     public String getMail(){
         return mail;

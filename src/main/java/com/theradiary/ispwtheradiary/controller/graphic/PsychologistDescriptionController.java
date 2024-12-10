@@ -8,7 +8,7 @@ import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.*;
-import com.theradiary.ispwtheradiary.model.beans.*;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

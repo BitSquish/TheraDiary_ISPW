@@ -29,7 +29,7 @@ public class UserRegistration {
     }
 
 
-    private void registerPatient(PatientBean patientBean) throws MailAlreadyExistsException {//metodo per registrare un paziente nel database
+    public static void registerPatient(PatientBean patientBean) throws MailAlreadyExistsException {//metodo per registrare un paziente nel database
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
         try {
             RegistrationDAO.registerPatient(patient);
@@ -40,7 +40,7 @@ public class UserRegistration {
         }
     }
 
-    private void registerPsychologist(PsychologistBean psychologistBean) throws MailAlreadyExistsException {
+    public static void registerPsychologist(PsychologistBean psychologistBean) throws MailAlreadyExistsException {
         Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST) ,psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
         try {
             RegistrationDAO.registerPsychologist(psychologist);
