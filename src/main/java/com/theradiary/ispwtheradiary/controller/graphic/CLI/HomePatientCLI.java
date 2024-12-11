@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.controller.graphic.CLI;
 
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.AbstractState;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.InitialState;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.StateMachineImpl;
@@ -14,6 +15,7 @@ public class HomePatientCLI extends AbstractState {
         this.user = user;
     }
     private final Scanner scanner = new Scanner(System.in);
+    /* Opzione menu dove voglio andare */
     @Override
     public void action(StateMachineImpl context) {
         int scelta;
@@ -21,13 +23,13 @@ public class HomePatientCLI extends AbstractState {
             try {
                 switch (scelta) {
                     case (1):
-                        goNext(context, new TaskPatientCLI());
+                        goNext(context, new TaskPatientCLI((PatientBean) user));
                         break;
                     case (2):
                         goNext(context, new AppointmentPatientCLI());
                         break;
                     case (3):
-                        goNext(context, new SearchCLI());
+                        goNext(context, new SearchCLI((PatientBean) user));
                         break;
                     default:
                         Printer.errorPrint("Scelta non valida");
@@ -41,6 +43,7 @@ public class HomePatientCLI extends AbstractState {
         }
         goNext(context, new InitialState());
     }
+    /*-----------------Pattern state---------------*/
     @Override
     public void showMenu() {
         Printer.println("1.Visualizza le task");

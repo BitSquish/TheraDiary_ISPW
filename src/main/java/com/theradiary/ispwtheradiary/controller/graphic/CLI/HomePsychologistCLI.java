@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.controller.graphic.CLI;
 
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.AbstractState;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.InitialState;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.StateMachineImpl;
@@ -12,7 +13,7 @@ public class HomePsychologistCLI extends AbstractState {
     protected LoggedUserBean user;
     public HomePsychologistCLI(LoggedUserBean user) {this.user = user;}
     private final Scanner scanner = new Scanner(System.in);
-
+    /* Opzione menu dove voglio andare */
     @Override
     public void action(StateMachineImpl context) {
         int scelta;
@@ -20,13 +21,13 @@ public class HomePsychologistCLI extends AbstractState {
             try {
                 switch (scelta) {
                     case (1):
-                        goNext(context, new TaskPsychologistCLI());
+                        goNext(context, new PatientListCLI((PsychologistBean) user));
                         break;
                     case (2):
                         goNext(context, new AppointmentPsychologistCLI());
                         break;
                     case (3):
-                        goNext(context, new MedicalOfficeCLI());
+                        goNext(context, new MedicalOfficeCLI(user));
                         break;
                     default:
                         Printer.errorPrint("Scelta non valida");
@@ -40,6 +41,7 @@ public class HomePsychologistCLI extends AbstractState {
         }
         goNext(context, new InitialState());
     }
+    /*-----------------Pattern state---------------*/
     @Override
     public void showMenu() {
         Printer.println("1.Visualizza le task");

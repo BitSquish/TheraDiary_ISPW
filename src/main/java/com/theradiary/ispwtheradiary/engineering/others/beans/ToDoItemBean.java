@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.others.beans;
 
-import java.util.List;
+
 
 public class ToDoItemBean {
     private String toDo;
@@ -21,6 +21,11 @@ public class ToDoItemBean {
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
+    @Override
+    public String toString() {
+        return (isCompleted() ? "[X]" : "[ ]") + "-" + toDo;
+    }
+
 
 
 }

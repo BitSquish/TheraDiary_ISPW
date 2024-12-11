@@ -39,7 +39,7 @@ public class SearchController extends CommonController{
             checkFields(fields);
             List<PsychologistBean> psychologistBeans = new ArrayList<>();
             Search searchClass = new Search();
-            searchClass.searchPsychologists(psychologistBeans,nomeP, cognomeP, cittaP, inPresenza, online, pag);
+            searchClass.searchPsychologists(psychologistBeans,nomeP.getText(), cognomeP.getText(), cittaP.getText(), inPresenza.isSelected(), online.isSelected(), pag.isSelected());
             goToPsychologistsList(psychologistBeans,event);
         } catch (EmptyFieldException | NoResultException exception){
             errorMessage.setText(exception.getMessage());

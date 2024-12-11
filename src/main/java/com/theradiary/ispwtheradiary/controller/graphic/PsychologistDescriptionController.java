@@ -106,7 +106,6 @@ public class PsychologistDescriptionController extends CommonController {
     @FXML
     protected void sendRequest(MouseEvent event) {
         PatientBean patientBean = (PatientBean) session.getUser();
-        PsychologistDescription psychologistDescription = new PsychologistDescription();
         if(patientBean.getPsychologistBean() != null){
             message.setText("Hai già uno psicologo");
             message.setVisible(true);
@@ -115,7 +114,7 @@ public class PsychologistDescriptionController extends CommonController {
             psychologistBean.setInPerson(psychologistBean.getInPersonFromModality(modalityField.getText()));
             psychologistBean.setOnline(psychologistBean.getOnlineFromModality(modalityField.getText()));
             RequestBean requestBean = new RequestBean(patientBean, psychologistBean, LocalDate.now());
-            psychologistDescription.sendRequest(requestBean);
+            PsychologistDescription.sendRequest(requestBean);
             message.setText("Richiesta inviata con successo");
             message.setVisible(true);
         }

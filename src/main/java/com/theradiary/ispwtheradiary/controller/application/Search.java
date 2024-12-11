@@ -17,9 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Search {
-    public void searchPsychologists(List<PsychologistBean> psychologistBeans, TextField nomeP, TextField cognomeP, TextField cittaP, CheckBox inPresenza, CheckBox online, CheckBox pag) throws NoResultException {
+    public void searchPsychologists(List<PsychologistBean> psychologistBeans, String nomeP, String cognomeP, String cittaP, boolean inPresenza, boolean online, boolean pag) throws NoResultException {
         List<Psychologist> psychologists = new ArrayList<>();
-        RetrieveDAO.searchPsychologists(psychologists, nomeP.getText(), cognomeP.getText(), cittaP.getText(), inPresenza.isSelected(), online.isSelected(), pag.isSelected());
+        RetrieveDAO.searchPsychologists(psychologists, nomeP, cognomeP, cittaP, inPresenza, online, pag);
         for(Psychologist psychologist : psychologists){
             RetrieveDAO.checkPag(psychologist);
             PsychologistBean psychologistBean = psychologist.toBean();

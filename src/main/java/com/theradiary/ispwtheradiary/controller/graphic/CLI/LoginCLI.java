@@ -21,9 +21,9 @@ public class LoginCLI extends AbstractState {
     @Override
     public void action(StateMachineImpl context) {
         //metodo effettivo per il login
-        System.out.println("   Email: ");
+        Printer.println("   Email: ");
         String email = scanner.next();
-        System.out.println("   Password: ");
+        Printer.println("   Password: ");
         String password = scanner.next();
         //controllo se l'utente è registrato
         //se si, setto l'utente loggato

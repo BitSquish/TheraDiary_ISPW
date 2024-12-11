@@ -29,7 +29,7 @@ public class PsychologistDescription {
         }
     }
 
-    public void sendRequest(RequestBean requestBean) {
+    public static void sendRequest(RequestBean requestBean) {
         Credentials credentialsPat = new Credentials(requestBean.getPatientBean().getCredentialsBean().getMail(), Role.PATIENT);
         Credentials credentialsPsy = new Credentials(requestBean.getPsychologistBean().getCredentialsBean().getMail(), Role.PSYCHOLOGIST);
         Request request= new Request(new Patient(credentialsPat, requestBean.getPatientBean().getName(), requestBean.getPatientBean().getSurname(), requestBean.getPatientBean().getCity(), requestBean.getPatientBean().getDescription(), requestBean.getPatientBean().isInPerson(), requestBean.getPatientBean().isOnline()),

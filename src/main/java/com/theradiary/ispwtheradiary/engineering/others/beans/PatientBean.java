@@ -45,6 +45,14 @@ public class PatientBean extends LoggedUserBean{
     public void addToDoItem(ToDoItemBean toDoItem){toDoList.add(toDoItem);}
     public void setToDoList(List<ToDoItemBean> toDoList) {this.toDoList = toDoList;}
     public void removeToDoItem(ToDoItemBean toDoItem){ toDoList.remove(toDoItem);}
+    public List<String> getToDoListAsString() {
+        List<String> toDoListAsString = new ArrayList<>();
+        for (ToDoItemBean item : toDoList) {
+            toDoListAsString.add(item.getToDo());
+        }
+        return toDoListAsString;
+    }
+
 
     public PsychologistBean getPsychologistBean(){
         return psychologistBean;

@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class TaskAndToDo {
 
-    public String getDiaryForToday(PatientBean patientBean) {
+    public static String getDiaryForToday(PatientBean patientBean) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
         Optional<String> diaryContent = TaskAndToDoDAO.getDiaryForToday(patient);
         if (diaryContent.isPresent()) {
@@ -27,7 +27,7 @@ public class TaskAndToDo {
         }
     }
 
-    public void saveDiary(String diaryContent, PatientBean patientBean) {
+    public static void saveDiary(String diaryContent, PatientBean patientBean) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
         TaskAndToDoDAO.Diary(patient,diaryContent);
         patientBean.setDiary(diaryContent);
@@ -39,14 +39,14 @@ public class TaskAndToDo {
         return diaryContent.orElse("");
     }
 
-    public void saveToDoList(ObservableList<ToDoItemBean> savedToDoItems, PatientBean patientBean) {
+    public static void saveToDoList(ObservableList<ToDoItemBean> savedToDoItems, PatientBean patientBean) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
         TaskAndToDoDAO.ToDoList(patient,savedToDoItems);
         patientBean.setToDoList(savedToDoItems);
     }
 
 
-    public void toDoList(PatientBean patientBean) {
+    public static void toDoList(PatientBean patientBean) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
         List<ToDoItem> toDoItems = TaskAndToDoDAO.retriveToDoList(patient);
         for (ToDoItem toDoItem : toDoItems) {
