@@ -6,6 +6,7 @@ import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.RequestBean;
+import com.theradiary.ispwtheradiary.engineering.patterns.observer.RequestManagerConcreteSubject;
 import com.theradiary.ispwtheradiary.model.*;
 
 
@@ -37,6 +38,8 @@ public class PsychologistDescription {
                 requestBean.getDate());
         try{
             PtAndPsDAO.sendRequest(request);
+            RequestManagerConcreteSubject requestManagerConcreteSubject = RequestManagerConcreteSubject.getInstance();
+            requestManagerConcreteSubject.addRequest(request);
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }

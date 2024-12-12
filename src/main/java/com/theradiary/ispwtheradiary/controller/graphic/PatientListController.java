@@ -176,8 +176,8 @@ public class PatientListController extends CommonController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(REQUEST_PATH)));
             loader.setControllerFactory(c -> new RequestController(fxmlPathConfig, session));
             Parent root = loader.load();
+            ((RequestController)loader.getController()).initializeObserver();
             ((RequestController)loader.getController()).loadRequest(requestBeans);
-            RequestManagerConcreteSubject.getInstance().addObserver(loader.getController());
             changeScene(root, event);
         } catch (IOException e) {
             e.printStackTrace();

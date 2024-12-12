@@ -101,9 +101,12 @@ public class UpdateDAO {
     public static void setPatientsPsychologist(Patient patient) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.setPatientsPsychologist(conn, patient.getCredentials().getMail(), patient.getPsychologist().getCredentials().getMail());
+            UpdateQuery.deleteOtherRequests(conn, patient);
         } catch(SQLException e){
             throw new RuntimeException(e.getMessage());
         }
     }
+
+
 }
 

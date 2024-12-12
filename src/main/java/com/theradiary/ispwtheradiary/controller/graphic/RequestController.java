@@ -33,6 +33,9 @@ public class RequestController extends CommonController implements Observer {
             implementa l’interfaccia dell’Observer definendo il comportamento in caso di cambio di stato del soggetto osservato
      */
 
+
+    private RequestManagerConcreteSubject requestManagerConcreteSubject;
+    private List<RequestBean> requestBeans = new ArrayList<>();
     public RequestController(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig, session);
         // Recupero l'istanza del ConcreteSubject
@@ -55,9 +58,11 @@ public class RequestController extends CommonController implements Observer {
     private TableColumn<RequestBean, Void> rejectButton;
 
 
-    private RequestManagerConcreteSubject requestManagerConcreteSubject;
-    private List<RequestBean> requestBeans = new ArrayList<>();
 
+    // Metodo per inizializzare l'observer
+    public void initializeObserver() {
+        requestManagerConcreteSubject.addObserver(this); // Aggiungi l'osservatore
+    }
 
     //Torna alla pagina precedente
     @FXML
@@ -88,88 +93,24 @@ public class RequestController extends CommonController implements Observer {
         }
     }
 
-    //Carica le richieste
-    /*public void loadRequest(List<RequestBean> requestBeans) {
-        setupTableView(); // Configura la tabella
-        requestBeanTableView.getItems().clear();
-        requestBeanTableView.getItems().addAll(requestBeans);
-    }
-
-    private void setupTableView() {
-        // Imposta le colonne della tabella
-        fullName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPatientBean().getFullName()));
-        cityName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPatientBean().getCity()));
-        requestDate.setCellValueFactory(new PropertyValueFactory<>("date"));
-        modality.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPatientBean().getModality()));
-        // Bottone per accettare la richiesta
-        acceptButton.setCellFactory(param -> new TableCell<>() {
-            private final Button btnAccept = new Button("Accetta");
-            {
-                btnAccept.setOnMouseClicked(event -> {
-                    RequestBean requestBean = getTableView().getItems().get(getIndex());
-                    try {
-                        manageRequest(event, requestBean, true);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-            }
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btnAccept);
-                }
-            }
-        });
-        // Bottone per rifiutare la richiesta
-        rejectButton.setCellFactory(param -> new TableCell<>() {
-            private final Button btnReject = new Button("Rifiuta");
-            {
-                btnReject.setOnMouseClicked(event -> {
-                    RequestBean requestBean = getTableView().getItems().get(getIndex());
-                    try {
-                        manageRequest(event, requestBean, false);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-            }
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btnReject);
-                }
-            }
-        });
-    }*/
-
+    //Metodo per caricare le richieste nella tabella
     @FXML
-    public void loadRequest(List<RequestBean> requestBeans){
+    public void loadRequest(List<RequestBean> requestBeansParam){
         //Imposto valori della tabella
         fullName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPatientBean().getFullName()));
         cityName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPatientBean().getCity()));
         requestDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         modality.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPatientBean().getModality()));
         //Aggiungo i nuovi elementi
-        requestBeanTableView.getItems().clear();    //Svuota la tableview
-        requestBeanTableView.getItems().addAll(requestBeans);
+        requestBeans.addAll(requestBeansParam);
+        refreshTableView();
         //Bottone per accettare la richiesta
         acceptButton.setCellFactory(param -> new TableCell<>() {
             private final Button btnAccept = new Button("Accetta");
             {
                 btnAccept.setOnMouseClicked(event -> {
                     RequestBean requestBean = getTableView().getItems().get(getIndex());
-                    try {
-                        manageRequest(event, requestBean, true);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    manageRequest(event, requestBean, true);
                 });
             }
             @Override
@@ -188,11 +129,7 @@ public class RequestController extends CommonController implements Observer {
             {
                 btnReject.setOnMouseClicked(event -> {
                     RequestBean requestBean = getTableView().getItems().get(getIndex());
-                    try {
-                        manageRequest(event, requestBean, false);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    manageRequest(event, requestBean, false);
                 });
             }
             @Override
@@ -208,7 +145,7 @@ public class RequestController extends CommonController implements Observer {
     }
 
     //Metodo per eliminare la richiesta dalla lista. Se accettata, crea l'associazione psicologo-paziente.
-    private void manageRequest(MouseEvent event, RequestBean requestBean, boolean flag) throws IOException {
+    private void manageRequest(MouseEvent event, RequestBean requestBean, boolean flag) {
         //chiamo applicativo passandogli la richiesta da rimuovere
         RequestApplication requestApplication = new RequestApplication();
         requestApplication.deleteRequest(requestBean);
@@ -218,34 +155,25 @@ public class RequestController extends CommonController implements Observer {
             requestApplication.addPsychologistToPatient(patientBean);   //assegno lo psicologo al paziente
             ((PsychologistBean)session.getUser()).getPatientsBean().add(patientBean);    //aggiungo il paziente alla lista dei pazienti dello psicologo
         }
-        // Rimuove la richiesta dalla lista e notifica la tabella
-        requestBeans.remove(requestBean);
-        requestBeanTableView.getItems().remove(requestBean); // Sincronizza la tabella
     }
 
     //Pattern observer
-   /* @Override
-    public void update() {
-        List <Request>requests = requestManagerConcreteSubject.getRequests();
-        for(Request request:requests) {
-            RequestBean requestBean = request.toBean();
-            requestBeans.add(requestBean);
-        }
-        //Aggiungo i nuovi elementi
-        requestBeanTableView.getItems().clear();    //Svuota la tableview
-        requestBeanTableView.getItems().addAll(requestBeans);
-    }*/
 
-    @Override
+   @Override
     public void update() {
         // Restituisce la lista aggiornata delle richieste
         List<Request> requests = requestManagerConcreteSubject.getRequests();
         // Aggiorna la lista dei RequestBean
-        List<RequestBean> updatedRequestBeans = new ArrayList<>();
+        requestBeans.clear();
         for (Request request : requests) {
-            updatedRequestBeans.add(request.toBean());
+            requestBeans.add(request.toBean());
         }
-        // Aggiorna solo gli elementi cambiati
-        requestBeanTableView.getItems().setAll(updatedRequestBeans);
+        refreshTableView();
     }
+
+    private void refreshTableView() {
+        requestBeanTableView.getItems().clear();
+        requestBeanTableView.getItems().addAll(requestBeans);
+    }
+
 }

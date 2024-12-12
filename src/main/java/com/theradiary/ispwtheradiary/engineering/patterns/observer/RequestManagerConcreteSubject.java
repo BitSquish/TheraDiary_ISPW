@@ -30,7 +30,8 @@ public class RequestManagerConcreteSubject extends Subject{
     }
 
     public void removeRequest(Request request){
-        requests.remove(request);
+        requests.removeIf(r -> r.getPsychologist().getCredentials().getMail().equals(request.getPsychologist().getCredentials().getMail())
+                && r.getPatient().getCredentials().getMail().equals(request.getPatient().getCredentials().getMail()));
         notifyObservers();
     }
     //per ottenere lo stato del subject
@@ -39,7 +40,7 @@ public class RequestManagerConcreteSubject extends Subject{
     }
 
     //metodo da invocare nell'applicativo per avere la lista aggiornata tramite observer
-    public void updateRequests(List<Request> requests){
+    public void loadRequests(List<Request> requests){
         this.requests = requests;
     }
 }

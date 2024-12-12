@@ -1,6 +1,8 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
 
+import com.theradiary.ispwtheradiary.model.Patient;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -129,6 +131,16 @@ public class UpdateQuery {
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, psychologist);
             pstmt.setString(2, patient);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static void deleteOtherRequests(Connection conn, Patient patient) {
+        String query = "DELETE FROM request WHERE patient = ?;";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, patient.getCredentials().getMail());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
