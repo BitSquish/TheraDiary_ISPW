@@ -55,8 +55,8 @@ public class InitialState extends AbstractState{
     @Override
     public void stampa() {
         Printer.println("");
-        Printer.println("Benvenuto in TheraDiary");
-        Printer.println("é necessario effettuare il login o registrarsi");
+        Printer.printlnBlue("           --------------------Benvenuto in TheraDiary--------------------          ");
+        Printer.printlnBlue("--------------------necessario effettuare il login o registrarsi--------------------");
     }
     @Override
     public void exit(StateMachineImpl stateMachine){}

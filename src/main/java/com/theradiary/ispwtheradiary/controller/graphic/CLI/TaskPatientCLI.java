@@ -54,19 +54,41 @@ public class TaskPatientCLI extends AbstractState {
     private void showDiary() {
         //mostra il diario
         Printer.printlnBlue("-------------------Diario-------------------");
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedDate= LocalDate.now().format(formatter);
-        Printer.println("Data:" + formattedDate);
-        Printer.println("Diario di " + patientBean.getFullName() + ":");
-        String diary = TaskAndToDo.getDiaryForToday(patientBean);
+        Printer.printlnBlue("Diario del :" + formattedDate );
+
+
+        TaskAndToDo.getDiaryForToday(patientBean);
+        String diary=patientBean.getDiary();
+
         if (diary.isEmpty()) {
             Printer.println("Il diario è vuoto");
-            addToDiary(scanner);
         } else {
             Printer.println(diary);
         }
     }
 
+    private void addToDiary(Scanner scanner) {
+        //scrivi diario
+        Printer.println("Scrivi la tua pagina di diario:");
+        if(scanner.hasNextLine()){
+            Printer.println("Sto leggendo l'input...");
+        }
+        String diaryEntry = scanner.next();
+        Printer.println(("Diario: " + diaryEntry));
+        if(!diaryEntry.isEmpty()) {
+            try {
+                TaskAndToDo.saveDiary(diaryEntry, patientBean);
+                Printer.println("Voce aggiunta al diario");
+            } catch (Exception e) {
+                Printer.errorPrint("Errore nel salvataggio del diario");
+            }
+        }else{
+            Printer.errorPrint("Diario vuoto");
+        }
+    }
     private void showToDoList() {
         //mostra la lista delle cose da fare
         Printer.printlnBlue("-------------------Lista  cose da fare-------------------");
@@ -82,27 +104,6 @@ public class TaskPatientCLI extends AbstractState {
                 Printer.println((i + 1) + ". " + toDoList.get(i));
             }
         }
-    }
-    private void addToDiary(Scanner scanner) {
-        //scrivi diario
-        Printer.println("Scrivi la tua pagina di diario:");
-        StringBuilder diaryEntry = new StringBuilder();//concateno le stringhe
-        //Leggo le righe fino a quando l'utente non insrisce una riga vuota o fine
-        String line;
-        while(true){
-            line= scanner.nextLine();//leggo una nuova riga
-            if(line.isEmpty()){
-                break;//termina l'inserimento
-            }
-            //Aggiungo la riga al diario
-            diaryEntry.append(line).append("\n");
-        }
-
-
-        TaskAndToDo.saveDiary(diaryEntry.toString(), patientBean);
-        Printer.println(diaryEntry.toString());
-        patientBean.setDiary(diaryEntry.toString());
-        Printer.println("Voce aggiunta al diario");
     }
     private void completeToDo(Scanner scanner) {
         showToDoList();

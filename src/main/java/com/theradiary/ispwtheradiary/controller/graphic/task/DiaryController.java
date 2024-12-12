@@ -29,7 +29,7 @@ public class DiaryController extends CommonController {
     private TextArea diary;
     @FXML
     private Text date;
-    TaskAndToDo diaryEntry = new TaskAndToDo();
+
     PatientBean patientBean = (PatientBean) session.getUser();
 
     @FXML
@@ -43,13 +43,8 @@ public class DiaryController extends CommonController {
     }
     protected void loadDiaryContent(PatientBean patientBean){
         try{
-            String diaryContent = diaryEntry.getDiaryForToday(patientBean);
-            if(diaryContent!=null) {
-                diary.setText(diaryContent);
-            }else{
-                diary.clear();
-                showAlert(Alert.AlertType.INFORMATION, "Nuovo Diario", "Puoi iniziare a scrivere il tuo diario per oggi.");
-            }
+            String diaryContent = TaskAndToDo.getDiaryForToday(patientBean);
+            diary.setText(diaryContent);
         }catch(Exception e){
             showAlert(Alert.AlertType.ERROR, "Errore durante il caricamento", "Impossibile caricare il diario.");
             e.printStackTrace();
@@ -88,7 +83,7 @@ public class DiaryController extends CommonController {
             return;
         }
         try{
-            diaryEntry.saveDiary(diaryContent,patientBean);
+            TaskAndToDo.saveDiary(diaryContent,patientBean);
             showAlert(Alert.AlertType.INFORMATION, "Salvataggio effettuato", "Il diario è stato salvato correttamente.");
         }catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "Errore", "Errore durante il salvataggio del diario.");
