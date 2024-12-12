@@ -64,6 +64,32 @@ public class RequestController extends CommonController implements Observer {
         requestManagerConcreteSubject.addObserver(this); // Aggiungi l'osservatore
     }
 
+
+    // Metodo per creare la cella con il bottone
+    private TableCell<RequestBean, Void> createButtonCell(String buttonText, boolean isAccept) {
+        return new TableCell<>() {
+            private final Button button = new Button(buttonText);
+            {
+                // Configura il comportamento del bottone
+                button.setOnMouseClicked(event -> {
+                    RequestBean requestBean = getTableView().getItems().get(getIndex());
+                    manageRequest(requestBean, isAccept);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(button);
+                }
+            }
+        };
+    }
+
+
     //Torna alla pagina precedente
     @FXML
     protected void back(MouseEvent event) {
@@ -89,9 +115,10 @@ public class RequestController extends CommonController implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
             // Aggiungi un messaggio di errore personalizzato
-            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
+            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e); //TODO Eccezione
         }
     }
+
 
     //Metodo per caricare le richieste nella tabella
     @FXML
@@ -104,48 +131,14 @@ public class RequestController extends CommonController implements Observer {
         //Aggiungo i nuovi elementi
         requestBeans.addAll(requestBeansParam);
         refreshTableView();
-        //Bottone per accettare la richiesta
-        acceptButton.setCellFactory(param -> new TableCell<>() {
-            private final Button btnAccept = new Button("Accetta");
-            {
-                btnAccept.setOnMouseClicked(event -> {
-                    RequestBean requestBean = getTableView().getItems().get(getIndex());
-                    manageRequest(event, requestBean, true);
-                });
-            }
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btnAccept);
-                }
-            }
-        });
-        //Bottone per rifiutare la richiesta
-        rejectButton.setCellFactory(param -> new TableCell<>() {
-            private final Button btnReject = new Button("Rifiuta");
-            {
-                btnReject.setOnMouseClicked(event -> {
-                    RequestBean requestBean = getTableView().getItems().get(getIndex());
-                    manageRequest(event, requestBean, false);
-                });
-            }
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btnReject);
-                }
-            }
-        });
+        // Configura il bottone per accettare la richiesta
+        acceptButton.setCellFactory(param -> createButtonCell("Accetta", true));
+        // Configura il bottone per rifiutare la richiesta
+        rejectButton.setCellFactory(param -> createButtonCell("Rifiuta", false));
     }
 
     //Metodo per eliminare la richiesta dalla lista. Se accettata, crea l'associazione psicologo-paziente.
-    private void manageRequest(MouseEvent event, RequestBean requestBean, boolean flag) {
+    private void manageRequest(RequestBean requestBean, boolean flag) {
         //chiamo applicativo passandogli la richiesta da rimuovere
         RequestApplication requestApplication = new RequestApplication();
         requestApplication.deleteRequest(requestBean);

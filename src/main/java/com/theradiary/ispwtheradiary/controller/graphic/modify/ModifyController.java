@@ -49,26 +49,6 @@ public abstract class ModifyController extends CommonController {
     @FXML
     Label successMessage;
 
-    @FXML
-    protected void back(MouseEvent event) {
-        try {
-            FXMLLoader loader;
-            if(session.getUser()==null){
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
-                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
-            }else if (session.getUser().getCredentialsBean().getRole().equals(Role.PATIENT)) {
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_ACCOUNT_PATH)));
-                loader.setControllerFactory(c -> new PatientAccountController(fxmlPathConfig, session));
-            } else {
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PSYCHOLOGIST_ACCOUNT_PATH)));
-                loader.setControllerFactory(c -> new PsychologistAccountController(fxmlPathConfig, session));
-            }
-            Parent root = loader.load();
-            changeScene(root,event);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @FXML
     protected void checkFields(TextField[] fields,CheckBox[] checkBoxes, PasswordField password) throws EmptyFieldException {

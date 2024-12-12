@@ -37,7 +37,7 @@
    </Text>
    <Button layoutX="150.0" layoutY="237.0" mnemonicParsing="false" onMouseClicked="#goToModifyScreen" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Modifica dati personali" textAlignment="CENTER" textFill="WHITE" />
    <Button layoutX="174.0" layoutY="474.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Logout" textFill="WHITE" />
-   <Button layoutX="56.0" layoutY="106.0" mnemonicParsing="false" onMouseClicked="#goBack" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+   <Button layoutX="56.0" layoutY="106.0" mnemonicParsing="false" onMouseClicked="#goToHomepage" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
    <HBox layoutX="31.0" layoutY="322.0" prefHeight="56.0" prefWidth="398.0" spacing="20.0">
       <Label fx:id="psychologist" layoutX="149.0" layoutY="316.0" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #9067C6; -fx-background-radius: 20px; -fx-border-radius: 20px;" textFill="#231f36">
          <opaqueInsets>

@@ -249,29 +249,6 @@ public abstract class AccountController extends CommonController {
 
     }
 
-
-
-    @FXML
-    protected void goBack(MouseEvent event) {
-        try {
-            FXMLLoader loader;
-            if(session.getUser()==null){
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
-                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
-            }else if (session.getUser().getCredentialsBean().getRole().equals(Role.PATIENT)) {
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(HOMEPAGE_LOGGED_PT_PATH)));
-                loader.setControllerFactory(c -> new HomepagePtController(fxmlPathConfig, session));
-            } else {
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(HOMEPAGE_LOGGED_PS_PATH)));
-                loader.setControllerFactory(c -> new HomepagePsController(fxmlPathConfig, session));
-            }
-            Parent root = loader.load();
-            changeScene(root,event);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }
 
 

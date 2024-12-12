@@ -26,6 +26,6 @@
          <Font name="System Bold" size="30.0" />
       </font>
    </Text>
-   <Button fx:id="back" layoutX="48.0" layoutY="122.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+   <Button fx:id="back" layoutX="48.0" layoutY="122.0" mnemonicParsing="false" onMouseClicked="#goToSearch" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
 
 </AnchorPane>

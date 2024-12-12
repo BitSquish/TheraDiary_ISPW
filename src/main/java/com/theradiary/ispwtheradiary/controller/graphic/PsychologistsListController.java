@@ -78,7 +78,6 @@ public class PsychologistsListController extends CommonController {
 
         });
         listPsychologist.setItems(psychologistsBeansList);
-
     }
 
     @FXML
@@ -95,30 +94,5 @@ public class PsychologistsListController extends CommonController {
         }
     }
 
-    @FXML
-    protected void back(MouseEvent event) {
-        try {
-            FXMLLoader loader;
-            // Verifica se l'utente è loggato
-            if (session.getUser() == null) {
-                // Se non c'è un utente loggato, carica la schermata di login
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
-                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session)); // Imposta il controller per la login
-            } else {
-                // Se l'utente è loggato, carica la schermata dell'account dello psicologo
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(SEARCH_PATH)));
-                loader.setControllerFactory(c -> new SearchController(fxmlPathConfig, session));
-            }
-
-            // Carica e cambia scena
-            Parent root = loader.load();
-            changeScene(root, event);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Aggiungi un messaggio di errore personalizzato
-            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
-        }
-    }
 }
 

@@ -144,33 +144,7 @@ public class PatientListController extends CommonController {
             throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
         }
     }
-    @FXML
-    protected void back(MouseEvent event) {
-        try {
-            FXMLLoader loader;
 
-            // Verifica se l'utente è loggato
-            if(session.getUser() == null) {
-                // Se non c'è un utente loggato, carica la schermata di login
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
-                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session)); // Imposta il controller per la login
-            } else {
-                // Se l'utente è loggato, carica la schermata dell'account dello psicologo
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PSYCHOLOGIST_ACCOUNT_PATH)));
-                loader.setControllerFactory(c -> new PsychologistAccountController(fxmlPathConfig, session)); // Controller per l'account psicologo
-            }
-
-            // Carica e cambia scena
-            Parent root = loader.load();
-            changeScene(root, event);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Aggiungi un messaggio di errore personalizzato
-            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
-        }
-    }
-    //DA COMPLETARE
     private void goToRequest(List<RequestBean> requestBeans, MouseEvent event){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(REQUEST_PATH)));

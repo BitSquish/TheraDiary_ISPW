@@ -25,6 +25,7 @@ import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -114,9 +115,8 @@ public abstract class CommonController {
             FXMLLoader loader;
             Parent root;
             if (session.getUser() == null) {
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
-                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
-                root = loader.load();
+                goToLogin(event);
+                return;
             } else if (session.getUser().getCredentialsBean().getRole().equals(Role.PATIENT)) {
                 loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_ACCOUNT_PATH)));
                 loader.setControllerFactory(c -> new PatientAccountController(fxmlPathConfig, session));
@@ -140,9 +140,8 @@ public abstract class CommonController {
             FXMLLoader loader;
             Parent root;
             if (session.getUser() == null) {
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
-                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
-                root = loader.load();
+                goToLogin(event);
+                return;
             } else if (session.getUser().getCredentialsBean().getRole().equals(Role.PATIENT)) {
                 loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(DIARY_AND_TASKS_PATH)));
                 loader.setControllerFactory(c -> new DiaryAndTasksController(fxmlPathConfig, session));
@@ -167,8 +166,8 @@ public abstract class CommonController {
         try {
             FXMLLoader loader;
             if (session.getUser() == null) {
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
-                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
+                goToLogin(event);
+                return;
             } else {
                 loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(DASHBOARD_PATH)));
                 loader.setControllerFactory(c -> new DashboardController(fxmlPathConfig, session));
@@ -185,8 +184,8 @@ public abstract class CommonController {
         try {
             FXMLLoader loader;
             if (session.getUser() == null) {
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
-                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
+                goToLogin(event);
+                return;
             } else {
                 loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PAG_PATH)));
                 loader.setControllerFactory(c -> new PAGController(fxmlPathConfig, session));
@@ -203,9 +202,9 @@ public abstract class CommonController {
         try {
             FXMLLoader loader;
             if (session.getUser() == null) {
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
-                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
-            } else if (session.getUser().getCredentialsBean().getRole().toString().equals("PATIENT")) {
+                goToLogin(event);
+                return;
+            }else if (session.getUser().getCredentialsBean().getRole().toString().equals("PATIENT")) {
                 loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(SEARCH_PATH)));
                 loader.setControllerFactory(c -> new SearchController(fxmlPathConfig, session));
             } else {
@@ -226,16 +225,23 @@ public abstract class CommonController {
     @FXML
     private void goToAppointment(MouseEvent event) {
         try {
-            FXMLLoader loader;
-
             if (session.getUser() == null) {
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
-                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
-            } else {
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(APPOINTMENT_PATH)));
+                goToLogin(event);
+            }else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(APPOINTMENT_PATH)));
                 loader.setControllerFactory(c -> new AppointmentController(fxmlPathConfig, session));
+                Parent root = loader.load();
+                changeScene(root, event);
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    private void goToLogin(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
+            loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
             Parent root = loader.load();
             changeScene(root, event);
         } catch (IOException e) {
@@ -243,10 +249,13 @@ public abstract class CommonController {
         }
     }
 
+    //Metodo per cambiare finestra
     protected void changeScene(Parent root, MouseEvent event) {
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
+
+
 }

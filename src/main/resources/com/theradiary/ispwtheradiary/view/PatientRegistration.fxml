@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.login.PatientRegistrationController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.login.PatientRegistrationController">
     <fx:include source="CommonPanel.fxml" />
    <Text fill="#242038" layoutX="264.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrati come paziente">
       <font>
@@ -96,4 +96,5 @@
       </children>
    </HBox>
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ebcef070" height="88.0" layoutX="86.0" stroke="#00000003" strokeType="INSIDE" width="87.0" />
+   <Button layoutX="60.0" layoutY="121.0" mnemonicParsing="false" onMouseClicked="#goToAccountPage" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
 </AnchorPane>
