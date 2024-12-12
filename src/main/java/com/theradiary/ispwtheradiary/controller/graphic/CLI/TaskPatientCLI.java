@@ -65,6 +65,7 @@ public class TaskPatientCLI extends AbstractState {
 
         if (diary.isEmpty()) {
             Printer.println("Il diario è vuoto");
+            addToDiary(scanner);
         } else {
             Printer.println(diary);
         }
@@ -72,21 +73,43 @@ public class TaskPatientCLI extends AbstractState {
 
     private void addToDiary(Scanner scanner) {
         //scrivi diario
-        Printer.println("Scrivi la tua pagina di diario:");
-        if(scanner.hasNextLine()){
-            Printer.println("Sto leggendo l'input...");
-        }
-        String diaryEntry = scanner.next();
-        Printer.println(("Diario: " + diaryEntry));
-        if(!diaryEntry.isEmpty()) {
-            try {
-                TaskAndToDo.saveDiary(diaryEntry, patientBean);
-                Printer.println("Voce aggiunta al diario");
-            } catch (Exception e) {
-                Printer.errorPrint("Errore nel salvataggio del diario");
+        TaskAndToDo.getDiaryForToday(patientBean);
+        if(patientBean.getDiary()!=null){
+            Printer.printlnGreen("Hai già scritto il diario per oggi");
+        }else {
+            Printer.println("Scrivi la tua pagina di diario (massimo 500 parole). Digita 'FINE' per terminare:");
+
+            StringBuilder diaryEntryBuilder = new StringBuilder();
+            int wordCount = 0;
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                //controllo per uscire se l'utente digita "FINE"
+                if (line.trim().equalsIgnoreCase("FINE")) {
+                    break;
+                }
+                //Calcolo il numero di parole nella linea corrente
+                String[] words = line.trim().split("\\s+");
+                wordCount += words.length;
+                //Controllo che il numero di parole non superi le 500
+                if (wordCount > 500) {
+                    Printer.errorPrint("Hai superato il limite di 500 parole");
+                    return;
+                }
+                //Aggiungo la linea al diario
+                diaryEntryBuilder.append(line).append(System.lineSeparator());
             }
-        }else{
-            Printer.errorPrint("Diario vuoto");
+            //Costruisco la stringa completa
+            String diaryEntry = diaryEntryBuilder.toString().trim();
+            if (!diaryEntry.isEmpty()) {
+                try {
+                    TaskAndToDo.saveDiary(diaryEntry, patientBean, LocalDate.now());
+                    Printer.printlnGreen("Voce aggiunta al diario");
+                } catch (Exception e) {
+                    Printer.errorPrint("Errore nel salvataggio del diario");
+                }
+            } else {
+                Printer.errorPrint("Diario vuoto");
+            }
         }
     }
     private void showToDoList() {
@@ -107,18 +130,17 @@ public class TaskPatientCLI extends AbstractState {
     }
     private void completeToDo(Scanner scanner) {
         showToDoList();
-        //completa un'attività
         Printer.println("Inserisci il numero dell'attività completata:");
-        int toDoIndex = scanner.nextInt();
-        List<ToDoItemBean> toDoList = patientBean.getToDoList();
-        if (toDoIndex < 1 || toDoIndex > toDoList.size()) {
-            Printer.errorPrint("Indice non valido");
-        } else {
-            ToDoItemBean toDoItem = toDoList.get(toDoIndex - 1);
-            toDoItem.setCompleted(true);
-            TaskAndToDo.saveToDoList((ObservableList<ToDoItemBean>) toDoList, patientBean);
-            Printer.println("Attività completata");
+        int index = scanner.nextInt();
+        for(int i=0;i<patientBean.getToDoList().size();i++){
+            if(i==index-1){
+                patientBean.getToDoList().get(i).setCompleted(true);
+                TaskAndToDo.saveToDoList(patientBean.getToDoList(),patientBean);
+                Printer.printlnGreen("Attività completata");
+            }
+
         }
+
     }
     /*--------------------------Metodi di AbstractState--------------------------*/
     @Override

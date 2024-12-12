@@ -11,13 +11,14 @@ import java.util.List;
 
 public class TaskAndToDoQuery {
     private TaskAndToDoQuery(){}
-    public static void Diary(Connection conn, String diary, String mail) {
+    public static void Diary(Connection conn, String diary, String mail, LocalDate selectedDate) {
         System.out.println("Contenuto del diario da inserire: " + diary);
-        String query= "INSERT INTO diary (contenuto,patient) VALUES (?,?)";
+        String query= "INSERT INTO diary (contenuto,data_creazione,patient) VALUES (?,?,?)";
         try  {
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, diary);
-            pstmt.setString(2, mail);
+            pstmt.setDate(2, java.sql.Date.valueOf(selectedDate));
+            pstmt.setString(3, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

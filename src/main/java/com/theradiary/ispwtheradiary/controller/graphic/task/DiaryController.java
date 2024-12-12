@@ -83,7 +83,7 @@ public class DiaryController extends CommonController {
             return;
         }
         try{
-            TaskAndToDo.saveDiary(diaryContent,patientBean);
+            TaskAndToDo.saveDiary(diaryContent,patientBean,LocalDate.now());
             showAlert(Alert.AlertType.INFORMATION, "Salvataggio effettuato", "Il diario è stato salvato correttamente.");
         }catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "Errore", "Errore durante il salvataggio del diario.");

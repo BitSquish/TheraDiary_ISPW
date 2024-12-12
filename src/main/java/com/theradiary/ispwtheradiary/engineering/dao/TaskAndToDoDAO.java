@@ -17,9 +17,9 @@ import java.util.Optional;
 
 public class TaskAndToDoDAO {
     private TaskAndToDoDAO(){}
-    public static void Diary(Patient patient, String diaryContent) {
+    public static void Diary(Patient patient, String diaryContent, LocalDate selectedDate) {
         try(Connection conn= ConnectionFactory.getConnection()) {
-            TaskAndToDoQuery.Diary(conn, diaryContent, patient.getCredentials().getMail());
+            TaskAndToDoQuery.Diary(conn, diaryContent, patient.getCredentials().getMail(), selectedDate);
         }catch (SQLException e){
             throw new RuntimeException(e);
         }

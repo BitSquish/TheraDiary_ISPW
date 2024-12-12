@@ -55,8 +55,8 @@ public class HomePatientCLI extends AbstractState {
     @Override
     public void stampa() {
         Printer.println(" ");
-        Printer.printlnBlue("-------------------Benvenuto nella home dello psicologo-------------------");
-        Printer.println("Ciao" + this.user.getFullName() + ",scegli cosa vuoi fare:");
+        Printer.printlnBlue("-------------------Benvenuto nella home di"+ " " + user.getFullName()+"-------------------");
+        Printer.println("Ciao" + " "+ this.user.getFullName() + ",scegli cosa vuoi fare:");
     }
     @Override
     public void enter(StateMachineImpl context) {

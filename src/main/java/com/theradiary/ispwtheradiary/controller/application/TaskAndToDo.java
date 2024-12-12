@@ -27,9 +27,9 @@ public class TaskAndToDo {
         }
     }
 
-    public static void saveDiary(String diaryContent, PatientBean patientBean) {
+    public static void saveDiary(String diaryContent, PatientBean patientBean,LocalDate selectedDate) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
-        TaskAndToDoDAO.Diary(patient,diaryContent);
+        TaskAndToDoDAO.Diary(patient,diaryContent,selectedDate);
         patientBean.setDiary(diaryContent);
     }
 
@@ -39,7 +39,7 @@ public class TaskAndToDo {
         return diaryContent.orElse("");
     }
 
-    public static void saveToDoList(ObservableList<ToDoItemBean> savedToDoItems, PatientBean patientBean) {
+    public static void saveToDoList(List<ToDoItemBean> savedToDoItems, PatientBean patientBean) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
         TaskAndToDoDAO.ToDoList(patient,savedToDoItems);
         patientBean.setToDoList(savedToDoItems);
