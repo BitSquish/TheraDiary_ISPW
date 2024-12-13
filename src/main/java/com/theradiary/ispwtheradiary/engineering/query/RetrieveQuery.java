@@ -136,4 +136,12 @@ public class RetrieveQuery {
         pstmt.setString(1, mailPsychologist);
         return pstmt.executeQuery();
     }
+
+    public static ResultSet retrieveSlotTime(Connection conn, String mailPsychologist, String dayOfTheWeek) throws SQLException {
+        String query = "SELECT psychologist, day, timeSlot, inPerson, online, patient FROM appointment WHERE psychologist = ? and day = ?";
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setString(1, mailPsychologist);
+        pstmt.setString(2, dayOfTheWeek);
+        return pstmt.executeQuery();
+    }
 }

@@ -1,9 +1,7 @@
 package com.theradiary.ispwtheradiary.engineering.dao;
 
 
-import com.theradiary.ispwtheradiary.engineering.enums.Category;
-import com.theradiary.ispwtheradiary.engineering.enums.Major;
-import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.enums.*;
 import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.RetrieveQuery;
@@ -197,6 +195,27 @@ public class RetrieveDAO {
                 requests.add(request);
             }
 
+        }catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static List<Appointment> retrieveSlotTime(Psychologist psychologist, DayOfTheWeek dayOfTheWeek) {
+        List<Appointment> appointments = new ArrayList<>();
+        try(Connection conn = ConnectionFactory.getConnection()){
+            ResultSet rs = RetrieveQuery.retrieveSlotTime(conn, psychologist.getCredentials().getMail(), dayOfTheWeek.toString());
+            while(rs.next()){
+                Appointment appointment = new Appointment(
+                        psychologist,
+                        dayOfTheWeek,
+                        TimeSlot.valueOf(rs.getString("timeSlot")),
+                        rs.getBoolean("inPerson"),
+                        rs.getBoolean("online")
+                );
+                appointment.setPatient(new Patient(new Credentials(rs.getString("patient"), Role.PATIENT)));
+                appointments.add(appointment);
+            }
+            return appointments;
         }catch (SQLException e){
             throw new RuntimeException(e.getMessage());
         }
