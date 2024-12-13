@@ -28,7 +28,7 @@
    </Text>
    <Button layoutX="150.0" layoutY="237.0" mnemonicParsing="false" onMouseClicked="#goToModifyScreen" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Modifica dati personali" textAlignment="CENTER" textFill="WHITE" />
    <Button layoutX="174.0" layoutY="474.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Logout" textFill="WHITE" />
-   <Button fx:id="listPatients" layoutX="149.0" layoutY="316.0" mnemonicParsing="false" onMouseClicked="#goToListPatients" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Visualizza pazienti" textFill="WHITE" />
+   <Button fx:id="listPatients" layoutX="149.0" layoutY="316.0" mnemonicParsing="false" onMouseClicked="#goToPatientList" prefHeight="45.0" prefWidth="195.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Visualizza pazienti" textFill="WHITE" />
    <Text layoutX="477.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Specializzazioni:" wrappingWidth="179.33477783203125">
       <font>
          <Font name="System Italic" size="16.0" />

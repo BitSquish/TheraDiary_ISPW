@@ -141,21 +141,34 @@ public abstract class CommonController {
             Parent root;
             if (session.getUser() == null) {
                 goToLogin(event);
-                return;
             } else if (session.getUser().getCredentialsBean().getRole().equals(Role.PATIENT)) {
                 loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(DIARY_AND_TASKS_PATH)));
                 loader.setControllerFactory(c -> new DiaryAndTasksController(fxmlPathConfig, session));
                 root = loader.load();
+                changeScene(root, event);
+            } else {
+                goToPatientList(event);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    protected void goToPatientList(MouseEvent event){
+        try {
+            FXMLLoader loader;
+            if (session.getUser() == null) {
+                goToLogin(event);
             } else {
                 PsychologistBean psychologistBean = (PsychologistBean) session.getUser();
                 List<PatientBean> patientBeans = new Account().retrievePatientList(psychologistBean);
-                ((PsychologistBean) session.getUser()).setPatientsBean(patientBeans);
                 loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_LIST_PATH)));
                 loader.setControllerFactory(c -> new PatientListController(fxmlPathConfig, session));
-                root = loader.load();
+                Parent root = loader.load();
                 ((PatientListController) loader.getController()).printPatient(event, patientBeans);
+                changeScene(root, event);
             }
-            changeScene(root, event);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

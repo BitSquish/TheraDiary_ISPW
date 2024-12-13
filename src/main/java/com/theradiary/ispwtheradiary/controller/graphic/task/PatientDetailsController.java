@@ -181,29 +181,7 @@ public class PatientDetailsController extends CommonController {
     }
 
 
-    @FXML
-    protected void back(MouseEvent event) {
-        try {
-            FXMLLoader loader;
-            Parent root;
-            if (session.getUser() == null) {
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
-                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
-                root = loader.load();
-            } else {
-                PsychologistBean psychologistBean = (PsychologistBean) session.getUser();
-                List<PatientBean> patientBeans = new Account().retrievePatientList(psychologistBean);
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_LIST_PATH)));
-                loader.setControllerFactory(c -> new PatientListController(fxmlPathConfig, session));
-                root = loader.load();
-                ((PatientListController) loader.getController()).printPatient(event, patientBeans);
-            }
-            changeScene(root, event);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
-        }
-    }
+
     private void showMessage(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

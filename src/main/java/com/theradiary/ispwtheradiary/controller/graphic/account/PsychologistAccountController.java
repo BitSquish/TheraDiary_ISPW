@@ -29,8 +29,6 @@ public class PsychologistAccountController extends AccountController {
         super(fxmlPathConfig,session);
     }
 
-
-
     @Override
     protected void retrieveData(Account account, LoggedUserBean loggedUserBean) {
         account.retrieveMajors((PsychologistBean) loggedUserBean);
@@ -58,35 +56,6 @@ public class PsychologistAccountController extends AccountController {
         Account account = new Account();
         account.removeMajor(psychologistBean, major);
         psychologistBean.removeMajor(major);
-    }
-    @FXML
-    private void goToListPatients(MouseEvent event) {
-
-        try {
-            FXMLLoader loader;
-            Parent root;
-            if(session.getUser()==null){
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
-                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
-                root = loader.load();
-                changeScene(root, event);
-                return;
-            }else {
-                //Recupero lo psicologo dalla sessione
-                PsychologistBean psychologistBean = (PsychologistBean) session.getUser();
-                //Recupero la lista dei pazienti
-                List<PatientBean> patientBeans = new Account().retrievePatientList(psychologistBean);
-                ((PsychologistBean) session.getUser()).setPatientsBean(patientBeans);
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_LIST_PATH)));
-                loader.setControllerFactory(c -> new PatientListController(fxmlPathConfig, session));
-                root = loader.load();
-                ((PatientListController) loader.getController()).printPatient(event, patientBeans);
-            }
-            changeScene(root, event);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 
 

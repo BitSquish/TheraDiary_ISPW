@@ -18,10 +18,7 @@ public class DiaryAndTasksController extends CommonController {
         super(fxmlPathConfig, session);
     }
     PatientBean patientBean = (PatientBean) session.getUser();
-    @FXML
-    protected void goToBacheca(MouseEvent event){
 
-    }
     @FXML
     protected void goToDiary(MouseEvent event ) {
         try {
@@ -37,7 +34,7 @@ public class DiaryAndTasksController extends CommonController {
     }
     @FXML
     protected void goToTest(MouseEvent event){
-
+        //TODO: Implementare
     }
     @FXML
     protected void goToDo(MouseEvent event){
@@ -54,26 +51,7 @@ public class DiaryAndTasksController extends CommonController {
     }
     @FXML
     protected void goToTask(MouseEvent event){
-
-    }
-    @FXML
-    protected void back(MouseEvent event){
-        try{
-            FXMLLoader loader;
-            if(session.getUser()==null) {
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
-                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
-            }else{
-                loader=new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(HOMEPAGE_LOGGED_PT_PATH)));
-                loader.setControllerFactory(c->new HomepagePtController(fxmlPathConfig,session));
-
-            }
-            Parent root=loader.load();
-            changeScene(root,event);
-        }catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena:" + e.getMessage(), e);
-        }
+        //TODO: Implementare
     }
 }
 

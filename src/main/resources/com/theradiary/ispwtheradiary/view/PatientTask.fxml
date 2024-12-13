@@ -83,6 +83,6 @@
             </Tab>
         </tabs>
       </TabPane>
-      <Button layoutX="56.0" layoutY="106.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+      <Button layoutX="56.0" layoutY="106.0" mnemonicParsing="false" onMouseClicked="#goToPatientList" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
    </children>
 </AnchorPane>
