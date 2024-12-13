@@ -2,15 +2,17 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.application.AppointmentPs;
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
+import com.theradiary.ispwtheradiary.engineering.enums.TimeSlot;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
-import com.theradiary.ispwtheradiary.engineering.others.beans.AppointmentBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class AppointmentPsController extends CommonController{
 
 
     @FXML
-    private void loadCheckboxes() { //TODO: Entra 2 volte su lunedì
+    protected void loadCheckboxes() { //TODO: Entra 2 volte su lunedì
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
         if(selectedTab == null) {
             System.out.println("Nessuna tab selezionata");
@@ -34,23 +36,23 @@ public class AppointmentPsController extends CommonController{
         String selectedTabText = selectedTab.getText();
         switch (selectedTabText) {
             case "Lunedì":
-                initializeCheckboxes(DayOfTheWeek.MONDAY);
+                initializeCheckboxes(DayOfTheWeek.MONDAY, selectedTab);
                 System.out.println("Lunedì");
                 break;
             case "Martedì":
-                initializeCheckboxes(DayOfTheWeek.TUESDAY);
+                initializeCheckboxes(DayOfTheWeek.TUESDAY, selectedTab);
                 System.out.println("Martedì");
                 break;
             case "Mercoledì":
-                initializeCheckboxes(DayOfTheWeek.WEDNESDAY);
+                initializeCheckboxes(DayOfTheWeek.WEDNESDAY, selectedTab);
                 System.out.println("Mercoledì");
                 break;
             case "Giovedì":
-                initializeCheckboxes(DayOfTheWeek.THURSDAY);
+                initializeCheckboxes(DayOfTheWeek.THURSDAY, selectedTab);
                 System.out.println("Giovedì");
                 break;
             case "Venerdì":
-                initializeCheckboxes(DayOfTheWeek.FRIDAY);
+                initializeCheckboxes(DayOfTheWeek.FRIDAY, selectedTab);
                 System.out.println("Venerdì");
                 break;
             default:
@@ -58,14 +60,36 @@ public class AppointmentPsController extends CommonController{
         }
     }
 
-    private void initializeCheckboxes(DayOfTheWeek dayOfTheWeek) {
+    private void initializeCheckboxes(DayOfTheWeek dayOfTheWeek, Tab selectedTab) {
+        AnchorPane anchorPane = (AnchorPane) selectedTab.getContent();  //getContent() restituisce un nodo
+        //Nota debug: AnchorPane riconosciuto correttamente
         PsychologistBean psychologistBean = (PsychologistBean) session.getUser();
         AppointmentPs appointmentPs = new AppointmentPs();
-        List<AppointmentBean> appointmentsBean = new ArrayList<>();
-        appointmentPs.loadAppointment(appointmentsBean, psychologistBean, dayOfTheWeek);
-        for(AppointmentBean appointmentBean : appointmentsBean) {
-            System.out.println(appointmentBean.getTimeSlot().toString());
+        List<TimeSlot> timeSlots = new ArrayList<>();
+        // Determina gli ID delle VBox per il giorno specifico
+        String inPersonVBoxId = "inPerson" + dayOfTheWeek.name();
+        String onlineVBoxId = "online" + dayOfTheWeek.name();
+
+                                // Trova le VBox corrispondenti
+        VBox inPersonVBox = (VBox) anchorPane.getScene().lookup("#" + inPersonVBoxId);  //Restituisce null
+        VBox onlineVBox = (VBox) anchorPane.getScene().lookup("#" + onlineVBoxId);  //Restituisce null
+        //System.out.println("VBox inPerson: " + inPersonVBox.getId());
+        //System.out.println("VBox online: " + onlineVBox.getId());
+                                    // Le VBOX sono null
+
+        /* if (inPersonVBox == null || onlineVBox == null) {
+            throw new IllegalStateException("VBox non trovata per il giorno: " + dayOfTheWeek.name());
         }
+        appointmentPs.loadAppointment(timeSlots, psychologistBean, dayOfTheWeek);
+        for (javafx.scene.Node node : inPersonVBox.getChildren()) {
+            if (node instanceof CheckBox) {
+                CheckBox checkBox = (CheckBox) node;
+                //TODO: Settare il valore del checkbox
+                if (timeSlots.contains(TimeSlot.valueOf(checkBox.getId()))) {
+                    checkBox.setSelected(true);
+                }
+            }
+        }*/
     }
 
     @FXML
