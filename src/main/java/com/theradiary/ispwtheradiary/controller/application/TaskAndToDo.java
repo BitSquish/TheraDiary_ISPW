@@ -44,6 +44,14 @@ public class TaskAndToDo {
         TaskAndToDoDAO.ToDoList(patient,savedToDoItems);
         patientBean.setToDoList(savedToDoItems);
     }
+    public static void completeToDoItem(List<ToDoItemBean> completetoDoItems, PatientBean patientBean) {
+        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+        ToDoItem toDoItem = new ToDoItem(completetoDoItems.get(0).getToDo(),completetoDoItems.get(0).isCompleted());
+        TaskAndToDoDAO.completeToDoItem(patient,completetoDoItems);
+        for(ToDoItemBean toDoItemBean:completetoDoItems){
+            patientBean.removeToDoItem(toDoItemBean);
+        }
+    }
 
 
     public static void toDoList(PatientBean patientBean) {

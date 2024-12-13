@@ -72,4 +72,17 @@ public class TaskAndToDoQuery {
             throw new RuntimeException(e);
         }
     }
+
+    public static void completeToDoItem(Connection conn, String mail, ToDoItemBean toDoItemBean) {
+        String query = "UPDATE todo SET done=? WHERE description=? AND patient=?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setBoolean(1, toDoItemBean.isCompleted());
+            pstmt.setString(2, toDoItemBean.getToDo());
+            pstmt.setString(3, mail);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

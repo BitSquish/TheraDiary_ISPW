@@ -7,7 +7,7 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.AbstractState;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.StateMachineImpl;
-import javafx.collections.ObservableList;
+
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -70,48 +70,61 @@ public class TaskPatientCLI extends AbstractState {
             Printer.println(diary);
         }
     }
-
-    private void addToDiary(Scanner scanner) {
-        //scrivi diario
-        TaskAndToDo.getDiaryForToday(patientBean);
-        if(patientBean.getDiary()!=null){
+    private void addToDiary(Scanner scanner){
+        if(hasDiaryForToday()) {
             Printer.printlnGreen("Hai già scritto il diario per oggi");
-        }else {
-            Printer.println("Scrivi la tua pagina di diario (massimo 500 parole). Digita 'FINE' per terminare:");
-
-            StringBuilder diaryEntryBuilder = new StringBuilder();
-            int wordCount = 0;
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                //controllo per uscire se l'utente digita "FINE"
-                if (line.trim().equalsIgnoreCase("FINE")) {
-                    break;
-                }
-                //Calcolo il numero di parole nella linea corrente
-                String[] words = line.trim().split("\\s+");
-                wordCount += words.length;
-                //Controllo che il numero di parole non superi le 500
-                if (wordCount > 500) {
-                    Printer.errorPrint("Hai superato il limite di 500 parole");
-                    return;
-                }
-                //Aggiungo la linea al diario
-                diaryEntryBuilder.append(line).append(System.lineSeparator());
+            return;
+        }
+        String diaryEntry=collectDiaryEntry(scanner);
+        if(diaryEntry.isEmpty()){
+            Printer.errorPrint("Diario vuoto");
+            return;
+        }
+        saveDiaryEntry(diaryEntry);
+    }
+    //metodo per controllare se il paziente ha già scritto il diario per oggi
+    private boolean hasDiaryForToday(){
+        TaskAndToDo.getDiaryForToday(patientBean);
+        if(patientBean.getDiary().isEmpty()){
+            return false;
+        }
+        return true;
+    }
+    //metodo per raccogliere l'input del paziente
+    private String collectDiaryEntry(Scanner scanner){
+        Printer.println("Scrivi la tua pagina di diario (massimo 500 parole). Digita 'FINE' per terminare:");
+        StringBuilder diaryEntryBuilder = new StringBuilder();
+        int wordCount = 0;
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            //controllo per uscire se l'utente digita "FINE"
+            if (line.trim().equalsIgnoreCase("FINE")) {
+                break;
             }
-            //Costruisco la stringa completa
-            String diaryEntry = diaryEntryBuilder.toString().trim();
-            if (!diaryEntry.isEmpty()) {
-                try {
-                    TaskAndToDo.saveDiary(diaryEntry, patientBean, LocalDate.now());
-                    Printer.printlnGreen("Voce aggiunta al diario");
-                } catch (Exception e) {
-                    Printer.errorPrint("Errore nel salvataggio del diario");
-                }
-            } else {
-                Printer.errorPrint("Diario vuoto");
+            //Calcolo il numero di parole nella linea corrente
+            String[] words = line.trim().split("\\s+");
+            wordCount += words.length;
+            //Controllo che il numero di parole non superi le 500
+            if (wordCount > 500) {
+                Printer.errorPrint("Hai superato il limite di 500 parole");
+                return "";
             }
+            //Aggiungo la linea al diario
+            diaryEntryBuilder.append(line).append(System.lineSeparator());
+        }
+        //Costruisco la stringa completa
+        return diaryEntryBuilder.toString().trim();
+    }
+    //metodo per salvare l'input del paziente
+    private void saveDiaryEntry(String diaryEntry){
+        try {
+            TaskAndToDo.saveDiary(diaryEntry, patientBean, LocalDate.now());
+            Printer.printlnGreen("Voce aggiunta al diario");
+        } catch (Exception e) {
+            Printer.errorPrint("Errore nel salvataggio del diario");
         }
     }
+
     private void showToDoList() {
         //mostra la lista delle cose da fare
         Printer.printlnBlue("-------------------Lista  cose da fare-------------------");

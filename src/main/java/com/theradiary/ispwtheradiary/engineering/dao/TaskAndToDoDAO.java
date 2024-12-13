@@ -54,7 +54,7 @@ public class TaskAndToDoDAO {
         }
     }
 
-    public static void ToDoList(Patient patient, List<ToDoItemBean> savedToDoItems) {
+    public static void ToDoList(Patient patient, List<ToDoItem> savedToDoItems) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.ToDoList(conn, savedToDoItems, patient.getCredentials().getMail());
         }catch (SQLException e){
@@ -73,5 +73,13 @@ public class TaskAndToDoDAO {
             throw new RuntimeException(e);
         }
         return toDoItems;
+    }
+
+    public static void completeToDoItem(Patient patient, List<ToDoItem> completetoDoItems) {
+        try(Connection conn= ConnectionFactory.getConnection()) {
+            TaskAndToDoQuery.completeToDoItem(conn, patient.getCredentials().getMail(), completetoDoItems);
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 }

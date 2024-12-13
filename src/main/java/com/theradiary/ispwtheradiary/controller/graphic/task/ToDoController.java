@@ -29,8 +29,7 @@ public class ToDoController extends CommonController {
     private ObservableList<HBox> toDoListItems= FXCollections.observableArrayList();
     @FXML
     public void initializeToDoList(PatientBean patientBean) {
-        TaskAndToDo taskAndToDo = new TaskAndToDo();
-        taskAndToDo.toDoList(patientBean);
+        TaskAndToDo.toDoList(patientBean);
         List< ToDoItemBean > toDoItems = patientBean.getToDoList();
         if (toDoItems != null) {
             for (ToDoItemBean toDoItem : toDoItems) {
@@ -57,20 +56,15 @@ public class ToDoController extends CommonController {
     }
     @FXML
     public void saveToDoList(MouseEvent event) {
-        PatientBean patientBean = (PatientBean) session.getUser();
-        ObservableList<ToDoItemBean> savedToDoItems = FXCollections.observableArrayList();
-        for(HBox itemBox : toDoListItems) {
-            CheckBox checkBox = (CheckBox) itemBox.getChildren().get(0);
-            Label label = (Label) itemBox.getChildren().get(1);
-            savedToDoItems.add(new ToDoItemBean(label.getText(), checkBox.isSelected()));
+        List<ToDoItemBean> completeToDoItems = FXCollections.observableArrayList();
+        for (HBox item : toDoListView.getItems()) {
+            CheckBox checkBox = (CheckBox) item.getChildren().get(0);
+            Label label = (Label) item.getChildren().get(1);
+            completeToDoItems.add(new ToDoItemBean(label.getText(), checkBox.isSelected()));
         }
-        try {
-            TaskAndToDo taskAndToDo = new TaskAndToDo();
-            taskAndToDo.saveToDoList(savedToDoItems, patientBean);
-            showMessage(Alert.AlertType.INFORMATION, "Salvataggio", "Lista ToDo salvata correttamente");
-        }catch (Exception e) {
-            showMessage(Alert.AlertType.ERROR, "Errore", "Errore durante il salvataggio della lista ToDo");
-        }
+        TaskAndToDo.completeToDoItem(completeToDoItems, (PatientBean) session.getUser());
+        showMessage(Alert.AlertType.INFORMATION, "Salvataggio", "Lista salvata correttamente");
+
     }
     private void showMessage(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
