@@ -79,7 +79,7 @@ public class ToDoController extends CommonController {
                 String toDoText = label.getText().trim();
                 if (!toDoText.isEmpty()) {
                     // Completa il To-Do
-                    TaskAndToDo.completeToDoItem(new ToDoItemBean(toDoText, true), (PatientBean) session.getUser());
+                    TaskAndToDo.deleteToDo(new ToDoItemBean(toDoText, true), (PatientBean) session.getUser());
                     // Rimuovi dalla lista in modo sicuro
                     iterator.remove();
 

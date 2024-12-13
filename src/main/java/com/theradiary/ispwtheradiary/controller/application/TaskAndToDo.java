@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class TaskAndToDo {
-
+    /*-------------------------DIARIO-------------------------*/
     public static String getDiaryForToday(PatientBean patientBean) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
         Optional<String> diaryContent = TaskAndToDoDAO.getDiaryForToday(patient);
@@ -31,6 +31,12 @@ public class TaskAndToDo {
         TaskAndToDoDAO.Diary(patient,diaryContent,selectedDate);
         patientBean.setDiary(diaryContent);
     }
+    public String getDiaryEntry(LocalDate selectedDate, PatientBean patientBean) {
+        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+        Optional<String> diaryContent = TaskAndToDoDAO.getDiaryEntry(selectedDate,patient);
+        return diaryContent.orElse("");
+    }
+    /*-------------------------TODOLIST-------------------------*/
 
     public static void deleteToDo(ToDoItemBean toDoItemBean, PatientBean patientBean) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
@@ -39,25 +45,19 @@ public class TaskAndToDo {
         patientBean.removeToDoItem(toDoItemBean);
     }
 
-    public String getDiaryEntry(LocalDate selectedDate, PatientBean patientBean) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
-        Optional<String> diaryContent = TaskAndToDoDAO.getDiaryEntry(selectedDate,patient);
-        return diaryContent.orElse("");
-    }
 
     public static void saveToDo(ToDoItemBean toDoItemBean, PatientBean patientBean) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
         ToDoItem toDoItem = new ToDoItem(toDoItemBean.getToDo(), toDoItemBean.isCompleted());
-        TaskAndToDoDAO.saveToDo(patient,toDoItem);
-        patientBean.addToDoItem(toDoItemBean);
+        if(!patient.getToDoList().contains(toDoItem)){
+            TaskAndToDoDAO.saveToDo(patient,toDoItem);
+            patientBean.addToDoItem(toDoItemBean);
+        }else{
+            TaskAndToDoDAO.deleteToDoItem(patient,toDoItem);
+            patientBean.removeToDoItem(toDoItemBean);
+        }
     }
 
-    public static void completeToDoItem(ToDoItemBean toDoItemBean, PatientBean patientBean) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
-        ToDoItem toDoItem = new ToDoItem(toDoItemBean.getToDo(), toDoItemBean.isCompleted());
-        TaskAndToDoDAO.completeToDoItem(patient,toDoItem);
-        patientBean.removeToDoItem(toDoItemBean);
-    }
 
 
     public static void toDoList(PatientBean patientBean) {

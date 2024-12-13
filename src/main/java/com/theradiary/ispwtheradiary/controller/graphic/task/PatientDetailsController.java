@@ -129,7 +129,6 @@ public class PatientDetailsController extends CommonController {
     private void modifyToDo(MouseEvent mouseEvent) {
         ToDoItemBean newItem=new ToDoItemBean("",false);
         patientBean.getToDoList().add(newItem);
-        TaskAndToDo.saveToDo(newItem,patientBean);
 
         HBox itemBox=createToDoItem(newItem);
         toDoListItems.add(itemBox);

@@ -148,7 +148,7 @@ public class TaskPatientCLI extends AbstractState {
         for(int i=0;i<patientBean.getToDoList().size();i++){
             if(i==index-1){
                 patientBean.getToDoList().get(i).setCompleted(true);
-                TaskAndToDo.completeToDoItem(patientBean.getToDoList().get(i),patientBean);
+                TaskAndToDo.deleteToDo(patientBean.getToDoList().get(i),patientBean);
                 Printer.printlnGreen("Attività completata");
             }
 
