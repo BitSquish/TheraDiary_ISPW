@@ -220,5 +220,27 @@ public class RetrieveDAO {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    public static Psychologist yourPsychologist(Patient patient) {
+        try(Connection conn = ConnectionFactory.getConnection();
+            ResultSet rs = RetrieveQuery.yourPsychologist(conn, patient.getCredentials().getMail())){
+            if(rs.next()){
+                Psychologist psychologist = new Psychologist(
+                        new Credentials(rs.getString("mail"), Role.PSYCHOLOGIST),
+                        rs.getString("name"),
+                        rs.getString("surname"),
+                        rs.getString("city"),
+                        rs.getString("description"),
+                        rs.getBoolean("inPerson"),
+                        rs.getBoolean("online")
+                );
+                psychologist.setPag(rs.getBoolean("pag"));
+                return psychologist;
+            }else
+                return null;
+        }catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }
 

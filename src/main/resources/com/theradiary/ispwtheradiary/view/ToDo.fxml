@@ -16,8 +16,8 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Text>
-      <Button layoutX="72.0" layoutY="126.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
-      <Button fx:id="save" layoutX="375.0" layoutY="477.0" mnemonicParsing="false" onMouseClicked="#saveToDoList" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE">
+      <Button layoutX="72.0" layoutY="126.0" mnemonicParsing="false" onMouseClicked="#goToTasks" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+      <Button fx:id="save" layoutX="375.0" layoutY="477.0" mnemonicParsing="false" onMouseClicked="#completeToDo" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE">
          <opaqueInsets>
             <Insets top="20.0" />
          </opaqueInsets>

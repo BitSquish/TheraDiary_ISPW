@@ -144,4 +144,15 @@ public class RetrieveQuery {
         pstmt.setString(2, dayOfTheWeek);
         return pstmt.executeQuery();
     }
+
+    public static ResultSet yourPsychologist(Connection conn, String mail) {
+        String query = "SELECT psychologist.* FROM patient Join psychologist ON patient.psychologist = psychologist.mail WHERE patient.mail = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, mail);
+            return pstmt.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

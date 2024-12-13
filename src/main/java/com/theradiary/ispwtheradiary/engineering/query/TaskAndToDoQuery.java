@@ -99,4 +99,16 @@ public class TaskAndToDoQuery {
             throw new RuntimeException(e);
         }
     }
+
+    public static void deleteToDoItem(Connection conn, String mail, ToDoItem toDoItem) {
+        String query = "DELETE FROM todo WHERE description=? AND patient=?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, toDoItem.getToDo());
+            pstmt.setString(2, mail);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

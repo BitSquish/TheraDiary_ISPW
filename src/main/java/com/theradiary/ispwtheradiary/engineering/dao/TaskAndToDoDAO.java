@@ -85,4 +85,12 @@ public class TaskAndToDoDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public static void deleteToDoItem(Patient patient, ToDoItem toDoItem) {
+        try(Connection conn= ConnectionFactory.getConnection()) {
+            TaskAndToDoQuery.deleteToDoItem(conn, patient.getCredentials().getMail(), toDoItem);
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
 }

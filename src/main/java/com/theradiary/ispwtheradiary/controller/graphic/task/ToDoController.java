@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 public class ToDoController extends CommonController {
@@ -27,15 +28,27 @@ public class ToDoController extends CommonController {
     private ListView<HBox> toDoListView;
     @FXML
     private ObservableList<HBox> toDoListItems= FXCollections.observableArrayList();
+
+    private boolean isDuplicate(String toDo) {
+        for (HBox itemBox : toDoListItems) {
+            Label label = (Label) itemBox.getChildren().get(1);
+            if (label.getText().equals(toDo)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @FXML
     public void initializeToDoList(PatientBean patientBean) {
         TaskAndToDo.toDoList(patientBean);
         List< ToDoItemBean > toDoItems = patientBean.getToDoList();
         if (toDoItems != null) {
             for (ToDoItemBean toDoItem : toDoItems) {
-                HBox itemBox = createToDoItem(toDoItem.getToDo(), toDoItem.isCompleted());
-                toDoListItems.add(itemBox);
-                toDoListView.setItems(toDoListItems);
+                if(!isDuplicate(toDoItem.getToDo())) {
+                    HBox itemBox = createToDoItem(toDoItem.getToDo(), toDoItem.isCompleted());
+                    toDoListItems.add(itemBox);
+                }
             }
         }
         toDoListView.setItems(toDoListItems);
@@ -56,7 +69,26 @@ public class ToDoController extends CommonController {
     }
     @FXML
     public void completeToDo(MouseEvent event) {
-        PatientBean patientBean= (PatientBean) session.getUser();
+        Iterator<HBox> iterator = toDoListItems.iterator();
+        while (iterator.hasNext()) {
+            HBox itemBox = iterator.next();
+            CheckBox checkBox = (CheckBox) itemBox.getChildren().get(0);
+            Label label = (Label) itemBox.getChildren().get(1);
+
+            if (checkBox.isSelected()) {
+                String toDoText = label.getText().trim();
+                if (!toDoText.isEmpty()) {
+                    // Completa il To-Do
+                    TaskAndToDo.completeToDoItem(new ToDoItemBean(toDoText, true), (PatientBean) session.getUser());
+                    // Rimuovi dalla lista in modo sicuro
+                    iterator.remove();
+
+                }
+            }
+        }
+        showMessage(Alert.AlertType.INFORMATION, "Completamento", "Elemento completato");
+        // Aggiorna la vista dopo aver modificato la lista
+        toDoListView.setItems(toDoListItems);
 
 
     }

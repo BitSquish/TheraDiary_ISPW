@@ -7,6 +7,7 @@ import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -22,11 +23,15 @@ public class PatientAccountController extends AccountController {
 
     @FXML
     private void yourPsychologist(MouseEvent event) {
-        //Va inizializzata la label psychologist
-        if (psychologist.getText().isEmpty()) {
-            goToSearch(event);
-        } else
-            System.out.println("Hai uno psicologo");
+        Account account = new Account();
+        PsychologistBean yourPsychologist= account.yourPsychologist((PatientBean) session.getUser());
+        if(yourPsychologist==null){
+            psychologist.setText("Non hai uno psicologo assegnato");
+            return;
+        }
+        psychologist.setText(yourPsychologist.getFullName());
+
+
     }
 
 

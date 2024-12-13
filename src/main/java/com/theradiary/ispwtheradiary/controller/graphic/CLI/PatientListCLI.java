@@ -11,16 +11,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PatientListCLI extends AbstractState {
-    protected PsychologistBean psychologistBean;
-    public PatientListCLI(PsychologistBean psychologistBean) {
-        this.psychologistBean = psychologistBean;
+    protected PsychologistBean user;
+    public PatientListCLI(PsychologistBean user) {
+        this.user=user;
     }
     Scanner scanner = new Scanner(System.in);
     @Override
     public void action(StateMachineImpl context) {
         try {
             Account account = new Account();
-            List<PatientBean> patients = account.retrievePatientList(psychologistBean);
+            List<PatientBean> patients = account.retrievePatientList(user);
             if (patients.isEmpty()) {
                 Printer.println("Non hai pazienti");
                 goBack(context);
@@ -34,7 +34,7 @@ public class PatientListCLI extends AbstractState {
                 int selectedIndex = scanner.nextInt();
                 if (selectedIndex > 0 && selectedIndex <= patients.size()) {
                     PatientBean selectedPatient = patients.get(selectedIndex - 1);
-                    goNext(context, new TaskPsychologistCLI(selectedPatient));
+                    goNext(context, new TaskPsychologistCLI(user,selectedPatient));
                 } else if (selectedIndex == 0) {
                     goBack(context);
                 } else {

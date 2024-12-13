@@ -126,7 +126,7 @@ public class PatientListController extends CommonController {
             changeScene(root, event);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException(e.getMessage()); //TODO: gestire eccezione
+            throw new RuntimeException(e.getMessage());
         }
     }
     @FXML
@@ -139,7 +139,7 @@ public class PatientListController extends CommonController {
             changeScene(root, event);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e); //TODO: gestire eccezione
+            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
         }
     }
 
@@ -153,7 +153,7 @@ public class PatientListController extends CommonController {
             changeScene(root, event);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e); //TODO: gestire eccezione
+            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
         }
     }
     //DA COMPLETARE
