@@ -44,31 +44,6 @@ public class PatientListController extends CommonController {
     private TableColumn<PatientBean,Void> checkProfile;
 
 
-    //Metodo per configurare i bottoni
-    // Metodo generico per creare una cella con un bottone
-    private TableCell<PatientBean, Void> createButtonCell(String buttonText, Consumer<PatientBean> action) {
-        return new TableCell<>() {
-            private final Button button = new Button(buttonText);
-            {
-                // Configura il comportamento del bottone
-                button.setOnMouseClicked(event -> {
-                    PatientBean patientBean = getTableView().getItems().get(getIndex());
-                    action.accept(patientBean);
-                });
-            }
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(button);
-                }
-            }
-        };
-    }
-
-
     @FXML
     public void printPatient(MouseEvent event, List<PatientBean> patientBeans){
         ObservableList<PatientBean> patientBeansList = FXCollections.observableArrayList(patientBeans);
@@ -79,13 +54,66 @@ public class PatientListController extends CommonController {
             return new javafx.beans.property.SimpleStringProperty(presenza ? "Sì" : "No");
         });
         online.setCellValueFactory(cellData->{
-            boolean isOnline = cellData.getValue().isOnline();
-            return new javafx.beans.property.SimpleStringProperty(isOnline ? "Sì" : "No");
+            boolean online = cellData.getValue().isOnline();
+            return new javafx.beans.property.SimpleStringProperty(online ? "Sì" : "No");
         });
-        // Configura la colonna "Vedi Task"
-        checkTask.setCellFactory(param -> createButtonCell("Vedi Task", patientBean -> goToPatientTask(event, patientBean)));
-        // Configura la colonna "Vedi Profilo"
-        checkProfile.setCellFactory(param -> createButtonCell("Vedi Profilo", patientBean -> goToPatientProfile(event, patientBean)));
+        checkTask.setCellFactory(param -> new TableCell<>() {
+            private final Button btn = new Button("Vedi Task");
+
+            {
+                btn.setOnMouseClicked(event -> {
+                    PatientBean patientBean = getTableView().getItems().get(getIndex());
+                    goToPatientTask(event, patientBean);
+                });
+            }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
+            }
+        });
+        checkProfile.setCellFactory(param -> new TableCell<>() {
+            private final Button btn = new Button("Vedi Task");
+            {
+                btn.setOnMouseClicked(event -> {
+                    PatientBean patientBean = getTableView().getItems().get(getIndex());
+                    goToPatientTask(event, patientBean);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
+            }
+        });
+        checkProfile.setCellFactory(param -> new TableCell<>() {
+            private final Button btn = new Button("Vedi profilo");
+
+            {
+                btn.setOnMouseClicked(event -> {
+                    PatientBean patientBean = getTableView().getItems().get(getIndex());
+                    goToPatientProfile(event, patientBean);
+                });
+            }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
+            }
+        });
         patientTable.setItems(patientBeansList);
     }
     @FXML

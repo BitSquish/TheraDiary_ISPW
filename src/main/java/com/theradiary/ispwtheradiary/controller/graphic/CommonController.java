@@ -25,7 +25,6 @@ import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -242,7 +241,7 @@ public abstract class CommonController {
                 goToLogin(event);
             }else {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(APPOINTMENT_PATH)));
-                loader.setControllerFactory(c -> new AppointmentController(fxmlPathConfig, session));
+                loader.setControllerFactory(c -> new AppointmentPsController(fxmlPathConfig, session));
                 Parent root = loader.load();
                 changeScene(root, event);
             }
