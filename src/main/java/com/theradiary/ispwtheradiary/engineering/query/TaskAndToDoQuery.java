@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
 import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
+import com.theradiary.ispwtheradiary.model.ToDoItem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class TaskAndToDoQuery {
     private TaskAndToDoQuery(){}
+    /*-------------------------DIARIO-------------------------*/
     public static void Diary(Connection conn, String diary, String mail, LocalDate selectedDate) {
         System.out.println("Contenuto del diario da inserire: " + diary);
         String query= "INSERT INTO diary (contenuto,data_creazione,patient) VALUES (?,?,?)";
@@ -45,22 +47,7 @@ public class TaskAndToDoQuery {
             throw new RuntimeException(e);
         }
     }
-
-    public static void ToDoList(Connection conn, List<ToDoItemBean> savedToDoItems, String mail) {
-        String query = "INSERT INTO todo (description,done,patient) VALUES (?,?,?)";
-        try {
-            for (ToDoItemBean toDoItemBean : savedToDoItems) {
-                PreparedStatement pstmt = conn.prepareStatement(query);
-                pstmt.setString(1, toDoItemBean.getToDo());
-                pstmt.setBoolean(2, toDoItemBean.isCompleted());
-                pstmt.setString(3, mail);
-                pstmt.executeUpdate();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
+    /*-------------------------TODOLIST-------------------------*/
 
     public static ResultSet getToDoList(Connection conn, String mail) {
         String query = "SELECT description,done FROM todo WHERE patient=?";
@@ -68,6 +55,33 @@ public class TaskAndToDoQuery {
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static void saveToDoItem(Connection conn, String mail, ToDoItem toDoItem)
+    {
+        String query = "INSERT INTO todo (description,done,patient) VALUES (?,?,?)";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, toDoItem.getToDo());
+            pstmt.setBoolean(2, toDoItem.isCompleted());
+            pstmt.setString(3, mail);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void deleteToDoItem(Connection conn, String mail, ToDoItem toDoItem) {
+        String query = "DELETE FROM todo WHERE description=? AND patient=?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, toDoItem.getToDo());
+            pstmt.setString(2, mail);
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

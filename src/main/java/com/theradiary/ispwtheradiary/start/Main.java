@@ -38,7 +38,7 @@ public class Main extends Application {
                         validInput = true;
                         break;
                     case 2:
-                        interfacciaCLI();
+                        interfaceCLI();
                         validInput = true;
                         break;
                     default:
@@ -70,7 +70,7 @@ public class Main extends Application {
         });
         stage.show();
     }
-    public  void interfacciaCLI(){
+    public  void interfaceCLI(){
         StateMachineImpl context= new StateMachineImpl();
         while(context.getCurrentState()!=null) {
             context.goNext();

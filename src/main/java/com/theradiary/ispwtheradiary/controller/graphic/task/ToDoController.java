@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 public class ToDoController extends CommonController {
@@ -27,16 +28,27 @@ public class ToDoController extends CommonController {
     private ListView<HBox> toDoListView;
     @FXML
     private ObservableList<HBox> toDoListItems= FXCollections.observableArrayList();
+
+    private boolean isDuplicate(String toDo) {
+        for (HBox itemBox : toDoListItems) {
+            Label label = (Label) itemBox.getChildren().get(1);
+            if (label.getText().equals(toDo)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @FXML
     public void initializeToDoList(PatientBean patientBean) {
-        TaskAndToDo taskAndToDo = new TaskAndToDo();
-        taskAndToDo.toDoList(patientBean);
+        TaskAndToDo.toDoList(patientBean);
         List< ToDoItemBean > toDoItems = patientBean.getToDoList();
         if (toDoItems != null) {
             for (ToDoItemBean toDoItem : toDoItems) {
-                HBox itemBox = createToDoItem(toDoItem.getToDo(), toDoItem.isCompleted());
-                toDoListItems.add(itemBox);
-                toDoListView.setItems(toDoListItems);
+                if(!isDuplicate(toDoItem.getToDo())) {
+                    HBox itemBox = createToDoItem(toDoItem.getToDo(), toDoItem.isCompleted());
+                    toDoListItems.add(itemBox);
+                }
             }
         }
         toDoListView.setItems(toDoListItems);
@@ -56,21 +68,29 @@ public class ToDoController extends CommonController {
         return hbox;
     }
     @FXML
-    public void saveToDoList(MouseEvent event) {
-        PatientBean patientBean = (PatientBean) session.getUser();
-        ObservableList<ToDoItemBean> savedToDoItems = FXCollections.observableArrayList();
-        for(HBox itemBox : toDoListItems) {
+    public void completeToDo(MouseEvent event) {
+        Iterator<HBox> iterator = toDoListItems.iterator();
+        while (iterator.hasNext()) {
+            HBox itemBox = iterator.next();
             CheckBox checkBox = (CheckBox) itemBox.getChildren().get(0);
             Label label = (Label) itemBox.getChildren().get(1);
-            savedToDoItems.add(new ToDoItemBean(label.getText(), checkBox.isSelected()));
+
+            if (checkBox.isSelected()) {
+                String toDoText = label.getText().trim();
+                if (!toDoText.isEmpty()) {
+                    // Completa il To-Do
+                    TaskAndToDo.deleteToDo(new ToDoItemBean(toDoText, true), (PatientBean) session.getUser());
+                    // Rimuovi dalla lista in modo sicuro
+                    iterator.remove();
+
+                }
+            }
         }
-        try {
-            TaskAndToDo taskAndToDo = new TaskAndToDo();
-            taskAndToDo.saveToDoList(savedToDoItems, patientBean);
-            showMessage(Alert.AlertType.INFORMATION, "Salvataggio", "Lista ToDo salvata correttamente");
-        }catch (Exception e) {
-            showMessage(Alert.AlertType.ERROR, "Errore", "Errore durante il salvataggio della lista ToDo");
-        }
+        showMessage(Alert.AlertType.INFORMATION, "Completamento", "Elemento completato");
+        // Aggiorna la vista dopo aver modificato la lista
+        toDoListView.setItems(toDoListItems);
+
+
     }
     private void showMessage(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);

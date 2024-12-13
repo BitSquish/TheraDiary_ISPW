@@ -20,7 +20,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PatientDetailsController extends CommonController {
 
@@ -55,18 +58,6 @@ public class PatientDetailsController extends CommonController {
 
     @FXML
     private TextArea diaryTextArea;
-
-    @FXML
-    private Button modify;
-
-    @FXML
-    private Button delete;
-
-    @FXML
-    private Button modifyToDo;
-
-    @FXML
-    private Button save;
     private PatientBean patientBean;
 
     @FXML
@@ -95,62 +86,72 @@ public class PatientDetailsController extends CommonController {
 
 
 
-
+    //Diario
     private void configureDiary() {
-        TaskAndToDo taskAndToDo = new TaskAndToDo();
-        taskAndToDo.getDiaryForToday(patientBean);
+        TaskAndToDo.getDiaryForToday(patientBean);
         String diaryText = patientBean.getDiary();
         diaryTextArea.setText(diaryText == null || diaryText.isEmpty() ? "Diario vuoto" : diaryText);
     }
+    //ToDoList
     private void configureToDoList() {
-        TaskAndToDo taskAndToDo=new TaskAndToDo();
-        taskAndToDo.toDoList(patientBean);
-        List<ToDoItemBean> toDoItems=patientBean.getToDoList();
-        for(ToDoItemBean item:toDoItems){
-            HBox itemBox=createToDoItem(item.getToDo(),item.isCompleted());
-            toDoListItems.add(itemBox);
+        toDoListItems.clear();
+        TaskAndToDo.toDoList(patientBean);
+        List<ToDoItemBean> toDoItems = patientBean.getToDoList();
+        for(ToDoItemBean item: toDoItems){
+            if(toDoListItems.stream().noneMatch(hBox -> ((TextField) hBox.getChildren().get(1)).getText().equals(item.getToDo()))) {
+                HBox itemBox = createToDoItem(item);
+                toDoListItems.add(itemBox);
+            }
         }
         toDoListView.setItems(toDoListItems);
     }
-    private HBox createToDoItem(String taskDescription,boolean isCompleted){
+    private HBox createToDoItem(ToDoItemBean toDoItemBean) {
         CheckBox checkBox=new CheckBox();
-        checkBox.setSelected(isCompleted);
-        TextField textField=new TextField(taskDescription);
+        checkBox.setSelected(toDoItemBean.isCompleted());
+        TextField textField=new TextField(toDoItemBean.getToDo());
         textField.setPrefWidth(200);
+        textField.textProperty().addListener((obs, oldValue, newValue) -> {
+            toDoItemBean.setToDo(newValue.trim());
+        });
         Button deleteButton=new Button("Elimina");
         deleteButton.setOnAction(e->{
             toDoListItems.removeIf(hBox -> hBox.getChildren().contains(deleteButton));
+            patientBean.removeToDoItem(toDoItemBean);
+            TaskAndToDo.deleteToDo(toDoItemBean,patientBean);
             toDoListView.setItems(toDoListItems);
         });
         HBox hbox = new HBox(10);
-        hbox.getChildren().addAll(checkBox,textField);
+        hbox.getChildren().addAll(checkBox,textField,deleteButton);
         return hbox;
     }
+
     @FXML
-    public void modifyToDo(MouseEvent event) {
-        HBox itemBox=createToDoItem("Nuovo To-Do",false);
+    private void modifyToDo(MouseEvent mouseEvent) {
+        ToDoItemBean newItem=new ToDoItemBean("",false);
+        patientBean.getToDoList().add(newItem);
+
+        HBox itemBox=createToDoItem(newItem);
         toDoListItems.add(itemBox);
         toDoListView.setItems(toDoListItems);
     }
 
     @FXML
     public void saveToDo(MouseEvent event) {
-        ObservableList<ToDoItemBean> savedToDoItems=FXCollections.observableArrayList();
-        for(HBox itemBox:toDoListItems){
-            CheckBox checkBox=(CheckBox) itemBox.getChildren().get(0);
+        List<ToDoItemBean> toDoItems=patientBean.getToDoList();
+        Set<String> uniqueDescriptions=new HashSet<>();
+        toDoItems.removeIf(item -> !uniqueDescriptions.add(item.getToDo().trim()));
+
+        for(HBox itemBox: toDoListItems){
+            CheckBox checkbox=(CheckBox) itemBox.getChildren().get(0);
             TextField textField=(TextField) itemBox.getChildren().get(1);
-            boolean completed=checkBox.isSelected();
-            String toDo=textField.getText();
-            savedToDoItems.add(new ToDoItemBean(toDo,completed));
+            String toDoText=textField.getText().trim();
+            if(!toDoText.isEmpty()){
+                toDoItems.add(new ToDoItemBean(toDoText,checkbox.isSelected()));
+            }
+            TaskAndToDo.saveToDo(new ToDoItemBean(toDoText,checkbox.isSelected()),patientBean);
         }
-        try{
-                TaskAndToDo taskAndToDo=new TaskAndToDo();
-                taskAndToDo.saveToDoList(savedToDoItems,patientBean);
-                showMessage(Alert.AlertType.INFORMATION,"Salvataggio completato","Lista To-Do salvata correttamente");
-        }catch (Exception e){
-            showMessage(Alert.AlertType.ERROR,"Errore nel salvataggio","Errore nel salvataggio della lista To-Do");
-            e.printStackTrace();
-        }
+        showMessage(Alert.AlertType.INFORMATION,"Salvataggio","Salvataggio completato");
+
     }
     @FXML
     public void modifyTask() {}
@@ -159,10 +160,7 @@ public class PatientDetailsController extends CommonController {
     @FXML
     private void handleTabSelectionChanged() {
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-        if(selectedTab == null) {
-            System.out.println("Nessuna tab selezionata");
-            return;
-        }
+        if(selectedTab == null) return;
         String selectedTabText = selectedTab.getText();
             switch (selectedTabText) {
                 case "Task":

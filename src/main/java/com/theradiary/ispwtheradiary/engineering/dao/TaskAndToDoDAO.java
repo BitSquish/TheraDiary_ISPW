@@ -17,6 +17,7 @@ import java.util.Optional;
 
 public class TaskAndToDoDAO {
     private TaskAndToDoDAO(){}
+    /**************diario***************/
     public static void Diary(Patient patient, String diaryContent, LocalDate selectedDate) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.Diary(conn, diaryContent, patient.getCredentials().getMail(), selectedDate);
@@ -40,7 +41,6 @@ public class TaskAndToDoDAO {
         }
 
     }
-
     public static Optional<String> getDiaryEntry(LocalDate selectedDate,Patient patient) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             ResultSet rs=TaskAndToDoQuery.getDiaryEntry(conn, selectedDate, patient.getCredentials().getMail());
@@ -54,13 +54,16 @@ public class TaskAndToDoDAO {
         }
     }
 
-    public static void ToDoList(Patient patient, List<ToDoItemBean> savedToDoItems) {
+    /**************to do***************/
+    public static void saveToDo(Patient patient, ToDoItem toDoItem) {
         try(Connection conn= ConnectionFactory.getConnection()) {
-            TaskAndToDoQuery.ToDoList(conn, savedToDoItems, patient.getCredentials().getMail());
+            TaskAndToDoQuery.saveToDoItem(conn, patient.getCredentials().getMail(), toDoItem);
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
     }
+
+
 
     public static List<ToDoItem> retriveToDoList(Patient patient) {
         List<ToDoItem> toDoItems=new ArrayList<>();
@@ -73,5 +76,13 @@ public class TaskAndToDoDAO {
             throw new RuntimeException(e);
         }
         return toDoItems;
+    }
+
+    public static void deleteToDoItem(Patient patient, ToDoItem toDoItem) {
+        try(Connection conn= ConnectionFactory.getConnection()) {
+            TaskAndToDoQuery.deleteToDoItem(conn, patient.getCredentials().getMail(), toDoItem);
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 }
