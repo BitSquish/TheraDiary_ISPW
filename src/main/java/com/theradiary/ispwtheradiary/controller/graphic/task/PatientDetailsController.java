@@ -95,16 +95,16 @@ public class PatientDetailsController extends CommonController {
 
 
 
-
+    //Diario
     private void configureDiary() {
         TaskAndToDo taskAndToDo = new TaskAndToDo();
         taskAndToDo.getDiaryForToday(patientBean);
         String diaryText = patientBean.getDiary();
         diaryTextArea.setText(diaryText == null || diaryText.isEmpty() ? "Diario vuoto" : diaryText);
     }
+    //ToDoList
     private void configureToDoList() {
-        TaskAndToDo taskAndToDo=new TaskAndToDo();
-        taskAndToDo.toDoList(patientBean);
+        TaskAndToDo.toDoList(patientBean);
         List<ToDoItemBean> toDoItems=patientBean.getToDoList();
         for(ToDoItemBean item:toDoItems){
             HBox itemBox=createToDoItem(item.getToDo(),item.isCompleted());
@@ -126,30 +126,19 @@ public class PatientDetailsController extends CommonController {
         hbox.getChildren().addAll(checkBox,textField);
         return hbox;
     }
+
     @FXML
-    public void modifyToDo(MouseEvent event) {
-        HBox itemBox=createToDoItem("Nuovo To-Do",false);
+    private void modifyToDo(MouseEvent mouseEvent) {
+        HBox itemBox=createToDoItem("",false);
         toDoListItems.add(itemBox);
-        toDoListView.setItems(toDoListItems);
+        toDoListView.getItems().setAll(toDoListItems);
     }
 
     @FXML
-    public void saveToDo(MouseEvent event) {
-        ObservableList<ToDoItemBean> savedToDoItems=FXCollections.observableArrayList();
-        for(HBox itemBox:toDoListItems){
-            CheckBox checkBox=(CheckBox) itemBox.getChildren().get(0);
-            TextField textField=(TextField) itemBox.getChildren().get(1);
-            boolean completed=checkBox.isSelected();
-            String toDo=textField.getText();
-            savedToDoItems.add(new ToDoItemBean(toDo,completed));
-        }
-        try{
-                TaskAndToDo taskAndToDo=new TaskAndToDo();
-                taskAndToDo.saveToDoList(savedToDoItems,patientBean);
-                showMessage(Alert.AlertType.INFORMATION,"Salvataggio completato","Lista To-Do salvata correttamente");
-        }catch (Exception e){
-            showMessage(Alert.AlertType.ERROR,"Errore nel salvataggio","Errore nel salvataggio della lista To-Do");
-            e.printStackTrace();
+    public void saveToDo(){
+        configureToDoList();
+        for(ToDoItemBean item:patientBean.getToDoList()){
+            TaskAndToDo.saveToDo(item,patientBean);
         }
     }
     @FXML

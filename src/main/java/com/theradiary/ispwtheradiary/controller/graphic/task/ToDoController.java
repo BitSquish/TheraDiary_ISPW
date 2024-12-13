@@ -55,15 +55,9 @@ public class ToDoController extends CommonController {
         return hbox;
     }
     @FXML
-    public void saveToDoList(MouseEvent event) {
-        List<ToDoItemBean> completeToDoItems = FXCollections.observableArrayList();
-        for (HBox item : toDoListView.getItems()) {
-            CheckBox checkBox = (CheckBox) item.getChildren().get(0);
-            Label label = (Label) item.getChildren().get(1);
-            completeToDoItems.add(new ToDoItemBean(label.getText(), checkBox.isSelected()));
-        }
-        TaskAndToDo.completeToDoItem(completeToDoItems, (PatientBean) session.getUser());
-        showMessage(Alert.AlertType.INFORMATION, "Salvataggio", "Lista salvata correttamente");
+    public void completeToDo(MouseEvent event) {
+        PatientBean patientBean= (PatientBean) session.getUser();
+
 
     }
     private void showMessage(Alert.AlertType alertType, String title, String message) {

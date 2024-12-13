@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
 import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
+import com.theradiary.ispwtheradiary.model.ToDoItem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -73,12 +74,25 @@ public class TaskAndToDoQuery {
         }
     }
 
-    public static void completeToDoItem(Connection conn, String mail, ToDoItemBean toDoItemBean) {
-        String query = "UPDATE todo SET done=? WHERE description=? AND patient=?";
+    public static void completeToDoItem(Connection conn, String mail, ToDoItem toDoItem) {
+        String query = "DELETE FROM todo WHERE description=? AND patient=? AND done=TRUE";
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setBoolean(1, toDoItemBean.isCompleted());
-            pstmt.setString(2, toDoItemBean.getToDo());
+            pstmt.setString(1, toDoItem.getToDo());
+            pstmt.setString(2, mail);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void saveToDoItem(Connection conn, String mail, ToDoItem toDoItem)
+    {
+        String query = "INSERT INTO todo (description,done,patient) VALUES (?,?,?)";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, toDoItem.getToDo());
+            pstmt.setBoolean(2, toDoItem.isCompleted());
             pstmt.setString(3, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {

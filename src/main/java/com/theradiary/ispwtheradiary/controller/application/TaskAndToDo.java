@@ -7,7 +7,6 @@ import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.ToDoItem;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
-import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -39,18 +38,18 @@ public class TaskAndToDo {
         return diaryContent.orElse("");
     }
 
-    public static void saveToDoList(List<ToDoItemBean> savedToDoItems, PatientBean patientBean) {
+    public static void saveToDo(ToDoItemBean toDoItemBean, PatientBean patientBean) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
-        TaskAndToDoDAO.ToDoList(patient,savedToDoItems);
-        patientBean.setToDoList(savedToDoItems);
+        ToDoItem toDoItem = new ToDoItem(toDoItemBean.getToDo(), toDoItemBean.isCompleted());
+        TaskAndToDoDAO.saveToDo(patient,toDoItem);
+        patientBean.addToDoItem(toDoItemBean);
     }
-    public static void completeToDoItem(List<ToDoItemBean> completetoDoItems, PatientBean patientBean) {
+
+    public static void completeToDoItem(ToDoItemBean toDoItemBean, PatientBean patientBean) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
-        ToDoItem toDoItem = new ToDoItem(completetoDoItems.get(0).getToDo(),completetoDoItems.get(0).isCompleted());
-        TaskAndToDoDAO.completeToDoItem(patient,completetoDoItems);
-        for(ToDoItemBean toDoItemBean:completetoDoItems){
-            patientBean.removeToDoItem(toDoItemBean);
-        }
+        ToDoItem toDoItem = new ToDoItem(toDoItemBean.getToDo(), toDoItemBean.isCompleted());
+        TaskAndToDoDAO.completeToDoItem(patient,toDoItem);
+        patientBean.removeToDoItem(toDoItemBean);
     }
 
 

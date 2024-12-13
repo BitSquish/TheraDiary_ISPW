@@ -17,6 +17,7 @@ import java.util.Optional;
 
 public class TaskAndToDoDAO {
     private TaskAndToDoDAO(){}
+    /**************diario***************/
     public static void Diary(Patient patient, String diaryContent, LocalDate selectedDate) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.Diary(conn, diaryContent, patient.getCredentials().getMail(), selectedDate);
@@ -40,7 +41,6 @@ public class TaskAndToDoDAO {
         }
 
     }
-
     public static Optional<String> getDiaryEntry(LocalDate selectedDate,Patient patient) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             ResultSet rs=TaskAndToDoQuery.getDiaryEntry(conn, selectedDate, patient.getCredentials().getMail());
@@ -54,13 +54,16 @@ public class TaskAndToDoDAO {
         }
     }
 
-    public static void ToDoList(Patient patient, List<ToDoItem> savedToDoItems) {
+    /**************to do***************/
+    public static void saveToDo(Patient patient, ToDoItem toDoItem) {
         try(Connection conn= ConnectionFactory.getConnection()) {
-            TaskAndToDoQuery.ToDoList(conn, savedToDoItems, patient.getCredentials().getMail());
+            TaskAndToDoQuery.saveToDoItem(conn, patient.getCredentials().getMail(), toDoItem);
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
     }
+
+
 
     public static List<ToDoItem> retriveToDoList(Patient patient) {
         List<ToDoItem> toDoItems=new ArrayList<>();
@@ -75,9 +78,9 @@ public class TaskAndToDoDAO {
         return toDoItems;
     }
 
-    public static void completeToDoItem(Patient patient, List<ToDoItem> completetoDoItems) {
+    public static void completeToDoItem(Patient patient,ToDoItem toDoItem) {
         try(Connection conn= ConnectionFactory.getConnection()) {
-            TaskAndToDoQuery.completeToDoItem(conn, patient.getCredentials().getMail(), completetoDoItems);
+            TaskAndToDoQuery.completeToDoItem(conn, patient.getCredentials().getMail(), toDoItem);
         }catch (SQLException e){
             throw new RuntimeException(e);
         }

@@ -85,18 +85,8 @@ public class TaskPsychologistCLI extends AbstractState {
         }
     }
     private void modifyToDO(Scanner scanner){
-        Printer.println("Inserisci la posizione dell'elemento da modificare");
-        int position=scanner.nextInt();
-        List<ToDoItemBean> toDoList = selectedPatient.getToDoList();
-        if(position>0 && position<=selectedPatient.getToDoList().size()){
-            Printer.println("Inserisci la nuova descrizione");
-            String newDescription=scanner.nextLine();
-            toDoList.get(position-1).setToDo(newDescription);
-            TaskAndToDo.saveToDoList((ObservableList<ToDoItemBean>) toDoList,selectedPatient);
-            Printer.println("Elemento modificato");
-        }else{
-            Printer.errorPrint("Posizione non valida");
-        }
+
+
     }
     private void viewTasks(){
         /*Printer.printlnBlue("-------------------Lista task-------------------");
