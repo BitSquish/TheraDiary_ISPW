@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.task.DiaryAndTasksController">
         <fx:include source="CommonPanel.fxml" />
-        <Button fx:id="bacheca" layoutX="606.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#goToBacheca" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: #9067C6; -fx-border-image-width: 16px; -fx-border-radius: 16px;" />
+        <Button fx:id="bacheca" layoutX="606.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#goToDashboard" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: #9067C6; -fx-border-image-width: 16px; -fx-border-radius: 16px;" />
         <Button fx:id="diary" layoutX="55.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#goToDiary" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: #9067C6; -fx-border-image-width: 16px; -fx-border-radius: 16px;" textAlignment="RIGHT" />
         <Button layoutX="55.0" layoutY="357.0" mnemonicParsing="false" onMouseClicked="#goToTest" prefHeight="130.0" prefWidth="219.0" style="-fx-border-color: #9067C6; -fx-background-color: transparent; -fx-border-image-width: 16px; -fx-border-radius: 16px;" textAlignment="RIGHT" wrapText="true">
       <font>
@@ -27,7 +27,7 @@
                         <Image url="@img/pc.png" />
                 </image>
         </ImageView>
-        <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="621.0" layoutY="221.0" onMouseClicked="#goToBacheca">
+        <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="621.0" layoutY="221.0" onMouseClicked="#goToDashboard">
                 <image>
                         <Image url="@img/post.png" />
                 </image>
@@ -48,7 +48,7 @@
          <Font size="14.0" />
       </font>
    </Text>
-   <Text layoutX="705.0" layoutY="255.0" onMouseClicked="#goToBacheca" strokeType="OUTSIDE" strokeWidth="0.0" text="Scrivi un post in bacheca" wrappingWidth="98.9302978515625">
+   <Text layoutX="705.0" layoutY="255.0" onMouseClicked="#goToDashboard" strokeType="OUTSIDE" strokeWidth="0.0" text="Scrivi un post in bacheca" wrappingWidth="98.9302978515625">
       <font>
          <Font size="14.0" />
       </font>

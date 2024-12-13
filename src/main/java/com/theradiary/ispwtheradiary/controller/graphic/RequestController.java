@@ -1,7 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.application.RequestApplication;
-import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.patterns.observer.Observer;
@@ -12,16 +11,11 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.RequestBean;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
-
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +52,6 @@ public class RequestController extends CommonController implements Observer {
     private TableColumn<RequestBean, Void> rejectButton;
 
 
-
     // Metodo per inizializzare l'observer
     public void initializeObserver() {
         requestManagerConcreteSubject.addObserver(this); // Aggiungi l'osservatore
@@ -88,37 +81,6 @@ public class RequestController extends CommonController implements Observer {
             }
         };
     }
-
-
-    //Torna alla pagina precedente
-    @FXML
-    protected void back(MouseEvent event) {
-        try {
-            FXMLLoader loader;
-            Parent root;
-            // Verifica se l'utente è loggato
-            if(session.getUser() == null) {
-                // Se non c'è un utente loggato, carica la schermata di login
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
-                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session)); // Imposta il controller per la login
-                root = loader.load();
-            } else {
-                // Se l'utente è loggato, carica la schermata dei pazienti
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_LIST_PATH)));
-                loader.setControllerFactory(c -> new PatientListController(fxmlPathConfig, session));
-                root = loader.load();
-                ((PatientListController) loader.getController()).printPatient(event, ((PsychologistBean)session.getUser()).getPatientsBean());
-            }
-            // Carica e cambia scena
-            changeScene(root, event);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Aggiungi un messaggio di errore personalizzato
-            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e); //TODO Eccezione
-        }
-    }
-
 
     //Metodo per caricare le richieste nella tabella
     @FXML

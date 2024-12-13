@@ -36,6 +36,7 @@ public class DiaryPageController extends CommonController {
        }
    }
 
+   //TODO: Vedere se si può eliminare
    @FXML
     public void back(MouseEvent event){
         try{

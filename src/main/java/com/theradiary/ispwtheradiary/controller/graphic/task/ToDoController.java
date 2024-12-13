@@ -73,23 +73,5 @@ public class ToDoController extends CommonController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    @FXML
-    protected void back(MouseEvent event) {
-        try {
-            FXMLLoader loader;
-            if (session.getUser() == null) {
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
-                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
-            } else {
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(DIARY_AND_TASKS_PATH)));
-                loader.setControllerFactory(c -> new DiaryAndTasksController(fxmlPathConfig, session));
-            }
-            Parent root = loader.load();
-            changeScene(root, event);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena:" + e.getMessage(), e);
-        }
-    }
 
 }

@@ -18,9 +18,17 @@ public class MedicalOfficeController extends CommonController{
     }
 
     @FXML
-    TextField citta, cap, via, altreInfo;
+    TextField citta;
     @FXML
-    Label errorMessage, successMessage;
+    TextField cap;
+    @FXML
+    TextField via;
+    @FXML
+    TextField altreInfo;
+    @FXML
+    Label errorMessage;
+    @FXML
+    Label successMessage;
     boolean medOffAlreadyInserted;
 
 
@@ -58,7 +66,7 @@ public class MedicalOfficeController extends CommonController{
             errorMessage.setText(exception.getMessage());
             errorMessage.setVisible(true);
         } catch (SQLException e) {
-            throw new RuntimeException(e); //DA VERIFICARE ECCEZIONE
+            throw new RuntimeException(e); //TODO: gestire eccezione
         }
 
     }

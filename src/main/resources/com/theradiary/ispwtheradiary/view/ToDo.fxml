@@ -7,8 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.task.ToDoController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.task.ToDoController">
    <children>
       <fx:include source="CommonPanel.fxml" />
       <ListView fx:id="toDoListView" layoutX="72.0" layoutY="186.0" prefHeight="266.0" prefWidth="732.0" />
@@ -17,7 +16,7 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Text>
-      <Button layoutX="72.0" layoutY="126.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+      <Button layoutX="72.0" layoutY="126.0" mnemonicParsing="false" onMouseClicked="#goToTasks" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
       <Button fx:id="save" layoutX="375.0" layoutY="477.0" mnemonicParsing="false" onMouseClicked="#saveToDoList" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE">
          <opaqueInsets>
             <Insets top="20.0" />

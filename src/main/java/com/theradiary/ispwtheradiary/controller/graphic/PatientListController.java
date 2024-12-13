@@ -1,15 +1,12 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.application.PatientList;
-import com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountController;
-import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.controller.graphic.task.PatientDetailsController;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.RequestBean;
-import com.theradiary.ispwtheradiary.engineering.patterns.observer.RequestManagerConcreteSubject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,6 +22,7 @@ import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class PatientListController extends CommonController {
     public PatientListController(FXMLPathConfig fxmlPathConfig, Session session) {
@@ -46,6 +44,31 @@ public class PatientListController extends CommonController {
     private TableColumn<PatientBean,Void> checkProfile;
 
 
+    //Metodo per configurare i bottoni
+    // Metodo generico per creare una cella con un bottone
+    private TableCell<PatientBean, Void> createButtonCell(String buttonText, Consumer<PatientBean> action) {
+        return new TableCell<>() {
+            private final Button button = new Button(buttonText);
+            {
+                // Configura il comportamento del bottone
+                button.setOnMouseClicked(event -> {
+                    PatientBean patientBean = getTableView().getItems().get(getIndex());
+                    action.accept(patientBean);
+                });
+            }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(button);
+                }
+            }
+        };
+    }
+
+
     @FXML
     public void printPatient(MouseEvent event, List<PatientBean> patientBeans){
         ObservableList<PatientBean> patientBeansList = FXCollections.observableArrayList(patientBeans);
@@ -56,66 +79,13 @@ public class PatientListController extends CommonController {
             return new javafx.beans.property.SimpleStringProperty(presenza ? "Sì" : "No");
         });
         online.setCellValueFactory(cellData->{
-            boolean online = cellData.getValue().isOnline();
-            return new javafx.beans.property.SimpleStringProperty(online ? "Sì" : "No");
+            boolean isOnline = cellData.getValue().isOnline();
+            return new javafx.beans.property.SimpleStringProperty(isOnline ? "Sì" : "No");
         });
-        checkTask.setCellFactory(param -> new TableCell<>() {
-            private final Button btn = new Button("Vedi Task");
-
-            {
-                btn.setOnMouseClicked(event -> {
-                    PatientBean patientBean = getTableView().getItems().get(getIndex());
-                    goToPatientTask(event, patientBean);
-                });
-            }
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btn);
-                }
-            }
-        });
-        checkProfile.setCellFactory(param -> new TableCell<>() {
-            private final Button btn = new Button("Vedi Task");
-            {
-                btn.setOnMouseClicked(event -> {
-                    PatientBean patientBean = getTableView().getItems().get(getIndex());
-                    goToPatientTask(event, patientBean);
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btn);
-                }
-            }
-        });
-        checkProfile.setCellFactory(param -> new TableCell<>() {
-            private final Button btn = new Button("Vedi profilo");
-
-            {
-                btn.setOnMouseClicked(event -> {
-                    PatientBean patientBean = getTableView().getItems().get(getIndex());
-                    goToPatientProfile(event, patientBean);
-                });
-            }
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btn);
-                }
-            }
-        });
+        // Configura la colonna "Vedi Task"
+        checkTask.setCellFactory(param -> createButtonCell("Vedi Task", patientBean -> goToPatientTask(event, patientBean)));
+        // Configura la colonna "Vedi Profilo"
+        checkProfile.setCellFactory(param -> createButtonCell("Vedi Profilo", patientBean -> goToPatientProfile(event, patientBean)));
         patientTable.setItems(patientBeansList);
     }
     @FXML
@@ -128,7 +98,7 @@ public class PatientListController extends CommonController {
             changeScene(root, event);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
+            throw new RuntimeException(e.getMessage()); //TODO: gestire eccezione
         }
     }
     @FXML
@@ -141,7 +111,7 @@ public class PatientListController extends CommonController {
             changeScene(root, event);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
+            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e); //TODO: gestire eccezione
         }
     }
 
@@ -155,7 +125,7 @@ public class PatientListController extends CommonController {
             changeScene(root, event);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
+            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e); //TODO: gestire eccezione
         }
     }
     //DA COMPLETARE

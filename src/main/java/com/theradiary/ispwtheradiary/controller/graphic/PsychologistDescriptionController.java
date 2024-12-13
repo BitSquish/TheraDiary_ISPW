@@ -2,20 +2,14 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.application.Account;
 import com.theradiary.ispwtheradiary.controller.application.PsychologistDescription;
-import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.*;
-
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.StringJoiner;
 
