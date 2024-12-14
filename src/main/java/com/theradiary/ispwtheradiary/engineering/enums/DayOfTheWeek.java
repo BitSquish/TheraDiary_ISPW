@@ -1,19 +1,30 @@
 package com.theradiary.ispwtheradiary.engineering.enums;
 
 public enum DayOfTheWeek {
-    MONDAY("Lunedì"),
-    TUESDAY("Martedì"),
-    WEDNESDAY("Mercoledì"),
-    THURSDAY("Giovedì"),
-    FRIDAY("Venerdì");
+    MONDAY(1),
+    TUESDAY(2),
+    WEDNESDAY(3),
+    THURSDAY(4),
+    FRIDAY(5);
 
-    private String day;
+    private int id;
 
-    DayOfTheWeek(String day) {
-        this.day = day;
+    DayOfTheWeek(int id) {
+        this.id = id;
     }
 
-    public String getDay() {
-        return day;
+    public int getId() {
+        return id;
+    }
+
+    public static String translateDay(int id){
+        return switch (id) {
+            case 1 -> "Lunedì";
+            case 2 -> "Martedì";
+            case 3 -> "Mercoledì";
+            case 4 -> "Giovedì";
+            case 5 -> "Venerdì";
+            default -> null;
+        };
     }
 }

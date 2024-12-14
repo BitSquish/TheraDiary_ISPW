@@ -53,7 +53,7 @@ public abstract class CommonController {
     protected static final String PAG_PATH = "PAG_PATH";
     protected static final String SEARCH_PATH = "SEARCH_PATH";
     protected static final String MEDICAL_OFFICE_PATH = "MEDICAL_OFFICE_PATH";
-    protected static final String APPOINTMENT_PATH = "APPOINTMENT_PATH";
+    protected static final String  APPOINTMENT_PATH = "APPOINTMENT_PATH";
     protected static final String PATIENT_TASK_PATH = "PATIENT_TASK_PATH";
     protected static final String REQUEST_PATH = "REQUEST_PATH";
     protected static final String PATIENT_PROFILE_PATH = "PATIENT_PROFILE_PATH";
