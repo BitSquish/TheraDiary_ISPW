@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.task.DiaryAndTasksController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.task.DiaryAndTasksController">
         <fx:include source="CommonPanel.fxml" />
         <Button fx:id="bacheca" layoutX="606.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#goToDashboard" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: #9067C6; -fx-border-image-width: 16px; -fx-border-radius: 16px;" />
         <Button fx:id="diary" layoutX="55.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#goToDiary" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: #9067C6; -fx-border-image-width: 16px; -fx-border-radius: 16px;" textAlignment="RIGHT" />
@@ -58,13 +58,13 @@
          <Font size="14.0" />
       </font>
    </Text>
-   <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="339.0" layoutY="389.0" onMouseClicked="#goToTask">
+   <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="339.0" layoutY="389.0" onMouseClicked="#goToTaskPatient">
       <image>
          <Image url="@img/psicologo.png" />
       </image>
    </ImageView>
-   <Button layoutX="328.0" layoutY="357.0" mnemonicParsing="false" onMouseClicked="#goToTask" prefHeight="130.0" prefWidth="219.0" style="-fx-border-color: #9067C6; -fx-background-color: transparent; -fx-border-image-width: 16px; -fx-border-radius: 16px;" />
-   <Text layoutX="416.0" layoutY="410.0" onMouseClicked="#goToTask" strokeType="OUTSIDE" strokeWidth="0.0" text="Compila il questionario del tuo psicologo" wrappingWidth="105.592529296875">
+   <Button layoutX="328.0" layoutY="357.0" mnemonicParsing="false" onMouseClicked="#goToTaskPatient" prefHeight="130.0" prefWidth="219.0" style="-fx-border-color: #9067C6; -fx-background-color: transparent; -fx-border-image-width: 16px; -fx-border-radius: 16px;" />
+   <Text layoutX="416.0" layoutY="410.0" onMouseClicked="#goToTaskPatient" strokeType="OUTSIDE" strokeWidth="0.0" text="Compila le task affidate dal tuo psicologo" wrappingWidth="105.592529296875">
       <font>
          <Font size="14.0" />
       </font>

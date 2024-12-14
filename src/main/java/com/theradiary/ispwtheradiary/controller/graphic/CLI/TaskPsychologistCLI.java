@@ -8,7 +8,6 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.AbstractState;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.StateMachineImpl;
-import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -38,7 +37,7 @@ public class TaskPsychologistCLI extends AbstractState {
                         showToDoList();
                         break;
                     case (3):
-                        modifyToDO(scanner);
+                        goNext(context,new ToDoCLI(user,selectedPatient));
                         break;
                     case (4):
                         viewTasks();
@@ -55,7 +54,7 @@ public class TaskPsychologistCLI extends AbstractState {
                 scanner.nextLine();
             }
         }
-        goNext(context, new HomePsychologistCLI(selectedPatient.getPsychologistBean()));
+        goNext(context, new HomePsychologistCLI(user));
 
     }
     private void showDiary() {
@@ -81,7 +80,7 @@ public class TaskPsychologistCLI extends AbstractState {
         //Nell todoitembean ho creato un metodo tostring che mi restituisce la stringa da stampare
         if(toDoList.isEmpty()){
             Printer.println("Cose da fare completate o non presenti");
-            modifyToDO(scanner);
+            goNext(context,new ToDoCLI(user,selectedPatient));
         }else{
             for(int i=0;i<toDoList.size();i++){
                 Printer.println((i+1)+". "+toDoList.get(i));
@@ -89,91 +88,6 @@ public class TaskPsychologistCLI extends AbstractState {
         }
     }
 
-    private void modifyToDO(Scanner scanner) {
-        TaskAndToDo.toDoList(selectedPatient);
-        List<ToDoItemBean> toDoList = selectedPatient.getToDoList();
-
-        if (toDoList.isEmpty()) {
-            handleEmptyToDoList(scanner);
-        } else {
-            showToDoList();
-            handleExistingToDoList(scanner, toDoList);
-        }
-
-    }
-
-    private void handleEmptyToDoList(Scanner scanner) {
-        Printer.println("Non ci sono cose da fare, crea un nuovo elemento");
-        Printer.println("Inserisci la descrizione");
-        String description = scanner.nextLine().trim();
-
-        if (description.isEmpty()) {
-            Printer.errorPrint("La descrizione non può essere vuota");
-            return;
-        }
-
-        ToDoItemBean toDoItemBean = new ToDoItemBean(description, false);
-        TaskAndToDo.saveToDo(toDoItemBean, selectedPatient);
-        Printer.printlnGreen("Elemento aggiunto");
-    }
-    private void handleExistingToDoList(Scanner scanner, List<ToDoItemBean> toDoList) {
-        Printer.println("Vuoi inserire un nuovo elemento?[S/N]");
-        String choice = scanner.nextLine().trim();
-
-        if (choice.equalsIgnoreCase("s")) {
-            addNewToDoItem(scanner);
-        } else {
-            Printer.println("Vuoi modificare un elemento?[S/N]");
-            choice = scanner.nextLine().trim();
-
-            if (choice.equalsIgnoreCase("s")) {
-                modifyToDoItem(scanner, toDoList);
-            } else {
-                goNext(context, new PatientListCLI(user));
-            }
-        }
-    }
-    private void addNewToDoItem(Scanner scanner) {
-        Printer.println("Inserisci la descrizione");
-        String description = scanner.nextLine().trim();
-
-        if (description.isEmpty()) {
-            Printer.errorPrint("La descrizione non può essere vuota");
-            return;
-        }
-
-        ToDoItemBean toDoItemBean = new ToDoItemBean(description, false);
-        TaskAndToDo.saveToDo(toDoItemBean, selectedPatient);
-        Printer.printlnGreen("Elemento aggiunto");
-    }
-    private void modifyToDoItem(Scanner scanner, List<ToDoItemBean> toDoList) {
-        Printer.println("Inserisci la posizione dell'elemento da modificare");
-
-        int position = -1;
-        try {
-            position = Integer.parseInt(scanner.nextLine().trim());
-        } catch (NumberFormatException e) {
-            Printer.errorPrint("Posizione non valida");
-            return;
-        }
-
-        if (position > 0 && position <= toDoList.size()) {
-            Printer.println("Inserisci la nuova descrizione");
-            String newDescription = scanner.nextLine().trim();
-
-            if (newDescription.isEmpty()) {
-                Printer.errorPrint("La descrizione non può essere vuota");
-                return;
-            }
-
-            ToDoItemBean selectedToDo = toDoList.get(position - 1);
-            selectedToDo.setToDo(newDescription);
-            TaskAndToDo.saveToDo(selectedToDo, selectedPatient);
-            Printer.printlnGreen("Elemento modificato");
-        } else {
-            Printer.errorPrint("Posizione non valida");
-        }
-    }
     private void viewTasks(){
         /*Printer.printlnBlue("-------------------Lista task-------------------");
         Printer.println("Lista task di "+patientBean.getFullName()+":");

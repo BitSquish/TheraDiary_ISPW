@@ -21,7 +21,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class DiaryController extends CommonController {
-    protected DiaryController(FXMLPathConfig fxmlPathConfig, Session session) {
+    public DiaryController(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig, session);
     }
 
@@ -46,7 +46,7 @@ public class DiaryController extends CommonController {
             String diaryContent = TaskAndToDo.getDiaryForToday(patientBean);
             diary.setText(diaryContent);
         }catch(Exception e){
-            showAlert(Alert.AlertType.ERROR, "Errore durante il caricamento", "Impossibile caricare il diario.");
+            showMessage(Alert.AlertType.ERROR, "Errore durante il caricamento", "Impossibile caricare il diario.");
             e.printStackTrace();
         }
     }
@@ -75,29 +75,23 @@ public class DiaryController extends CommonController {
         int maxWords=5000;
         int wordCount=countWords(diaryContent);
         if(diaryContent.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Contenuto vuoto", "Inserisci del testo nel diario prima di salvare.");
+            showMessage(Alert.AlertType.WARNING, "Contenuto vuoto", "Inserisci del testo nel diario prima di salvare.");
             return;
         }
         if(wordCount>maxWords) {
-            showAlert(Alert.AlertType.WARNING, "Contenuto troppo lungo", "Il diario non può superare le 1000 parole.");
+            showMessage(Alert.AlertType.WARNING, "Contenuto troppo lungo", "Il diario non può superare le 1000 parole.");
             return;
         }
         try{
             TaskAndToDo.saveDiary(diaryContent,patientBean,LocalDate.now());
-            showAlert(Alert.AlertType.INFORMATION, "Salvataggio effettuato", "Il diario è stato salvato correttamente.");
+            showMessage(Alert.AlertType.INFORMATION, "Salvataggio effettuato", "Il diario è stato salvato correttamente.");
         }catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR, "Errore", "Errore durante il salvataggio del diario.");
+            showMessage(Alert.AlertType.ERROR, "Errore", "Errore durante il salvataggio del diario.");
             e.printStackTrace();
         }
     }
 
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
     private int countWords(String s) {
         if (s == null || s.trim().isEmpty()) {
             return 0;

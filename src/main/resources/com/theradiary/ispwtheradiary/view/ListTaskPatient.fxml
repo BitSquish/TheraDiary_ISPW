@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.task.TaskPatientController">
+   <children>
+      <fx:include source="CommonPanel.fxml" />
+      <TableView fx:id="taskTableView" layoutX="100.0" layoutY="179.0" prefHeight="246.0" prefWidth="675.0">
+         <columns>
+            <TableColumn fx:id="taskNameColumn" prefWidth="225.0" text="Nome task" />
+            <TableColumn fx:id="taskDeadlineColumn" prefWidth="225.0" text="Scadenza" />
+            <TableColumn fx:id="taskStatusColumn" prefWidth="225.0" text="Stato" />
+         </columns>
+      </TableView>
+      <Button fx:id="modify" layoutX="300.0" layoutY="452.0" mnemonicParsing="false" onMouseClicked="#modifyTask" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Modifica" textFill="WHITE">
+         <opaqueInsets>
+            <Insets top="20.0" />
+         </opaqueInsets>
+      </Button>
+      <Button layoutX="445.0" layoutY="452.0" mnemonicParsing="false" onMouseClicked="#saveTask" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE">
+         <opaqueInsets>
+            <Insets top="20.0" />
+         </opaqueInsets>
+      </Button>
+      <Text fill="#242038" layoutX="365.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le tue task " textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

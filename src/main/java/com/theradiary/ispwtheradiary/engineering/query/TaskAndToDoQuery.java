@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
 import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
+import com.theradiary.ispwtheradiary.model.Task;
 import com.theradiary.ispwtheradiary.model.ToDoItem;
 
 import java.sql.Connection;
@@ -80,6 +81,44 @@ public class TaskAndToDoQuery {
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, toDoItem.getToDo());
+            pstmt.setString(2, mail);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    /*-------------------------TASK-------------------------*/
+
+    public static ResultSet getTasks(Connection conn, String mail) {
+        String query="SELECT description,deadline,status FROM task WHERE patient=?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, mail);
+            return pstmt.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void saveTask(Connection conn, String mail, Task task) {
+        String query = "INSERT INTO task (description,deadline,status,patient) VALUES (?,?,?,?)";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, task.getTaskName());
+            pstmt.setDate(2, java.sql.Date.valueOf(task.getTaskDeadline()));
+            pstmt.setString(3, task.getTaskStatus());
+            pstmt.setString(4, mail);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    public static void deleteTask(Connection conn, String mail, Task task) {
+        String query = "DELETE FROM task WHERE description=? AND patient=?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, task.getTaskName());
             pstmt.setString(2, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {

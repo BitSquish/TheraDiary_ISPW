@@ -39,12 +39,17 @@
                               <TableColumn fx:id="taskStatusColumn" prefWidth="225.0" text="Stato" />
                           </columns>
                         </TableView>
-                        <Button fx:id="modify" layoutX="233.0" layoutY="273.0" mnemonicParsing="false" onMouseClicked="#modifyTask" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Modifica" textFill="WHITE">
+                        <Button fx:id="modify" layoutX="160.0" layoutY="273.0" mnemonicParsing="false" onMouseClicked="#modifyTask" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Modifica" textFill="WHITE">
                            <opaqueInsets>
                               <Insets top="20.0" />
                            </opaqueInsets>
                         </Button>
-                        <Button fx:id="delete" layoutX="370.0" layoutY="273.0" mnemonicParsing="false" onMouseClicked="#deleteTask" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Elimina" textFill="WHITE">
+                        <Button fx:id="delete" layoutX="298.0" layoutY="273.0" mnemonicParsing="false" onMouseClicked="#saveTask" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE">
+                           <opaqueInsets>
+                              <Insets top="20.0" />
+                           </opaqueInsets>
+                        </Button>
+                        <Button fx:id="delete1" layoutX="436.0" layoutY="273.0" mnemonicParsing="false" onMouseClicked="#deleteTask" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Elimina" textFill="WHITE">
                            <opaqueInsets>
                               <Insets top="20.0" />
                            </opaqueInsets>

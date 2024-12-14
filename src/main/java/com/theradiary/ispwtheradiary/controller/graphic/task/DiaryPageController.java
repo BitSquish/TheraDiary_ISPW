@@ -26,7 +26,6 @@ public class DiaryPageController extends CommonController {
    @FXML
    public void selectDate(ActionEvent event){
        LocalDate selectedDate = date.getValue();
-       System.out.println(selectedDate);
        if(selectedDate!=null) {
            TaskAndToDo taskAndToDo = new TaskAndToDo();
            PatientBean patientBean = (PatientBean) session.getUser();
@@ -34,28 +33,6 @@ public class DiaryPageController extends CommonController {
        }else{
               diaryPage.setText("Seleziona una data");
        }
-   }
-
-   //TODO: Vedere se si può eliminare
-   @FXML
-    public void back(MouseEvent event){
-        try{
-            FXMLLoader loader;
-            if(session.getUser()==null) {
-                loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
-                loader.setControllerFactory(c -> new LoginController(fxmlPathConfig, session));
-            }else{
-                PatientBean patientBean = (PatientBean) session.getUser();
-                loader=new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(DIARY_PATH)));
-                loader.setControllerFactory(c->new DiaryController(fxmlPathConfig,session));
-                ((DiaryController) loader.getController()).initializeDiary(patientBean);
-            }
-            Parent root=loader.load();
-            changeScene(root,event);
-        }catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena:" + e.getMessage(), e);
-        }
    }
 
 

@@ -8,6 +8,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePsContr
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.controller.graphic.task.DiaryAndTasksController;
+import com.theradiary.ispwtheradiary.controller.graphic.task.DiaryController;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
@@ -18,7 +19,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Line;
@@ -27,6 +30,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class CommonController {
     protected Session session;
@@ -249,7 +253,7 @@ public abstract class CommonController {
             throw new RuntimeException(e);
         }
     }
-
+    @FXML
     private void goToLogin(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
@@ -260,6 +264,19 @@ public abstract class CommonController {
             throw new RuntimeException(e);
         }
     }
+    @FXML
+    protected void goToDiary(MouseEvent event ) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(DIARY_PATH)));
+            loader.setControllerFactory(c -> new DiaryController(fxmlPathConfig, session));
+            Parent root = loader.load();
+            ((DiaryController) loader.getController()).initializeDiary((PatientBean) session.getUser());
+            changeScene(root, event);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Errore nel caricamento della scena:" + e.getMessage(), e);
+        }
+    }
 
     //Metodo per cambiare finestra
     protected void changeScene(Parent root, MouseEvent event) {
@@ -267,6 +284,23 @@ public abstract class CommonController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+    //POP UP
+    public void showMessage(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    //INSERIRE
+    public String showInputDialog(String title, String content, String defaultValue) {
+        TextInputDialog dialog = new TextInputDialog(defaultValue);
+        dialog.setTitle(title);
+        dialog.setHeaderText(null);
+        dialog.setContentText(content);
+        Optional<String> result=dialog.showAndWait();
+        return result.orElse(null);
     }
 
 

@@ -10,6 +10,6 @@
       <fx:include source="CommonPanel.fxml" />
       <DatePicker fx:id="date" layoutX="78.0" layoutY="191.0" onAction="#selectDate" prefHeight="26.0" prefWidth="166.0" />
       <TextArea fx:id="diaryPage" layoutX="78.0" layoutY="230.0" prefHeight="266.0" prefWidth="732.0" />
-      <Button layoutX="78.0" layoutY="130.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+      <Button layoutX="78.0" layoutY="130.0" mnemonicParsing="false" onMouseClicked="#goToDiary" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
    </children>
 </AnchorPane>

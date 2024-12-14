@@ -1,13 +1,14 @@
 package com.theradiary.ispwtheradiary.engineering.others.beans;
 
 
+import java.time.LocalDate;
 
 public class TaskBean {
     private String taskName;
-    private String taskDeadline;
+    private LocalDate taskDeadline;
     private String taskStatus;
 
-    public TaskBean(String taskName, String taskDeadline, String taskStatus) {
+    public TaskBean(String taskName,LocalDate taskDeadline, String taskStatus) {
         this.taskName = taskName;
         this.taskDeadline = taskDeadline;
         this.taskStatus = taskStatus;
@@ -21,12 +22,12 @@ public class TaskBean {
         this.taskName = taskName;
     }
 
-    public String getTaskDeadline() {
+    public LocalDate getTaskDeadline() {
         return taskDeadline;
     }
 
     public void setTaskDeadline(String taskDeadline) {
-        this.taskDeadline = taskDeadline;
+        this.taskDeadline = LocalDate.parse(taskDeadline);
     }
 
     public String getTaskStatus() {

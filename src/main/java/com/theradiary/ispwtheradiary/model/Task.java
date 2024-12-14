@@ -1,27 +1,40 @@
 package com.theradiary.ispwtheradiary.model;
 
+import java.time.LocalDate;
+
 public class Task {
-    private String task;
-    private boolean completed;
+    private String taskName;
+    private LocalDate taskDeadline;
+    private String taskStatus;
 
-    public Task(String task, boolean completed) {
-        this.task = task;
-        this.completed = completed;
+
+    public Task(String taskName, LocalDate taskDeadline, String taskStatus) {
+        this.taskName = taskName;
+        this.taskDeadline = taskDeadline;
+        this.taskStatus = taskStatus;
     }
 
-    public String getTask() {
-        return task;
+    public String getTaskName() {
+        return taskName;
     }
 
-    public void setTask(String task) {
-        this.task = task;
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
-    public boolean isCompleted() {
-        return completed;
+    public LocalDate getTaskDeadline() {
+        return taskDeadline;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    public void setTaskDeadline(LocalDate taskDeadline) {
+        this.taskDeadline = taskDeadline;
+    }
+
+    public String getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(String taskStatus) {
+        this.taskStatus = taskStatus;
     }
 }

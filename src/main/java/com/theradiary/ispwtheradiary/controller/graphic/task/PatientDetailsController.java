@@ -1,29 +1,29 @@
 package com.theradiary.ispwtheradiary.controller.graphic.task;
-import com.theradiary.ispwtheradiary.controller.application.Account;
+
 import com.theradiary.ispwtheradiary.controller.application.TaskAndToDo;
 import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
-import com.theradiary.ispwtheradiary.controller.graphic.PatientListController;
-import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
+
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
-import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
+
 import com.theradiary.ispwtheradiary.engineering.others.beans.TaskBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+
 
 public class PatientDetailsController extends CommonController {
 
@@ -68,7 +68,7 @@ public class PatientDetailsController extends CommonController {
         fullName.setText(patientBean.getFullName());
 
         // Configura la tabella dei Task
-        /*configureTaskTable(patientBean);*/
+        configureTaskTable(patientBean);
 
         // Configura la lista To-Do
        configureToDoList();
@@ -77,10 +77,115 @@ public class PatientDetailsController extends CommonController {
         configureDiary();
     }
 
-   /* private void configureTaskTable(PatientBean patientBean) {
+   private void configureTaskTable(PatientBean patientBean) {
+        TaskAndToDo.retrieveTasks(patientBean);
+        ObservableList<TaskBean> tasks = FXCollections.observableArrayList(patientBean.getTasks());
         taskNameColumn.setCellValueFactory(new PropertyValueFactory<>("taskName"));
-        taskDeadlineColumn.setCellValueFactory(new PropertyValueFactory<>("taskDeadline"));
-        taskStatusColumn.setCellValueFactory(new PropertyValueFactory<>("taskStatus"));*/
+       taskDeadlineColumn.setCellValueFactory(new PropertyValueFactory<>("taskDeadline"));
+       taskStatusColumn.setCellValueFactory(new PropertyValueFactory<>("taskStatus"));
+       taskTableView.setItems(tasks);
+   }
+   private final List<TaskBean> listTask = new ArrayList<>();
+    @FXML
+    public void modifyTask(MouseEvent event) {
+        TaskBean selectedTask=taskTableView.getSelectionModel().getSelectedItem();
+        if(selectedTask!=null){
+            modify(selectedTask);
+        }else{
+            addTask();
+        }
+    }
+    @FXML
+    public void deleteTask(MouseEvent event){
+        TaskBean selectedTask=taskTableView.getSelectionModel().getSelectedItem();
+        if(selectedTask!=null){
+            taskTableView.getItems().remove(selectedTask);
+            listTask.remove(selectedTask);
+            TaskAndToDo.deleteTask(selectedTask,patientBean);
+            showMessage(Alert.AlertType.INFORMATION,"Eliminazione","Eliminazione completata");
+        }else{
+            showMessage(Alert.AlertType.ERROR,"Errore","Seleziona un task da eliminare");
+        }
+    }
+    private void modify(TaskBean selectedTask) {
+        // Mostra la finestra di input per il nuovo nome del task
+        String newTaskName = showInputDialog("Modifica Task", "Inserisci il nuovo nome del task", selectedTask.getTaskName());
+
+        // Mostra la finestra di input per la nuova scadenza del task (formattata come stringa per la visualizzazione)
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String newTaskDeadline = showInputDialog("Modifica Scadenza", "Inserisci la nuova scadenza del task", selectedTask.getTaskDeadline().format(formatter));
+
+        // Mostra la finestra di input per il nuovo stato del task
+        String newTaskStatus = showInputDialog("Modifica Stato", "Inserisci il nuovo stato del task", selectedTask.getTaskStatus());
+
+        if (newTaskName != null && newTaskDeadline != null && newTaskStatus != null) {
+            try {
+                // Converte la data inserita in LocalDate usando il formato specificato
+                LocalDate taskDeadlineDate = LocalDate.parse(newTaskDeadline, formatter);
+
+                // Imposta i nuovi valori per il task
+                selectedTask.setTaskName(newTaskName);
+                selectedTask.setTaskDeadline(String.valueOf(taskDeadlineDate)); // Impostiamo la scadenza come LocalDate
+                selectedTask.setTaskStatus(newTaskStatus);
+                //aggiungo alla lista
+                TaskBean modifiedTask = new TaskBean(newTaskName, taskDeadlineDate, newTaskStatus);
+                listTask.add(modifiedTask);
+
+                // Rende visibile la modifica nella tabella
+                taskTableView.refresh();
+
+                // Mostra il messaggio di conferma
+                showMessage(Alert.AlertType.INFORMATION, "Modifica", "Modifica completata");
+
+            } catch (Exception e) {
+                // Mostra il messaggio di errore se il formato della data non è valido
+                showMessage(Alert.AlertType.ERROR, "Errore", "Formato data non valido");
+            }
+        }
+    }
+
+    private void addTask() {
+        // Mostra la finestra di input per il nome del nuovo task
+        String taskName = showInputDialog("Aggiungi Task", "Inserisci il nome del task", "");
+
+        // Mostra la finestra di input per la scadenza del task (formattata come stringa per la visualizzazione)
+        String taskDeadline = showInputDialog("Aggiungi Scadenza", "Inserisci la scadenza del task", "");
+
+        // Mostra la finestra di input per lo stato del task
+        String taskStatus = showInputDialog("Aggiungi Stato", "Inserisci lo stato del task", "");
+
+        if (taskName != null && taskDeadline != null && taskStatus != null) {
+            try {
+                // Converte la data inserita in LocalDate usando il formato specificato
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate taskDeadlineDate = LocalDate.parse(taskDeadline, formatter);
+
+                // Crea un nuovo task con i dati inseriti
+                TaskBean newTask = new TaskBean(taskName, taskDeadlineDate, taskStatus);
+
+                // Aggiunge il nuovo task alla tabella
+                taskTableView.getItems().add(newTask);
+                listTask.add(newTask);
+
+                // Mostra il messaggio di conferma
+                showMessage(Alert.AlertType.INFORMATION, "Aggiunta", "Aggiunta completata");
+
+            } catch (Exception e) {
+                // Mostra il messaggio di errore se il formato della data non è valido
+                showMessage(Alert.AlertType.ERROR, "Errore", "Formato data non valido");
+            }
+        }
+    }
+
+
+
+    @FXML
+    public void saveTask(MouseEvent event){
+        for(TaskBean task: listTask){
+            TaskAndToDo.saveTasks(patientBean,task);
+        }
+        showMessage(Alert.AlertType.INFORMATION,"Salvataggio","Salvataggio completato");
+    }
 
 
 
@@ -153,10 +258,7 @@ public class PatientDetailsController extends CommonController {
         showMessage(Alert.AlertType.INFORMATION,"Salvataggio","Salvataggio completato");
 
     }
-    @FXML
-    public void modifyTask() {}
-    @FXML
-    public void deleteTask(){}
+
     @FXML
     private void handleTabSelectionChanged() {
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
@@ -164,8 +266,7 @@ public class PatientDetailsController extends CommonController {
         String selectedTabText = selectedTab.getText();
             switch (selectedTabText) {
                 case "Task":
-                    System.out.println("Task");
-                    /*configureTaskTable(patientBean);*/
+                    configureTaskTable(patientBean);
                     break;
                 case "To-do List":
                    configureToDoList();
@@ -180,11 +281,5 @@ public class PatientDetailsController extends CommonController {
 
 
 
-    private void showMessage(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
 }

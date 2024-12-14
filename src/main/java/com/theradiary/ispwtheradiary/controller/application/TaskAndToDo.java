@@ -2,8 +2,10 @@ package com.theradiary.ispwtheradiary.controller.application;
 
 import com.theradiary.ispwtheradiary.engineering.dao.TaskAndToDoDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.others.beans.TaskBean;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
+import com.theradiary.ispwtheradiary.model.Task;
 import com.theradiary.ispwtheradiary.model.ToDoItem;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
@@ -31,6 +33,15 @@ public class TaskAndToDo {
         TaskAndToDoDAO.Diary(patient,diaryContent,selectedDate);
         patientBean.setDiary(diaryContent);
     }
+
+    public static void deleteTask(TaskBean selectedTask, PatientBean patientBean) {
+        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+        Task task = new Task(selectedTask.getTaskName(),selectedTask.getTaskDeadline(), selectedTask.getTaskStatus());
+        TaskAndToDoDAO.deleteTask(patient,task);
+        patientBean.removeTask(selectedTask);
+    }
+
+
     public String getDiaryEntry(LocalDate selectedDate, PatientBean patientBean) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
         Optional<String> diaryContent = TaskAndToDoDAO.getDiaryEntry(selectedDate,patient);
@@ -57,14 +68,32 @@ public class TaskAndToDo {
             patientBean.removeToDoItem(toDoItemBean);
         }
     }
-
-
-
     public static void toDoList(PatientBean patientBean) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
         List<ToDoItem> toDoItems = TaskAndToDoDAO.retriveToDoList(patient);
         for (ToDoItem toDoItem : toDoItems) {
             patientBean.addToDoItem(new ToDoItemBean(toDoItem.getToDo(), toDoItem.isCompleted()));
         }
+    }
+    /*-------------------------TASKS-------------------------*/
+    public static void retrieveTasks(PatientBean patientBean) {
+        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+        List<Task> tasks = TaskAndToDoDAO.retriveTasks(patient);
+        for (Task task : tasks) {
+            patientBean.addTask(new TaskBean(task.getTaskName(),task.getTaskDeadline(), task.getTaskStatus()));
+        }
+    }
+    public static void saveTasks(PatientBean patientBean,TaskBean taskBean) {
+        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+        Task task = new Task(taskBean.getTaskName(),taskBean.getTaskDeadline(), taskBean.getTaskStatus());
+        if(!patient.getTasks().contains(task)) {
+            TaskAndToDoDAO.saveTask(patient, task);
+            patientBean.addTask(taskBean);
+        }else{
+            TaskAndToDoDAO.deleteTask(patient,task);
+            patientBean.removeTask(taskBean);
+        }
+
+
     }
 }

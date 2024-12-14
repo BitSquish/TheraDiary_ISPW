@@ -3,6 +3,7 @@ package com.theradiary.ispwtheradiary.engineering.dao;
 import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.TaskAndToDoQuery;
 import com.theradiary.ispwtheradiary.model.Patient;
+import com.theradiary.ispwtheradiary.model.Task;
 import com.theradiary.ispwtheradiary.model.ToDoItem;
 import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
 
@@ -81,6 +82,34 @@ public class TaskAndToDoDAO {
     public static void deleteToDoItem(Patient patient, ToDoItem toDoItem) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.deleteToDoItem(conn, patient.getCredentials().getMail(), toDoItem);
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+    /*********************************task**********************************/
+    public static List<Task> retriveTasks(Patient patient) {
+        List<Task> tasks=new ArrayList<>();
+        try(Connection conn= ConnectionFactory.getConnection()) {
+            ResultSet rs=TaskAndToDoQuery.getTasks(conn, patient.getCredentials().getMail());
+            while(rs.next()){
+                tasks.add(new Task(rs.getString("description"),rs.getDate("deadline").toLocalDate(),rs.getString("status")));
+            }
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return tasks;
+    }
+
+    public static void saveTask(Patient patient, Task task) {
+        try(Connection conn= ConnectionFactory.getConnection()) {
+            TaskAndToDoQuery.saveTask(conn, patient.getCredentials().getMail(), task);
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+    public static void deleteTask(Patient patient, Task task) {
+        try(Connection conn= ConnectionFactory.getConnection()) {
+            TaskAndToDoQuery.deleteTask(conn, patient.getCredentials().getMail(), task);
         }catch (SQLException e){
             throw new RuntimeException(e);
         }

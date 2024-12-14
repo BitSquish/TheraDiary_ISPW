@@ -50,8 +50,18 @@ public class DiaryAndTasksController extends CommonController {
         }
     }
     @FXML
-    protected void goToTask(MouseEvent event){
-        //TODO: Implementare
+    protected void goToTaskPatient(MouseEvent event){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_TASK_PATH)));
+            loader.setControllerFactory(c -> new TaskPatientController(fxmlPathConfig, session));
+            Parent root = loader.load();
+            ((TaskPatientController) loader.getController()).initializeTaskList(patientBean);
+            changeScene(root, event);
+        }catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Errore nel caricamento della scena:" + e.getMessage(), e);
+        }
+
     }
 }
 
