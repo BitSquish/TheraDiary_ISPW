@@ -19,7 +19,7 @@ public enum TimeSlot {
         this.id = id;
     }
 
-    public static String timeSlotToString(int id){
+    public static String translateTimeSlot(int id){
         return switch (id) {
             case 1 -> "9:00 - 10:00";
             case 2 -> "10:00 - 11:00";

@@ -11,6 +11,7 @@ import com.theradiary.ispwtheradiary.model.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
 
 public class UpdateDAO {
@@ -108,5 +109,27 @@ public class UpdateDAO {
     }
 
 
+    public static void addAppointments(List<Appointment> appointmentsToAdd) {
+        String psychologist = appointmentsToAdd.get(0).getPsychologist().getCredentials().getMail();
+        try(Connection conn = ConnectionFactory.getConnection()){
+            for(Appointment appointment : appointmentsToAdd){
+                UpdateQuery.addAppointment(conn, psychologist, appointment.getDay(), appointment.getTimeSlot(), appointment.isInPerson(), appointment.isOnline());
+            }
+        } catch(SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static void removeAppointments(List<Appointment> appointmentsToRemove) {
+        //TODO Aggiusta remove
+        String psychologist = appointmentsToRemove.get(0).getPsychologist().getCredentials().getMail();
+        try(Connection conn = ConnectionFactory.getConnection()){
+            for(Appointment appointment : appointmentsToRemove){
+                UpdateQuery.removeAppointment(conn, psychologist, appointment.getDay(), appointment.getTimeSlot(), appointment.isInPerson(), appointment.isOnline());
+            }
+        } catch(SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }
 

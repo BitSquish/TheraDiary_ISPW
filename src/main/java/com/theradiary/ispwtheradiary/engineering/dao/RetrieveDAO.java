@@ -242,5 +242,24 @@ public class RetrieveDAO {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    public static void retrieveAllAppointments(Psychologist psychologist, List<Appointment> appointments) {
+        try(Connection conn = ConnectionFactory.getConnection();
+            ResultSet rs = RetrieveQuery.retrieveAllAppointments(conn, psychologist.getCredentials().getMail())){
+            while(rs.next()){
+                Appointment appointment = new Appointment(
+                        psychologist,
+                        DayOfTheWeek.valueOf(rs.getString("day")),
+                        TimeSlot.valueOf(rs.getString("timeSlot")),
+                        rs.getBoolean("inPerson"),
+                        rs.getBoolean("online")
+                );
+                appointment.setPatient(new Patient(new Credentials(rs.getString("patient"), Role.PATIENT)));
+                appointments.add(appointment);
+            }
+        }catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }
 

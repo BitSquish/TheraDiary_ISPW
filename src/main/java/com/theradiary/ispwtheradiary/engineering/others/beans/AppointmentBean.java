@@ -20,6 +20,7 @@ public class AppointmentBean {
         this.patientBean = null;
     }
 
+
     public PsychologistBean getPsychologistBean() {
         return psychologistBean;
     }
