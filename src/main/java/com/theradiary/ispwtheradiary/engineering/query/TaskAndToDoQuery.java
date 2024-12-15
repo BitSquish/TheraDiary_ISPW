@@ -125,4 +125,18 @@ public class TaskAndToDoQuery {
             throw new RuntimeException(e);
         }
     }
+
+    public static void updateTask(Connection conn, String mail, Task task) {
+        String query = "UPDATE task SET status=? WHERE description=? AND patient=? AND deadline=?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, task.getTaskStatus());
+            pstmt.setString(2, task.getTaskName());
+            pstmt.setString(3, mail);
+            pstmt.setDate(4, java.sql.Date.valueOf(task.getTaskDeadline()));
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

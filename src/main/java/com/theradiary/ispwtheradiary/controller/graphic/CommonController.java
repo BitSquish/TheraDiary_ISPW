@@ -67,6 +67,7 @@ public abstract class CommonController {
     protected static final String DIARY_PATH="DIARY_PATH";
     protected static final String DIARY_PAGE_PATH="DIARY_PAGE_PATH";
     protected static final String TODO_PATH="TODO_PATH";
+    protected static final String LIST_TASK_PATIENT_PATH="LIST_TASK_PATIENT_PATH";
 
     @FXML
     private Line line1;

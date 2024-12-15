@@ -70,7 +70,7 @@ public class TaskPatientController extends CommonController {
     public void saveTask(MouseEvent event){
         if(!modifiedTasks.isEmpty()){
             for(TaskBean task:modifiedTasks){
-                TaskAndToDo.saveTasks(patientBean,task);
+                TaskAndToDo.updateTasks(patientBean,task);
 
             }
             modifiedTasks.clear();

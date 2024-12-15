@@ -114,4 +114,12 @@ public class TaskAndToDoDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public static void updateTask(Patient patient, Task task) {
+        try(Connection conn= ConnectionFactory.getConnection()) {
+            TaskAndToDoQuery.updateTask(conn, patient.getCredentials().getMail(), task);
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
 }
