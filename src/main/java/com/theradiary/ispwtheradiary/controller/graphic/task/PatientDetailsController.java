@@ -28,7 +28,7 @@ import java.util.*;
 public class PatientDetailsController extends CommonController {
 
     public PatientDetailsController(FXMLPathConfig fxmlPathConfig, Session session) {
-        super(fxmlPathConfig,session);
+        super(fxmlPathConfig, session);
     }
 
     @FXML
@@ -54,7 +54,7 @@ public class PatientDetailsController extends CommonController {
     private ListView<HBox> toDoListView;
 
     @FXML
-    private ObservableList<HBox> toDoListItems= FXCollections.observableArrayList();
+    private ObservableList<HBox> toDoListItems = FXCollections.observableArrayList();
 
     @FXML
     private TextArea diaryTextArea;
@@ -71,42 +71,46 @@ public class PatientDetailsController extends CommonController {
         configureTaskTable(patientBean);
 
         // Configura la lista To-Do
-       configureToDoList();
+        configureToDoList();
 
         // Configura il diario
         configureDiary();
     }
 
-   private void configureTaskTable(PatientBean patientBean) {
+    private void configureTaskTable(PatientBean patientBean) {
         TaskAndToDo.retrieveTasks(patientBean);
         ObservableList<TaskBean> tasks = FXCollections.observableArrayList(patientBean.getTasks());
         taskNameColumn.setCellValueFactory(new PropertyValueFactory<>("taskName"));
-       taskDeadlineColumn.setCellValueFactory(new PropertyValueFactory<>("taskDeadline"));
-       taskStatusColumn.setCellValueFactory(new PropertyValueFactory<>("taskStatus"));
-       taskTableView.setItems(tasks);
-   }
-   private final List<TaskBean> listTask = new ArrayList<>();
+        taskDeadlineColumn.setCellValueFactory(new PropertyValueFactory<>("taskDeadline"));
+        taskStatusColumn.setCellValueFactory(new PropertyValueFactory<>("taskStatus"));
+        taskTableView.setItems(tasks);
+    }
+
+    private final List<TaskBean> listTask = new ArrayList<>();
+
     @FXML
     public void modifyTask(MouseEvent event) {
-        TaskBean selectedTask=taskTableView.getSelectionModel().getSelectedItem();
-        if(selectedTask!=null){
+        TaskBean selectedTask = taskTableView.getSelectionModel().getSelectedItem();
+        if (selectedTask != null) {
             modify(selectedTask);
-        }else{
+        } else {
             addTask();
         }
     }
+
     @FXML
-    public void deleteTask(MouseEvent event){
-        TaskBean selectedTask=taskTableView.getSelectionModel().getSelectedItem();
-        if(selectedTask!=null){
+    public void deleteTask(MouseEvent event) {
+        TaskBean selectedTask = taskTableView.getSelectionModel().getSelectedItem();
+        if (selectedTask != null) {
             taskTableView.getItems().remove(selectedTask);
             listTask.remove(selectedTask);
-            TaskAndToDo.deleteTask(selectedTask,patientBean);
-            showMessage(Alert.AlertType.INFORMATION,"Eliminazione","Eliminazione completata");
-        }else{
-            showMessage(Alert.AlertType.ERROR,"Errore","Seleziona un task da eliminare");
+            TaskAndToDo.deleteTask(selectedTask, patientBean);
+            showMessage(Alert.AlertType.INFORMATION, "Eliminazione", "Eliminazione completata");
+        } else {
+            showMessage(Alert.AlertType.ERROR, "Errore", "Seleziona un task da eliminare");
         }
     }
+
     private void modify(TaskBean selectedTask) {
         // Mostra la finestra di input per il nuovo nome del task
         String newTaskName = showInputDialog("Modifica Task", "Inserisci il nuovo nome del task", selectedTask.getTaskName());
@@ -115,10 +119,7 @@ public class PatientDetailsController extends CommonController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String newTaskDeadline = showInputDialog("Modifica Scadenza", "Inserisci la nuova scadenza del task", selectedTask.getTaskDeadline().format(formatter));
 
-        // Mostra la finestra di input per il nuovo stato del task
-        String newTaskStatus = showInputDialog("Modifica Stato", "Inserisci il nuovo stato del task", selectedTask.getTaskStatus());
-
-        if (newTaskName != null && newTaskDeadline != null && newTaskStatus != null) {
+        if (newTaskName != null && newTaskDeadline != null) {
             try {
                 // Converte la data inserita in LocalDate usando il formato specificato
                 LocalDate taskDeadlineDate = LocalDate.parse(newTaskDeadline, formatter);
@@ -126,9 +127,8 @@ public class PatientDetailsController extends CommonController {
                 // Imposta i nuovi valori per il task
                 selectedTask.setTaskName(newTaskName);
                 selectedTask.setTaskDeadline(String.valueOf(taskDeadlineDate)); // Impostiamo la scadenza come LocalDate
-                selectedTask.setTaskStatus(newTaskStatus);
                 //aggiungo alla lista
-                TaskBean modifiedTask = new TaskBean(newTaskName, taskDeadlineDate, newTaskStatus);
+                TaskBean modifiedTask = new TaskBean(newTaskName, taskDeadlineDate, "non completato");
                 listTask.add(modifiedTask);
 
                 // Rende visibile la modifica nella tabella
@@ -151,17 +151,14 @@ public class PatientDetailsController extends CommonController {
         // Mostra la finestra di input per la scadenza del task (formattata come stringa per la visualizzazione)
         String taskDeadline = showInputDialog("Aggiungi Scadenza", "Inserisci la scadenza del task", "");
 
-        // Mostra la finestra di input per lo stato del task
-        String taskStatus = showInputDialog("Aggiungi Stato", "Inserisci lo stato del task", "");
-
-        if (taskName != null && taskDeadline != null && taskStatus != null) {
+        if (taskName != null && taskDeadline != null) {
             try {
                 // Converte la data inserita in LocalDate usando il formato specificato
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 LocalDate taskDeadlineDate = LocalDate.parse(taskDeadline, formatter);
 
                 // Crea un nuovo task con i dati inseriti
-                TaskBean newTask = new TaskBean(taskName, taskDeadlineDate, taskStatus);
+                TaskBean newTask = new TaskBean(taskName, taskDeadlineDate, "non completato");
 
                 // Aggiunge il nuovo task alla tabella
                 taskTableView.getItems().add(newTask);
@@ -178,17 +175,13 @@ public class PatientDetailsController extends CommonController {
     }
 
 
-
     @FXML
-    public void saveTask(MouseEvent event){
-        for(TaskBean task: listTask){
-            TaskAndToDo.saveTasks(patientBean,task);
+    public void saveTask(MouseEvent event) {
+        for (TaskBean task : listTask) {
+            TaskAndToDo.saveTasks(patientBean, task);
         }
-        showMessage(Alert.AlertType.INFORMATION,"Salvataggio","Salvataggio completato");
+        showMessage(Alert.AlertType.INFORMATION, "Salvataggio", "Salvataggio completato");
     }
-
-
-
 
 
     //Diario
@@ -197,89 +190,71 @@ public class PatientDetailsController extends CommonController {
         String diaryText = patientBean.getDiary();
         diaryTextArea.setText(diaryText == null || diaryText.isEmpty() ? "Diario vuoto" : diaryText);
     }
+
     //ToDoList
     private void configureToDoList() {
         toDoListItems.clear();
         TaskAndToDo.toDoList(patientBean);
         List<ToDoItemBean> toDoItems = patientBean.getToDoList();
-        for(ToDoItemBean item: toDoItems){
-            if(toDoListItems.stream().noneMatch(hBox -> ((TextField) hBox.getChildren().get(1)).getText().equals(item.getToDo()))) {
+        for (ToDoItemBean item : toDoItems) {
+            if (toDoListItems.stream().noneMatch(hBox -> ((TextField) hBox.getChildren().get(1)).getText().equals(item.getToDo()))) {
                 HBox itemBox = createToDoItem(item);
                 toDoListItems.add(itemBox);
             }
         }
         toDoListView.setItems(toDoListItems);
     }
+
     private HBox createToDoItem(ToDoItemBean toDoItemBean) {
-        CheckBox checkBox=new CheckBox();
+        CheckBox checkBox = new CheckBox();
         checkBox.setSelected(toDoItemBean.isCompleted());
-        TextField textField=new TextField(toDoItemBean.getToDo());
+        TextField textField = new TextField(toDoItemBean.getToDo());
         textField.setPrefWidth(200);
         textField.textProperty().addListener((obs, oldValue, newValue) -> {
             toDoItemBean.setToDo(newValue.trim());
         });
-        Button deleteButton=new Button("Elimina");
-        deleteButton.setOnAction(e->{
+        Button deleteButton = new Button("Elimina");
+        deleteButton.setOnAction(e -> {
             toDoListItems.removeIf(hBox -> hBox.getChildren().contains(deleteButton));
             patientBean.removeToDoItem(toDoItemBean);
-            TaskAndToDo.deleteToDo(toDoItemBean,patientBean);
+            TaskAndToDo.deleteToDo(toDoItemBean, patientBean);
             toDoListView.setItems(toDoListItems);
         });
         HBox hbox = new HBox(10);
-        hbox.getChildren().addAll(checkBox,textField,deleteButton);
+        hbox.getChildren().addAll(checkBox, textField, deleteButton);
         return hbox;
     }
 
     @FXML
     private void modifyToDo(MouseEvent mouseEvent) {
-        ToDoItemBean newItem=new ToDoItemBean("",false);
+        ToDoItemBean newItem = new ToDoItemBean("", false);
         patientBean.getToDoList().add(newItem);
 
-        HBox itemBox=createToDoItem(newItem);
+        HBox itemBox = createToDoItem(newItem);
         toDoListItems.add(itemBox);
         toDoListView.setItems(toDoListItems);
     }
 
     @FXML
     public void saveToDo(MouseEvent event) {
-        List<ToDoItemBean> toDoItems=patientBean.getToDoList();
-        Set<String> uniqueDescriptions=new HashSet<>();
+        List<ToDoItemBean> toDoItems = patientBean.getToDoList();
+        Set<String> uniqueDescriptions = new HashSet<>();
         toDoItems.removeIf(item -> !uniqueDescriptions.add(item.getToDo().trim()));
 
-        for(HBox itemBox: toDoListItems){
-            CheckBox checkbox=(CheckBox) itemBox.getChildren().get(0);
-            TextField textField=(TextField) itemBox.getChildren().get(1);
-            String toDoText=textField.getText().trim();
-            if(!toDoText.isEmpty()){
-                toDoItems.add(new ToDoItemBean(toDoText,checkbox.isSelected()));
+        for (HBox itemBox : toDoListItems) {
+            CheckBox checkbox = (CheckBox) itemBox.getChildren().get(0);
+            TextField textField = (TextField) itemBox.getChildren().get(1);
+            String toDoText = textField.getText().trim();
+            if (!toDoText.isEmpty()) {
+                toDoItems.add(new ToDoItemBean(toDoText, checkbox.isSelected()));
             }
-            TaskAndToDo.saveToDo(new ToDoItemBean(toDoText,checkbox.isSelected()),patientBean);
+            TaskAndToDo.saveToDo(new ToDoItemBean(toDoText, checkbox.isSelected()), patientBean);
         }
-        showMessage(Alert.AlertType.INFORMATION,"Salvataggio","Salvataggio completato");
+        showMessage(Alert.AlertType.INFORMATION, "Salvataggio", "Salvataggio completato");
 
     }
-
-    @FXML
-    private void handleTabSelectionChanged() {
-        Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-        if(selectedTab == null) return;
-        String selectedTabText = selectedTab.getText();
-            switch (selectedTabText) {
-                case "Task":
-                    configureTaskTable(patientBean);
-                    break;
-                case "To-do List":
-                   configureToDoList();
-                    break;
-                case "Diary":
-                    configureDiary();
-                    break;
-                default:
-                    break;
-            }
-    }
-
-
-
-
 }
+
+
+
+

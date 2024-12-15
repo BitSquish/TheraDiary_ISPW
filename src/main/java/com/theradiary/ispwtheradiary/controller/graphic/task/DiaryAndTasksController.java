@@ -52,7 +52,7 @@ public class DiaryAndTasksController extends CommonController {
     @FXML
     protected void goToTaskPatient(MouseEvent event){
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_TASK_PATH)));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LIST_TASK_PATIENT_PATH)));
             loader.setControllerFactory(c -> new TaskPatientController(fxmlPathConfig, session));
             Parent root = loader.load();
             ((TaskPatientController) loader.getController()).initializeTaskList(patientBean);

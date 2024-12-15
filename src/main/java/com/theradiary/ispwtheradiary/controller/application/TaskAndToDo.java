@@ -60,7 +60,7 @@ public class TaskAndToDo {
     public static void saveToDo(ToDoItemBean toDoItemBean, PatientBean patientBean) {
         Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
         ToDoItem toDoItem = new ToDoItem(toDoItemBean.getToDo(), toDoItemBean.isCompleted());
-        if(!patient.getToDoList().contains(toDoItem)){
+        if(!patient.getToDoList().contains(toDoItem) ){
             TaskAndToDoDAO.saveToDo(patient,toDoItem);
             patientBean.addToDoItem(toDoItemBean);
         }else{
@@ -95,5 +95,10 @@ public class TaskAndToDo {
         }
 
 
+    }
+    public static void updateTasks(PatientBean patientBean,TaskBean taskBean) {
+        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+        Task task = new Task(taskBean.getTaskName(),taskBean.getTaskDeadline(), taskBean.getTaskStatus());
+        TaskAndToDoDAO.updateTask(patient,task);
     }
 }
