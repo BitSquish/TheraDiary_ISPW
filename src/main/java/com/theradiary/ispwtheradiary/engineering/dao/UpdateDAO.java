@@ -45,20 +45,7 @@ public class UpdateDAO {
             throw new MailAlreadyExistsException(e.getMessage());
         }
     }
-    /*public static void modifyMail(String newMail, String oldMail) throws SQLException {
-        try(Connection conn = ConnectionFactory.getConnection()){
-            UpdateQuery.modifyMail(conn, newMail, oldMail);
-        } catch(SQLException e){
-            throw new SQLException(e.getMessage());
-        }
-    }
-    public static void modifyPassword(String newPassword, String oldPassword) throws SQLException {
-        try(Connection conn = ConnectionFactory.getConnection()){
-            UpdateQuery.modifyPassword(conn, newPassword, oldPassword);
-        } catch(SQLException e){
-            throw new SQLException(e.getMessage());
-        }
-    }*/
+
     public static void modifyPsychologist(Psychologist psychologist) throws SQLException {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.modifyPsychologist(conn, psychologist.getCredentials().getMail(), psychologist.getName(), psychologist.getSurname(), psychologist.getCity(), psychologist.getDescription(), psychologist.isInPerson(), psychologist.isOnline());
@@ -109,24 +96,40 @@ public class UpdateDAO {
     }
 
 
-    public static void addAppointments(List<Appointment> appointmentsToAdd) {
-        String psychologist = appointmentsToAdd.get(0).getPsychologist().getCredentials().getMail();
+    public static void addAppointments(Appointment appointmentsToAdd) {
+        String psychologist = appointmentsToAdd.getPsychologist().getCredentials().getMail();
         try(Connection conn = ConnectionFactory.getConnection()){
-            for(Appointment appointment : appointmentsToAdd){
-                UpdateQuery.addAppointment(conn, psychologist, appointment.getDay(), appointment.getTimeSlot(), appointment.isInPerson(), appointment.isOnline());
-            }
+            UpdateQuery.addAppointment(conn, psychologist, appointmentsToAdd.getDay(), appointmentsToAdd.getTimeSlot(), appointmentsToAdd.isInPerson(), appointmentsToAdd.isOnline(), appointmentsToAdd.getPatient().getCredentials().getMail());
         } catch(SQLException e){
             throw new RuntimeException(e.getMessage());
         }
     }
 
     public static void removeAppointments(List<Appointment> appointmentsToRemove) {
-        //TODO Aggiusta remove
         String psychologist = appointmentsToRemove.get(0).getPsychologist().getCredentials().getMail();
         try(Connection conn = ConnectionFactory.getConnection()){
             for(Appointment appointment : appointmentsToRemove){
                 UpdateQuery.removeAppointment(conn, psychologist, appointment.getDay(), appointment.getTimeSlot(), appointment.isInPerson(), appointment.isOnline());
             }
+        } catch(SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static void modifyAppointments(List<Appointment> appointmentsToModify) {
+        String psychologist = appointmentsToModify.get(0).getPsychologist().getCredentials().getMail();
+        try(Connection conn = ConnectionFactory.getConnection()){
+            for(Appointment appointment : appointmentsToModify){
+                UpdateQuery.modifyAppointment(conn, psychologist, appointment.getDay(), appointment.getTimeSlot(), appointment.isInPerson(), appointment.isOnline());
+            }
+        } catch(SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static void clearAppointments(Psychologist psychologist) {
+        try(Connection conn = ConnectionFactory.getConnection()){
+            UpdateQuery.clearAppointments(conn, psychologist.getCredentials().getMail());
         } catch(SQLException e){
             throw new RuntimeException(e.getMessage());
         }

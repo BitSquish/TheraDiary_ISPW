@@ -149,8 +149,26 @@ public class UpdateQuery {
         }
     }
 
-    public static void addAppointment(Connection conn, String psychologist, DayOfTheWeek day, TimeSlot timeSlot, boolean inPerson, boolean online) {
-        String query = "INSERT INTO appointment (psychologist, day, timeSlot, inPerson, online) VALUES (?, ?, ?, ?, ?)";
+    public static void addAppointment(Connection conn, String psychologist, DayOfTheWeek day, TimeSlot timeSlot, boolean inPerson, boolean online, String patient) {
+        String query = "INSERT INTO appointment VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, psychologist);
+            pstmt.setString(2, day.toString());
+            pstmt.setString(3, timeSlot.toString());
+            pstmt.setBoolean(4, inPerson);
+            pstmt.setBoolean(5, online);
+            if(patient == null)
+                pstmt.setNull(6, java.sql.Types.VARCHAR);
+            else
+                pstmt.setString(6, patient);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static void removeAppointment(Connection conn, String psychologist, DayOfTheWeek day, TimeSlot timeSlot, boolean inPerson, boolean online) {
+        String query = "DELETE FROM appointment WHERE psychologist = ? AND day = ? AND timeSlot = ? AND inPerson = ? AND online = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, psychologist);
             pstmt.setString(2, day.toString());
@@ -163,7 +181,32 @@ public class UpdateQuery {
         }
     }
 
-    public static void removeAppointment(Connection conn, String psychologist, DayOfTheWeek day, TimeSlot timeSlot, boolean inPerson, boolean online) {
-        //Attenzione: se devo eliminare solo una modalità, devo fare un set.
+    public static void modifyAppointment(Connection conn, String psychologist, DayOfTheWeek day, TimeSlot timeSlot, boolean inPerson, boolean online) {
+        String query = "UPDATE appointment SET psychologist = ?, day = ?, timeSlot = ?, inPerson = ?, online = ? WHERE psychologist = ? AND day = ? AND timeSlot = ? AND inPerson = ? AND online = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, psychologist);
+            pstmt.setString(2, day.toString());
+            pstmt.setString(3, timeSlot.toString());
+            pstmt.setBoolean(4, inPerson);
+            pstmt.setBoolean(5, online);
+            pstmt.setString(6, psychologist);
+            pstmt.setString(7, day.toString());
+            pstmt.setString(8, timeSlot.toString());
+            pstmt.setBoolean(9, inPerson);
+            pstmt.setBoolean(10, online);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static void clearAppointments(Connection conn, String mail) {
+        String query = "DELETE FROM appointment WHERE psychologist = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, mail);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }
