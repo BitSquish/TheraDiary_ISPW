@@ -1,6 +1,8 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
 
+import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
+import com.theradiary.ispwtheradiary.engineering.enums.TimeSlot;
 import com.theradiary.ispwtheradiary.model.Patient;
 
 import java.sql.Connection;
@@ -145,5 +147,23 @@ public class UpdateQuery {
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    public static void addAppointment(Connection conn, String psychologist, DayOfTheWeek day, TimeSlot timeSlot, boolean inPerson, boolean online) {
+        String query = "INSERT INTO appointment (psychologist, day, timeSlot, inPerson, online) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, psychologist);
+            pstmt.setString(2, day.toString());
+            pstmt.setString(3, timeSlot.toString());
+            pstmt.setBoolean(4, inPerson);
+            pstmt.setBoolean(5, online);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static void removeAppointment(Connection conn, String psychologist, DayOfTheWeek day, TimeSlot timeSlot, boolean inPerson, boolean online) {
+        //Attenzione: se devo eliminare solo una modalità, devo fare un set.
     }
 }

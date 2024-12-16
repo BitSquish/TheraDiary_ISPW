@@ -25,10 +25,130 @@
    </Text>
    <TabPane fx:id="tabPane" layoutX="73.0" layoutY="164.0" prefHeight="299.0" prefWidth="727.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
-         <Tab fx:id="lunedi" onSelectionChanged="#loadCheckboxes" text="Lunedì">
+         <Tab fx:id="MONDAY" onSelectionChanged="#loadCheckboxes" text="Lunedì">
             <content>
                <AnchorPane fx:id="anchorPaneMONDAY" minHeight="0.0" minWidth="0.0" prefHeight="249.0" prefWidth="727.0">
                   <children>
+                     <VBox fx:id="inPersonMONDAY" layoutX="206.0" layoutY="47.0" prefHeight="200.0" prefWidth="100.0">
+                        <children>
+                           <CheckBox fx:id="MONDAY_NINE_TEN_P" mnemonicParsing="false" text="09:00-10:00">
+                              <font>
+                                 <Font size="14.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets top="7.0" />
+                              </VBox.margin>
+                           </CheckBox>
+                           <CheckBox fx:id="MONDAY_TEN_ELEVEN_P" mnemonicParsing="false" prefHeight="20.0" prefWidth="122.0" text="10:00-11:00">
+                              <font>
+                                 <Font size="14.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets top="7.0" />
+                              </VBox.margin>
+                           </CheckBox>
+                           <CheckBox fx:id="MONDAY_ELEVEN_TWELVE_P" mnemonicParsing="false" text="11:00-12:00">
+                              <font>
+                                 <Font size="14.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets top="7.0" />
+                              </VBox.margin>
+                           </CheckBox>
+                           <CheckBox fx:id="MONDAY_TWELVE_THIRTEEN_P" mnemonicParsing="false" text="12:00-13:00">
+                              <font>
+                                 <Font size="14.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets top="7.0" />
+                              </VBox.margin>
+                           </CheckBox>
+                           <CheckBox fx:id="MONDAY_FOURTEEN_FIFTY_P" mnemonicParsing="false" text="14:00-15:00">
+                              <font>
+                                 <Font size="14.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets top="7.0" />
+                              </VBox.margin>
+                           </CheckBox>
+                           <CheckBox fx:id="MONDAY_FIFTEEN_SIXTEEN_P" mnemonicParsing="false" text="15:00-16:00">
+                              <padding>
+                                 <Insets top="7.0" />
+                              </padding>
+                              <font>
+                                 <Font size="14.0" />
+                              </font>
+                           </CheckBox>
+                           <CheckBox fx:id="MONDAY_SIXTEEN_SEVENTEEN_P" mnemonicParsing="false" text="16:00-17:00">
+                              <font>
+                                 <Font size="14.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets top="7.0" />
+                              </VBox.margin>
+                           </CheckBox>
+                        </children>
+                     </VBox>
+                     <VBox fx:id="onlineMONDAY" layoutX="559.0" layoutY="47.0" prefHeight="200.0" prefWidth="100.0">
+                        <children>
+                           <CheckBox fx:id="MONDAY_NINE_TEN_O" mnemonicParsing="false" text="09:00-10:00">
+                              <font>
+                                 <Font size="14.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets top="7.0" />
+                              </VBox.margin>
+                           </CheckBox>
+                           <CheckBox fx:id="MONDAY_TEN_ELEVEN_O" mnemonicParsing="false" prefHeight="20.0" prefWidth="122.0" text="10:00-11:00">
+                              <font>
+                                 <Font size="14.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets top="7.0" />
+                              </VBox.margin>
+                           </CheckBox>
+                           <CheckBox fx:id="MONDAY_ELEVEN_TWELVE_O" mnemonicParsing="false" text="11:00-12:00">
+                              <font>
+                                 <Font size="14.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets top="7.0" />
+                              </VBox.margin>
+                           </CheckBox>
+                           <CheckBox fx:id="MONDAY_TWELVE_THIRTEEN_O" mnemonicParsing="false" text="12:00-13:00">
+                              <font>
+                                 <Font size="14.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets top="7.0" />
+                              </VBox.margin>
+                           </CheckBox>
+                           <CheckBox fx:id="MONDAY_FOURTEEN_FIFTEEN_O" mnemonicParsing="false" text="14:00-15:00">
+                              <font>
+                                 <Font size="14.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets top="7.0" />
+                              </VBox.margin>
+                           </CheckBox>
+                           <CheckBox fx:id="MONDAY_FIFTEEN_SIXTEEN_O" mnemonicParsing="false" text="15:00-16:00">
+                              <padding>
+                                 <Insets top="7.0" />
+                              </padding>
+                              <font>
+                                 <Font size="14.0" />
+                              </font>
+                           </CheckBox>
+                           <CheckBox fx:id="MONDAY_SIXTEEN_SEVENTEEN_O" mnemonicParsing="false" text="16:00-17:00">
+                              <font>
+                                 <Font size="14.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets top="7.0" />
+                              </VBox.margin>
+                           </CheckBox>
+                        </children>
+                     </VBox>
                      <Line endX="100.0" endY="7.000003814697266" layoutX="263.0" layoutY="20.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
                      <Text fill="#231f36cc" layoutX="52.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Visite in presenza" textAlignment="CENTER" wrappingWidth="254.39999999999998">
                         <font>
@@ -40,66 +160,7 @@
                            <Font name="System Italic" size="18.0" />
                         </font>
                      </Text>
-                     <VBox fx:id="inPersonMONDAY" layoutX="206.0" layoutY="47.0" prefHeight="200.0" prefWidth="100.0">
-                        <children>
-                           <CheckBox mnemonicParsing="false" text="09:00-10:00">
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                              <VBox.margin>
-                                 <Insets top="7.0" />
-                              </VBox.margin>
-                           </CheckBox>
-                           <CheckBox mnemonicParsing="false" prefHeight="20.0" prefWidth="122.0" text="10:00-11:00">
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                              <VBox.margin>
-                                 <Insets top="7.0" />
-                              </VBox.margin>
-                           </CheckBox>
-                           <CheckBox mnemonicParsing="false" text="11:00-12:00">
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                              <VBox.margin>
-                                 <Insets top="7.0" />
-                              </VBox.margin>
-                           </CheckBox>
-                           <CheckBox mnemonicParsing="false" text="12:00-13:00">
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                              <VBox.margin>
-                                 <Insets top="7.0" />
-                              </VBox.margin>
-                           </CheckBox>
-                           <CheckBox mnemonicParsing="false" text="14:00-15:00">
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                              <VBox.margin>
-                                 <Insets top="7.0" />
-                              </VBox.margin>
-                           </CheckBox>
-                           <CheckBox mnemonicParsing="false" text="15:00-16:00">
-                              <padding>
-                                 <Insets top="7.0" />
-                              </padding>
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                           </CheckBox>
-                           <CheckBox mnemonicParsing="false" text="16:00-17:00">
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                              <VBox.margin>
-                                 <Insets top="7.0" />
-                              </VBox.margin>
-                           </CheckBox>
-                        </children>
-                     </VBox>
+
                      <ImageView fitHeight="189.0" fitWidth="146.0" layoutX="21.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@img/inPersonMeeting.png" />
@@ -110,85 +171,15 @@
                            <Image url="@img/onlineMeeting.png" />
                         </image>
                      </ImageView>
-                     <VBox fx:id="onlineMONDAY" layoutX="559.0" layoutY="47.0" prefHeight="200.0" prefWidth="100.0">
-                        <children>
-                           <CheckBox mnemonicParsing="false" text="09:00-10:00">
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                              <VBox.margin>
-                                 <Insets top="7.0" />
-                              </VBox.margin>
-                           </CheckBox>
-                           <CheckBox mnemonicParsing="false" prefHeight="20.0" prefWidth="122.0" text="10:00-11:00">
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                              <VBox.margin>
-                                 <Insets top="7.0" />
-                              </VBox.margin>
-                           </CheckBox>
-                           <CheckBox mnemonicParsing="false" text="11:00-12:00">
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                              <VBox.margin>
-                                 <Insets top="7.0" />
-                              </VBox.margin>
-                           </CheckBox>
-                           <CheckBox mnemonicParsing="false" text="12:00-13:00">
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                              <VBox.margin>
-                                 <Insets top="7.0" />
-                              </VBox.margin>
-                           </CheckBox>
-                           <CheckBox mnemonicParsing="false" text="14:00-15:00">
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                              <VBox.margin>
-                                 <Insets top="7.0" />
-                              </VBox.margin>
-                           </CheckBox>
-                           <CheckBox mnemonicParsing="false" text="15:00-16:00">
-                              <padding>
-                                 <Insets top="7.0" />
-                              </padding>
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                           </CheckBox>
-                           <CheckBox mnemonicParsing="false" text="16:00-17:00">
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                              <VBox.margin>
-                                 <Insets top="7.0" />
-                              </VBox.margin>
-                           </CheckBox>
-                        </children>
-                     </VBox>
+
                   </children>
                </AnchorPane>
             </content>
          </Tab>
-         <Tab fx:id="martedi" onSelectionChanged="#loadCheckboxes" text="Martedì">
+         <Tab fx:id="TUESDAY" onSelectionChanged="#loadCheckboxes" text="Martedì">
             <content>
                <AnchorPane fx:id="anchorPaneTUESDAY" minHeight="0.0" minWidth="0.0" prefHeight="249.0" prefWidth="727.0">
                   <children>
-                     <Line endX="100.0" endY="7.000003814697266" layoutX="263.0" layoutY="20.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
-                     <Text fill="#231f36cc" layoutX="52.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Visite in presenza" textAlignment="CENTER" wrappingWidth="254.39999999999998">
-                        <font>
-                           <Font name="System Italic" size="18.0" />
-                        </font>
-                     </Text>
-                     <Text fill="#231f36cc" layoutX="417.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Visite online" textAlignment="CENTER" wrappingWidth="254.39999999999998">
-                        <font>
-                           <Font name="System Italic" size="18.0" />
-                        </font>
-                     </Text>
                      <VBox fx:id="inPersonTUESDAY" layoutX="206.0" layoutY="47.0" prefHeight="200.0" prefWidth="100.0">
                         <children>
                            <CheckBox mnemonicParsing="false" text="09:00-10:00">
@@ -249,16 +240,6 @@
                            </CheckBox>
                         </children>
                      </VBox>
-                     <ImageView fitHeight="189.0" fitWidth="146.0" layoutX="21.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@img/inPersonMeeting.png" />
-                        </image>
-                     </ImageView>
-                     <ImageView fitHeight="176.0" fitWidth="160.0" layoutX="378.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@img/onlineMeeting.png" />
-                        </image>
-                     </ImageView>
                      <VBox fx:id="onlineTUESDAY" layoutX="559.0" layoutY="47.0" prefHeight="200.0" prefWidth="100.0">
                         <children>
                            <CheckBox mnemonicParsing="false" text="09:00-10:00">
@@ -319,16 +300,8 @@
                            </CheckBox>
                         </children>
                      </VBox>
-                  </children>
-               </AnchorPane>
-            </content>
-         </Tab>
-         <Tab fx:id="mercoledi" onSelectionChanged="#loadCheckboxes" text="Mercoledì">
-            <content>
-               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="249.0" prefWidth="727.0">
-                  <children>
                      <Line endX="100.0" endY="7.000003814697266" layoutX="263.0" layoutY="20.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
-                     <Text fx:id="anchorPaneWEDNESDAY" fill="#231f36cc" layoutX="52.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Visite in presenza" textAlignment="CENTER" wrappingWidth="254.39999999999998">
+                     <Text fill="#231f36cc" layoutX="52.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Visite in presenza" textAlignment="CENTER" wrappingWidth="254.39999999999998">
                         <font>
                            <Font name="System Italic" size="18.0" />
                         </font>
@@ -338,6 +311,26 @@
                            <Font name="System Italic" size="18.0" />
                         </font>
                      </Text>
+
+                     <ImageView fitHeight="189.0" fitWidth="146.0" layoutX="21.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@img/inPersonMeeting.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView fitHeight="176.0" fitWidth="160.0" layoutX="378.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@img/onlineMeeting.png" />
+                        </image>
+                     </ImageView>
+
+                  </children>
+               </AnchorPane>
+            </content>
+         </Tab>
+         <Tab fx:id="WEDNESDAY" onSelectionChanged="#loadCheckboxes" text="Mercoledì">
+            <content>
+               <AnchorPane fx:id="anchorPaneWEDNESDAY" minHeight="0.0" minWidth="0.0" prefHeight="249.0" prefWidth="727.0">
+                  <children>
                      <VBox fx:id="inPersonWEDNESDAY" layoutX="206.0" layoutY="47.0" prefHeight="200.0" prefWidth="100.0">
                         <children>
                            <CheckBox mnemonicParsing="false" text="09:00-10:00">
@@ -398,16 +391,6 @@
                            </CheckBox>
                         </children>
                      </VBox>
-                     <ImageView fitHeight="189.0" fitWidth="146.0" layoutX="21.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@img/inPersonMeeting.png" />
-                        </image>
-                     </ImageView>
-                     <ImageView fitHeight="176.0" fitWidth="160.0" layoutX="378.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@img/onlineMeeting.png" />
-                        </image>
-                     </ImageView>
                      <VBox fx:id="onlineWEDNESDAY" layoutX="559.0" layoutY="47.0" prefHeight="200.0" prefWidth="100.0">
                         <children>
                            <CheckBox mnemonicParsing="false" text="09:00-10:00">
@@ -468,14 +451,6 @@
                            </CheckBox>
                         </children>
                      </VBox>
-                  </children>
-               </AnchorPane>
-            </content>
-         </Tab>
-         <Tab fx:id="giovedi" onSelectionChanged="#loadCheckboxes" text="Giovedì">
-            <content>
-               <AnchorPane fx:id="anchorPaneTHURSDAY" minHeight="0.0" minWidth="0.0" prefHeight="249.0" prefWidth="727.0">
-                  <children>
                      <Line endX="100.0" endY="7.000003814697266" layoutX="263.0" layoutY="20.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
                      <Text fill="#231f36cc" layoutX="52.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Visite in presenza" textAlignment="CENTER" wrappingWidth="254.39999999999998">
                         <font>
@@ -487,6 +462,25 @@
                            <Font name="System Italic" size="18.0" />
                         </font>
                      </Text>
+
+                     <ImageView fitHeight="189.0" fitWidth="146.0" layoutX="21.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@img/inPersonMeeting.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView fitHeight="176.0" fitWidth="160.0" layoutX="378.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@img/onlineMeeting.png" />
+                        </image>
+                     </ImageView>
+                  </children>
+               </AnchorPane>
+            </content>
+         </Tab>
+         <Tab fx:id="THURSDAY" onSelectionChanged="#loadCheckboxes" text="Giovedì">
+            <content>
+               <AnchorPane fx:id="anchorPaneTHURSDAY" minHeight="0.0" minWidth="0.0" prefHeight="249.0" prefWidth="727.0">
+                  <children>
                      <VBox fx:id="inPersonTHURSDAY" layoutX="206.0" layoutY="47.0" prefHeight="200.0" prefWidth="100.0">
                         <children>
                            <CheckBox mnemonicParsing="false" text="09:00-10:00">
@@ -547,16 +541,6 @@
                            </CheckBox>
                         </children>
                      </VBox>
-                     <ImageView fitHeight="189.0" fitWidth="146.0" layoutX="21.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@img/inPersonMeeting.png" />
-                        </image>
-                     </ImageView>
-                     <ImageView fitHeight="176.0" fitWidth="160.0" layoutX="378.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@img/onlineMeeting.png" />
-                        </image>
-                     </ImageView>
                      <VBox fx:id="onlineTHURSDAY" layoutX="559.0" layoutY="47.0" prefHeight="200.0" prefWidth="100.0">
                         <children>
                            <CheckBox mnemonicParsing="false" text="09:00-10:00">
@@ -617,14 +601,6 @@
                            </CheckBox>
                         </children>
                      </VBox>
-                  </children>
-               </AnchorPane>
-            </content>
-         </Tab>
-         <Tab fx:id="venerdi" onSelectionChanged="#loadCheckboxes" text="Venerdì">
-            <content>
-               <AnchorPane fx:id="anchorPaneFRIDAY" minHeight="0.0" minWidth="0.0" prefHeight="249.0" prefWidth="727.0">
-                  <children>
                      <Line endX="100.0" endY="7.000003814697266" layoutX="263.0" layoutY="20.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
                      <Text fill="#231f36cc" layoutX="52.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Visite in presenza" textAlignment="CENTER" wrappingWidth="254.39999999999998">
                         <font>
@@ -636,6 +612,26 @@
                            <Font name="System Italic" size="18.0" />
                         </font>
                      </Text>
+
+                     <ImageView fitHeight="189.0" fitWidth="146.0" layoutX="21.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@img/inPersonMeeting.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView fitHeight="176.0" fitWidth="160.0" layoutX="378.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@img/onlineMeeting.png" />
+                        </image>
+                     </ImageView>
+
+                  </children>
+               </AnchorPane>
+            </content>
+         </Tab>
+         <Tab fx:id="FRIDAY" onSelectionChanged="#loadCheckboxes" text="Venerdì">
+            <content>
+               <AnchorPane fx:id="anchorPaneFRIDAY" minHeight="0.0" minWidth="0.0" prefHeight="249.0" prefWidth="727.0">
+                  <children>
                      <VBox fx:id="inPersonFRIDAY" layoutX="206.0" layoutY="47.0" prefHeight="200.0" prefWidth="100.0">
                         <children>
                            <CheckBox mnemonicParsing="false" text="09:00-10:00">
@@ -696,16 +692,6 @@
                            </CheckBox>
                         </children>
                      </VBox>
-                     <ImageView fitHeight="189.0" fitWidth="146.0" layoutX="21.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@img/inPersonMeeting.png" />
-                        </image>
-                     </ImageView>
-                     <ImageView fitHeight="176.0" fitWidth="160.0" layoutX="378.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@img/onlineMeeting.png" />
-                        </image>
-                     </ImageView>
                      <VBox fx:id="onlineFRIDAY" layoutX="559.0" layoutY="47.0" prefHeight="200.0" prefWidth="100.0">
                         <children>
                            <CheckBox mnemonicParsing="false" text="09:00-10:00">
@@ -766,6 +752,29 @@
                            </CheckBox>
                         </children>
                      </VBox>
+                     <Line endX="100.0" endY="7.000003814697266" layoutX="263.0" layoutY="20.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
+                     <Text fill="#231f36cc" layoutX="52.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Visite in presenza" textAlignment="CENTER" wrappingWidth="254.39999999999998">
+                        <font>
+                           <Font name="System Italic" size="18.0" />
+                        </font>
+                     </Text>
+                     <Text fill="#231f36cc" layoutX="417.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Visite online" textAlignment="CENTER" wrappingWidth="254.39999999999998">
+                        <font>
+                           <Font name="System Italic" size="18.0" />
+                        </font>
+                     </Text>
+
+                     <ImageView fitHeight="189.0" fitWidth="146.0" layoutX="21.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@img/inPersonMeeting.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView fitHeight="176.0" fitWidth="160.0" layoutX="378.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@img/onlineMeeting.png" />
+                        </image>
+                     </ImageView>
+
                   </children>
                </AnchorPane>
             </content>

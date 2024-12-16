@@ -155,4 +155,15 @@ public class RetrieveQuery {
             throw new RuntimeException(e);
         }
     }
+
+    public static ResultSet retrieveAllAppointments(Connection conn, String mail) {
+        String query = "SELECT psychologist, day, timeSlot, inPerson, online, patient FROM appointment WHERE psychologist = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, mail);
+            return pstmt.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

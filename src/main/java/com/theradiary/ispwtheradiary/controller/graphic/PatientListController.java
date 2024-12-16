@@ -156,7 +156,6 @@ public class PatientListController extends CommonController {
             throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
         }
     }
-    //DA COMPLETARE
     @FXML
     public void seeRequest(MouseEvent event) {
         ArrayList<RequestBean> requestBeans = new ArrayList<>();

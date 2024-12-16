@@ -248,6 +248,7 @@ public abstract class CommonController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(APPOINTMENT_PATH)));
                 loader.setControllerFactory(c -> new AppointmentPsController(fxmlPathConfig, session));
                 Parent root = loader.load();
+                ((AppointmentPsController)loader.getController()).getAllAppointments();
                 changeScene(root, event);
             }
         } catch (IOException e) {

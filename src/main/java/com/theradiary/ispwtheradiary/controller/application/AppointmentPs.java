@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.controller.application;
 
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
+import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.enums.TimeSlot;
@@ -9,14 +10,61 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.model.Appointment;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Psychologist;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class AppointmentPs {
-    public void loadAppointment(List<TimeSlot> timeSlots, PsychologistBean psychologistBean, DayOfTheWeek dayOfTheWeek) {
+    //Questo metodo recupera tutte le disponibilità dello psicologo
+    public void loadAllAppointments(List<AppointmentBean> appointmentsBean, PsychologistBean psychologistBean) {
         Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
-        List<Appointment> appointments = RetrieveDAO.retrieveSlotTime(psychologist, dayOfTheWeek);
+        List<Appointment> appointments = new ArrayList<>();
+        RetrieveDAO.retrieveAllAppointments(psychologist, appointments);
         for(Appointment appointment : appointments) {
-            timeSlots.add(appointment.getTimeSlot());
+            AppointmentBean appointmentBean = appointment.toBean();
+            if(!(appointment.getPatient() == null)){
+                appointmentBean.setPatientBean(appointment.getPatient().toBean());
+            }
+            appointmentsBean.add(appointmentBean);
         }
     }
+
+    public void getDayOfTheWeekAppointments(List<AppointmentBean> appointmentsBean, DayOfTheWeek dayOfTheWeek, List<TimeSlot> inPersonTimeSlot, List<TimeSlot> onlineTimeSlot, PsychologistBean psychologistBean) {
+        for(AppointmentBean appointmentBean : appointmentsBean) {
+            if(appointmentBean.getDay().equals(dayOfTheWeek)) {
+                if(appointmentBean.isInPerson()) {
+                    inPersonTimeSlot.add(appointmentBean.getTimeSlot());
+                } else {
+                    onlineTimeSlot.add(appointmentBean.getTimeSlot());
+                }
+            }
+        }
+    }
+
+    public void saveAppointments(PsychologistBean psychologistBean, List<AppointmentBean> appointmentsToAddBean, List<AppointmentBean> appointmentToRemove) {
+        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
+        if(!appointmentsToAddBean.isEmpty()){
+            addAppointments(psychologist, appointmentsToAddBean);
+        }
+        if(!appointmentToRemove.isEmpty()){
+            removeAppointments(psychologist, appointmentToRemove);
+        }
+    }
+
+    private void addAppointments(Psychologist psychologist, List<AppointmentBean> appointmentsToAddBean) {
+        List<Appointment> appointmentsToAdd = new ArrayList<>();
+        for(AppointmentBean appointmentBean : appointmentsToAddBean) {
+            appointmentsToAdd.add(new Appointment(psychologist,appointmentBean.getDay(), appointmentBean.getTimeSlot(), appointmentBean.isInPerson(), appointmentBean.isOnline()));
+        }
+        UpdateDAO.addAppointments(appointmentsToAdd);
+    }
+    private void removeAppointments(Psychologist psychologist, List<AppointmentBean> appointmentToRemove) {
+        List<Appointment> appointmentsToRemove = new ArrayList<>();
+        for(AppointmentBean appointmentBean : appointmentToRemove) {
+            appointmentsToRemove.add(new Appointment(psychologist,appointmentBean.getDay(), appointmentBean.getTimeSlot(), appointmentBean.isInPerson(), appointmentBean.isOnline()));
+        }
+        UpdateDAO.removeAppointments(appointmentsToRemove);
+    }
+
+
 }
