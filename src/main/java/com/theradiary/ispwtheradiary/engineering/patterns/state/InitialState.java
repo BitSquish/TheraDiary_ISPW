@@ -1,7 +1,7 @@
 package com.theradiary.ispwtheradiary.engineering.patterns.state;
 
-import com.theradiary.ispwtheradiary.controller.graphic.CLI.LoginCLI;
-import com.theradiary.ispwtheradiary.controller.graphic.CLI.RegisterCLI;
+import com.theradiary.ispwtheradiary.controller.graphic.comandline.LoginCLI;
+import com.theradiary.ispwtheradiary.controller.graphic.comandline.RegisterCLI;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 
 import java.util.Scanner;

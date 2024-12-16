@@ -1,4 +1,4 @@
-package com.theradiary.ispwtheradiary.controller.graphic.CLI;
+package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
 import com.theradiary.ispwtheradiary.controller.application.TaskAndToDo;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
@@ -31,10 +31,10 @@ public class TaskCLI extends AbstractState {
                         addNewTask(scanner);
                         break;
                     case (2):
-                        modifyTask(scanner, selectedPatient.getTasks());
+                        modifyTask(scanner);
                         break;
                     case (3):
-                        deleteTask(scanner, selectedPatient.getTasks());
+                        deleteTask(scanner);
                         break;
                     default:
                         Printer.errorPrint("Scelta non valida");
@@ -50,20 +50,27 @@ public class TaskCLI extends AbstractState {
     }
     private void addNewTask(Scanner scanner) {
         Printer.print("Inserisci la descrizione del nuovo Task: ");
+        scanner.nextLine();
         String description = scanner.nextLine();
         Printer.print("Inserisci la data di scadenza del Task (formato gg/mm/aaaa): ");
-        String date = scanner.nextLine();
-        TaskBean newTask = new TaskBean(description, LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")), "non completato");
-        TaskAndToDo.saveTasks(selectedPatient, newTask);
-        Printer.printlnGreen("Elemento aggiunto correttamente");
-    }
-    private void deleteTask(Scanner scanner, List<TaskBean> taskList) {
-        for (int i = 0; i < taskList.size(); i++) {
-            Printer.println((i + 1) + ". " + taskList.get(i).getTaskName() + " " + taskList.get(i).getTaskDeadline() + " " + taskList.get(i).getTaskStatus());
+        try{
+            String date = scanner.nextLine();
+            TaskBean newTask = new TaskBean(description, LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")), "non completato");
+            TaskAndToDo.saveTasks(selectedPatient, newTask);
+            Printer.printlnGreen("Elemento aggiunto correttamente");
+        }catch (Exception e){
+            Printer.errorPrint("Errore nella data");
+
         }
+    }
+    private void deleteTask(Scanner scanner) {
+        TaskAndToDo.retrieveTasks(selectedPatient);
+        List<TaskBean> taskList = selectedPatient.getTasks();
+        printTasks(taskList);
         Printer.println("Seleziona l'elemento da eliminare:");
         try {
             int position = scanner.nextInt();
+            scanner.nextLine();
             if (position > 0 && position <= taskList.size()) {
                 TaskAndToDo.deleteTask(taskList.get(position - 1), selectedPatient);
                 Printer.printlnGreen("Elemento eliminato correttamente");
@@ -75,21 +82,22 @@ public class TaskCLI extends AbstractState {
             scanner.nextLine();
         }
     }
-    private void modifyTask(Scanner scanner,List<TaskBean> taskList) {
+    private void modifyTask(Scanner scanner) {
+        TaskAndToDo.retrieveTasks(selectedPatient);
+        List<TaskBean> tasks = selectedPatient.getTasks();
+        printTasks(tasks);
         Printer.println("Inserisci la posizione dell'elemento da modificare");
-        for (int i = 0; i < taskList.size(); i++) {
-            Printer.println((i + 1) + ". " + taskList.get(i).getTaskName() + " " + taskList.get(i).getTaskDeadline() + " " + taskList.get(i).getTaskStatus());
-        }
         try {
             int position = scanner.nextInt();
+            scanner.nextLine();
             if (position > 0 && position <= selectedPatient.getTasks().size()) {
                 Printer.println("Inserisci la nuova descrizione");
                 String newDescription = scanner.nextLine();
                 Printer.println("Inserisci la nuova data di scadenza");
                 LocalDate newDeadline = LocalDate.parse(scanner.nextLine());
-                taskList.get(position - 1).setTaskName(newDescription);
-                taskList.get(position - 1).setTaskDeadline(String.valueOf(newDeadline));
-                TaskAndToDo.saveTasks(selectedPatient, taskList.get(position - 1));
+                tasks.get(position - 1).setTaskName(newDescription);
+                tasks.get(position - 1).setTaskDeadline(String.valueOf(newDeadline));
+                TaskAndToDo.saveTasks(selectedPatient, tasks.get(position - 1));
                 Printer.println("Elemento modificato");
             } else {
                 Printer.errorPrint("Posizione non valida");
@@ -97,6 +105,15 @@ public class TaskCLI extends AbstractState {
         } catch (Exception e) {
             Printer.errorPrint("Errore nella selezione");
             scanner.nextLine();
+        }
+    }
+    private void printTasks(List<TaskBean> taskList) {
+        if (taskList.isEmpty()) {
+            Printer.println("Non ci sono task da completare");
+        } else {
+            for (int i = 0; i < taskList.size(); i++) {
+                Printer.println((i + 1) + ". " + taskList.get(i));
+            }
         }
     }
     @Override

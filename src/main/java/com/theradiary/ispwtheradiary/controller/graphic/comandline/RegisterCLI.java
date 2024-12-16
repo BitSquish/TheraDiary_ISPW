@@ -1,20 +1,16 @@
-package com.theradiary.ispwtheradiary.controller.graphic.CLI;
+package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
 import com.theradiary.ispwtheradiary.controller.application.UserRegistration;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
-import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
-import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.Validator;
 import com.theradiary.ispwtheradiary.engineering.others.beans.CredentialsBean;
-import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.AbstractState;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.StateMachineImpl;
 
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class RegisterCLI extends AbstractState {
     Validator validator = new Validator();

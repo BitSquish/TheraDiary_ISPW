@@ -1,4 +1,4 @@
-package com.theradiary.ispwtheradiary.controller.graphic.CLI;
+package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
 import com.theradiary.ispwtheradiary.controller.application.TaskAndToDo;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
@@ -29,10 +29,10 @@ public class ToDoCLI extends AbstractState {
                         addNewToDo(scanner);
                         break;
                     case (2):
-                        modifyToDo(scanner, selectedPatient.getToDoList());
+                        modifyToDo(scanner);
                         break;
                     case (3):
-                        deleteToDoItem(scanner, selectedPatient.getToDoList());
+                        deleteToDoItem(scanner);
                         break;
                     default:
                         Printer.errorPrint("Scelta non valida");
@@ -53,15 +53,16 @@ public class ToDoCLI extends AbstractState {
         TaskAndToDo.saveToDo(newToDo,selectedPatient);
         Printer.printlnGreen("Elemento aggiunto correttamente");
     }
-    private void deleteToDoItem(Scanner scanner, List<ToDoItemBean> toDoList){
-        for (int i = 0; i < toDoList.size(); i++) {
-            Printer.println((i + 1) + ". " + toDoList.get(i).isCompleted() + " " + toDoList.get(i).getToDo());
-        }
+    private void deleteToDoItem(Scanner scanner){
+        TaskAndToDo.toDoList(selectedPatient);
+        List<ToDoItemBean> doList = selectedPatient.getToDoList();
+        printToDoList(doList);
         Printer.println("Seleziona l'elemento da modificare:");
         try{
             int position = scanner.nextInt();
-            if(position>0 && position<=toDoList.size()){
-                TaskAndToDo.deleteToDo(toDoList.get(position-1),selectedPatient);
+            scanner.nextLine();
+            if(position>0 && position<=doList.size()){
+                TaskAndToDo.deleteToDo(doList.get(position-1),selectedPatient);
                 Printer.printlnGreen("Elemento eliminato correttamente");
             }else{
                 Printer.errorPrint("Scelta non valida");
@@ -71,13 +72,14 @@ public class ToDoCLI extends AbstractState {
             scanner.nextLine();
         }
     }
-    private void modifyToDo(Scanner scanner, List<ToDoItemBean> toDoList){
-        for (int i = 0; i < toDoList.size(); i++) {
-            Printer.println((i + 1) + ". " + toDoList.get(i).isCompleted() + " " + toDoList.get(i).getToDo());
-        }
+    private void modifyToDo(Scanner scanner){
+        TaskAndToDo.toDoList(selectedPatient);
+        List<ToDoItemBean> toDoList = selectedPatient.getToDoList();
+        printToDoList(toDoList);
         Printer.println("Seleziona l'elemento da modificare:");
         try{
             int position = scanner.nextInt();
+            scanner.nextLine();
             if(position>0 && position<=toDoList.size()){
                 Printer.print("Inserisci la nuova descrizione: ");
                 String newDescription = scanner.nextLine();
@@ -91,6 +93,15 @@ public class ToDoCLI extends AbstractState {
         }catch (Exception e){
             Printer.errorPrint("Errore nella selezione");
             scanner.nextLine();
+        }
+    }
+    private void printToDoList(List<ToDoItemBean> toDoList){
+        if(toDoList.isEmpty()){
+            Printer.println("Non hai nulla da completare!");
+        }else{
+            for(int i=0;i<toDoList.size();i++){
+                Printer.println((i+1)+". "+toDoList.get(i));
+            }
         }
     }
     @Override

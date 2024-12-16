@@ -1,4 +1,4 @@
-package com.theradiary.ispwtheradiary.controller.graphic.CLI;
+package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
 import com.theradiary.ispwtheradiary.engineering.patterns.state.AbstractState;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.StateMachineImpl;

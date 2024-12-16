@@ -1,4 +1,4 @@
-package com.theradiary.ispwtheradiary.controller.graphic.CLI;
+package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
 import com.theradiary.ispwtheradiary.controller.application.PsychologistDescription;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
