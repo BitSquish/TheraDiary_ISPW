@@ -54,13 +54,12 @@ public class ToDoCLI extends AbstractState {
         Printer.printlnGreen("Elemento aggiunto correttamente");
     }
     private void deleteToDoItem(Scanner scanner, List<ToDoItemBean> toDoList){
-        Printer.println("Seleziona l'elemento da eliminare:");
-        int position = -1;
         for (int i = 0; i < toDoList.size(); i++) {
             Printer.println((i + 1) + ". " + toDoList.get(i).isCompleted() + " " + toDoList.get(i).getToDo());
         }
+        Printer.println("Seleziona l'elemento da modificare:");
         try{
-            position = scanner.nextInt();
+            int position = scanner.nextInt();
             if(position>0 && position<=toDoList.size()){
                 TaskAndToDo.deleteToDo(toDoList.get(position-1),selectedPatient);
                 Printer.printlnGreen("Elemento eliminato correttamente");
@@ -73,13 +72,12 @@ public class ToDoCLI extends AbstractState {
         }
     }
     private void modifyToDo(Scanner scanner, List<ToDoItemBean> toDoList){
-        Printer.println("Seleziona l'elemento da modificare:");
-        int position = -1;
         for (int i = 0; i < toDoList.size(); i++) {
             Printer.println((i + 1) + ". " + toDoList.get(i).isCompleted() + " " + toDoList.get(i).getToDo());
         }
+        Printer.println("Seleziona l'elemento da modificare:");
         try{
-            position = scanner.nextInt();
+            int position = scanner.nextInt();
             if(position>0 && position<=toDoList.size()){
                 Printer.print("Inserisci la nuova descrizione: ");
                 String newDescription = scanner.nextLine();

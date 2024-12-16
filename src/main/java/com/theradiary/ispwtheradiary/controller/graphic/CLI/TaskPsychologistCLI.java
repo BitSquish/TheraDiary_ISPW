@@ -5,6 +5,7 @@ import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.TaskBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.AbstractState;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.StateMachineImpl;
@@ -43,7 +44,7 @@ public class TaskPsychologistCLI extends AbstractState {
                         viewTasks();
                         break;
                     case (5):
-                        modifyTask(scanner);
+                        goNext(context,new TaskCLI(user,selectedPatient));
                         break;
                     default:
                         Printer.errorPrint("Scelta non valida");
@@ -89,32 +90,18 @@ public class TaskPsychologistCLI extends AbstractState {
     }
 
     private void viewTasks(){
-        /*Printer.printlnBlue("-------------------Lista task-------------------");
-        Printer.println("Lista task di "+patientBean.getFullName()+":");
-        TaskAndToDo.taskList(patientBean);
-        List<String> taskList = patientBean.getTaskListAsString();
+        Printer.printlnBlue("-------------------Lista task-------------------");
+        Printer.println("Lista task di "+selectedPatient.getFullName()+":");
+        TaskAndToDo.retrieveTasks(selectedPatient);
+        List<TaskBean> taskList = selectedPatient.getTasks();
         if(taskList.isEmpty()){
             Printer.println("Non ci sono task");
+            goNext(context,new TaskCLI(user,selectedPatient));
         }else{
             for(int i=0;i<taskList.size();i++){
                 Printer.println((i+1)+". "+taskList.get(i));
             }
-        }*/
-    }
-    private void modifyTask(Scanner scanner){
-       /* viewTasks();
-        Printer.println("Inserisci la posizione dell'elemento da modificare");
-        int position=scanner.nextInt();
-        List<ToDoItemBean> taskList = patientBean.getTaskList();
-        if(position>0 && position<=patientBean.getTaskList().size()){
-            Printer.println("Inserisci la nuova descrizione");
-            String newDescription=scanner.nextLine();
-            taskList.get(position-1).setToDo(newDescription);
-            TaskAndToDo.saveTaskList((ObservableList<ToDoItemBean>) taskList,patientBean);
-            Printer.println("Elemento modificato");
-        }else{
-            Printer.errorPrint("Posizione non valida");
-        }*/
+        }
     }
     /*-------------------Metodi di AbstractState-------------------*/
     @Override

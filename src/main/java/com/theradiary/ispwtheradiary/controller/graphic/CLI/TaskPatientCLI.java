@@ -4,6 +4,7 @@ import com.theradiary.ispwtheradiary.controller.application.TaskAndToDo;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.TaskBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.AbstractState;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.StateMachineImpl;
@@ -37,6 +38,12 @@ public class TaskPatientCLI extends AbstractState {
                         break;
                     case (4):
                         completeToDo(scanner);
+                        break;
+                    case(5):
+                        viewTasks();
+                        break;
+                    case(6):
+                        doTask(scanner);
                         break;
                     default:
                         Printer.errorPrint("Scelta non valida");
@@ -155,6 +162,40 @@ public class TaskPatientCLI extends AbstractState {
         }
 
     }
+    private void viewTasks(){
+        Printer.printlnBlue("-------------------Ciao"+" "+ patientBean.getFullName()+","+"la tua lista task-------------------");
+        TaskAndToDo.retrieveTasks(patientBean);
+        List<TaskBean> taskList = patientBean.getTasks();
+        if(taskList.isEmpty()){
+            Printer.println("Non ci sono task da completare");
+        }else{
+            for(int i=0;i<taskList.size();i++){
+                Printer.println((i+1)+". "+taskList.get(i));
+            }
+        }
+    }
+    private void doTask(Scanner scanner){
+        viewTasks();
+        Printer.println("Inserisci la posizione dell'elemento da completare");
+        List<TaskBean> taskList = patientBean.getTasks();
+        try {
+            int position = scanner.nextInt();
+            if(position>0 && position<=taskList.size()){
+                Printer.print("Inserisci la nuova descrizione: ");
+                String status = scanner.nextLine();
+                TaskBean taskBean = taskList.get(position-1);
+                taskBean.setTaskStatus(status);
+                TaskAndToDo.updateTasks(patientBean,taskBean);
+                Printer.printlnGreen("Elemento completato!");
+            }else{
+                Printer.errorPrint("Scelta non valida");
+            }
+        }catch (Exception e){
+            Printer.errorPrint("Errore nella selezione");
+            scanner.nextLine();
+        }
+    }
+
     /*--------------------------Metodi di AbstractState--------------------------*/
     @Override
     public void showMenu() {
@@ -162,8 +203,10 @@ public class TaskPatientCLI extends AbstractState {
         Printer.println("2.Visualizza la lista delle cose da fare");
         Printer.println("3.Aggiungi voce al diario");
         Printer.println("4.Completa attività");
+        Printer.println("5.Visualizza lista task");
         Printer.println("0.Torna indietro");
         Printer.print("Opzione scelta:");
+
     }
     @Override
     public void stampa() {

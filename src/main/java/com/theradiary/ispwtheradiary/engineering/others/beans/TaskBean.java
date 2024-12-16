@@ -37,6 +37,10 @@ public class TaskBean {
     public void setTaskStatus(String taskStatus) {
         this.taskStatus = taskStatus;
     }
+    @Override
+    public String toString() {
+        return taskName + " - " + taskDeadline + " - " + taskStatus;
+    }
 
 
 }
