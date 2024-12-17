@@ -52,7 +52,7 @@ public class Main extends Application {
     }
     public void interfacciaGrafica(Stage stage) throws IOException {
         FXMLPathConfig fxmlPathConfig = new FXMLPathConfig("/viewPaths.properties");
-        Session session = new Session(false);
+        Session session = new Session();
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath("HOMEPAGE_NOT_LOGGED_PATH")));
         loader.setControllerFactory(c -> new HomepageGUI(fxmlPathConfig, session)); //Controller homepage
         Parent rootParent = loader.load();
