@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.engineering.dao;
 
 
 
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.LoginAndRegistrationQuery;
@@ -47,7 +48,7 @@ public class RegistrationDAO {
                 LoginAndRegistrationQuery.registerPatient(conn, patient);
             }
             catch(SQLException e){
-                throw new SQLException(e.getMessage());
+                throw new DatabaseOperationException("Errore nella registrazione", e);
             }
         }
         else

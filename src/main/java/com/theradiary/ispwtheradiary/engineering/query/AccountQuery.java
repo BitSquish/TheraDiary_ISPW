@@ -1,11 +1,13 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class AccountQuery {
     private AccountQuery() {
@@ -19,8 +21,7 @@ public class AccountQuery {
             //restituisce il numero di righe aggiunte
             return pstmt.executeUpdate() != 0;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+            throw new DatabaseOperationException("Errore nell'aggiunta della categoria",e);
         }
     }
 
@@ -33,8 +34,7 @@ public class AccountQuery {
             //restituisce il numero di righe eliminate
             return pstmt.executeUpdate() != 0;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+            throw new DatabaseOperationException("Errore nell'aggiunta della specializzazione",e);
         }
     }
 
@@ -46,8 +46,7 @@ public class AccountQuery {
                 //restituisce il numero di righe eliminate
                 return pstmt.executeUpdate() != 0;
             } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
+                throw new DatabaseOperationException("Errore nella rimozione della categoria",e);
             }
     }
 
@@ -60,8 +59,7 @@ public class AccountQuery {
             //restituisce il numero di righe eliminate
             return pstmt.executeUpdate() != 0;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+            throw new DatabaseOperationException("Errore nella rimozione della specializzazione",e);
         }
 
     }

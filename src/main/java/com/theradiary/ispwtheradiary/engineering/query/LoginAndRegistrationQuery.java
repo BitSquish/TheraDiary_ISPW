@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.engineering.query;
 
 //NOTA: conviene usare Statement per query senza input, per query con input si usa PreparedStatement
 
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
@@ -13,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginAndRegistrationQuery {
+    private LoginAndRegistrationQuery() {
+    }
     public static ResultSet logQuery(Connection conn, Credentials credentialsBean) throws SQLException {
         String query = "SELECT mail, password, role FROM users WHERE mail = ? AND password = ?";
         PreparedStatement pstmt = conn.prepareStatement(query);
@@ -32,8 +35,7 @@ public class LoginAndRegistrationQuery {
             pstmt.setString(3, credentialsBean.getRole().toString());
             return pstmt.executeUpdate(); //restituisce il numero di righe influenzate dalla query
         }catch (SQLException e) {
-            System.out.println("Errore: " + e.getMessage());
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nella registrazione", e);
         }
     }
 
@@ -53,8 +55,7 @@ public class LoginAndRegistrationQuery {
                 throw new MailAlreadyExistsException("Mail già esistente");
             }
         }catch (SQLException e) {
-            System.out.println("Errore: " + e.getMessage());
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nella registrazione", e);
         }
     }
 
@@ -74,8 +75,7 @@ public class LoginAndRegistrationQuery {
                 throw new MailAlreadyExistsException("Mail già esistente");
             }
         }catch (SQLException e) {
-            System.out.println("Errore: " + e.getMessage());
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nella registrazione", e);
         }
     }
 
@@ -90,8 +90,7 @@ public class LoginAndRegistrationQuery {
             pstmt.executeUpdate();
             //Possono esserci problemi da gestire?
         }catch (SQLException e) {
-            System.out.println("Errore: " + e.getMessage());
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nella registrazione", e);
         }
     }
 
@@ -103,8 +102,7 @@ public class LoginAndRegistrationQuery {
             result.next();
             return result.getInt(1);
         }catch (SQLException e) {
-            System.out.println("Errore: " + e.getMessage());
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nella verifica della mail", e);
         }
     }
     public static void joinPag(Connection conn,String mail) throws SQLException {
@@ -113,8 +111,7 @@ public class LoginAndRegistrationQuery {
             statement.setString(1,mail);
             statement.executeUpdate();
         }catch (SQLException e) {
-            System.out.println("Errore: " + e.getMessage());
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nell'aggiornamento dell'account", e);
         }
     }
 

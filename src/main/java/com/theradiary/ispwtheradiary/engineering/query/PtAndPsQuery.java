@@ -1,5 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
 
 import java.sql.Connection;
@@ -9,7 +10,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class PtAndPsQuery {
-    public static void sendRequest(String psychologist, String patient, LocalDate date) throws SQLException {
+    private PtAndPsQuery() {
+    }
+    public static void sendRequest(String psychologist, String patient, LocalDate date)  {
         String query = "INSERT INTO request (psychologist, patient, date) VALUES (?, ?, ?)";
         try(Connection connection = ConnectionFactory.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -18,7 +21,7 @@ public class PtAndPsQuery {
             preparedStatement.setDate(3, Date.valueOf(date));
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new SQLException(e.getMessage());
+            throw new DatabaseOperationException("Errore nell'invio della richiesta", e);
         }
     }
 }

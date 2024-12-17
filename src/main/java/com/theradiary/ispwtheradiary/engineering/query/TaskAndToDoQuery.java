@@ -1,5 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
 import com.theradiary.ispwtheradiary.model.Task;
 import com.theradiary.ispwtheradiary.model.ToDoItem;
@@ -24,7 +25,7 @@ public class TaskAndToDoQuery {
             pstmt.setString(3, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nell'inserimento del diario",e);
         }
     }
 
@@ -45,7 +46,7 @@ public class TaskAndToDoQuery {
             pstmt.setString(2, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel recupero del diario",e);
         }
     }
     /*-------------------------TODOLIST-------------------------*/
@@ -57,7 +58,7 @@ public class TaskAndToDoQuery {
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel recupero dei task",e);
         }
     }
 
@@ -72,7 +73,7 @@ public class TaskAndToDoQuery {
             pstmt.setString(3, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nell'aggiunta del task",e);
         }
     }
 
@@ -84,7 +85,7 @@ public class TaskAndToDoQuery {
             pstmt.setString(2, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nella rimozione del task",e);
         }
     }
     /*-------------------------TASK-------------------------*/
@@ -110,7 +111,7 @@ public class TaskAndToDoQuery {
             pstmt.setString(4, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nell'aggiunta del task",e);
         }
 
     }
@@ -122,7 +123,7 @@ public class TaskAndToDoQuery {
             pstmt.setString(2, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nella rimozione del task",e);
         }
     }
 
@@ -136,7 +137,7 @@ public class TaskAndToDoQuery {
             pstmt.setDate(4, java.sql.Date.valueOf(task.getTaskDeadline()));
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nell'aggiornamento del task",e);
         }
     }
 }

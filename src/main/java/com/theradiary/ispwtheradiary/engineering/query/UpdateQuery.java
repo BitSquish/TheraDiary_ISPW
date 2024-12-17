@@ -3,6 +3,7 @@ package com.theradiary.ispwtheradiary.engineering.query;
 
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.enums.TimeSlot;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.model.Patient;
 
 import java.sql.Connection;
@@ -21,8 +22,7 @@ public class UpdateQuery {
             pstmt.setString(5, mail);  // This is the parameter for the WHERE clause
             pstmt.executeUpdate();
         }catch (SQLException e) {
-            System.out.println("Errore: " + e.getMessage());
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nella modifica dell'indirizzo", e);
         }//Possono esserci problemi da gestire?
     }
 
@@ -39,7 +39,7 @@ public class UpdateQuery {
             pstmt.setString(7, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nella modifica del profilo", e);
         }
     }
 
@@ -51,7 +51,7 @@ public class UpdateQuery {
             pstmt.setString(3, oldMail);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nella modifica delle credenziali", e);
         }
     }
         /*public static void modifyMail(Connection conn, String newMail, String oldMail)  {
@@ -89,8 +89,7 @@ public class UpdateQuery {
             pstmt.setString(7, mail);  // This is the parameter for the WHERE clause
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Errore: " + e.getMessage());
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nella modifica del profilo", e);
         }
     }
 
@@ -101,7 +100,7 @@ public class UpdateQuery {
             pstmt.setString(2, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nell'aggiunta al pag", e);
         }
     }
 
@@ -112,7 +111,7 @@ public class UpdateQuery {
             pstmt.setString(2, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nell'aggiunta al pag", e);
         }
     }
 
@@ -124,7 +123,7 @@ public class UpdateQuery {
             pstmt.setDate(3, java.sql.Date.valueOf(date));
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nella rimozione della richiesta", e);
         }
     }
 
@@ -135,7 +134,7 @@ public class UpdateQuery {
             pstmt.setString(2, patient);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nell'associazione del paziente", e);
         }
     }
 
@@ -145,7 +144,7 @@ public class UpdateQuery {
             pstmt.setString(1, patient.getCredentials().getMail());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nella rimozione delle altre richieste", e);
         }
     }
 
@@ -163,7 +162,7 @@ public class UpdateQuery {
                 pstmt.setString(6, patient);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nell'aggiunta dell'appuntamento", e);
         }
     }
 
@@ -177,7 +176,7 @@ public class UpdateQuery {
             pstmt.setBoolean(5, online);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nella rimozione dell'appuntamento", e);
         }
     }
 
@@ -196,7 +195,7 @@ public class UpdateQuery {
             pstmt.setBoolean(10, online);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nella modifica dell'appuntamento", e);
         }
     }
 
@@ -206,7 +205,7 @@ public class UpdateQuery {
             pstmt.setString(1, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nella rimozione degli appuntamenti", e);
         }
     }
 }

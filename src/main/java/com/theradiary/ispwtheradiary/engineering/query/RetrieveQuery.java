@@ -1,5 +1,7 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -52,7 +54,7 @@ public class RetrieveQuery {
             }
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nella ricerca", e);
         }
 
     }
@@ -100,7 +102,7 @@ public class RetrieveQuery {
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel recupero della lista pazienti", e);
         }
 
     }
@@ -113,7 +115,7 @@ public class RetrieveQuery {
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel recupero del pag", e);
         }
     }
 
@@ -124,7 +126,7 @@ public class RetrieveQuery {
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel recupero del pag", e);
         }
     }
 
@@ -152,7 +154,7 @@ public class RetrieveQuery {
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel recupero del proprio psicologo", e);
         }
     }
 
@@ -163,7 +165,7 @@ public class RetrieveQuery {
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel recupero degli appuntamenti", e);
         }
     }
 }
