@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.engineering.dao;
 
 
 
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.LoginAndRegistrationQuery;
@@ -29,7 +30,7 @@ public class UpdateDAO {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.modifyMedicalOffice(conn, medicalOffice.getMail(), medicalOffice.getCity(), medicalOffice.getPostCode(), medicalOffice.getAddress(), medicalOffice.getOtherInfo());
         } catch(SQLException e){
-            throw new SQLException(e.getMessage());
+            throw new DatabaseOperationException("Errore nella modifica dello studio medico", e);
         }
     }
 
@@ -40,7 +41,7 @@ public class UpdateDAO {
             UpdateQuery.modifyCredentials(conn, newCredentials.getMail(), newCredentials.getPassword(), oldCredentials.getMail());
 
         } catch(SQLException e){
-            throw new SQLException(e.getMessage());
+            throw new DatabaseOperationException("Errore nella modifica delle credenziali", e);
         } catch (MailAlreadyExistsException e) {
             throw new MailAlreadyExistsException(e.getMessage());
         }
@@ -50,7 +51,7 @@ public class UpdateDAO {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.modifyPsychologist(conn, psychologist.getCredentials().getMail(), psychologist.getName(), psychologist.getSurname(), psychologist.getCity(), psychologist.getDescription(), psychologist.isInPerson(), psychologist.isOnline());
         } catch(SQLException e){
-            throw new SQLException(e.getMessage());
+            throw new DatabaseOperationException("Errore nella modifica dello psicologo", e);
         }
     }
 
@@ -58,7 +59,7 @@ public class UpdateDAO {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.modifyPatient(conn, patient.getCredentials().getMail(), patient.getName(), patient.getSurname(), patient.getCity(), patient.getDescription(), patient.isInPerson(), patient.isOnline());
         } catch(SQLException e){
-            throw new SQLException(e.getMessage());
+            throw new DatabaseOperationException("Errore nella modifica del paziente", e);
         }
     }
 
@@ -66,7 +67,7 @@ public class UpdateDAO {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.joinPagPsychologist(conn, psychologist.getCredentials().getMail());
         } catch(SQLException e){
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nell'aggiunta del  pag", e);
         }
     }
 
@@ -74,7 +75,7 @@ public class UpdateDAO {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.joinPagPatient(conn, patient.getCredentials().getMail());
         } catch(SQLException e){
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nell'aggiunta del  pag", e);
         }
     }
 
@@ -101,10 +102,9 @@ public class UpdateDAO {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.addAppointment(conn, psychologist, appointmentsToAdd.getDay(), appointmentsToAdd.getTimeSlot(), appointmentsToAdd.isInPerson(), appointmentsToAdd.isOnline(), appointmentsToAdd.getPatient().getCredentials().getMail(), appointmentsToAdd.isAvailable());
         } catch(SQLException e){
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nella rimozione degli appuntamenti", e);
         }
     }
-
 
     public static void modifyAppointments(List<Appointment> appointmentsToModify) {
         String psychologist = appointmentsToModify.get(0).getPsychologist().getCredentials().getMail();
@@ -113,7 +113,7 @@ public class UpdateDAO {
                 UpdateQuery.modifyAppointment(conn, psychologist, appointment.getDay(), appointment.getTimeSlot(), appointment.isInPerson(), appointment.isOnline());
             }
         } catch(SQLException e){
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nella modifica degli appuntamenti", e);
         }
     }
 
@@ -121,7 +121,7 @@ public class UpdateDAO {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.clearAppointments(conn, psychologist.getCredentials().getMail());
         } catch(SQLException e){
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nella cancellazione degli appuntamenti", e);
         }
     }
 }

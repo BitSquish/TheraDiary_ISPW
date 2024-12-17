@@ -1,11 +1,11 @@
 package com.theradiary.ispwtheradiary.engineering.dao;
 
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.TaskAndToDoQuery;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Task;
 import com.theradiary.ispwtheradiary.model.ToDoItem;
-import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
 
 
 import java.sql.Connection;
@@ -23,7 +23,7 @@ public class TaskAndToDoDAO {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.Diary(conn, diaryContent, patient.getCredentials().getMail(), selectedDate);
         }catch (SQLException e){
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel salvataggio del diario",e);
         }
     }
 
@@ -38,7 +38,7 @@ public class TaskAndToDoDAO {
                 return Optional.empty();
             }
         }catch (SQLException e){
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel recupero del diario",e);
         }
 
     }
@@ -51,7 +51,7 @@ public class TaskAndToDoDAO {
                 return Optional.empty();
             }
         }catch (SQLException e){
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel recupero del diario",e);
         }
     }
 
@@ -60,7 +60,7 @@ public class TaskAndToDoDAO {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.saveToDoItem(conn, patient.getCredentials().getMail(), toDoItem);
         }catch (SQLException e){
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel salvataggio del to do",e);
         }
     }
 
@@ -74,7 +74,7 @@ public class TaskAndToDoDAO {
                 toDoItems.add(new ToDoItem(rs.getString("description"),rs.getBoolean("done")));
             }
         }catch (SQLException e){
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel recupero del to do",e);
         }
         return toDoItems;
     }
@@ -83,7 +83,7 @@ public class TaskAndToDoDAO {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.deleteToDoItem(conn, patient.getCredentials().getMail(), toDoItem);
         }catch (SQLException e){
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nella cancellazione del to do",e);
         }
     }
     /*********************************task**********************************/
@@ -95,7 +95,7 @@ public class TaskAndToDoDAO {
                 tasks.add(new Task(rs.getString("description"),rs.getDate("deadline").toLocalDate(),rs.getString("status")));
             }
         }catch (SQLException e){
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel recupero dei task",e);
         }
         return tasks;
     }
@@ -104,14 +104,14 @@ public class TaskAndToDoDAO {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.saveTask(conn, patient.getCredentials().getMail(), task);
         }catch (SQLException e){
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel salvataggio del task",e);
         }
     }
     public static void deleteTask(Patient patient, Task task) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.deleteTask(conn, patient.getCredentials().getMail(), task);
         }catch (SQLException e){
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nella cancellazione del task",e);
         }
     }
 
@@ -119,7 +119,7 @@ public class TaskAndToDoDAO {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.updateTask(conn, patient.getCredentials().getMail(), task);
         }catch (SQLException e){
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nell'aggiornamento del task",e);
         }
     }
 }

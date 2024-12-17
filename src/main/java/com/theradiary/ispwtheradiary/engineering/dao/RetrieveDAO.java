@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.engineering.dao;
 
 
 import com.theradiary.ispwtheradiary.engineering.enums.*;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.RetrieveQuery;
@@ -39,7 +40,7 @@ public class RetrieveDAO {
                 psychologists.add(psychologist);
             } while (rs.next());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nella ricerca", e);
         }
     }
 
@@ -55,7 +56,7 @@ public class RetrieveDAO {
             } else
                 return false;
         } catch (SQLException e) {
-            throw new RuntimeException(e); //DA VERIFICARE ECCEZIONE
+            throw new DatabaseOperationException("Errore nel recupero dell'ufficio medico", e);
         }
 
     }
@@ -74,7 +75,7 @@ public class RetrieveDAO {
                 patient.setPsychologist(new Psychologist(new Credentials(rs.getString("psychologist"), Role.PSYCHOLOGIST)));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel recupero del paziente", e);
         }
     }
 
@@ -90,7 +91,7 @@ public class RetrieveDAO {
                 psychologist.setOnline(rs.getBoolean("online"));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel recupero dello psicologo", e);
         }
     }
 
@@ -104,14 +105,13 @@ public class RetrieveDAO {
                     Category category = Category.valueOf(categoryName);
                     categories.add(category);
                 } catch (IllegalArgumentException e) {
-                    System.err.println("Categoria non valida:" + categoryName);
-                    continue;
+                    throw new IllegalArgumentException("Categoria non valida:" + categoryName);
                 }
             }
             patient.setCategories(new ArrayList<>(categories));
             return !categories.isEmpty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel recupero delle categorie", e);
         }
     }
 
@@ -125,14 +125,13 @@ public class RetrieveDAO {
                     Major major = Major.valueOf(majorName);
                     majors.add(major);
                 } catch (IllegalArgumentException e) {
-                    System.err.println("Specializzazione non valida:" + majorName);
-                    continue;
+                    throw new IllegalArgumentException("Specializzazione non valida:" + majorName);
                 }
             }
             psychologist.setMajors(new ArrayList<>(majors));
             return !majors.isEmpty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel recupero delle specializzazioni", e);
         }
     }
 
@@ -158,7 +157,7 @@ public class RetrieveDAO {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving patient list", e);
+            throw new DatabaseOperationException("Errore nel recupero dei pazienti", e);
         }
         return patients;
     }
@@ -174,7 +173,7 @@ public class RetrieveDAO {
                 loggedUser.setPag(rs.getBoolean("pag"));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseOperationException("Errore nel recupero del pag", e);
         }
     }
 
@@ -198,7 +197,7 @@ public class RetrieveDAO {
             }
 
         }catch (SQLException e){
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nel recupero delle richieste", e);
         }
     }
 
@@ -219,7 +218,7 @@ public class RetrieveDAO {
             }
             return appointments;
         }catch (SQLException e){
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nel recupero degli appuntamenti", e);
         }
     }
 
@@ -241,7 +240,7 @@ public class RetrieveDAO {
             }else
                 return null;
         }catch (SQLException e){
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nel recupero dello psicologo", e);
         }
     }
 
@@ -261,7 +260,7 @@ public class RetrieveDAO {
                 appointments.add(appointment);
             }
         }catch (SQLException e){
-            throw new RuntimeException(e.getMessage());
+            throw new DatabaseOperationException("Errore nel recupero degli appuntamenti", e);
         }
     }
 }

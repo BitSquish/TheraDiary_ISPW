@@ -1,7 +1,7 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
 
-import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;

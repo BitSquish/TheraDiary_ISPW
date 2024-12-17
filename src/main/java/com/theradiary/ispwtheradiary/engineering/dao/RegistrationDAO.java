@@ -18,6 +18,7 @@ import java.sql.SQLException;
 public class RegistrationDAO {
     private RegistrationDAO() {
     }
+    protected static final String REGISTER_ERROR="Errore nella registrazione";
     //controllo se l'email è presente o meno
     private static boolean emailExists(String mail) throws SQLException {
         try (Connection conn = ConnectionFactory.getConnection()){
@@ -48,7 +49,7 @@ public class RegistrationDAO {
                 LoginAndRegistrationQuery.registerPatient(conn, patient);
             }
             catch(SQLException e){
-                throw new DatabaseOperationException("Errore nella registrazione", e);
+                throw new DatabaseOperationException(REGISTER_ERROR, e);
             }
         }
         else
@@ -66,7 +67,7 @@ public class RegistrationDAO {
                 LoginAndRegistrationQuery.registerPsychologist(conn, psychologist);
             }
             catch(SQLException e){
-                    throw new SQLException(e.getMessage()); //DA SOSTITUIRE CON ECCEZIONE SPECIFICA PER INSERIMENTO SU PSICOLOGI NON A BUON FINE (O FORSE NO?)
+                    throw new DatabaseOperationException(REGISTER_ERROR, e);
             }
         }
         else
@@ -77,14 +78,10 @@ public class RegistrationDAO {
         try(Connection conn = ConnectionFactory.getConnection()){
             LoginAndRegistrationQuery.registerMedicalOffice(conn, medicalOffice.getMail(), medicalOffice.getCity(), medicalOffice.getPostCode(), medicalOffice.getAddress(), medicalOffice.getOtherInfo());
         } catch(SQLException e){
-            throw new SQLException(e.getMessage());
+            throw new DatabaseOperationException(REGISTER_ERROR, e);
         }
     }
-    public static void joinPag(String email) throws SQLException {
-        try (Connection conn = ConnectionFactory.getConnection()) {
-            LoginAndRegistrationQuery.joinPag(conn, email);
-        }
-    }
+
 
 
 }
