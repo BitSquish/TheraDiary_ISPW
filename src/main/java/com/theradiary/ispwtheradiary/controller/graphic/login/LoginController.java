@@ -5,6 +5,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePsController;
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtController;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
@@ -95,8 +96,8 @@ public class LoginController extends CommonController {
             loader.setControllerFactory(c -> new PatientRegistrationController(fxmlPathConfig,session));
             Parent root = loader.load();
             changeScene(root, event);
-        } catch (IOException exception) {
-            throw new RuntimeException(exception.getMessage());
+        } catch (IOException e) {
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -108,7 +109,7 @@ public class LoginController extends CommonController {
             Parent root = loader.load();
             changeScene(root, event);
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
+import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
@@ -89,8 +90,7 @@ public class PsychologistsListController extends CommonController {
             ((PsychologistDescriptionController) loader.getController()).printPsychologist(psychologistBean);
             changeScene(root, event);
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.application.PAG;
+import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
@@ -26,7 +27,7 @@ public class PAGController extends CommonController{
             //Eccezione da gestire?
             successMessage.setVisible(true);
         }catch(Exception e){
-            throw new RuntimeException(e.getMessage());
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
 
     }

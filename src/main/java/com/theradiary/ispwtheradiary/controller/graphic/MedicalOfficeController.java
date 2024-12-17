@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.application.MedicalOfficeRegistration;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
@@ -66,7 +67,7 @@ public class MedicalOfficeController extends CommonController{
             errorMessage.setText(exception.getMessage());
             errorMessage.setVisible(true);
         } catch (SQLException e) {
-            throw new RuntimeException(e); //TODO: gestire eccezione
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
 
     }

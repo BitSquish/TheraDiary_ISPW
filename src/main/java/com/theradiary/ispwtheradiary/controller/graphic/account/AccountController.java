@@ -11,6 +11,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.modify.ModifyPsychologis
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
@@ -228,7 +229,7 @@ public abstract class AccountController extends CommonController {
             }
             changeScene(root,event);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
     }
 
