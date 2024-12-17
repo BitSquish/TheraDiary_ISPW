@@ -5,7 +5,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.CommonGUI;
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePsGUI;
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtGUI;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
-import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
@@ -97,7 +97,7 @@ public class LoginGUI extends CommonGUI {
             Parent root = loader.load();
             changeScene(root, event);
         } catch (IOException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -109,7 +109,7 @@ public class LoginGUI extends CommonGUI {
             Parent root = loader.load();
             changeScene(root, event);
         } catch (IOException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
     }
 }

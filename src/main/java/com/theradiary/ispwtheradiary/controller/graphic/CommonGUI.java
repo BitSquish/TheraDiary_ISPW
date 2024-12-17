@@ -10,7 +10,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.login.LoginGUI;
 import com.theradiary.ispwtheradiary.controller.graphic.task.DiaryAndTasksGUI;
 import com.theradiary.ispwtheradiary.controller.graphic.task.DiaryControllerGUI;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
-import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
@@ -114,7 +114,7 @@ public abstract class CommonGUI {
             Parent root = loader.load();
             changeScene(root, event);
         } catch (IOException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -139,7 +139,7 @@ public abstract class CommonGUI {
             }
             changeScene(root, event);
         } catch (IOException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -159,7 +159,7 @@ public abstract class CommonGUI {
                 goToPatientList(event);
             }
         } catch (IOException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -179,7 +179,7 @@ public abstract class CommonGUI {
                 changeScene(root, event);
             }
         } catch (IOException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -197,7 +197,7 @@ public abstract class CommonGUI {
             Parent root = loader.load();
             changeScene(root, event);
         } catch (IOException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -215,7 +215,7 @@ public abstract class CommonGUI {
             Parent root = loader.load();
             changeScene(root, event);
         } catch (IOException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -240,7 +240,7 @@ public abstract class CommonGUI {
             Parent root = loader.load();
             changeScene(root, event);
         } catch (IOException | SQLException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -262,7 +262,7 @@ public abstract class CommonGUI {
                 changeScene(root, event);
             }
         } catch (IOException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
     }
     @FXML
@@ -273,7 +273,7 @@ public abstract class CommonGUI {
             Parent root = loader.load();
             changeScene(root, event);
         } catch (IOException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
     }
     @FXML
@@ -286,7 +286,7 @@ public abstract class CommonGUI {
             changeScene(root, event);
         } catch (IOException e) {
             // Rilancio di un'eccezione più descrittiva
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
 
 
         }

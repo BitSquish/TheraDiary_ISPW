@@ -4,7 +4,7 @@ package com.theradiary.ispwtheradiary.controller.graphic.task;
 import com.theradiary.ispwtheradiary.controller.application.TaskAndToDoController;
 import com.theradiary.ispwtheradiary.controller.graphic.CommonGUI;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginGUI;
-import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 
@@ -68,7 +68,7 @@ public class DiaryControllerGUI extends CommonGUI {
             Parent root=loader.load();
             changeScene(root,event);
         }catch (IOException e) {
-            throw new SceneLoadingException("Errore durante il caricamento della scena", e);
+            throw new LoadingException("Errore durante il caricamento della scena", e);
         }
     }
     @FXML
@@ -105,7 +105,7 @@ public class DiaryControllerGUI extends CommonGUI {
             Parent root = loader.load();
             changeScene(root, event);
         }catch (IOException e) {
-            throw new SceneLoadingException("Errore durante il caricamento della scena", e);
+            throw new LoadingException("Errore durante il caricamento della scena", e);
         }
 
     }

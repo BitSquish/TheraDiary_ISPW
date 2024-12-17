@@ -2,7 +2,7 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.application.PatientListController;
 import com.theradiary.ispwtheradiary.controller.graphic.task.PatientDetailsGUI;
-import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
@@ -112,7 +112,7 @@ public class PatientListGUI extends CommonGUI {
             ((PatientProfileGUI)loader.getController()).printPatient(patientBean);
             changeScene(root, event);
         } catch (IOException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
     }
     @FXML
@@ -124,7 +124,7 @@ public class PatientListGUI extends CommonGUI {
             ((PatientDetailsGUI)loader.getController()).patientTask(patientBean);
             changeScene(root, event);
         } catch (IOException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -137,7 +137,7 @@ public class PatientListGUI extends CommonGUI {
             ((RequestGUI)loader.getController()).loadRequest(requestBeans);
             changeScene(root, event);
         } catch (IOException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
     }
     @FXML

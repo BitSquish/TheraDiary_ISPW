@@ -1,5 +1,7 @@
 package com.theradiary.ispwtheradiary.engineering.others;
 
+import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,8 +24,7 @@ public class ConnectionFactory {
             String pass = properties.getProperty("LOGIN_PASS");
             return DriverManager.getConnection(connection_url, user, pass);
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new SQLException("Errore nel caricamento delle proprietà del database.");
+            throw new LoadingException("Errore nel caricamento del file di configurazione", e);
         }
     }
 }

@@ -2,7 +2,7 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 
 
 import com.theradiary.ispwtheradiary.controller.application.PagController;
-import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
@@ -28,7 +28,7 @@ public class PagGUI extends CommonGUI {
             //Eccezione da gestire?
             successMessage.setVisible(true);
         }catch(Exception e){
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
 
     }

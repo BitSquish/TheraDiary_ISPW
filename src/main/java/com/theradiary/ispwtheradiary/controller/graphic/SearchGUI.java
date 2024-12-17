@@ -4,7 +4,7 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 import com.theradiary.ispwtheradiary.controller.application.SearchController;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
-import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
@@ -57,7 +57,7 @@ public class SearchGUI extends CommonGUI{
             ((PsychologistsListGUI) loader.getController()).printPsychologists(event, psychologistBeans);
             changeScene(root, event);
         } catch (IOException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
     }
 

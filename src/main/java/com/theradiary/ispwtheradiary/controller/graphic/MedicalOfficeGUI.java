@@ -3,7 +3,7 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.application.MedicalOfficeRegistrationController;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
-import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
@@ -68,7 +68,7 @@ public class MedicalOfficeGUI extends CommonGUI {
             errorMessage.setText(exception.getMessage());
             errorMessage.setVisible(true);
         } catch (SQLException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
 
     }

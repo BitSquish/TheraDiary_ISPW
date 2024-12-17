@@ -1,7 +1,7 @@
 package com.theradiary.ispwtheradiary.controller.graphic.task;
 
 
-import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
@@ -34,7 +34,7 @@ public class DiaryAndTasksGUI extends com.theradiary.ispwtheradiary.controller.g
             ((ToDoGUI) loader.getController()).initializeToDoList(patientBean);
             changeScene(root, event);
         }catch (IOException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
     }
     @FXML
@@ -46,7 +46,7 @@ public class DiaryAndTasksGUI extends com.theradiary.ispwtheradiary.controller.g
             ((TaskPatientGUI) loader.getController()).initializeTaskList(patientBean);
             changeScene(root, event);
         }catch (IOException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
+            throw new LoadingException(LOADING_SCENE, e);
         }
 
     }
