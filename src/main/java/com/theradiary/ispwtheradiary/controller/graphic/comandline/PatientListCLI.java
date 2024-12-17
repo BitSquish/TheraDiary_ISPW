@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
-import com.theradiary.ispwtheradiary.controller.application.Account;
+import com.theradiary.ispwtheradiary.controller.application.AccountController;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
@@ -19,8 +19,8 @@ public class PatientListCLI extends AbstractState {
     @Override
     public void action(StateMachineImpl context) {
         try {
-            Account account = new Account();
-            List<PatientBean> patients = account.retrievePatientList(user);
+            AccountController accountController = new AccountController();
+            List<PatientBean> patients = accountController.retrievePatientList(user);
             if (patients.isEmpty()) {
                 Printer.println("Non hai pazienti");
                 goBack(context);

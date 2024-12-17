@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
-import com.theradiary.ispwtheradiary.controller.application.PsychologistDescription;
+import com.theradiary.ispwtheradiary.controller.application.PsychologistDescriptionController;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
@@ -26,7 +26,7 @@ public class PsychologistProfileCLI extends AbstractState {
         String risposta = scanner.next();
         if(risposta.equals("s")){
             RequestBean requestBean = new RequestBean(user,selectedPsychologist, LocalDate.now());
-            PsychologistDescription.sendRequest(requestBean);
+            PsychologistDescriptionController.sendRequest(requestBean);
             Printer.println("Richiesta inviata con successo");
             goBack(context);
         } else {

@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
-import com.theradiary.ispwtheradiary.controller.application.UserRegistration;
+import com.theradiary.ispwtheradiary.controller.application.UserRegistrationController;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.Validator;
@@ -70,10 +70,10 @@ public class RegisterCLI extends AbstractState {
         try {
             if (isPsychologist) {
                 PsychologistBean psychologistBean = new PsychologistBean(new CredentialsBean(email, password, Role.PSYCHOLOGIST), nome, cognome, city, null, false, false);
-                UserRegistration.registerPsychologist(psychologistBean);
+                UserRegistrationController.registerPsychologist(psychologistBean);
             } else {
                 PatientBean patientBean = new PatientBean(new CredentialsBean(email, password, Role.PATIENT), nome, cognome, city, null, false, false);
-                UserRegistration.registerPatient(patientBean);
+                UserRegistrationController.registerPatient(patientBean);
             }
             Printer.println("---------------------------------------------------------");
             Printer.println("L'utente è stato correttamente registrato.");

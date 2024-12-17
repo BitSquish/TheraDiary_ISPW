@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
-import com.theradiary.ispwtheradiary.controller.application.MedicalOfficeRegistration;
+import com.theradiary.ispwtheradiary.controller.application.MedicalOfficeRegistrationController;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
@@ -29,12 +29,12 @@ public class MedicalOfficeCLI extends AbstractState {
         String info = scanner.next();
         try {
             MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(user.getCredentialsBean().getMail(), city, address, cap, info);
-            MedicalOfficeRegistration medicalOfficeRegistration = new MedicalOfficeRegistration();
-            if(medicalOfficeRegistration.retrieveMedicalOffice(medicalOfficeBean)){
+            MedicalOfficeRegistrationController medicalOfficeRegistrationController = new MedicalOfficeRegistrationController();
+            if(medicalOfficeRegistrationController.retrieveMedicalOffice(medicalOfficeBean)){
                 Printer.println("Studio medico già registrato, vuoi modificarlo? (s/n)");
                 String risposta = scanner.next();
                 if(risposta.equals("s")){
-                    medicalOfficeRegistration.modify(medicalOfficeBean);
+                    medicalOfficeRegistrationController.modify(medicalOfficeBean);
                     Printer.printlnBlue("Studio medico modificato con successo");
                     goNext(context, new HomePsychologistCLI(user));
                 } else {
@@ -42,7 +42,7 @@ public class MedicalOfficeCLI extends AbstractState {
                     goNext(context, new HomePsychologistCLI(user));
                 }
             } else {
-                medicalOfficeRegistration.register(medicalOfficeBean);
+                medicalOfficeRegistrationController.register(medicalOfficeBean);
                 Printer.printlnBlue("Studio medico registrato con successo");
                 goNext(context, new HomePsychologistCLI(user));
             }

@@ -14,8 +14,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.AppointmentPsController">
-    <fx:include source="CommonPanel.fxml" />
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.AppointmentPsGUI">
+   <fx:include source="CommonPanel.fxml" />
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ebcef070" height="88.0" layoutX="520.0" stroke="#00000003" strokeType="INSIDE" width="87.0" />
    <Button layoutX="49.0" layoutY="116.0" mnemonicParsing="false" onMouseClicked="#goToHomepage" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
    <Text fill="#242038" layoutX="335.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appuntamenti">
@@ -23,11 +23,11 @@
          <Font name="System Bold" size="30.0" />
       </font>
    </Text>
-   <TabPane fx:id="tabPane" layoutX="73.0" layoutY="164.0" prefHeight="299.0" prefWidth="727.0" tabClosingPolicy="UNAVAILABLE">
+   <TabPane fx:id="tabPane" layoutX="73.0" layoutY="164.0" prefHeight="282.0" prefWidth="727.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
          <Tab fx:id="MONDAY" onSelectionChanged="#loadCheckboxes" text="Lunedì">
             <content>
-               <AnchorPane fx:id="anchorPaneMONDAY" minHeight="0.0" minWidth="0.0" prefHeight="249.0" prefWidth="727.0">
+               <AnchorPane fx:id="anchorPaneMONDAY" minHeight="0.0" minWidth="0.0" prefHeight="239.0" prefWidth="727.0">
                   <children>
                      <VBox fx:id="inPersonMONDAY" layoutX="206.0" layoutY="47.0" prefHeight="200.0" prefWidth="100.0">
                         <children>
@@ -149,7 +149,7 @@
                            </CheckBox>
                         </children>
                      </VBox>
-                     <Line endX="100.0" endY="7.000003814697266" layoutX="263.0" layoutY="20.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
+                     <Line endX="100.0" endY="38.000003814697266" layoutX="263.0" layoutY="20.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
                      <Text fill="#231f36cc" layoutX="52.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Visite in presenza" textAlignment="CENTER" wrappingWidth="254.39999999999998">
                         <font>
                            <Font name="System Italic" size="18.0" />
@@ -786,15 +786,15 @@
          <Font size="18.0" />
       </font>
    </Button>
-   <Text fx:id="inPersonMessage" fill="#52b148" layoutX="119.0" layoutY="492.0" strokeType="OUTSIDE" strokeWidth="0.0" text="È stata aggiunta la modalità &quot;visite in presenza&quot;" textAlignment="CENTER" visible="false" wrappingWidth="215.33355712890625">
-      <font>
-         <Font name="System Bold" size="14.0" />
-      </font>
-   </Text>
-   <Text fx:id="onlineMessage" fill="#52b148" layoutX="539.0" layoutY="492.0" strokeType="OUTSIDE" strokeWidth="0.0" text="È stata aggiunta la modalità &quot;visite online&quot;" textAlignment="CENTER" visible="false" wrappingWidth="215.33355712890625">
-      <font>
-         <Font name="System Bold" size="14.0" />
-      </font>
-   </Text>
    <Button layoutX="754.0" layoutY="116.0" mnemonicParsing="false" onMouseClicked="#goToHomepage" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Richieste" textFill="WHITE" />
+   <Text fx:id="successMessage" fill="#52b148" layoutX="329.0" layoutY="462.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Salvataggio effettuato" textAlignment="CENTER" visible="false" wrappingWidth="215.33355712890625">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </Text>
+   <Text fx:id="modalityChangedMessage" fill="#df5353" layoutX="76.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nota: le modalità di visita sul tuo profilo sono state aggiornate in accordo alle selezioni inserite" visible="false" wrappingWidth="248.93353271484375">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </Text>
 </AnchorPane>

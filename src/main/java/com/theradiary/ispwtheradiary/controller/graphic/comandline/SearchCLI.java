@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
-import com.theradiary.ispwtheradiary.controller.application.Search;
+import com.theradiary.ispwtheradiary.controller.application.SearchController;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
@@ -36,8 +36,8 @@ public class SearchCLI extends AbstractState {
 
         try {
             List<PsychologistBean> psychologists = new ArrayList<>();
-            Search search = new Search();
-            search.searchPsychologists(psychologists, name, surname, city, inPresence, online, false);
+            SearchController searchController = new SearchController();
+            searchController.searchPsychologists(psychologists, name, surname, city, inPresence, online, false);
             if (psychologists.isEmpty()) {
                 Printer.println("Nessun risultato trovato");
                 goBack(context);

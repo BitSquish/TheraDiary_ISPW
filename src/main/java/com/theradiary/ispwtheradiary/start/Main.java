@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.start;
 
-import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepageController;
+import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepageGUI;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
@@ -45,7 +45,7 @@ public class Main extends Application {
                         Printer.println("Scelta non valida");
                 }
             } catch (Exception e) {
-                Printer.errorPrint("Input non valido");
+                Printer.errorPrint(e.getMessage());
                 scanner.nextLine();
             }
         }
@@ -54,7 +54,7 @@ public class Main extends Application {
         FXMLPathConfig fxmlPathConfig = new FXMLPathConfig("/viewPaths.properties");
         Session session = new Session(false);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath("HOMEPAGE_NOT_LOGGED_PATH")));
-        loader.setControllerFactory(c -> new HomepageController(fxmlPathConfig, session)); //Controller homepage
+        loader.setControllerFactory(c -> new HomepageGUI(fxmlPathConfig, session)); //Controller homepage
         Parent rootParent = loader.load();
         Scene scene = new Scene(rootParent);
         stage.setTitle("Theradiary");
@@ -74,6 +74,7 @@ public class Main extends Application {
         StateMachineImpl context= new StateMachineImpl();
         while(context.getCurrentState()!=null) {
             context.goNext();
+
         }
         Printer.println("Arrivederci");
     }

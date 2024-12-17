@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
-import com.theradiary.ispwtheradiary.controller.application.TaskAndToDo;
+import com.theradiary.ispwtheradiary.controller.application.TaskAndToDoController;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 
@@ -64,7 +64,7 @@ public class TaskPsychologistCLI extends AbstractState {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedDate= LocalDate.now().format(formatter);
         Printer.println("Data:" + formattedDate);
-        String diary = TaskAndToDo.getDiaryForToday(selectedPatient);
+        String diary = TaskAndToDoController.getDiaryForToday(selectedPatient);
         if (diary.isEmpty()) {
             Printer.println("Il diario è vuoto");
         } else {
@@ -76,7 +76,7 @@ public class TaskPsychologistCLI extends AbstractState {
         //mostra la lista delle cose da fare
         Printer.printlnBlue("-------------------Lista cose da fare-------------------");
         Printer.println("Lista cose da fare di " + selectedPatient.getFullName() + ":");
-        TaskAndToDo.toDoList(selectedPatient);
+        TaskAndToDoController.toDoList(selectedPatient);
         List<ToDoItemBean> toDoList = selectedPatient.getToDoList();
         //Nell todoitembean ho creato un metodo tostring che mi restituisce la stringa da stampare
         if(toDoList.isEmpty()){
@@ -92,7 +92,7 @@ public class TaskPsychologistCLI extends AbstractState {
     private void viewTasks(){
         Printer.printlnBlue("-------------------Lista task-------------------");
         Printer.println("Lista task di "+selectedPatient.getFullName()+":");
-        TaskAndToDo.retrieveTasks(selectedPatient);
+        TaskAndToDoController.retrieveTasks(selectedPatient);
         List<TaskBean> taskList = selectedPatient.getTasks();
         if(taskList.isEmpty()){
             Printer.println("Non ci sono task");

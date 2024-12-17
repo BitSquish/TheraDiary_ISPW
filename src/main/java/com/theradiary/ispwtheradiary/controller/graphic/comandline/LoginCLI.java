@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
-import com.theradiary.ispwtheradiary.controller.application.Login;
+import com.theradiary.ispwtheradiary.controller.application.LoginController;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
@@ -32,7 +32,7 @@ public class LoginCLI extends AbstractState {
             //creazione delle credenziali
             CredentialsBean credentials = new CredentialsBean(email, password, null);
             //login e verifica credenziali
-            Login login = new Login();
+            LoginController login = new LoginController();
             login.log(credentials);
             //determino il ruolo e prepara lo stato successivo
             AbstractState homeCLI;
@@ -49,12 +49,12 @@ public class LoginCLI extends AbstractState {
             action(context);
         }
     }
-    private PsychologistBean setupPsychologist(Login login, CredentialsBean credentials) {
+    private PsychologistBean setupPsychologist(LoginController login, CredentialsBean credentials) {
         PsychologistBean psychologistBean = new PsychologistBean(credentials);
         login.retrievePsychologist(psychologistBean);
         return psychologistBean;
     }
-    private PatientBean setupPatient(Login login, CredentialsBean credentials) {
+    private PatientBean setupPatient(LoginController login, CredentialsBean credentials) {
         PatientBean patientBean = new PatientBean(credentials);
         login.retrievePatient(patientBean);
         return patientBean;
