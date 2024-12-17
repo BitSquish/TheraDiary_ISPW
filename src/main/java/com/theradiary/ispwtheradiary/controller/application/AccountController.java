@@ -88,27 +88,29 @@ public class AccountController {
         return patientBeans;
     }
     public PsychologistBean yourPsychologist(PatientBean patientBean) {
-        // Conversione del PatientBean in Patient (entità)
-        Patient patient = new Patient(
-                new Credentials(
-                        patientBean.getCredentialsBean().getMail(),
-                        patientBean.getCredentialsBean().getPassword(),
-                        Role.PATIENT
-                ),
-                patientBean.getName(),
-                patientBean.getSurname(),
-                patientBean.getCity(),
-                patientBean.getDescription(),
-                patientBean.isInPerson(),
-                patientBean.isOnline()
-        );
+        if(patientBean.getPsychologistBean() != null) {
+            // Conversione del PatientBean in Patient (entità)
+            Patient patient = new Patient(
+                    new Credentials(
+                            patientBean.getCredentialsBean().getMail(),
+                            patientBean.getCredentialsBean().getPassword(),
+                            Role.PATIENT
+                    ),
+                    patientBean.getName(),
+                    patientBean.getSurname(),
+                    patientBean.getCity(),
+                    patientBean.getDescription(),
+                    patientBean.isInPerson(),
+                    patientBean.isOnline()
+            );
 
-        // Recupero il Psychologist dal DAO
-        Psychologist psychologist = RetrieveDAO.yourPsychologist(patient);
-
-        // Conversione da Psychologist (entità) a PsychologistBean
-        PsychologistBean psychologistBean = psychologist.toBean();
-        return psychologistBean;
+            // Recupero il Psychologist dal DAO
+            Psychologist psychologist = RetrieveDAO.yourPsychologist(patient);
+            // Conversione da Psychologist (entità) a PsychologistBean
+            PsychologistBean psychologistBean = psychologist.toBean();
+            return psychologistBean;
+        }
+        return null;
     }
 }
 
