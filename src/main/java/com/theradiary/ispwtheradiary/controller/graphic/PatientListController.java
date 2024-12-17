@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.application.PatientList;
 import com.theradiary.ispwtheradiary.controller.graphic.task.PatientDetailsController;
+import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
@@ -18,11 +19,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public class PatientListController extends CommonController {
     public PatientListController(FXMLPathConfig fxmlPathConfig, Session session) {
@@ -45,77 +47,62 @@ public class PatientListController extends CommonController {
 
 
     @FXML
-    public void printPatient(MouseEvent event, List<PatientBean> patientBeans){
+    public void printPatient(MouseEvent event, List<PatientBean> patientBeans) {
+        // Creazione della lista osservabile
         ObservableList<PatientBean> patientBeansList = FXCollections.observableArrayList(patientBeans);
+
+        // Configurazione delle colonne
         fullName.setCellValueFactory(new PropertyValueFactory<>("surname"));
         cityName.setCellValueFactory(new PropertyValueFactory<>("city"));
-        inPresenza.setCellValueFactory(cellData->{
-            boolean presenza = cellData.getValue().isInPerson();
-            return new javafx.beans.property.SimpleStringProperty(presenza ? "Sì" : "No");
-        });
-        online.setCellValueFactory(cellData->{
-            boolean online = cellData.getValue().isOnline();
-            return new javafx.beans.property.SimpleStringProperty(online ? "Sì" : "No");
-        });
-        checkTask.setCellFactory(param -> new TableCell<>() {
-            private final Button btn = new Button("Vedi Task");
 
-            {
-                btn.setOnMouseClicked(event -> {
-                    PatientBean patientBean = getTableView().getItems().get(getIndex());
-                    goToPatientTask(event, patientBean);
-                });
-            }
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btn);
-                }
-            }
+        inPresenza.setCellValueFactory(cellData -> {
+            boolean inPerson = cellData.getValue().isInPerson();
+            return new javafx.beans.property.SimpleStringProperty(inPerson ? "Sì" : "No");
         });
-        checkProfile.setCellFactory(param -> new TableCell<>() {
-            private final Button btn = new Button("Vedi Task");
-            {
-                btn.setOnMouseClicked(event -> {
-                    PatientBean patientBean = getTableView().getItems().get(getIndex());
-                    goToPatientTask(event, patientBean);
-                });
-            }
 
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btn);
-                }
-            }
+        online.setCellValueFactory(cellData -> {
+            boolean onlineStatus = cellData.getValue().isOnline();
+            return new javafx.beans.property.SimpleStringProperty(onlineStatus ? "Sì" : "No");
         });
-        checkProfile.setCellFactory(param -> new TableCell<>() {
-            private final Button btn = new Button("Vedi profilo");
 
-            {
-                btn.setOnMouseClicked(event -> {
-                    PatientBean patientBean = getTableView().getItems().get(getIndex());
-                    goToPatientProfile(event, patientBean);
-                });
-            }
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btn);
-                }
-            }
-        });
+        // Configurazione delle colonne con bottoni
+        checkTask.setCellFactory(createButtonCellFactory("Vedi Task", this::goToPatientTask));
+        checkProfile.setCellFactory(createButtonCellFactory("Vedi Profilo", this::goToPatientProfile));
+
+        // Imposta i dati nella tabella
         patientTable.setItems(patientBeansList);
     }
+
+    /**
+     * Metodo ausiliario per creare una cell factory con un bottone.
+     *
+     * @param buttonText Testo del bottone
+     * @param action     Azione da eseguire al click del bottone
+     * @return Callback per la cell factory
+     */
+    private Callback<TableColumn<PatientBean, Void>, TableCell<PatientBean, Void>> createButtonCellFactory(
+            String buttonText, BiConsumer<MouseEvent, PatientBean> action) {
+        return param -> new TableCell<>() {
+            private final Button btn = new Button(buttonText);
+            {
+                btn.setOnMouseClicked(event -> {
+                    PatientBean patientBean = getTableView().getItems().get(getIndex());
+                    action.accept(event, patientBean);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
+            }
+        };
+    }
+
     @FXML
     private void goToPatientProfile(MouseEvent event, PatientBean patientBean) {
         try {
@@ -125,8 +112,7 @@ public class PatientListController extends CommonController {
             ((PatientProfileController)loader.getController()).printPatient(patientBean);
             changeScene(root, event);
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e.getMessage());
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
     }
     @FXML
@@ -138,8 +124,7 @@ public class PatientListController extends CommonController {
             ((PatientDetailsController)loader.getController()).patientTask(patientBean);
             changeScene(root, event);
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -152,8 +137,7 @@ public class PatientListController extends CommonController {
             ((RequestController)loader.getController()).loadRequest(requestBeans);
             changeScene(root, event);
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
     }
     @FXML

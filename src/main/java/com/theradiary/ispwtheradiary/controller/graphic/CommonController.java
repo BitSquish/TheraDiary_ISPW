@@ -10,6 +10,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 import com.theradiary.ispwtheradiary.controller.graphic.task.DiaryAndTasksController;
 import com.theradiary.ispwtheradiary.controller.graphic.task.DiaryController;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
@@ -68,6 +69,9 @@ public abstract class CommonController {
     protected static final String DIARY_PAGE_PATH="DIARY_PAGE_PATH";
     protected static final String TODO_PATH="TODO_PATH";
     protected static final String LIST_TASK_PATIENT_PATH="LIST_TASK_PATIENT_PATH";
+    public static final String LOADING_SCENE ="Errore durante il caricamento della scena";
+
+
 
     @FXML
     private Line line1;
@@ -109,7 +113,7 @@ public abstract class CommonController {
             Parent root = loader.load();
             changeScene(root, event);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -134,7 +138,7 @@ public abstract class CommonController {
             }
             changeScene(root, event);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -154,7 +158,7 @@ public abstract class CommonController {
                 goToPatientList(event);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -174,7 +178,7 @@ public abstract class CommonController {
                 changeScene(root, event);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -192,7 +196,7 @@ public abstract class CommonController {
             Parent root = loader.load();
             changeScene(root, event);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -210,7 +214,7 @@ public abstract class CommonController {
             Parent root = loader.load();
             changeScene(root, event);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -235,7 +239,7 @@ public abstract class CommonController {
             Parent root = loader.load();
             changeScene(root, event);
         } catch (IOException | SQLException e) {
-            throw new RuntimeException(e);
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
     }
 
@@ -252,7 +256,7 @@ public abstract class CommonController {
                 changeScene(root, event);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
     }
     @FXML
@@ -263,7 +267,7 @@ public abstract class CommonController {
             Parent root = loader.load();
             changeScene(root, event);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
     }
     @FXML
@@ -275,8 +279,10 @@ public abstract class CommonController {
             ((DiaryController) loader.getController()).initializeDiary((PatientBean) session.getUser());
             changeScene(root, event);
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena:" + e.getMessage(), e);
+            // Rilancio di un'eccezione più descrittiva
+            throw new SceneLoadingException(LOADING_SCENE, e);
+
+
         }
     }
 

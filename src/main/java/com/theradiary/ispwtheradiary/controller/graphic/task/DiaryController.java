@@ -4,6 +4,7 @@ import com.theradiary.ispwtheradiary.controller.application.TaskAndToDo;
 import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
 
+import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 
@@ -19,6 +20,8 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Logger;
+
 
 public class DiaryController extends CommonController {
     public DiaryController(FXMLPathConfig fxmlPathConfig, Session session) {
@@ -47,7 +50,7 @@ public class DiaryController extends CommonController {
             diary.setText(diaryContent);
         }catch(Exception e){
             showMessage(Alert.AlertType.ERROR, "Errore durante il caricamento", "Impossibile caricare il diario.");
-            e.printStackTrace();
+            Logger.getAnonymousLogger().severe("Errore durante il caricamento del diario: " + e.getMessage());
         }
     }
 
@@ -65,8 +68,7 @@ public class DiaryController extends CommonController {
             Parent root=loader.load();
             changeScene(root,event);
         }catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena:" + e.getMessage(), e);
+            throw new SceneLoadingException("Errore durante il caricamento della scena", e);
         }
     }
     @FXML
@@ -74,10 +76,6 @@ public class DiaryController extends CommonController {
         String diaryContent = diary.getText();
         int maxWords=5000;
         int wordCount=countWords(diaryContent);
-        if(diaryContent.isEmpty()) {
-            showMessage(Alert.AlertType.WARNING, "Contenuto vuoto", "Inserisci del testo nel diario prima di salvare.");
-            return;
-        }
         if(wordCount>maxWords) {
             showMessage(Alert.AlertType.WARNING, "Contenuto troppo lungo", "Il diario non può superare le 1000 parole.");
             return;
@@ -87,7 +85,7 @@ public class DiaryController extends CommonController {
             showMessage(Alert.AlertType.INFORMATION, "Salvataggio effettuato", "Il diario è stato salvato correttamente.");
         }catch (Exception e) {
             showMessage(Alert.AlertType.ERROR, "Errore", "Errore durante il salvataggio del diario.");
-            e.printStackTrace();
+            Logger.getAnonymousLogger().severe("Errore durante il salvataggio del diario: " + e.getMessage());
         }
     }
 
@@ -107,8 +105,7 @@ public class DiaryController extends CommonController {
             Parent root = loader.load();
             changeScene(root, event);
         }catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena: " + e.getMessage(), e);
+            throw new SceneLoadingException("Errore durante il caricamento della scena", e);
         }
 
     }

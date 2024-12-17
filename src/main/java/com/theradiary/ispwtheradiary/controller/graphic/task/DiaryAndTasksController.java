@@ -1,8 +1,7 @@
 package com.theradiary.ispwtheradiary.controller.graphic.task;
 
 import com.theradiary.ispwtheradiary.controller.graphic.CommonController;
-import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtController;
-import com.theradiary.ispwtheradiary.controller.graphic.login.LoginController;
+import com.theradiary.ispwtheradiary.engineering.exceptions.SceneLoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
@@ -13,28 +12,18 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
+
 public class DiaryAndTasksController extends CommonController {
      public DiaryAndTasksController(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig, session);
     }
     PatientBean patientBean = (PatientBean) session.getUser();
 
-    @FXML
-    protected void goToDiary(MouseEvent event ) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(DIARY_PATH)));
-            loader.setControllerFactory(c -> new DiaryController(fxmlPathConfig, session));
-            Parent root = loader.load();
-            ((DiaryController) loader.getController()).initializeDiary(patientBean);
-            changeScene(root, event);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena:" + e.getMessage(), e);
-        }
-    }
+
+
     @FXML
     protected void goToTest(MouseEvent event){
-        //TODO: Implementare
+        //TODO
     }
     @FXML
     protected void goToDo(MouseEvent event){
@@ -45,8 +34,7 @@ public class DiaryAndTasksController extends CommonController {
             ((ToDoController) loader.getController()).initializeToDoList(patientBean);
             changeScene(root, event);
         }catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena:" + e.getMessage(), e);
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
     }
     @FXML
@@ -58,8 +46,7 @@ public class DiaryAndTasksController extends CommonController {
             ((TaskPatientController) loader.getController()).initializeTaskList(patientBean);
             changeScene(root, event);
         }catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Errore nel caricamento della scena:" + e.getMessage(), e);
+            throw new SceneLoadingException(LOADING_SCENE, e);
         }
 
     }
