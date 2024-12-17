@@ -9,7 +9,7 @@ public class AppointmentBean {
     private TimeSlot timeSlot;
     private boolean inPerson;
     private boolean online;
-    private PatientBean patientBean;
+    private String patientBean;
 
     public AppointmentBean(PsychologistBean psychologistBean, DayOfTheWeek day, TimeSlot timeSlot, boolean inPerson, boolean online) {
         this.psychologistBean = psychologistBean;
@@ -29,7 +29,7 @@ public class AppointmentBean {
         return day;
     }
 
-    public PatientBean getPatientBean() {
+    public String getPatientBean() {
         return patientBean;
     }
 
@@ -65,7 +65,7 @@ public class AppointmentBean {
         this.inPerson = inPerson;
     }
 
-    public void setPatientBean(PatientBean patientBean) {
+    public void setPatientBean(String patientBean) {
         this.patientBean = patientBean;
     }
 }

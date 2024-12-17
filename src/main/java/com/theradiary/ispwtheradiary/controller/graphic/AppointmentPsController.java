@@ -30,10 +30,10 @@ public class AppointmentPsController extends CommonController{
 
 
     @FXML
-    protected void loadCheckboxes() { //TODO: Entra 2 volte su lunedì
+    protected void loadCheckboxes() { //metodo chiamato quando viene cambiata la tab
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
         if(selectedTab == null) {
-            System.out.println("Nessuna tab selezionata");
+            System.out.println("Nessuna tab selezionata");  //TODO: gestire l'eccezione
             return;
         }
         String selectedTabText = selectedTab.getText();
@@ -73,11 +73,10 @@ public class AppointmentPsController extends CommonController{
                 onlineCheckboxes.add((CheckBox) node);
             }
             //Ricavo gli orari di visita dello psicologo già registrati
-            PsychologistBean psychologistBean = (PsychologistBean) session.getUser();
             AppointmentPs appointmentPs = new AppointmentPs();
             List<TimeSlot> inPersonTimeSlots = new ArrayList<>();
             List<TimeSlot> onlineTimeSlots = new ArrayList<>();
-            appointmentPs.getDayOfTheWeekAppointments(allAppointments,dayOfTheWeek, inPersonTimeSlots,onlineTimeSlots, psychologistBean);
+            appointmentPs.getDayOfTheWeekAppointments(allAppointments,dayOfTheWeek, inPersonTimeSlots,onlineTimeSlots);
             //Setto le checkbox
             for(int i = 0; i<inPersonCheckboxes.size(); i++) {
                 if(inPersonTimeSlots.contains(TimeSlot.values()[i])) {
@@ -90,42 +89,31 @@ public class AppointmentPsController extends CommonController{
         }
     }
 
+
     @FXML
-    private void save(MouseEvent event) {
+    private void save(MouseEvent event){
         List<Tab> tabs = tabPane.getTabs();
         List<AppointmentBean> appointmentToAdd = new ArrayList<>();
-        List<AppointmentBean> appointmentToRemove = new ArrayList<>();
-        for(Tab tab : tabs){    //per ogni tab, quindi per ogni giorno della settimana
+        for(Tab tab:tabs){
             AnchorPane anchorPane = (AnchorPane) tab.getContent();
-            VBox vBoxInPerson = (VBox) anchorPane.getChildren().getFirst(); //fasce orarie in presenza
-            VBox vBoxOnline = (VBox) anchorPane.getChildren().get(1);   //fasce orarie online
-            //Itero per tutte le fasce orarie
+            VBox vBoxInPerson = (VBox) anchorPane.getChildren().get(0);
+            VBox vBoxOnline = (VBox) anchorPane.getChildren().get(1);
             for(int i = 0; i<vBoxInPerson.getChildren().size(); i++){
-                CheckBox inPersonCheckBox = (CheckBox) vBoxInPerson.getChildren().get(i);
-                CheckBox onlineCheckBox = (CheckBox) vBoxOnline.getChildren().get(i);
-                //Aggiorno la lista con le nuove fasce orarie scelte
+                CheckBox inPersonCheckBox = (CheckBox) vBoxInPerson.getChildren().get(i);   //checkbox fasce orarie in presenza
+                CheckBox onlineCheckBox = (CheckBox) vBoxOnline.getChildren().get(i);   //checkbox fasce orarie online
                 if(inPersonCheckBox.isSelected() || onlineCheckBox.isSelected()){
-                    AppointmentBean appointmentBean = getAppointmentBean(tab.getId(),TimeSlot.values()[i], inPersonCheckBox, onlineCheckBox);
-                    if(!allAppointments.contains(appointmentBean)){
-                        appointmentToAdd.add(appointmentBean);
-                    }
-                }
-                //Aggiorno la lista con le fasce orarie da rimuovere
-                else{
                     AppointmentBean appointmentBean = getAppointmentBean(tab.getId(), TimeSlot.values()[i], inPersonCheckBox, onlineCheckBox);
-                    if(allAppointments.contains(appointmentBean)){
-                        appointmentToRemove.add(appointmentBean);
-                    }
+                    setPatient(appointmentBean);
+                    appointmentToAdd.add(appointmentBean);
                 }
-            }
-            if(!(appointmentToAdd.isEmpty() && appointmentToRemove.isEmpty())){
-                AppointmentPs appointmentPs = new AppointmentPs();
-                appointmentPs.saveAppointments((PsychologistBean)session.getUser(),appointmentToAdd, appointmentToRemove);
-                //TODO Mostra messaggio di successo
-                //TODO Se l'utente inserisce modalità di visita non concordi a quelle del profilo, aggiornare il profilo
             }
         }
+        AppointmentPs appointmentPs = new AppointmentPs();
+        appointmentPs.saveAppointments((PsychologistBean) session.getUser(), appointmentToAdd);
+        allAppointments.clear();
+        allAppointments.addAll(appointmentToAdd);
     }
+
 
     private AppointmentBean getAppointmentBean(String id, TimeSlot timeSlot, CheckBox inPersonCheckBox, CheckBox onlineCheckBox) {
         return new AppointmentBean(
@@ -135,6 +123,14 @@ public class AppointmentPsController extends CommonController{
                 inPersonCheckBox.isSelected(),
                 onlineCheckBox.isSelected()
                 );
+    }
+
+    private void setPatient(AppointmentBean appointmentBean) {
+        for(AppointmentBean app: allAppointments){
+            if(app.getDay().equals(appointmentBean.getDay()) && app.getTimeSlot().equals(appointmentBean.getTimeSlot())){
+                appointmentBean.setPatientBean(app.getPatientBean());
+            }
+        }
     }
 
     //Recupera tutti gli appuntamenti, questo metodo viene chiamato all'istanziazione del controller
