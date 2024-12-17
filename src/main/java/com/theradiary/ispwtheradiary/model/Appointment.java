@@ -11,6 +11,7 @@ public class Appointment {
     private boolean inPerson;
     private boolean online;
     private Patient patient;
+    private boolean available;
 
     public Appointment(Psychologist psychologist, DayOfTheWeek day, TimeSlot timeSlot, boolean inPerson, boolean online) {
         this.psychologist = psychologist;
@@ -19,6 +20,7 @@ public class Appointment {
         this.inPerson = inPerson;
         this.online = online;
         this.patient = null;
+        this.available = true;
     }
 
     public Psychologist getPsychologist() {
@@ -68,6 +70,14 @@ public class Appointment {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     public AppointmentBean toBean() {

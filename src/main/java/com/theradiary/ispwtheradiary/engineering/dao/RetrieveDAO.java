@@ -257,6 +257,7 @@ public class RetrieveDAO {
                         rs.getBoolean("online")
                 );
                 appointment.setPatient(new Patient(new Credentials(rs.getString("patient"), Role.PATIENT)));
+                appointment.setAvailable(rs.getBoolean("available"));
                 appointments.add(appointment);
             }
         }catch (SQLException e){

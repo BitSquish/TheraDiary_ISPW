@@ -60,7 +60,7 @@
             <Font size="14.0" />
         </font>
     </Text>
-    <Button fx:id="iniziamo" layoutX="369.0" layoutY="469.0" mnemonicParsing="false" onMouseClicked="#startButton" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6;" text="Iniziamo!" textFill="WHITE">
+    <Button fx:id="iniziamo" layoutX="369.0" layoutY="469.0" mnemonicParsing="false" onMouseClicked="#startButton" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Iniziamo!" textFill="WHITE">
         <font>
             <Font size="18.0" />
         </font>

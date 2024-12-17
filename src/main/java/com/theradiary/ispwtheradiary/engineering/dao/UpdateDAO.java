@@ -99,22 +99,12 @@ public class UpdateDAO {
     public static void addAppointments(Appointment appointmentsToAdd) {
         String psychologist = appointmentsToAdd.getPsychologist().getCredentials().getMail();
         try(Connection conn = ConnectionFactory.getConnection()){
-            UpdateQuery.addAppointment(conn, psychologist, appointmentsToAdd.getDay(), appointmentsToAdd.getTimeSlot(), appointmentsToAdd.isInPerson(), appointmentsToAdd.isOnline(), appointmentsToAdd.getPatient().getCredentials().getMail());
+            UpdateQuery.addAppointment(conn, psychologist, appointmentsToAdd.getDay(), appointmentsToAdd.getTimeSlot(), appointmentsToAdd.isInPerson(), appointmentsToAdd.isOnline(), appointmentsToAdd.getPatient().getCredentials().getMail(), appointmentsToAdd.isAvailable());
         } catch(SQLException e){
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    public static void removeAppointments(List<Appointment> appointmentsToRemove) {
-        String psychologist = appointmentsToRemove.get(0).getPsychologist().getCredentials().getMail();
-        try(Connection conn = ConnectionFactory.getConnection()){
-            for(Appointment appointment : appointmentsToRemove){
-                UpdateQuery.removeAppointment(conn, psychologist, appointment.getDay(), appointment.getTimeSlot(), appointment.isInPerson(), appointment.isOnline());
-            }
-        } catch(SQLException e){
-            throw new RuntimeException(e.getMessage());
-        }
-    }
 
     public static void modifyAppointments(List<Appointment> appointmentsToModify) {
         String psychologist = appointmentsToModify.get(0).getPsychologist().getCredentials().getMail();

@@ -27,6 +27,7 @@ public class AppointmentPsController {
             if(appointment.getPatient() != null){
                 appointmentBean.setPatientBean(appointment.getPatient().getCredentials().getMail());
             }
+            appointmentBean.setAvailable(appointment.isAvailable());
             appointmentsBean.add(appointmentBean);
         }
     }
@@ -48,6 +49,7 @@ public class AppointmentPsController {
         for(AppointmentBean appointmentBean : appointmentToAdd) {
             Appointment appointment = new Appointment(psychologist, appointmentBean.getDay(), appointmentBean.getTimeSlot(), appointmentBean.isInPerson(), appointmentBean.isOnline());
             appointment.setPatient(new Patient(new Credentials(appointmentBean.getPatientBean(), Role.PATIENT)));
+            appointment.setAvailable(appointmentBean.isAvailable());
             UpdateDAO.addAppointments(appointment);
         }
     }

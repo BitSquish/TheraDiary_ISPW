@@ -32,7 +32,7 @@ public class PatientAccountGUI extends AccountGUI {
     }
 
     public void initializePsychologistField(){
-        if(((PatientBean)session.getUser()).getPsychologistBean() == null){
+        if(((PatientBean)session.getUser()).getPsychologistBean().getCredentialsBean().getMail() == null){
             psychologist.setText("Nessuno psicologo");
         }else{
             AccountController accountController = new AccountController();

@@ -23,7 +23,7 @@
         </font>
     </Text>
     <TextField fx:id="nomeP" layoutX="182.0" layoutY="251.0" prefHeight="35.0" prefWidth="169.0" style="-fx-background-radius: 20px;" />
-    <Button fx:id="ricerca" layoutX="370.0" layoutY="455.0" mnemonicParsing="false" onMouseClicked="#search" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6;" text="Cerca" textFill="WHITE">
+    <Button fx:id="ricerca" layoutX="370.0" layoutY="455.0" mnemonicParsing="false" onMouseClicked="#search" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Cerca" textFill="WHITE">
         <font>
             <Font size="18.0" />
         </font>

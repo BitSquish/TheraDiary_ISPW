@@ -260,6 +260,7 @@ public abstract class CommonGUI {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(APPOINTMENTPT_PATH)));
                 loader.setControllerFactory(c -> new AppointmentPtGUI(fxmlPathConfig, session));
                 Parent root = loader.load();
+                ((AppointmentPtGUI)loader.getController()).initializeVbox();
                 changeScene(root, event);
             }
         } catch (IOException e) {
