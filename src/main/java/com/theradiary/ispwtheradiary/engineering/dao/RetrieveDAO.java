@@ -70,6 +70,8 @@ public class RetrieveDAO {
                 patient.setDescription(rs.getString("description"));
                 patient.setInPerson(rs.getBoolean("inPerson"));
                 patient.setOnline(rs.getBoolean("online"));
+                patient.setPag(rs.getBoolean("pag"));
+                patient.setPsychologist(new Psychologist(new Credentials(rs.getString("psychologist"), Role.PSYCHOLOGIST)));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

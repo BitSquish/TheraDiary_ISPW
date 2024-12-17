@@ -27,7 +27,7 @@ public class LoginController {
     }
 
     public void retrievePatient(PatientBean patientBean) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), null, null, null, null, false, false);
+        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT));
         RetrieveDAO.retrievePatient(patient);
         patientBean.setName(patient.getName());
         patientBean.setSurname(patient.getSurname());
@@ -36,6 +36,7 @@ public class LoginController {
         patientBean.setInPerson(patient.isInPerson());
         patientBean.setOnline(patient.isOnline());
         patientBean.setPag(patient.isPag());
+        patientBean.setPsychologistBean(patient.getPsychologist().toBean());
     }
 
     public void retrievePsychologist(PsychologistBean psychologistBean) {

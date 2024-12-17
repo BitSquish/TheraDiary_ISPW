@@ -67,7 +67,7 @@ public class RetrieveQuery {
     }
 
     public static ResultSet retrievePatient(Connection conn, String mail) throws SQLException {
-        String query = "SELECT mail, name, surname, city, description, inPerson, online FROM patient WHERE mail = ?";
+        String query = "SELECT mail, name, surname, city, description, inPerson, online, pag, psychologist FROM patient WHERE mail = ?";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, mail);
         return pstmt.executeQuery();

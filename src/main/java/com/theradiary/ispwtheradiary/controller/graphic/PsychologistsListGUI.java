@@ -81,18 +81,6 @@ public class PsychologistsListGUI extends CommonGUI {
         listPsychologist.setItems(psychologistsBeansList);
     }
 
-    @FXML
-    private void goToPsychologistDescription(MouseEvent event, PsychologistBean psychologistBean) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PSYCHOLOGIST_DESCRIPTION_PATH)));
-            loader.setControllerFactory(c -> new PsychologistDescriptionGUI(fxmlPathConfig, session));
-            Parent root = loader.load();
-            ((PsychologistDescriptionGUI) loader.getController()).printPsychologist(psychologistBean);
-            changeScene(root, event);
-        } catch (IOException e) {
-            throw new SceneLoadingException(LOADING_SCENE, e);
-        }
-    }
 
 }
 

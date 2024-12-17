@@ -23,15 +23,22 @@ public class PatientAccountGUI extends AccountGUI {
 
     @FXML
     private void yourPsychologist(MouseEvent event) {
-        AccountController account = new AccountController();
-        PsychologistBean yourPsychologist= account.yourPsychologist((PatientBean) session.getUser());
-        if(yourPsychologist==null){
-            psychologist.setText("Non hai uno psicologo assegnato");
-            return;
+        if(((PatientBean)session.getUser()).getPsychologistBean() == null){
+            goToSearch(event);
+        }else{
+            goToPsychologistDescription(event, ((PatientBean)session.getUser()).getPsychologistBean());
         }
-        psychologist.setText(yourPsychologist.getFullName());
 
+    }
 
+    public void initializePsychologistField(){
+        if(((PatientBean)session.getUser()).getPsychologistBean() == null){
+            psychologist.setText("Nessuno psicologo");
+        }else{
+            AccountController accountController = new AccountController();
+            PsychologistBean psychologistBean = accountController.yourPsychologist(((PatientBean)session.getUser()));
+            psychologist.setText(psychologistBean.getFullName());
+        }
     }
 
 
