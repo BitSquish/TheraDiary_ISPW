@@ -8,6 +8,7 @@ import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.*;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import java.time.LocalDate;
@@ -38,9 +39,15 @@ public class PsychologistDescriptionGUI extends CommonGUI {
     private Label otherInfoField;
     @FXML
     private Label message;
+    @FXML
+    private Button request;
 
 
     public void printPsychologist(PsychologistBean psychologistBean) {
+        //Se il paziente ha già uno psicologo associato, nasconde il bottone per inviare la richiesta
+        if(((PatientBean)session.getUser()).getPsychologistBean() != null){
+            request.setVisible(false);
+        }
         MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCity(), null, null, null);
         PsychologistDescriptionController psychologistDescriptionController = new PsychologistDescriptionController();
         psychologistDescriptionController.searchPsychologistInfo(psychologistBean, medicalOfficeBean);

@@ -26,6 +26,8 @@ public class PatientAccountGUI extends AccountGUI {
         if(((PatientBean)session.getUser()).getPsychologistBean() == null){
             goToSearch(event);
         }else{
+            AccountController accountController = new AccountController();
+            //TODO: non vengono visualizzati tutti i dati dello psicologo
             goToPsychologistDescription(event, ((PatientBean)session.getUser()).getPsychologistBean());
         }
 

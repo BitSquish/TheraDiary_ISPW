@@ -98,7 +98,19 @@ public class RetrieveDAO {
     public static boolean retrieveCategories(Patient patient) {
         try (Connection conn = ConnectionFactory.getConnection();
              ResultSet rs = RetrieveQuery.retrieveCategories(conn, patient.getCredentials().getMail())) {
-            ArrayList<Category> categories = new ArrayList<>();
+
+            ArrayList<Category> categories = extractCategories(rs);
+            patient.setCategories(new ArrayList<>(categories));
+            return !categories.isEmpty();
+
+        } catch (SQLException e) {
+            throw new DatabaseOperationException("Errore nel recupero delle categorie", e);
+        }
+    }
+
+    private static ArrayList<Category> extractCategories(ResultSet rs) {
+        ArrayList<Category> categories = new ArrayList<>();
+        try {
             while (rs.next()) {
                 String categoryName = rs.getString("category");
                 try {
@@ -108,17 +120,28 @@ public class RetrieveDAO {
                     throw new IllegalArgumentException("Categoria non valida:" + categoryName);
                 }
             }
-            patient.setCategories(new ArrayList<>(categories));
-            return !categories.isEmpty();
         } catch (SQLException e) {
-            throw new DatabaseOperationException("Errore nel recupero delle categorie", e);
+            throw new DatabaseOperationException("Errore durante l'elaborazione del ResultSet", e);
         }
+        return categories;
     }
 
     public static boolean retrieveMajors(Psychologist psychologist) {
         try (Connection conn = ConnectionFactory.getConnection();
              ResultSet rs = RetrieveQuery.retrieveMajors(conn, psychologist.getCredentials().getMail())) {
-            ArrayList<Major> majors = new ArrayList<>();
+
+            ArrayList<Major> majors = extractMajors(rs);
+            psychologist.setMajors(new ArrayList<>(majors));
+            return !majors.isEmpty();
+
+        } catch (SQLException e) {
+            throw new DatabaseOperationException("Errore nel recupero delle specializzazioni", e);
+        }
+    }
+
+    private static ArrayList<Major> extractMajors(ResultSet rs) {
+        ArrayList<Major> majors = new ArrayList<>();
+        try {
             while (rs.next()) {
                 String majorName = rs.getString("major");
                 try {
@@ -128,11 +151,10 @@ public class RetrieveDAO {
                     throw new IllegalArgumentException("Specializzazione non valida:" + majorName);
                 }
             }
-            psychologist.setMajors(new ArrayList<>(majors));
-            return !majors.isEmpty();
         } catch (SQLException e) {
-            throw new DatabaseOperationException("Errore nel recupero delle specializzazioni", e);
+            throw new DatabaseOperationException("Errore durante l'elaborazione del ResultSet", e);
         }
+        return majors;
     }
 
     public static List<Patient> retrievePatientList(Psychologist psychologist) {
