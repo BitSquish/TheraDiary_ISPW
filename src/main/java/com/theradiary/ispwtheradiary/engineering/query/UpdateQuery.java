@@ -12,6 +12,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class UpdateQuery {
+
+    private UpdateQuery() {
+    }
     public static void modifyMedicalOffice(Connection conn, String mail, String city, String postCode, String address, String otherInfo) throws SQLException {
         String query = "UPDATE medicaloffice SET city = ?, postCode = ?, address = ?, otherInfo = ? WHERE mail = ?";
         try(PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -54,27 +57,7 @@ public class UpdateQuery {
             throw new DatabaseOperationException("Errore nella modifica delle credenziali", e);
         }
     }
-        /*public static void modifyMail(Connection conn, String newMail, String oldMail)  {
-        String query = "UPDATE users SET mail = ? WHERE mail = ?";
-        try(PreparedStatement pstmt = conn.prepareStatement(query)){
-            pstmt.setString(1,newMail);
-            pstmt.setString(2,oldMail);
-            pstmt.executeUpdate();
-        }catch (SQLException e){
-            throw new RuntimeException(e.getMessage());
-        }
 
-    }
-    public static void modifyPassword(Connection conn,String newPassword, String oldPassword){
-        String query="UPDATE users SET password = ? WHERE password = ?";
-        try(PreparedStatement pstmt = conn.prepareStatement(query)){
-            pstmt.setString(1,newPassword);
-            pstmt.setString(2,oldPassword);
-            pstmt.executeUpdate();
-        }catch (SQLException e){
-            throw new RuntimeException(e.getMessage());
-        }
-    }*/
 
     public static void modifyPatient(Connection conn, String mail, String name, String surname, String city, String description, boolean inPerson, boolean online) {
         String query = "UPDATE patient SET name = ?, surname = ?, city = ?, description = ?, inPerson = ?, online = ? WHERE mail = ?";

@@ -300,7 +300,7 @@
                            </CheckBox>
                         </children>
                      </VBox>
-                     <Line endX="100.0" endY="7.000003814697266" layoutX="263.0" layoutY="20.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
+                     <Line endX="100.0" endY="39.60000991821289" layoutX="263.0" layoutY="20.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
                      <Text fill="#231f36cc" layoutX="52.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Visite in presenza" textAlignment="CENTER" wrappingWidth="254.39999999999998">
                         <font>
                            <Font name="System Italic" size="18.0" />
@@ -451,7 +451,7 @@
                            </CheckBox>
                         </children>
                      </VBox>
-                     <Line endX="100.0" endY="7.000003814697266" layoutX="263.0" layoutY="20.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
+                     <Line endX="100.0" endY="38.799991607666016" layoutX="263.0" layoutY="20.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
                      <Text fill="#231f36cc" layoutX="52.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Visite in presenza" textAlignment="CENTER" wrappingWidth="254.39999999999998">
                         <font>
                            <Font name="System Italic" size="18.0" />
@@ -601,7 +601,7 @@
                            </CheckBox>
                         </children>
                      </VBox>
-                     <Line endX="100.0" endY="7.000003814697266" layoutX="263.0" layoutY="20.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
+                     <Line endX="100.0" endY="37.19998550415039" layoutX="263.0" layoutY="20.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
                      <Text fill="#231f36cc" layoutX="52.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Visite in presenza" textAlignment="CENTER" wrappingWidth="254.39999999999998">
                         <font>
                            <Font name="System Italic" size="18.0" />
@@ -752,7 +752,7 @@
                            </CheckBox>
                         </children>
                      </VBox>
-                     <Line endX="100.0" endY="7.000003814697266" layoutX="263.0" layoutY="20.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
+                     <Line endX="100.0" endY="38.799991607666016" layoutX="263.0" layoutY="20.0" startX="99.99996948242188" startY="221.79998779296875" stroke="#242038" />
                      <Text fill="#231f36cc" layoutX="52.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Visite in presenza" textAlignment="CENTER" wrappingWidth="254.39999999999998">
                         <font>
                            <Font name="System Italic" size="18.0" />

@@ -92,14 +92,14 @@
          </Button>
       </children>
    </VBox>
-   <VBox fx:id="emptyAppointments" layoutX="504.0" layoutY="201.0" prefHeight="255.0" prefWidth="254.0" visible="false">
+   <VBox fx:id="emptyAppointments" layoutX="497.0" layoutY="222.0" prefHeight="214.0" prefWidth="272.0" visible="false">
       <children>
-         <Text fill="#231f36cc" strokeType="OUTSIDE" strokeWidth="0.0" text="Il tuo psicologo non ha ancora registrato i suoi orari per gli appuntamenti." textAlignment="CENTER" wrappingWidth="271.9999755859375">
+         <Text fx:id="errorMessage" fill="#231f36cc" strokeType="OUTSIDE" strokeWidth="0.0" text="Il tuo psicologo non ha ancora registrato i suoi orari per gli appuntamenti." textAlignment="CENTER" wrappingWidth="271.9999755859375">
             <font>
                <Font name="System Italic" size="18.0" />
             </font>
          </Text>
-         <Text fill="#231f36cc" strokeType="OUTSIDE" strokeWidth="0.0" text="Prova a contattarlo via mail:" textAlignment="CENTER" wrappingWidth="271.9999755859375">
+         <Text fx:id="contactInfo" fill="#231f36cc" strokeType="OUTSIDE" strokeWidth="0.0" text="Ti consigliamo di contattarlo via mail:" textAlignment="CENTER" wrappingWidth="271.9999755859375">
             <font>
                <Font name="System Italic" size="18.0" />
             </font>
@@ -117,9 +117,4 @@
          </Text>
       </children>
    </VBox>
-   <Text fx:id="appointmentAlreadySetted" fill="#231f36cc" layoutX="507.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hai già un appuntamento associato. Contatta il tuo psicologo per modificarlo." textAlignment="CENTER" visible="false" wrappingWidth="271.9999755859375">
-      <font>
-         <Font name="System Italic" size="18.0" />
-      </font>
-   </Text>
 </AnchorPane>

@@ -20,9 +20,9 @@ import java.util.List;
 
 public class AppointmentPtGUI extends CommonGUI {
 
-    private PsychologistBean psychologistBean = ((PatientBean)session.getUser()).getPsychologistBean();
+    private final PsychologistBean psychologistBean = ((PatientBean)session.getUser()).getPsychologistBean();
     private List<AppointmentBean> allAppointments = new ArrayList<>();
-    private AppointmentController appointmentController = new AppointmentController();
+    private final AppointmentController appointmentController = new AppointmentController();
     public AppointmentPtGUI(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig, session);
     }
@@ -40,9 +40,11 @@ public class AppointmentPtGUI extends CommonGUI {
     @FXML
     private Text psychologistMail;
     @FXML
-    private Text appointmentAlreadySetted;
-    @FXML
     private Label success;
+    @FXML
+    private Text errorMessage;
+    @FXML
+    private Text contactInfo;
 
     /*
         Casi da distinguere:
@@ -68,8 +70,12 @@ public class AppointmentPtGUI extends CommonGUI {
                 psychologistMail.setText(psychologistBean.getCredentialsBean().getMail());
             }else{
                 //Se il paziente ha già un appuntamento associato, lo avvisa.
-                if(appointmentController.hasAlreadyAnAppointment((PatientBean) session.getUser(), allAppointments)){
-                    appointmentAlreadySetted.setVisible(true);
+                AppointmentBean appointmentBean = appointmentController.getAppointmentIfExists((PatientBean) session.getUser(), allAppointments);
+                if(appointmentBean != null){
+                    emptyAppointments.setVisible(true);
+                    errorMessage.setText("Hai già un appuntamento fissato con lo psicologo, ogni " + DayOfTheWeek.translateDay(appointmentBean.getDay().getId()) + " nella fascia oraria " + TimeSlot.translateTimeSlot(appointmentBean.getTimeSlot().getId()) + "");
+                    contactInfo.setText("Contatta il tuo psicologo per eventuali modifiche al seguente indirizzo e-mail: ");
+                    psychologistMail.setText(psychologistBean.getCredentialsBean().getMail());
                 }else{
                     //Se il paziente ha uno psicologo associato e non ha già un appuntamento assegnato, mostra le fasce orarie e i giorni disponibili
                     appointmentVbox.setVisible(true);

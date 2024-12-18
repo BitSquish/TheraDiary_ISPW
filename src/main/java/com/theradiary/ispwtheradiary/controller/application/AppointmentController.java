@@ -93,9 +93,15 @@ public class AppointmentController {
 
 
     //Controlla se il paziente ha già un appuntamento associato
-    public boolean hasAlreadyAnAppointment(PatientBean patientBean, List<AppointmentBean> allAppointments) {
-        return allAppointments.stream().anyMatch(appointmentBean -> appointmentBean.getPatientBean() != null && appointmentBean.getPatientBean().equals(patientBean.getCredentialsBean().getMail()) && !appointmentBean.isAvailable());
+    public AppointmentBean getAppointmentIfExists(PatientBean patientBean, List<AppointmentBean> allAppointments) {
+        return allAppointments.stream()
+                .filter(appointmentBean -> appointmentBean.getPatientBean() != null
+                        && appointmentBean.getPatientBean().equals(patientBean.getCredentialsBean().getMail())
+                        && !appointmentBean.isAvailable())
+                .findFirst() // Trova al massimo il primo appuntamento che soddisfa la condizione
+                .orElse(null); // Restituisce null se non c'è alcun appuntamento che soddisfa la condizione
     }
+
 
     //Controlla se il paziente ha già fatto richiesta per l'appuntamento corrispondente a quella fascia oraria e a quel giorno
     public boolean hasAlreadySentARequest(PatientBean patientBean, DayOfTheWeek day, TimeSlot timeSlot, List<AppointmentBean> allAppointments) {
