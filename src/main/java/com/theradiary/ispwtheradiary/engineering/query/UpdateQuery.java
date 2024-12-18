@@ -197,4 +197,17 @@ public class UpdateQuery {
             throw new DatabaseOperationException("Errore nella rimozione degli appuntamenti", e);
         }
     }
+
+    public static void setRequestForAppointment(Connection conn, String psychologist, DayOfTheWeek day, TimeSlot timeSlot, String patient) {
+        String query = "UPDATE appointment SET patient = ? WHERE psychologist = ? AND day = ? AND timeSlot = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, patient);
+            pstmt.setString(2, psychologist);
+            pstmt.setString(3, day.toString());
+            pstmt.setString(4, timeSlot.toString());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DatabaseOperationException("Errore nella richiesta di appuntamento", e);
+        }
+    }
 }

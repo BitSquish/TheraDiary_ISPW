@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -23,7 +24,7 @@
          <Image url="@img/appointment.png" />
       </image>
    </ImageView>
-   <VBox fx:id="psychologistNotSetted" layoutX="506.0" layoutY="222.0" prefHeight="213.0" prefWidth="274.0">
+   <VBox fx:id="psychologistNotSetted" layoutX="506.0" layoutY="222.0" prefHeight="213.0" prefWidth="274.0" visible="false">
       <children>
          <Text fill="#231f36cc" strokeType="OUTSIDE" strokeWidth="0.0" text="Non hai ancora scelto il tuo psicologo." textAlignment="CENTER" wrappingWidth="271.9999755859375">
             <font>
@@ -48,7 +49,7 @@
          </Button>
       </children>
    </VBox>
-   <VBox fx:id="appointmentVbox" layoutX="516.0" layoutY="204.0" prefHeight="292.0" prefWidth="254.0">
+   <VBox fx:id="appointmentVbox" layoutX="506.0" layoutY="202.0" prefHeight="292.0" prefWidth="254.0" visible="false">
       <children>
          <Text fill="#231f36cc" strokeType="OUTSIDE" strokeWidth="0.0" text="Scegli il giorno della settimana" textAlignment="CENTER" wrappingWidth="254.39999999999998">
             <font>
@@ -73,14 +74,52 @@
                <Insets left="50.0" top="15.0" />
             </VBox.margin>
          </ComboBox>
+         <Label fx:id="success" prefHeight="66.0" prefWidth="218.0" style="-fx-alignment: center;" text="Richiesta inviata." textAlignment="CENTER" textFill="#52b148" visible="false" wrapText="true">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+            <VBox.margin>
+               <Insets left="17.0" top="20.0" />
+            </VBox.margin>
+         </Label>
          <Button fx:id="request" mnemonicParsing="false" onMouseClicked="#askForAnAppointment" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Invia richiesta" textFill="WHITE">
             <font>
                <Font size="18.0" />
             </font>
             <VBox.margin>
-               <Insets left="57.0" top="50.0" />
+               <Insets left="57.0" />
             </VBox.margin>
          </Button>
       </children>
    </VBox>
+   <VBox fx:id="emptyAppointments" layoutX="504.0" layoutY="201.0" prefHeight="255.0" prefWidth="254.0" visible="false">
+      <children>
+         <Text fill="#231f36cc" strokeType="OUTSIDE" strokeWidth="0.0" text="Il tuo psicologo non ha ancora registrato i suoi orari per gli appuntamenti." textAlignment="CENTER" wrappingWidth="271.9999755859375">
+            <font>
+               <Font name="System Italic" size="18.0" />
+            </font>
+         </Text>
+         <Text fill="#231f36cc" strokeType="OUTSIDE" strokeWidth="0.0" text="Prova a contattarlo via mail:" textAlignment="CENTER" wrappingWidth="271.9999755859375">
+            <font>
+               <Font name="System Italic" size="18.0" />
+            </font>
+            <VBox.margin>
+               <Insets top="15.0" />
+            </VBox.margin>
+         </Text>
+         <Text fx:id="psychologistMail" fill="#231f36cc" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="271.9999755859375">
+            <font>
+               <Font name="System Italic" size="18.0" />
+            </font>
+            <VBox.margin>
+               <Insets top="10.0" />
+            </VBox.margin>
+         </Text>
+      </children>
+   </VBox>
+   <Text fx:id="appointmentAlreadySetted" fill="#231f36cc" layoutX="507.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hai già un appuntamento associato. Contatta il tuo psicologo per modificarlo." textAlignment="CENTER" visible="false" wrappingWidth="271.9999755859375">
+      <font>
+         <Font name="System Italic" size="18.0" />
+      </font>
+   </Text>
 </AnchorPane>

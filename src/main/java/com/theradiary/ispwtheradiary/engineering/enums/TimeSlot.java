@@ -31,4 +31,17 @@ public enum TimeSlot {
             default -> null;
         };
     }
+
+    public static TimeSlot fromStringToTimeSlot(String time){
+        return switch (time){
+            case "9:00 - 10:00" -> NINE_TEN;
+            case "10:00 - 11:00" -> TEN_ELEVEN;
+            case "11:00 - 12:00" -> ELEVEN_TWELVE;
+            case "12:00 - 13:00" -> TWELVE_THIRTEEN;
+            case "14:00 - 15:00" -> FOURTEEN_FIFTEEN;
+            case "15:00 - 16:00" -> FIFTEEN_SIXTEEN;
+            case "16:00 - 17:00" -> SIXTEEN_SEVENTEEN;
+            default -> null;
+        };
+    }
 }

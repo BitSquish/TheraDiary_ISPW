@@ -22,6 +22,14 @@ public class AppointmentBean {
         this.available = true;
     }
 
+    //Costruttore usato per inviare la richiesta
+    public AppointmentBean(PsychologistBean psychologistBean, DayOfTheWeek day, TimeSlot timeSlot, String patientBean) {
+        this.psychologistBean = psychologistBean;
+        this.day = day;
+        this.timeSlot = timeSlot;
+        this.patientBean = patientBean;
+    }
+
 
     public PsychologistBean getPsychologistBean() {
         return psychologistBean;

@@ -27,4 +27,15 @@ public enum DayOfTheWeek {
             default -> null;
         };
     }
+
+    public static DayOfTheWeek fromStringToDay(String day){
+        return switch (day){
+            case "Lunedì" -> MONDAY;
+            case "Martedì" -> TUESDAY;
+            case "Mercoledì" -> WEDNESDAY;
+            case "Giovedì" -> THURSDAY;
+            case "Venerdì" -> FRIDAY;
+            default -> null;
+        };
+    }
 }

@@ -124,5 +124,13 @@ public class UpdateDAO {
             throw new DatabaseOperationException("Errore nella cancellazione degli appuntamenti", e);
         }
     }
+
+    public static void setRequestForAppointment(Appointment appointment) {
+        try(Connection conn = ConnectionFactory.getConnection()){
+            UpdateQuery.setRequestForAppointment(conn, appointment.getPsychologist().getCredentials().getMail(), appointment.getDay(), appointment.getTimeSlot(), appointment.getPatient().getCredentials().getMail());
+        } catch(SQLException e){
+            throw new DatabaseOperationException("Errore nella richiesta di appuntamento", e);
+        }
+    }
 }
 

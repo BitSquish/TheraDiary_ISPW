@@ -6,6 +6,7 @@ import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.enums.TimeSlot;
 import com.theradiary.ispwtheradiary.engineering.others.beans.AppointmentBean;
+import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.model.Appointment;
 import com.theradiary.ispwtheradiary.model.Credentials;
@@ -15,8 +16,9 @@ import com.theradiary.ispwtheradiary.model.Psychologist;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class AppointmentPsController {
+public class AppointmentController {
     //Questo metodo recupera tutte le disponibilità dello psicologo
     public void loadAllAppointments(List<AppointmentBean> appointmentsBean, PsychologistBean psychologistBean) {
         Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
@@ -75,5 +77,28 @@ public class AppointmentPsController {
             }
         }
         return hasChanged;
+    }
+
+    //Rimuove dalla lista degli appuntamenti quelli non disponibili e quelli per cui il paziente ha già fatto richiesta
+    public void loadAvailableAppointments(List<AppointmentBean> allAppointments, PatientBean patientBean) {
+        allAppointments.removeIf(appointmentBean -> !appointmentBean.isAvailable() || (appointmentBean.isAvailable() && Objects.equals(appointmentBean.getPatientBean(), patientBean.getCredentialsBean().getMail())));
+    }
+
+    public void askForAnAppointment(PsychologistBean psychologistBean, PatientBean patientBean, DayOfTheWeek day, TimeSlot timeSlot) {
+        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), Role.PATIENT));
+        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), Role.PSYCHOLOGIST));
+        Appointment appointment = new Appointment(psychologist, day, timeSlot, patient);
+        UpdateDAO.setRequestForAppointment(appointment);
+    }
+
+
+    //Controlla se il paziente ha già un appuntamento associato
+    public boolean hasAlreadyAnAppointment(PatientBean patientBean, List<AppointmentBean> allAppointments) {
+        return allAppointments.stream().anyMatch(appointmentBean -> appointmentBean.getPatientBean() != null && appointmentBean.getPatientBean().equals(patientBean.getCredentialsBean().getMail()) && !appointmentBean.isAvailable());
+    }
+
+    //Controlla se il paziente ha già fatto richiesta per l'appuntamento corrispondente a quella fascia oraria e a quel giorno
+    public boolean hasAlreadySentARequest(PatientBean patientBean, DayOfTheWeek day, TimeSlot timeSlot, List<AppointmentBean> allAppointments) {
+        return allAppointments.stream().anyMatch(appointmentBean -> appointmentBean.getPatientBean() != null && appointmentBean.getPatientBean().equals(patientBean.getCredentialsBean().getMail()) && appointmentBean.getDay().equals(day) && appointmentBean.getTimeSlot().equals(timeSlot) && !appointmentBean.isAvailable());
     }
 }

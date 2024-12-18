@@ -263,5 +263,7 @@ public class RetrieveDAO {
             throw new DatabaseOperationException("Errore nel recupero degli appuntamenti", e);
         }
     }
+
+
 }
 
