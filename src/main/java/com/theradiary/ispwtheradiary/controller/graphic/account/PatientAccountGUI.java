@@ -23,11 +23,11 @@ public class PatientAccountGUI extends AccountGUI {
 
     @FXML
     private void yourPsychologist(MouseEvent event) {
-        if(((PatientBean)session.getUser()).getPsychologistBean() == null){
+        if(((PatientBean)session.getUser()).getPsychologistBean().getCredentialsBean().getMail() == null){
             goToSearch(event);
         }else{
-            AccountController accountController = new AccountController();
-            //TODO: non vengono visualizzati tutti i dati dello psicologo
+            accountController.yourPsychologist(((PatientBean)session.getUser()), ((PatientBean)session.getUser()).getPsychologistBean());
+            System.out.println("Metodo in PatientAccountGUI, Nome: " + ((PatientBean)session.getUser()).getPsychologistBean().getFullName());
             goToPsychologistDescription(event, ((PatientBean)session.getUser()).getPsychologistBean());
         }
 
@@ -37,9 +37,8 @@ public class PatientAccountGUI extends AccountGUI {
         if(((PatientBean)session.getUser()).getPsychologistBean().getCredentialsBean().getMail() == null){
             psychologist.setText("Nessuno psicologo");
         }else{
-            AccountController accountController = new AccountController();
-            PsychologistBean psychologistBean = accountController.yourPsychologist(((PatientBean)session.getUser()));
-            psychologist.setText(psychologistBean.getFullName());
+            accountController.yourPsychologist(((PatientBean)session.getUser()), ((PatientBean)session.getUser()).getPsychologistBean());
+            psychologist.setText(((PatientBean) session.getUser()).getPsychologistBean().getFullName());
         }
     }
 

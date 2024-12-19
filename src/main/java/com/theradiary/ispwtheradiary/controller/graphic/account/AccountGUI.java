@@ -36,6 +36,7 @@ import java.util.Set;
 
 public abstract class AccountGUI extends CommonGUI {
 
+    protected AccountController accountController = new AccountController();
     protected AccountGUI(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig,session);
     }
@@ -82,7 +83,7 @@ public abstract class AccountGUI extends CommonGUI {
         };
 
         // Recupera i dati necessari per l'utente (categorie o majors)
-        retrieveData(new AccountController(), loggedUserBean);
+        retrieveData(accountController, loggedUserBean);
         // Ottieni le categorie o majors dall'oggetto `LoggedUserBean`
         Iterable<?> items = getItems(loggedUserBean);
         if (items != null) {

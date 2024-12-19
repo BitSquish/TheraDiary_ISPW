@@ -9,5 +9,4 @@ public class HomepagePtGUI extends com.theradiary.ispwtheradiary.controller.grap
         super(fxmlPathConfig,session);
     }
 
-
 }

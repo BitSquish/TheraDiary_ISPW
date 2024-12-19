@@ -25,6 +25,7 @@ public class SearchGUI extends CommonGUI{
     public SearchGUI(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig,session);
     }
+    private final SearchController searchController = new SearchController();
 
     @FXML
     TextField nomeP, cognomeP, cittaP;
@@ -40,7 +41,6 @@ public class SearchGUI extends CommonGUI{
             TextField[] fields = {cognomeP, cittaP};
             checkFields(fields);
             List<PsychologistBean> psychologistBeans = new ArrayList<>();
-            SearchController searchController = new SearchController();
             searchController.searchPsychologists(psychologistBeans,nomeP.getText(), cognomeP.getText(), cittaP.getText(), inPresenza.isSelected(), online.isSelected(), pag.isSelected());
             goToPsychologistsList(psychologistBeans,event);
         } catch (EmptyFieldException | NoResultException exception){
@@ -54,7 +54,7 @@ public class SearchGUI extends CommonGUI{
             FXMLLoader loader = new FXMLLoader(getClass().getResource(PSYCHOLOGISTS_LIST));
             loader.setControllerFactory(c -> new PsychologistsListGUI(fxmlPathConfig,session));
             Parent root = loader.load();
-            ((PsychologistsListGUI) loader.getController()).printPsychologists(event, psychologistBeans);
+            ((PsychologistsListGUI) loader.getController()).printPsychologists(psychologistBeans);
             changeScene(root, event);
         } catch (IOException e) {
             throw new LoadingException(LOADING_SCENE, e);

@@ -21,11 +21,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -73,30 +70,6 @@ public abstract class CommonGUI {
     public static final String LOADING_SCENE ="Errore durante il caricamento della scena";
 
 
-
-    @FXML
-    private Line line1;
-
-    @FXML
-    private Label contattiLabel;
-
-    @FXML
-    private ImageView mail1;
-
-    @FXML
-    private ImageView stars1;
-
-    @FXML
-    private Label recensioneLabel;
-
-    @FXML
-    private ImageView faq1;
-
-    @FXML
-    private Label faqLabel;
-
-
-
     @FXML
     protected void goToHomepage(MouseEvent event) {
         try {
@@ -119,7 +92,7 @@ public abstract class CommonGUI {
     }
 
     @FXML
-    protected void goToAccountPage(MouseEvent event) {
+    protected void goToAccount(MouseEvent event) {
         try {
             FXMLLoader loader;
             Parent root;

@@ -15,6 +15,12 @@ public class Request {
         this.date = date;
     }
 
+    //Costruttore usato nel metodo per verificare se un paziente ha già inviato una richiesta per un certo psicologo
+    public Request(Patient patient, Psychologist psychologist) {
+        this.patient = patient;
+        this.psychologist = psychologist;
+    }
+
     public Patient getPatient() {
         return patient;
     }

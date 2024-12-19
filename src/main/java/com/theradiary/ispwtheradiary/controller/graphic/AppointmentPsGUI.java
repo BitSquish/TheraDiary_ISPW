@@ -34,6 +34,7 @@ public class AppointmentPsGUI extends CommonGUI {
         super(fxmlPathConfig, session);
     }
 
+    private final AppointmentController appointmentPs = new AppointmentController();
 
     @FXML
     protected void loadCheckboxes() { //metodo chiamato quando viene cambiata la tab
@@ -79,7 +80,6 @@ public class AppointmentPsGUI extends CommonGUI {
                 onlineCheckboxes.add((CheckBox) node);
             }
             //Ricavo gli orari di visita dello psicologo già registrati
-            AppointmentController appointmentPs = new AppointmentController();
             List<TimeSlot> inPersonTimeSlots = new ArrayList<>();
             List<TimeSlot> onlineTimeSlots = new ArrayList<>();
             appointmentPs.getDayOfTheWeekAppointments(allAppointments,dayOfTheWeek, inPersonTimeSlots,onlineTimeSlots);
@@ -115,8 +115,7 @@ public class AppointmentPsGUI extends CommonGUI {
             }
         }
         if(!appointmentToAdd.isEmpty()){
-            AppointmentController appointmentPsController = new AppointmentController();
-            appointmentPsController.saveAppointments((PsychologistBean) session.getUser(), appointmentToAdd);
+            appointmentPs.saveAppointments((PsychologistBean) session.getUser(), appointmentToAdd);
             allAppointments.clear();
             allAppointments.addAll(appointmentToAdd);
             changeModality(appointmentToAdd);
@@ -146,15 +145,13 @@ public class AppointmentPsGUI extends CommonGUI {
     //Recupera tutti gli appuntamenti, questo metodo viene chiamato all'istanziazione del controller
     public void getAllAppointments() {
         PsychologistBean psychologistBean = (PsychologistBean) session.getUser();
-        com.theradiary.ispwtheradiary.controller.application.AppointmentController appointmentPsController = new com.theradiary.ispwtheradiary.controller.application.AppointmentController();
-        appointmentPsController.loadAllAppointments(allAppointments, psychologistBean);
+        appointmentPs.loadAllAppointments(allAppointments, psychologistBean);
         //faccio il load delle checkboxes del primo tab, perchè le checkboxes vengono inizializzate solo quando viene cambiato tab
         initializeCheckboxes(DayOfTheWeek.MONDAY, tabPane.getTabs().get(0));
     }
 
     private void changeModality(List<AppointmentBean> appointmentsToAdd){
-        AppointmentController appointment = new com.theradiary.ispwtheradiary.controller.application.AppointmentController();
-        boolean hasChanged = appointment.changeModality(appointmentsToAdd);
+        boolean hasChanged = appointmentPs.changeModality(appointmentsToAdd);
         if(hasChanged){
             session.getUser().setInPerson(true);
             session.getUser().setOnline(true);

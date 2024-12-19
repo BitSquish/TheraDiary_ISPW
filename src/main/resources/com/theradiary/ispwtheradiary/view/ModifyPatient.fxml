@@ -87,7 +87,7 @@
                 <Font size="18.0" />
             </font>
         </Button>
-      <Button fx:id="indietro" layoutX="60.0" layoutY="119.0" mnemonicParsing="false" onMouseClicked="#goToAccountPage" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+      <Button fx:id="indietro" layoutX="60.0" layoutY="119.0" mnemonicParsing="false" onMouseClicked="#goToAccount" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
       <HBox alignment="CENTER" layoutX="535.0" layoutY="429.0" prefHeight="18.0" prefWidth="250.0" spacing="10" style="-fx-alignment: center;">
          <children>
             <Label fx:id="errorMessage" layoutX="140.0" layoutY="342.0" prefHeight="18.0" prefWidth="508.0" style="-fx-alignment: center;" text="   " textFill="#ec4747" visible="false">

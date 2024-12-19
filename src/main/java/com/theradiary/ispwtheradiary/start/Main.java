@@ -58,7 +58,6 @@ public class Main extends Application {
         Parent rootParent = loader.load();
         Scene scene = new Scene(rootParent);
         stage.setTitle("Theradiary");
-        // stage.getIcons().add(new Image("/logic/view/images/utente.jpg"));
         stage.setScene(scene);
         stage.setResizable(false);
         // Add an event filter to the primary stage to handle the ESC key

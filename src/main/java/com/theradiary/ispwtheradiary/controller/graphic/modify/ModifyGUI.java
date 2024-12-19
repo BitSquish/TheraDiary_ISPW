@@ -21,6 +21,7 @@ public abstract class ModifyGUI extends CommonGUI {
         super(fxmlPathConfig ,session);
     }
 
+    private final UserModifyController userModifyController = new UserModifyController();
     @FXML
     TextField nome;
     @FXML
@@ -79,9 +80,8 @@ public abstract class ModifyGUI extends CommonGUI {
             CheckBox[] checkboxes = {inPresenza, online};
             checkFields(fields,checkboxes,password);
             if (!Validator.isValidMail(mail.getText(), errorMessage)){//!Validator.isValidPassword(password.getText(), errorMessage)) {
-                return; //Lanciare eccezione apposita
+                return; //TODO Lanciare eccezione apposita
             }
-            UserModifyController userModifyController = new UserModifyController();
             userModifyController.userModify(loggedUserBean,session.getUser());  //session.getUser().getCredentialsBean() passa le vecchie credenziali
             session.setUser(loggedUserBean);
             successMessage.setVisible(true);

@@ -13,6 +13,7 @@ import java.util.Scanner;
 
 public class PsychologistProfileCLI extends AbstractState {
     protected PsychologistBean selectedPsychologist;
+    protected PsychologistDescriptionController psychologistDescriptionController = new PsychologistDescriptionController();
     Scanner scanner = new Scanner(System.in);
     protected PatientBean user;
     public PsychologistProfileCLI(PatientBean user,PsychologistBean selectedPsychologist) {
@@ -26,7 +27,7 @@ public class PsychologistProfileCLI extends AbstractState {
         String risposta = scanner.next();
         if(risposta.equals("s")){
             RequestBean requestBean = new RequestBean(user,selectedPsychologist, LocalDate.now());
-            PsychologistDescriptionController.sendRequest(requestBean);
+            psychologistDescriptionController.sendRequest(requestBean);
             Printer.println("Richiesta inviata con successo");
             goBack(context);
         } else {

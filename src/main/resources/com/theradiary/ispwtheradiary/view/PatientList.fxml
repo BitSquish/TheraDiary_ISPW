@@ -25,7 +25,7 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Text>
-      <Button fx:id="back" layoutX="48.0" layoutY="122.0" mnemonicParsing="false" onMouseClicked="#goToAccountPage" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+      <Button fx:id="back" layoutX="48.0" layoutY="122.0" mnemonicParsing="false" onMouseClicked="#goToAccount" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
       <Button fx:id="request" layoutX="743.0" layoutY="122.0" mnemonicParsing="false" onMouseClicked="#seeRequest" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Vedi richieste" textFill="WHITE" />
    </children>
 </AnchorPane>

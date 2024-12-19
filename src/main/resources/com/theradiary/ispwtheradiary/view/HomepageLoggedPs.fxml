@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePsGUI">
     <fx:include source="CommonPanel.fxml" />
-    <Button fx:id="iniziamo" layoutX="55.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#goToAccountPage" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: #9067C6; -fx-background-radius: 15px;" textFill="WHITE">
+    <Button fx:id="iniziamo" layoutX="55.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#goToAccount" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: #9067C6; -fx-background-radius: 15px;" textFill="WHITE">
         <font>
             <Font size="18.0" />
         </font>
@@ -25,7 +25,7 @@
             <Font size="18.0" />
         </font>
     </Button>
-    <ImageView fitHeight="57.0" fitWidth="53.0" layoutX="74.0" layoutY="233.0" onMouseClicked="#goToAccountPage" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="57.0" fitWidth="53.0" layoutX="74.0" layoutY="233.0" onMouseClicked="#goToAccount" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@img/account.png" />
         </image>
@@ -65,12 +65,12 @@
             <Font name="System Bold" size="30.0" />
         </font>
     </Text>
-    <Text fill="WHITE" layoutX="142.0" layoutY="225.0" onMouseClicked="#goToAccountPage" strokeType="OUTSIDE" strokeWidth="0.0" text="Account:">
+    <Text fill="WHITE" layoutX="142.0" layoutY="225.0" onMouseClicked="#goToAccount" strokeType="OUTSIDE" strokeWidth="0.0" text="Account:">
         <font>
             <Font name="System Bold" size="14.0" />
         </font>
     </Text>
-    <Text fill="WHITE" layoutX="141.0" layoutY="246.0" onMouseClicked="#goToAccountPage" strokeType="OUTSIDE" strokeWidth="0.0" text="Visualizza o modifica i tuoi dati personali" wrappingWidth="116.5367431640625">
+    <Text fill="WHITE" layoutX="141.0" layoutY="246.0" onMouseClicked="#goToAccount" strokeType="OUTSIDE" strokeWidth="0.0" text="Visualizza o modifica i tuoi dati personali" wrappingWidth="116.5367431640625">
         <font>
             <Font size="14.0" />
         </font>

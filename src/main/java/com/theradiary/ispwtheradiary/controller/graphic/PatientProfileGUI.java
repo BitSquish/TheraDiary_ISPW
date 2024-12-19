@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.application.AccountController;
+import com.theradiary.ispwtheradiary.controller.application.PatientProfileController;
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
@@ -13,6 +14,7 @@ public class PatientProfileGUI extends CommonGUI {
     public PatientProfileGUI(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig,session);
     }
+    private final PatientProfileController patientProfileController = new PatientProfileController();
 
     @FXML
     private Label fullName;
@@ -40,8 +42,7 @@ public class PatientProfileGUI extends CommonGUI {
         }
         city.setText(patientBean.getCity());
         StringJoiner categoryString = new StringJoiner(",");
-        com.theradiary.ispwtheradiary.controller.application.AccountController accountController = new AccountController();
-        accountController.retrieveCategories(patientBean);
+        patientProfileController.retrieveCategories(patientBean);
         if (patientBean.getCategories() != null && !patientBean.getCategories().isEmpty()) {
             for (Category c : patientBean.getCategories()) {
                 String translatedCategory = Category.translateCategory(c.getId());

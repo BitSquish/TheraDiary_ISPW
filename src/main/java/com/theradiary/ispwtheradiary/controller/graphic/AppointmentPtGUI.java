@@ -26,7 +26,6 @@ public class AppointmentPtGUI extends CommonGUI {
     public AppointmentPtGUI(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig, session);
     }
-
     @FXML
     private VBox psychologistNotSetted;
     @FXML

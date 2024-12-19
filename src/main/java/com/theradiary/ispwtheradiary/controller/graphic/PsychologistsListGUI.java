@@ -41,7 +41,7 @@ public class PsychologistsListGUI extends CommonGUI {
 
 
     @FXML
-    public void printPsychologists(MouseEvent event, List<PsychologistBean> psychologistBeans) {
+    public void printPsychologists(List<PsychologistBean> psychologistBeans) {
         ObservableList<PsychologistBean> psychologistsBeansList = FXCollections.observableArrayList(psychologistBeans);
         fullNameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
@@ -57,7 +57,7 @@ public class PsychologistsListGUI extends CommonGUI {
             boolean pag = cellData.getValue().isPag();
             return new javafx.beans.property.SimpleStringProperty(pag ? "Sì" : "No");
         });
-        buttonColumn.setCellFactory(param -> new TableCell<PsychologistBean, Void>() {
+        buttonColumn.setCellFactory(param -> new TableCell<>() {
             private final Button btn = new Button("Vedi psicologo");
 
             {

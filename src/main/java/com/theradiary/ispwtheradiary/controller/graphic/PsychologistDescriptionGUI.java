@@ -15,6 +15,8 @@ import java.time.LocalDate;
 import java.util.StringJoiner;
 
 public class PsychologistDescriptionGUI extends CommonGUI {
+
+    private final PsychologistDescriptionController psychologistDescriptionController = new PsychologistDescriptionController();
     public PsychologistDescriptionGUI(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig ,session);
     }
@@ -44,12 +46,12 @@ public class PsychologistDescriptionGUI extends CommonGUI {
 
 
     public void printPsychologist(PsychologistBean psychologistBean) {
-        //Se il paziente ha già uno psicologo associato, nasconde il bottone per inviare la richiesta
-        if(((PatientBean)session.getUser()).getPsychologistBean() != null){
+        boolean hasAlreadySentARequest = psychologistDescriptionController.hasAlreadySentARequest((PatientBean)session.getUser(), psychologistBean);
+        //Se il paziente ha già uno psicologo associato o ha già inviato una richiesta per quello psicologo, nasconde il bottone per inviare la richiesta
+        if(((PatientBean)session.getUser()).getPsychologistBean().getCredentialsBean().getMail() != null || hasAlreadySentARequest){
             request.setVisible(false);
         }
-        MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCity(), null, null, null);
-        PsychologistDescriptionController psychologistDescriptionController = new PsychologistDescriptionController();
+        MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCity());
         psychologistDescriptionController.searchPsychologistInfo(psychologistBean, medicalOfficeBean);
         nameField.setText(psychologistBean.getName());
         surnameField.setText(psychologistBean.getSurname());
@@ -68,7 +70,7 @@ public class PsychologistDescriptionGUI extends CommonGUI {
         }else{
             majorsField.setText("Non specificate");
         }
-        String medicalOffice = "";
+        String medicalOffice;
         if(medicalOfficeBean.getPostCode() == null)
             medicalOffice = "Non specificato";
         else
@@ -82,17 +84,12 @@ public class PsychologistDescriptionGUI extends CommonGUI {
     @FXML
     protected void sendRequest(MouseEvent event) {
         PatientBean patientBean = (PatientBean) session.getUser();
-        if(patientBean.getPsychologistBean() != null){
-            message.setText("Hai già uno psicologo");
-            message.setVisible(true);
-        }else{
-            PsychologistBean psychologistBean = new PsychologistBean(new CredentialsBean(mailField.getText(), Role.PSYCHOLOGIST), nameField.getText(), surnameField.getText(), cityField.getText(), descriptionField.getText(), false, false);
-            psychologistBean.setInPerson(psychologistBean.getInPersonFromModality(modalityField.getText()));
-            psychologistBean.setOnline(psychologistBean.getOnlineFromModality(modalityField.getText()));
-            RequestBean requestBean = new RequestBean(patientBean, psychologistBean, LocalDate.now());
-            PsychologistDescriptionController.sendRequest(requestBean);
-            message.setText("Richiesta inviata con successo");
-            message.setVisible(true);
-        }
+        PsychologistBean psychologistBean = new PsychologistBean(new CredentialsBean(mailField.getText(), Role.PSYCHOLOGIST), nameField.getText(), surnameField.getText(), cityField.getText(), descriptionField.getText(), false, false);
+        psychologistBean.setInPerson(psychologistBean.getInPersonFromModality(modalityField.getText()));
+        psychologistBean.setOnline(psychologistBean.getOnlineFromModality(modalityField.getText()));
+        RequestBean requestBean = new RequestBean(patientBean, psychologistBean, LocalDate.now());
+        psychologistDescriptionController.sendRequest(requestBean);
+        message.setText("Richiesta inviata con successo");
+        message.setVisible(true);
     }
 }

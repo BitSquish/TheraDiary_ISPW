@@ -19,6 +19,8 @@ public class MedicalOfficeGUI extends CommonGUI {
         super(fxmlPathConfig,session);
     }
 
+    private final MedicalOfficeRegistrationController medicalOfficeRegistration = new MedicalOfficeRegistrationController();
+
     @FXML
     TextField citta;
     @FXML
@@ -38,7 +40,6 @@ public class MedicalOfficeGUI extends CommonGUI {
     @FXML
     protected void initializeTextFields() throws SQLException {
         MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(session.getUser().getCredentialsBean().getMail(), null, null, null, null);
-        MedicalOfficeRegistrationController medicalOfficeRegistration = new MedicalOfficeRegistrationController();
         if (medicalOfficeRegistration.retrieveMedicalOffice(medicalOfficeBean)) {
             medOffAlreadyInserted = true;
             citta.setText(medicalOfficeBean.getCity());
@@ -58,7 +59,6 @@ public class MedicalOfficeGUI extends CommonGUI {
             TextField[] fields = {citta, cap, via};
             checkFields(fields);
             MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(session.getUser().getCredentialsBean().getMail(), citta.getText(), cap.getText(), via.getText(), altreInfo.getText());
-            MedicalOfficeRegistrationController medicalOfficeRegistration = new MedicalOfficeRegistrationController();
             if(medOffAlreadyInserted)
                 medicalOfficeRegistration.modify(medicalOfficeBean);
             else

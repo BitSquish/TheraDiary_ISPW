@@ -1,5 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
+import com.theradiary.ispwtheradiary.controller.application.AccountController;
 import com.theradiary.ispwtheradiary.controller.application.LoginController;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
@@ -16,6 +17,7 @@ import java.util.Scanner;
 public class LoginCLI extends AbstractState {
     LoggedUserBean user;
     private final Scanner scanner = new Scanner(System.in);
+    private final LoginController login = new LoginController();
 
     @Override
     public void action(StateMachineImpl context) {
@@ -32,7 +34,6 @@ public class LoginCLI extends AbstractState {
             //creazione delle credenziali
             CredentialsBean credentials = new CredentialsBean(email, password, null);
             //login e verifica credenziali
-            LoginController login = new LoginController();
             login.log(credentials);
             //determino il ruolo e prepara lo stato successivo
             AbstractState homeCLI;

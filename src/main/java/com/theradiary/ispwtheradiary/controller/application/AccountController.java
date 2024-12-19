@@ -87,8 +87,8 @@ public class AccountController {
         }
         return patientBeans;
     }
-    public PsychologistBean yourPsychologist(PatientBean patientBean) {
-        if(patientBean.getPsychologistBean() != null) {
+    public void yourPsychologist(PatientBean patientBean, PsychologistBean psychologistBean) {
+        if(psychologistBean != null) {
             // Conversione del PatientBean in Patient (entità)
             Patient patient = new Patient(
                     new Credentials(
@@ -107,10 +107,15 @@ public class AccountController {
             // Recupero il Psychologist dal DAO
             Psychologist psychologist = RetrieveDAO.yourPsychologist(patient);
             // Conversione da Psychologist (entità) a PsychologistBean
-            PsychologistBean psychologistBean = psychologist.toBean();
-            return psychologistBean;
+            if(psychologist != null){
+                psychologistBean.setName(psychologist.getName());
+                psychologistBean.setSurname(psychologist.getSurname());
+                psychologistBean.setCity(psychologist.getCity());
+                psychologistBean.setDescription(psychologist.getDescription());
+                psychologistBean.setInPerson(psychologist.isInPerson());
+                psychologistBean.setOnline(psychologist.isOnline());
+            }
         }
-        return null;
     }
 }
 

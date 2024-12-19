@@ -1,26 +1,31 @@
 package com.theradiary.ispwtheradiary.engineering.others.beans;
 
 public class MedicalOfficeBean {
-    private String mail;
+    private String psychologist;
     private String postCode;
     private String address;
     private String city;
     private String otherInfo;
 
-    public MedicalOfficeBean (String mail, String city, String postCode, String address, String otherInfo){
-        this.mail = mail;
+    public MedicalOfficeBean (String psychologist, String city, String postCode, String address, String otherInfo){
+        this.psychologist = psychologist;
         this.postCode = postCode;
         this.address = address;
         this.city = city;
         this.otherInfo = otherInfo;
     }
 
-    public String getMail() {
-        return mail;
+    public MedicalOfficeBean(String psychologist, String city) {
+        this.psychologist = psychologist;
+        this.city = city;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public String getPsychologist() {
+        return psychologist;
+    }
+
+    public void setPsychologist(String psychologist) {
+        this.psychologist = psychologist;
     }
 
     public String getCity() {

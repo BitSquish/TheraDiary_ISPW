@@ -13,7 +13,7 @@ public class HomepageGUI extends CommonGUI {
 
     @FXML
     private void startButton(MouseEvent event){
-        goToAccountPage(event);
+        goToAccount(event);
     }
 
 

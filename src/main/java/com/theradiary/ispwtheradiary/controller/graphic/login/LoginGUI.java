@@ -29,6 +29,7 @@ public class LoginGUI extends CommonGUI {
         super(fxmlPathConfig,session);
     }
 
+    private final LoginController login = new LoginController();
     @FXML
     TextField mail;
     @FXML
@@ -42,7 +43,6 @@ public class LoginGUI extends CommonGUI {
         try{
             validateFields();
             CredentialsBean credentialsBean = new CredentialsBean(mail.getText(), password.getText(), null);
-            LoginController login = new LoginController();
             login.log(credentialsBean);
             if(credentialsBean.getRole() == null){
                 throw new WrongEmailOrPasswordException("Mail o password errati");
@@ -64,11 +64,6 @@ public class LoginGUI extends CommonGUI {
         }
     }
 
-    //UN METODO DEL GENERE NON PUO ANDARE SU UN CONTROLLER GRAFICO
-    /*private Connection getConnection() throws SQLException { //Mai usato???
-        // Abstracted database connection method
-        return ConnectionFactory.getConnection();
-    }*/
     private void validateFields() throws EmptyFieldException {
         if (mail.getText().isEmpty() || password.getText().isEmpty()) {
             throw new EmptyFieldException("Compila tutti campi.");

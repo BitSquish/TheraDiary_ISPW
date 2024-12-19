@@ -14,7 +14,7 @@ public class PagGUI extends CommonGUI {
     protected PagGUI(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig,session);
     }
-
+    private final PagController pagController = new PagController();
     @FXML
     Label successMessage;
 
@@ -23,9 +23,7 @@ public class PagGUI extends CommonGUI {
         try{
             session.getUser().setPag(true);
             LoggedUserBean loggedUserBean = session.getUser();
-            PagController pagController = new PagController();
             pagController.joinPag(loggedUserBean);
-            //Eccezione da gestire?
             successMessage.setVisible(true);
         }catch(Exception e){
             throw new LoadingException(LOADING_SCENE, e);

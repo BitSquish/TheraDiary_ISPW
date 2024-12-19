@@ -20,6 +20,7 @@ public abstract class UserRegistrationGUI extends CommonGUI {
         super(fxmlPathConfig ,session);
     }
 
+    private final LoginController login = new LoginController();
     @FXML
     TextField nome;
     @FXML
@@ -75,7 +76,6 @@ public abstract class UserRegistrationGUI extends CommonGUI {
             alert.showAndWait();
 
             // Se la registrazione va a buon fine, effettua automaticamente il login
-            LoginController login = new LoginController();
             login.log(loggedUserBean.getCredentialsBean());
             session.setUser(loggedUserBean);
             goToHomepage(event);

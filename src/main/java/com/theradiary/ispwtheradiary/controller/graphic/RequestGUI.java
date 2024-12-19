@@ -27,8 +27,9 @@ public class RequestGUI extends CommonGUI implements Observer {
             implementa l’interfaccia dell’Observer definendo il comportamento in caso di cambio di stato del soggetto osservato
      */
 
+    private final RequestApplicationController requestApplicationController = new RequestApplicationController();
 
-    private RequestManagerConcreteSubject requestManagerConcreteSubject;
+    private final RequestManagerConcreteSubject requestManagerConcreteSubject;
     private List<RequestBean> requestBeans = new ArrayList<>();
     public RequestGUI(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig, session);
@@ -102,7 +103,6 @@ public class RequestGUI extends CommonGUI implements Observer {
     //Metodo per eliminare la richiesta dalla lista. Se accettata, crea l'associazione psicologo-paziente.
     private void manageRequest(RequestBean requestBean, boolean flag) {
         //chiamo applicativo passandogli la richiesta da rimuovere
-        RequestApplicationController requestApplicationController = new RequestApplicationController();
         requestApplicationController.deleteRequest(requestBean);
         if(flag){
             PatientBean patientBean = requestBean.getPatientBean();
