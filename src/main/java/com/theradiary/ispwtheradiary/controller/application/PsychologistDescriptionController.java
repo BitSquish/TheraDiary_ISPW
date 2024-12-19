@@ -3,6 +3,7 @@ package com.theradiary.ispwtheradiary.controller.application;
 import com.theradiary.ispwtheradiary.engineering.dao.PtAndPsDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
@@ -53,6 +54,15 @@ public class PsychologistDescriptionController {
                 new Psychologist(credentialsPsy, psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline()));
         try{
             return PtAndPsDAO.hasAlreadySentARequest(request);
+        } catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+    public boolean hasAlreadyAPsychologist(PatientBean patientBean) {
+        Credentials credentialsPat = new Credentials(patientBean.getCredentialsBean().getMail(), Role.PATIENT);
+        Patient patient = new Patient(credentialsPat, patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+        try{
+            return PtAndPsDAO.hasAlreadyAPsychologist(patient);
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }

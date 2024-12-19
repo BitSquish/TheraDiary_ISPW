@@ -29,6 +29,9 @@ public class HomePsychologistCLI extends AbstractState {
                     case (3):
                         goNext(context, new MedicalOfficeCLI(user));
                         break;
+                    case(4):
+                        goNext(context,new RequestCLI((PsychologistBean) user));
+                        break;
                     default:
                         Printer.errorPrint("Scelta non valida");
                         break;
@@ -47,6 +50,7 @@ public class HomePsychologistCLI extends AbstractState {
         Printer.println("1.Visualizza le task");
         Printer.println("2.Visualizza appuntamenti");
         Printer.println("3.Registra studio medico");
+        Printer.println("4.Visualizza richieste");
         Printer.println("0.Logout");
         Printer.print("Opzione scelta:");
     }

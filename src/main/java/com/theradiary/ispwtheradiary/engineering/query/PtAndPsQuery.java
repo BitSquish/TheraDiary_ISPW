@@ -32,4 +32,20 @@ public class PtAndPsQuery {
             throw new DatabaseOperationException("Errore nel controllo della richiesta", e);
         }
     }
+
+    public static boolean hasAlreadyAPsychologist(Connection conn, String mail) {
+        String query = "SELECT psychologist FROM patient WHERE patient = ?";
+        try{
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, mail);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("psychologist_id") != null; // True se ha uno psicologo
+                }
+            }
+        } catch (SQLException e) {
+            throw new DatabaseOperationException("Errore nel controllo del paziente", e);
+        }
+        return false;
+    }
 }

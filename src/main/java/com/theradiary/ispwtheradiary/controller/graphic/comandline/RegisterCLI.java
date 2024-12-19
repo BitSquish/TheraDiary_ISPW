@@ -13,7 +13,7 @@ import com.theradiary.ispwtheradiary.engineering.patterns.state.StateMachineImpl
 import java.util.Scanner;
 
 public class RegisterCLI extends AbstractState {
-    Validator validator = new Validator();
+
 
 
     private final Scanner scanner = new Scanner(System.in);
@@ -22,27 +22,29 @@ public class RegisterCLI extends AbstractState {
     public void action(StateMachineImpl contextSM) {
         //metodo effettivo per la registrazione
 
-        Printer.print("   Nome: ");
+        Printer.print("Nome: ");
         String nome = scanner.next();
 
-        Printer.print("   Cognome: ");
+        Printer.print("Cognome: ");
         String cognome = scanner.next();
         Printer.print("Città:");
         String city = scanner.next();
 
 
-        Printer.print("   Email: ");
+        Printer.print("Email: ");
         String email = scanner.next();
 
         try {
-            validator.isValidMail(email, null);
+            Validator.isValidMail(email, null);
         } catch (Exception e) {
             Printer.errorPrint("Email non valida");
             return;
         }
 
-        Printer.print("   Password: ");
+        Printer.print("Password: ");
         String password = scanner.next();
+        Printer.print("Conferma password: ");
+        String confermaPassword = scanner.next();
 
 
         boolean sbagliato = true;

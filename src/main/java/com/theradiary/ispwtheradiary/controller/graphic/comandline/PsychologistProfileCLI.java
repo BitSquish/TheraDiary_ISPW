@@ -27,9 +27,17 @@ public class PsychologistProfileCLI extends AbstractState {
         String risposta = scanner.next();
         if(risposta.equals("s")){
             RequestBean requestBean = new RequestBean(user,selectedPsychologist, LocalDate.now());
-            psychologistDescriptionController.sendRequest(requestBean);
-            Printer.println("Richiesta inviata con successo");
-            goBack(context);
+            if(psychologistDescriptionController.hasAlreadySentARequest(user,selectedPsychologist)){
+                Printer.println("Hai già inviato una richiesta a questo psicologo");
+                goNext(context,new HomePatientCLI(user));
+            }else if(psychologistDescriptionController.hasAlreadyAPsychologist(user)){
+                Printer.println("Hai già un psicologo");
+                goNext(context,new HomePatientCLI(user));
+            }else{
+                psychologistDescriptionController.sendRequest(requestBean);
+                Printer.println("Richiesta inviata con successo");
+                goNext(context,new HomePatientCLI(user));
+            }
         } else {
             goNext(context,new HomePatientCLI(user));
         }
