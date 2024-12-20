@@ -27,9 +27,11 @@ import java.util.*;
 
 public class PatientDetailsGUI extends CommonGUI {
 
+    private final TaskAndToDoController taskAndToDoController = new TaskAndToDoController();
     public PatientDetailsGUI(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig, session);
     }
+
 
     @FXML
     private Label fullName;
@@ -78,7 +80,7 @@ public class PatientDetailsGUI extends CommonGUI {
     }
 
     private void configureTaskTable(PatientBean patientBean) {
-        TaskAndToDoController.retrieveTasks(patientBean);
+        taskAndToDoController.retrieveTasks(patientBean);
         ObservableList<TaskBean> tasks = FXCollections.observableArrayList(patientBean.getTasks());
         taskNameColumn.setCellValueFactory(new PropertyValueFactory<>("taskName"));
         taskDeadlineColumn.setCellValueFactory(new PropertyValueFactory<>("taskDeadline"));
@@ -104,7 +106,7 @@ public class PatientDetailsGUI extends CommonGUI {
         if (selectedTask != null) {
             taskTableView.getItems().remove(selectedTask);
             listTask.remove(selectedTask);
-            TaskAndToDoController.deleteTask(selectedTask, patientBean);
+            taskAndToDoController.deleteTask(selectedTask, patientBean);
             showMessage(Alert.AlertType.INFORMATION, "Eliminazione", "Eliminazione completata");
         } else {
             showMessage(Alert.AlertType.ERROR, "Errore", "Seleziona un task da eliminare");
@@ -178,7 +180,7 @@ public class PatientDetailsGUI extends CommonGUI {
     @FXML
     public void saveTask(MouseEvent event) {
         for (TaskBean task : listTask) {
-            TaskAndToDoController.saveTasks(patientBean, task);
+            taskAndToDoController.saveTasks(patientBean, task);
         }
         showMessage(Alert.AlertType.INFORMATION, "Salvataggio", "Salvataggio completato");
     }
@@ -186,7 +188,7 @@ public class PatientDetailsGUI extends CommonGUI {
 
     //Diario
     private void configureDiary() {
-        TaskAndToDoController.getDiaryForToday(patientBean);
+        taskAndToDoController.getDiaryForToday(patientBean);
         String diaryText = patientBean.getDiary();
         diaryTextArea.setText(diaryText == null || diaryText.isEmpty() ? "Diario vuoto" : diaryText);
     }
@@ -194,7 +196,7 @@ public class PatientDetailsGUI extends CommonGUI {
     //ToDoList
     private void configureToDoList() {
         toDoListItems.clear();
-        TaskAndToDoController.toDoList(patientBean);
+        taskAndToDoController.toDoList(patientBean);
         List<ToDoItemBean> toDoItems = patientBean.getToDoList();
         for (ToDoItemBean item : toDoItems) {
             if (toDoListItems.stream().noneMatch(hBox -> ((TextField) hBox.getChildren().get(1)).getText().equals(item.getToDo()))) {
@@ -217,7 +219,7 @@ public class PatientDetailsGUI extends CommonGUI {
         deleteButton.setOnAction(e -> {
             toDoListItems.removeIf(hBox -> hBox.getChildren().contains(deleteButton));
             patientBean.removeToDoItem(toDoItemBean);
-            TaskAndToDoController.deleteToDo(toDoItemBean, patientBean);
+            taskAndToDoController.deleteToDo(toDoItemBean, patientBean);
             toDoListView.setItems(toDoListItems);
         });
         HBox hbox = new HBox(10);
@@ -248,7 +250,7 @@ public class PatientDetailsGUI extends CommonGUI {
             if (!toDoText.isEmpty()) {
                 toDoItems.add(new ToDoItemBean(toDoText, checkbox.isSelected()));
             }
-            TaskAndToDoController.saveToDo(new ToDoItemBean(toDoText, checkbox.isSelected()), patientBean);
+            taskAndToDoController.saveToDo(new ToDoItemBean(toDoText, checkbox.isSelected()), patientBean);
         }
         showMessage(Alert.AlertType.INFORMATION, "Salvataggio", "Salvataggio completato");
 

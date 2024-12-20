@@ -27,7 +27,7 @@ public class DiaryControllerGUI extends CommonGUI {
     public DiaryControllerGUI(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig, session);
     }
-
+    private final TaskAndToDoController taskAndToDoController = new TaskAndToDoController();
     @FXML
     private TextArea diary;
     @FXML
@@ -46,7 +46,7 @@ public class DiaryControllerGUI extends CommonGUI {
     }
     protected void loadDiaryContent(PatientBean patientBean){
         try{
-            String diaryContent = TaskAndToDoController.getDiaryForToday(patientBean);
+            String diaryContent = taskAndToDoController.getDiaryForToday(patientBean);
             diary.setText(diaryContent);
         }catch(Exception e){
             showMessage(Alert.AlertType.ERROR, "Errore durante il caricamento", "Impossibile caricare il diario.");
@@ -81,7 +81,7 @@ public class DiaryControllerGUI extends CommonGUI {
             return;
         }
         try{
-            TaskAndToDoController.saveDiary(diaryContent,patientBean,LocalDate.now());
+            taskAndToDoController.saveDiary(diaryContent,patientBean,LocalDate.now());
             showMessage(Alert.AlertType.INFORMATION, "Salvataggio effettuato", "Il diario è stato salvato correttamente.");
         }catch (Exception e) {
             showMessage(Alert.AlertType.ERROR, "Errore", "Errore durante il salvataggio del diario.");

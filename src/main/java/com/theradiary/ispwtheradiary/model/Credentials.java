@@ -37,9 +37,6 @@ public class Credentials {
         this.role = role;
     }
 
-    public CredentialsBean toBean(){
-        return new CredentialsBean(mail, password, role);
-    }
 
 
 

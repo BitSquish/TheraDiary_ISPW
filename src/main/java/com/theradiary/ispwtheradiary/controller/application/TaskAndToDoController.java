@@ -3,6 +3,7 @@ package com.theradiary.ispwtheradiary.controller.application;
 import com.theradiary.ispwtheradiary.engineering.dao.TaskAndToDoDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.others.beans.TaskBean;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Task;
@@ -15,9 +16,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class TaskAndToDoController {
+    BeanAndModelMapperFactory beanAndModelMapperFactory;
+    public TaskAndToDoController() {
+        this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
+    }
     /*-------------------------DIARIO-------------------------*/
-    public static String getDiaryForToday(PatientBean patientBean) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+    public String getDiaryForToday(PatientBean patientBean) {
+        Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         Optional<String> diaryContent = TaskAndToDoDAO.getDiaryForToday(patient);
         if (diaryContent.isPresent()) {
             patientBean.setDiary(diaryContent.get()); // Imposta il diario nel PatientBean
@@ -28,14 +33,14 @@ public class TaskAndToDoController {
         }
     }
 
-    public static void saveDiary(String diaryContent, PatientBean patientBean,LocalDate selectedDate) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+    public void saveDiary(String diaryContent, PatientBean patientBean,LocalDate selectedDate) {
+        Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         TaskAndToDoDAO.Diary(patient,diaryContent,selectedDate);
         patientBean.setDiary(diaryContent);
     }
 
-    public static void deleteTask(TaskBean selectedTask, PatientBean patientBean) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+    public void deleteTask(TaskBean selectedTask, PatientBean patientBean) {
+        Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         Task task = new Task(selectedTask.getTaskName(),selectedTask.getTaskDeadline(), selectedTask.getTaskStatus());
         TaskAndToDoDAO.deleteTask(patient,task);
         patientBean.removeTask(selectedTask);
@@ -43,22 +48,22 @@ public class TaskAndToDoController {
 
 
     public String getDiaryEntry(LocalDate selectedDate, PatientBean patientBean) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+        Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         Optional<String> diaryContent = TaskAndToDoDAO.getDiaryEntry(selectedDate,patient);
         return diaryContent.orElse("");
     }
     /*-------------------------TODOLIST-------------------------*/
 
-    public static void deleteToDo(ToDoItemBean toDoItemBean, PatientBean patientBean) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+    public void deleteToDo(ToDoItemBean toDoItemBean, PatientBean patientBean) {
+        Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         ToDoItem toDoItem = new ToDoItem(toDoItemBean.getToDo(), toDoItemBean.isCompleted());
         TaskAndToDoDAO.deleteToDoItem(patient,toDoItem);
         patientBean.removeToDoItem(toDoItemBean);
     }
 
 
-    public static void saveToDo(ToDoItemBean toDoItemBean, PatientBean patientBean) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+    public void saveToDo(ToDoItemBean toDoItemBean, PatientBean patientBean) {
+        Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         ToDoItem toDoItem = new ToDoItem(toDoItemBean.getToDo(), toDoItemBean.isCompleted());
         if(!patient.getToDoList().contains(toDoItem) ){
             TaskAndToDoDAO.saveToDo(patient,toDoItem);
@@ -68,23 +73,23 @@ public class TaskAndToDoController {
             patientBean.removeToDoItem(toDoItemBean);
         }
     }
-    public static void toDoList(PatientBean patientBean) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+    public void toDoList(PatientBean patientBean) {
+        Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         List<ToDoItem> toDoItems = TaskAndToDoDAO.retriveToDoList(patient);
         for (ToDoItem toDoItem : toDoItems) {
             patientBean.addToDoItem(new ToDoItemBean(toDoItem.getToDo(), toDoItem.isCompleted()));
         }
     }
     /*-------------------------TASKS-------------------------*/
-    public static void retrieveTasks(PatientBean patientBean) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+    public void retrieveTasks(PatientBean patientBean) {
+        Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         List<Task> tasks = TaskAndToDoDAO.retriveTasks(patient);
         for (Task task : tasks) {
             patientBean.addTask(new TaskBean(task.getTaskName(),task.getTaskDeadline(), task.getTaskStatus()));
         }
     }
-    public static void saveTasks(PatientBean patientBean,TaskBean taskBean) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+    public void saveTasks(PatientBean patientBean,TaskBean taskBean) {
+        Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         Task task = new Task(taskBean.getTaskName(),taskBean.getTaskDeadline(), taskBean.getTaskStatus());
         if(!patient.getTasks().contains(task)) {
             TaskAndToDoDAO.saveTask(patient, task);
@@ -96,8 +101,8 @@ public class TaskAndToDoController {
 
 
     }
-    public static void updateTasks(PatientBean patientBean,TaskBean taskBean) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+    public void updateTasks(PatientBean patientBean,TaskBean taskBean) {
+        Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         Task task = new Task(taskBean.getTaskName(),taskBean.getTaskDeadline(), taskBean.getTaskStatus());
         TaskAndToDoDAO.updateTask(patient,task);
     }

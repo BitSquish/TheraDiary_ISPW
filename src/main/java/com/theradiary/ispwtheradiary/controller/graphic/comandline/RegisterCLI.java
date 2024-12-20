@@ -1,3 +1,4 @@
+
 package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
 import com.theradiary.ispwtheradiary.controller.application.LoginController;
@@ -130,8 +131,3 @@ public class RegisterCLI extends AbstractState {
         Printer.print("Opzione scelta: ");
     }
 }
-
-
-
-
-

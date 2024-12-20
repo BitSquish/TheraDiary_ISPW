@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TaskCLI extends AbstractState {
+    TaskAndToDoController taskAndToDoController = new TaskAndToDoController();
     protected PatientBean selectedPatient;
     protected PsychologistBean user;
     Scanner scanner = new Scanner(System.in);
@@ -56,7 +57,7 @@ public class TaskCLI extends AbstractState {
         try{
             String date = scanner.nextLine();
             TaskBean newTask = new TaskBean(description, LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")), "non completato");
-            TaskAndToDoController.saveTasks(selectedPatient, newTask);
+            taskAndToDoController.saveTasks(selectedPatient, newTask);
             Printer.printlnGreen("Elemento aggiunto correttamente");
         }catch (Exception e){
             Printer.errorPrint("Errore nella data");
@@ -64,7 +65,7 @@ public class TaskCLI extends AbstractState {
         }
     }
     private void deleteTask(Scanner scanner) {
-        TaskAndToDoController.retrieveTasks(selectedPatient);
+        taskAndToDoController.retrieveTasks(selectedPatient);
         List<TaskBean> taskList = selectedPatient.getTasks();
         printTasks(taskList);
         Printer.println("Seleziona l'elemento da eliminare:");
@@ -72,7 +73,7 @@ public class TaskCLI extends AbstractState {
             int position = scanner.nextInt();
             scanner.nextLine();
             if (position > 0 && position <= taskList.size()) {
-                TaskAndToDoController.deleteTask(taskList.get(position - 1), selectedPatient);
+                taskAndToDoController.deleteTask(taskList.get(position - 1), selectedPatient);
                 Printer.printlnGreen("Elemento eliminato correttamente");
             } else {
                 Printer.errorPrint("Scelta non valida");
@@ -83,7 +84,7 @@ public class TaskCLI extends AbstractState {
         }
     }
     private void modifyTask(Scanner scanner) {
-        com.theradiary.ispwtheradiary.controller.application.TaskAndToDoController.retrieveTasks(selectedPatient);
+        taskAndToDoController.retrieveTasks(selectedPatient);
         List<TaskBean> tasks = selectedPatient.getTasks();
         printTasks(tasks);
         Printer.println("Inserisci la posizione dell'elemento da modificare");
@@ -97,7 +98,7 @@ public class TaskCLI extends AbstractState {
                 LocalDate newDeadline = LocalDate.parse(scanner.nextLine());
                 tasks.get(position - 1).setTaskName(newDescription);
                 tasks.get(position - 1).setTaskDeadline(String.valueOf(newDeadline));
-                TaskAndToDoController.saveTasks(selectedPatient, tasks.get(position - 1));
+                taskAndToDoController.saveTasks(selectedPatient, tasks.get(position - 1));
                 Printer.println("Elemento modificato");
             } else {
                 Printer.errorPrint("Posizione non valida");

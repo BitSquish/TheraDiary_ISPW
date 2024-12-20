@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TaskPatientCLI extends AbstractState {
+    private TaskAndToDoController taskAndToDoController = new TaskAndToDoController();
     protected PatientBean patientBean;
     public TaskPatientCLI(PatientBean patientBean) {
         this.patientBean = patientBean;
@@ -67,7 +68,7 @@ public class TaskPatientCLI extends AbstractState {
         Printer.printlnBlue("Diario del :" + formattedDate );
 
 
-        TaskAndToDoController.getDiaryForToday(patientBean);
+        taskAndToDoController.getDiaryForToday(patientBean);
         String diary=patientBean.getDiary();
 
         if (diary.isEmpty()) {
@@ -91,7 +92,7 @@ public class TaskPatientCLI extends AbstractState {
     }
     //metodo per controllare se il paziente ha già scritto il diario per oggi
     private boolean hasDiaryForToday(){
-        TaskAndToDoController.getDiaryForToday(patientBean);
+        taskAndToDoController.getDiaryForToday(patientBean);
         if(patientBean.getDiary().isEmpty()){
             return false;
         }
@@ -125,7 +126,7 @@ public class TaskPatientCLI extends AbstractState {
     //metodo per salvare l'input del paziente
     private void saveDiaryEntry(String diaryEntry){
         try {
-            TaskAndToDoController.saveDiary(diaryEntry, patientBean, LocalDate.now());
+            taskAndToDoController.saveDiary(diaryEntry, patientBean, LocalDate.now());
             Printer.printlnGreen("Voce aggiunta al diario");
         } catch (Exception e) {
             Printer.errorPrint("Errore nel salvataggio del diario");
@@ -137,7 +138,7 @@ public class TaskPatientCLI extends AbstractState {
         Printer.printlnBlue("-------------------Lista  cose da fare-------------------");
         Printer.println("Lista  cose da fare di " + patientBean.getFullName() + ":");
 
-        TaskAndToDoController.toDoList(patientBean);
+        taskAndToDoController.toDoList(patientBean);
         List<ToDoItemBean> toDoList = patientBean.getToDoList();
 
         if (toDoList.isEmpty()) {
@@ -155,7 +156,7 @@ public class TaskPatientCLI extends AbstractState {
         for(int i=0;i<patientBean.getToDoList().size();i++){
             if(i==index-1){
                 patientBean.getToDoList().get(i).setCompleted(true);
-                TaskAndToDoController.deleteToDo(patientBean.getToDoList().get(i),patientBean);
+                taskAndToDoController.deleteToDo(patientBean.getToDoList().get(i),patientBean);
                 Printer.printlnGreen("Attività completata");
             }
 
@@ -164,7 +165,7 @@ public class TaskPatientCLI extends AbstractState {
     }
     private void viewTasks(){
         Printer.printlnBlue("-------------------Ciao"+" "+ patientBean.getFullName()+","+"la tua lista task-------------------");
-        TaskAndToDoController.retrieveTasks(patientBean);
+        taskAndToDoController.retrieveTasks(patientBean);
         List<TaskBean> taskList = patientBean.getTasks();
         if(taskList.isEmpty()){
             Printer.println("Non ci sono task da completare");
@@ -185,7 +186,7 @@ public class TaskPatientCLI extends AbstractState {
                 String status = scanner.nextLine();
                 TaskBean taskBean = taskList.get(position-1);
                 taskBean.setTaskStatus(status);
-                TaskAndToDoController.updateTasks(patientBean,taskBean);
+                taskAndToDoController.updateTasks(patientBean,taskBean);
                 Printer.printlnGreen("Elemento completato!");
             }else{
                 Printer.errorPrint("Scelta non valida");

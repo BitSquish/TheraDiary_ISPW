@@ -22,6 +22,7 @@ public class TaskPatientGUI extends CommonGUI {
     public TaskPatientGUI(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig, session);
     }
+    TaskAndToDoController taskAndToDoController = new TaskAndToDoController();
     PatientBean patientBean = (PatientBean) session.getUser();
     @FXML
     private TableView<TaskBean> taskTableView;
@@ -37,7 +38,7 @@ public class TaskPatientGUI extends CommonGUI {
 
     public void initializeTaskList(PatientBean patientBean) {
         ObservableList<TaskBean> taskList = FXCollections.observableArrayList();
-        TaskAndToDoController.retrieveTasks(patientBean);
+        taskAndToDoController.retrieveTasks(patientBean);
         taskList.addAll(patientBean.getTasks());
         taskNameColumn.setCellValueFactory(new PropertyValueFactory<>("taskName"));
         taskDeadlineColumn.setCellValueFactory(new PropertyValueFactory<>("taskDeadline"));
@@ -70,7 +71,7 @@ public class TaskPatientGUI extends CommonGUI {
     public void saveTask(MouseEvent event){
         if(!modifiedTasks.isEmpty()){
             for(TaskBean task:modifiedTasks){
-                com.theradiary.ispwtheradiary.controller.application.TaskAndToDoController.updateTasks(patientBean,task);
+                taskAndToDoController.updateTasks(patientBean,task);
 
             }
             modifiedTasks.clear();

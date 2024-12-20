@@ -8,6 +8,7 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.RequestBean;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.engineering.patterns.observer.RequestManagerConcreteSubject;
 import com.theradiary.ispwtheradiary.model.*;
 
@@ -15,16 +16,20 @@ import com.theradiary.ispwtheradiary.model.*;
 import java.sql.SQLException;
 
 public class PsychologistDescriptionController {
+    BeanAndModelMapperFactory beanAndModelMapperFactory;
+    public PsychologistDescriptionController() {
+        this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
+    }
 
     public void searchPsychologistInfo(PsychologistBean psychologistBean, MedicalOfficeBean medicalOfficeBean) {
         //Ricavo studio medico e specializzazioni
         try{
-            MedicalOffice medicalOffice = new MedicalOffice(medicalOfficeBean.getPsychologist(), medicalOfficeBean.getCity(), medicalOfficeBean.getPostCode(), medicalOfficeBean.getAddress(), medicalOfficeBean.getOtherInfo());
+            MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
             RetrieveDAO.retrieveMedicalOffice(medicalOffice);
             medicalOfficeBean.setPostCode(medicalOffice.getPostCode());
             medicalOfficeBean.setAddress(medicalOffice.getAddress());
             medicalOfficeBean.setOtherInfo(medicalOffice.getOtherInfo());
-            Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
+            Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
             RetrieveDAO.retrieveMajors(psychologist);
             psychologistBean.setMajor(psychologist.getMajors());
         } catch(SQLException e){
@@ -33,11 +38,7 @@ public class PsychologistDescriptionController {
     }
 
     public void sendRequest(RequestBean requestBean) {
-        Credentials credentialsPat = new Credentials(requestBean.getPatientBean().getCredentialsBean().getMail(), Role.PATIENT);
-        Credentials credentialsPsy = new Credentials(requestBean.getPsychologistBean().getCredentialsBean().getMail(), Role.PSYCHOLOGIST);
-        Request request= new Request(new Patient(credentialsPat, requestBean.getPatientBean().getName(), requestBean.getPatientBean().getSurname(), requestBean.getPatientBean().getCity(), requestBean.getPatientBean().getDescription(), requestBean.getPatientBean().isInPerson(), requestBean.getPatientBean().isOnline()),
-                new Psychologist(credentialsPsy, requestBean.getPsychologistBean().getName(), requestBean.getPsychologistBean().getSurname(), requestBean.getPsychologistBean().getCity(), requestBean.getPsychologistBean().getDescription(), requestBean.getPsychologistBean().isInPerson(), requestBean.getPsychologistBean().isOnline()),
-                requestBean.getDate());
+        Request request = beanAndModelMapperFactory.fromBeanToModel(requestBean, RequestBean.class);
         try{
             PtAndPsDAO.sendRequest(request);
             RequestManagerConcreteSubject requestManagerConcreteSubject = RequestManagerConcreteSubject.getInstance();
@@ -48,10 +49,9 @@ public class PsychologistDescriptionController {
     }
 
     public boolean hasAlreadySentARequest(PatientBean patientBean, PsychologistBean psychologistBean) {
-        Credentials credentialsPat = new Credentials(patientBean.getCredentialsBean().getMail(), Role.PATIENT);
-        Credentials credentialsPsy = new Credentials(psychologistBean.getCredentialsBean().getMail(), Role.PSYCHOLOGIST);
-        Request request= new Request(new Patient(credentialsPat, patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline()),
-                new Psychologist(credentialsPsy, psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline()));
+        Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
+        Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
+        Request request= new Request(patient, psychologist);
         try{
             return PtAndPsDAO.hasAlreadySentARequest(request);
         } catch (Exception e){
@@ -59,8 +59,7 @@ public class PsychologistDescriptionController {
         }
     }
     public boolean hasAlreadyAPsychologist(PatientBean patientBean) {
-        Credentials credentialsPat = new Credentials(patientBean.getCredentialsBean().getMail(), Role.PATIENT);
-        Patient patient = new Patient(credentialsPat, patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+        Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         try{
             return PtAndPsDAO.hasAlreadyAPsychologist(patient);
         } catch (Exception e){

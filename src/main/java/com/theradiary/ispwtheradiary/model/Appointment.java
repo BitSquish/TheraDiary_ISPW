@@ -89,7 +89,4 @@ public class Appointment {
         this.available = available;
     }
 
-    public AppointmentBean toBean() {
-        return new AppointmentBean(psychologist.toBean(), day, timeSlot, inPerson, online);
-    }
 }

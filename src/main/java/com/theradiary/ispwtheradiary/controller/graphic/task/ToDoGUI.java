@@ -24,6 +24,7 @@ public class ToDoGUI extends CommonGUI {
     private ListView<HBox> toDoListView;
     @FXML
     private ObservableList<HBox> toDoListItems= FXCollections.observableArrayList();
+    private final TaskAndToDoController taskAndToDoController = new TaskAndToDoController();
 
     private boolean isDuplicate(String toDo) {
         for (HBox itemBox : toDoListItems) {
@@ -37,7 +38,7 @@ public class ToDoGUI extends CommonGUI {
 
     @FXML
     public void initializeToDoList(PatientBean patientBean) {
-        TaskAndToDoController.toDoList(patientBean);
+        taskAndToDoController.toDoList(patientBean);
         List< ToDoItemBean > toDoItems = patientBean.getToDoList();
         if (toDoItems != null) {
             for (ToDoItemBean toDoItem : toDoItems) {
@@ -75,7 +76,7 @@ public class ToDoGUI extends CommonGUI {
                 String toDoText = label.getText().trim();
                 if (!toDoText.isEmpty()) {
                     // Completa il To-Do
-                    TaskAndToDoController.deleteToDo(new ToDoItemBean(toDoText, true), (PatientBean) session.getUser());
+                    taskAndToDoController.deleteToDo(new ToDoItemBean(toDoText, true), (PatientBean) session.getUser());
                     // Rimuovi dalla lista in modo sicuro
                     iterator.remove();
 

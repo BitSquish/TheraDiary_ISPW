@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.controller.application;
 
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.engineering.patterns.observer.RequestManagerConcreteSubject;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Psychologist;
@@ -13,13 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PatientListController {
+    BeanAndModelMapperFactory beanAndModelMapperFactory;
+    public PatientListController() {
+        this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
+    }
     public void getRequests(PsychologistBean psychologistBean, List<RequestBean> requestBeans) {
-        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), psychologistBean.getCredentialsBean().getRole()), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
+        Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         List<Request> requests = new ArrayList<>();
         RetrieveDAO.retrievePatientsRequest(psychologist, requests);
         RequestBean requestBean;
         for(Request request:requests){
-            requestBean = request.toBean();
+            requestBean = beanAndModelMapperFactory.fromModelToBean(request, Request.class);
             requestBeans.add(requestBean);
         }
         RequestManagerConcreteSubject requestManagerConcreteSubject = RequestManagerConcreteSubject.getInstance();

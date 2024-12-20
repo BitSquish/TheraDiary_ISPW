@@ -121,7 +121,7 @@ public class RequestGUI extends CommonGUI implements Observer {
         // Aggiorna la lista dei RequestBean
         requestBeans.clear();
         for (Request request : requests) {
-            requestBeans.add(request.toBean());
+            requestBeans.add(requestApplicationController.createRequestBean(request));
         }
         refreshTableView();
     }

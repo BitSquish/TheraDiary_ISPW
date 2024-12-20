@@ -109,7 +109,8 @@ public class AppointmentPtGUI extends CommonGUI {
         DayOfTheWeek day = DayOfTheWeek.fromStringToDay(chooseDay.getValue());
         TimeSlot timeSlot = TimeSlot.fromStringToTimeSlot(chooseTimeSlot.getValue());
         if(!appointmentController.hasAlreadySentARequest((PatientBean) session.getUser(), day, timeSlot, allAppointments)) {
-            appointmentController.askForAnAppointment(psychologistBean,(PatientBean) session.getUser(), day, timeSlot);
+            AppointmentBean appointmentBean = new AppointmentBean(psychologistBean, day, timeSlot, session.getUser().getCredentialsBean().getMail());
+            appointmentController.askForAnAppointment(appointmentBean);
             success.setText("Richiesta inviata con successo.");
         }
         else {

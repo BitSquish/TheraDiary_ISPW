@@ -71,10 +71,6 @@ public class Patient extends LoggedUser {
         this.psychologist = psychologist;
     }
 
-    @Override
-    public PatientBean toBean() {
-        return new PatientBean(getCredentials().toBean(), getName(), getSurname(), getCity(), getDescription(), isInPerson(), isOnline());
-    }
 
 
     public void setDiary(String contenuto) {

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ToDoCLI extends AbstractState {
+    TaskAndToDoController taskAndToDoController = new TaskAndToDoController();
     protected PatientBean selectedPatient;
     protected PsychologistBean user;
     Scanner scanner = new Scanner(System.in);
@@ -50,11 +51,11 @@ public class ToDoCLI extends AbstractState {
         Printer.print("Inserisci la descrizione del nuovo ToDo: ");
         String description = scanner.nextLine();
         ToDoItemBean newToDo = new ToDoItemBean(description,false);
-        TaskAndToDoController.saveToDo(newToDo,selectedPatient);
+        taskAndToDoController.saveToDo(newToDo,selectedPatient);
         Printer.printlnGreen("Elemento aggiunto correttamente");
     }
     private void deleteToDoItem(Scanner scanner){
-        TaskAndToDoController.toDoList(selectedPatient);
+        taskAndToDoController.toDoList(selectedPatient);
         List<ToDoItemBean> doList = selectedPatient.getToDoList();
         printToDoList(doList);
         Printer.println("Seleziona l'elemento da modificare:");
@@ -62,7 +63,7 @@ public class ToDoCLI extends AbstractState {
             int position = scanner.nextInt();
             scanner.nextLine();
             if(position>0 && position<=doList.size()){
-                TaskAndToDoController.deleteToDo(doList.get(position-1),selectedPatient);
+                taskAndToDoController.deleteToDo(doList.get(position-1),selectedPatient);
                 Printer.printlnGreen("Elemento eliminato correttamente");
             }else{
                 Printer.errorPrint("Scelta non valida");
@@ -73,7 +74,7 @@ public class ToDoCLI extends AbstractState {
         }
     }
     private void modifyToDo(Scanner scanner){
-        TaskAndToDoController.toDoList(selectedPatient);
+        taskAndToDoController.toDoList(selectedPatient);
         List<ToDoItemBean> toDoList = selectedPatient.getToDoList();
         printToDoList(toDoList);
         Printer.println("Seleziona l'elemento da modificare:");
@@ -85,7 +86,7 @@ public class ToDoCLI extends AbstractState {
                 String newDescription = scanner.nextLine();
                 ToDoItemBean toDo = toDoList.get(position-1);
                 toDo.setToDo(newDescription);
-                TaskAndToDoController.saveToDo(toDo,selectedPatient);
+                taskAndToDoController.saveToDo(toDo,selectedPatient);
                 Printer.printlnGreen("Elemento modificato correttamente");
             }else{
                 Printer.errorPrint("Scelta non valida");
