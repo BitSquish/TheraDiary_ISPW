@@ -3,7 +3,7 @@ package com.theradiary.ispwtheradiary.controller.application;
 import com.theradiary.ispwtheradiary.engineering.dao.PtAndPsDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
-import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
 import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
@@ -28,7 +28,7 @@ public class PsychologistDescriptionController {
             RetrieveDAO.retrieveMajors(psychologist);
             psychologistBean.setMajor(psychologist.getMajors());
         } catch(SQLException e){
-            throw new RuntimeException(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
         }
     }
 
@@ -43,7 +43,7 @@ public class PsychologistDescriptionController {
             RequestManagerConcreteSubject requestManagerConcreteSubject = RequestManagerConcreteSubject.getInstance();
             requestManagerConcreteSubject.addRequest(request);
         } catch (Exception e){
-            throw new RuntimeException(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
         }
     }
 
@@ -55,7 +55,7 @@ public class PsychologistDescriptionController {
         try{
             return PtAndPsDAO.hasAlreadySentARequest(request);
         } catch (Exception e){
-            throw new RuntimeException(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
         }
     }
     public boolean hasAlreadyAPsychologist(PatientBean patientBean) {
@@ -64,7 +64,7 @@ public class PsychologistDescriptionController {
         try{
             return PtAndPsDAO.hasAlreadyAPsychologist(patient);
         } catch (Exception e){
-            throw new RuntimeException(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
         }
     }
 }

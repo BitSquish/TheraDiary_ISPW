@@ -23,24 +23,30 @@ public class PsychologistProfileCLI extends AbstractState {
     /*Azione per invio richiesta*/
     @Override
     public void action(StateMachineImpl context) {
-        Printer.println("Vuoi inviare una richiesta a questo psicologo? (s/n)");
-        String risposta = scanner.next();
-        if(risposta.equals("s")){
-            RequestBean requestBean = new RequestBean(user,selectedPsychologist, LocalDate.now());
-            if(psychologistDescriptionController.hasAlreadySentARequest(user,selectedPsychologist)){
-                Printer.println("Hai già inviato una richiesta a questo psicologo");
-                goNext(context,new HomePatientCLI(user));
-            }else if(psychologistDescriptionController.hasAlreadyAPsychologist(user)){
-                Printer.println("Hai già un psicologo");
-                goNext(context,new HomePatientCLI(user));
-            }else{
-                psychologistDescriptionController.sendRequest(requestBean);
-                Printer.println("Richiesta inviata con successo");
-                goNext(context,new HomePatientCLI(user));
+        try {
+            Printer.println("Vuoi inviare una richiesta a questo psicologo? (s/n)");
+            String answer = scanner.next().trim().toLowerCase();
+            if (answer.equals("s")) {
+                handleRequest(context);
+            } else {
+                goNext(context, new HomePatientCLI(user));
             }
-        } else {
-            goNext(context,new HomePatientCLI(user));
+        }catch (Exception e){
+            Printer.errorPrint(e.getMessage());
+            scanner.nextLine();
         }
+    }
+    private void handleRequest(StateMachineImpl context) {
+        RequestBean requestBean = new RequestBean(user, selectedPsychologist, LocalDate.now());
+        if (psychologistDescriptionController.hasAlreadySentARequest(user,selectedPsychologist)){
+            Printer.errorPrint("Hai già inviato una richiesta a questo psicologo");
+        } else if (psychologistDescriptionController.hasAlreadyAPsychologist(user)) {
+            Printer.errorPrint("Hai già un psicologo");
+        } else {
+            psychologistDescriptionController.sendRequest(requestBean);
+            Printer.println("Richiesta inviata con successo");
+        }
+        goNext(context,new HomePatientCLI(user));
     }
     /*-----------------Pattern state---------------*/
     @Override

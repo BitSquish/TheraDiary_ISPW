@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.controller.application;
 
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
 import com.theradiary.ispwtheradiary.engineering.patterns.observer.RequestManagerConcreteSubject;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
@@ -33,7 +34,7 @@ public class RequestApplicationController {
             patient.setPsychologist(psychologist);
             UpdateDAO.setPatientsPsychologist(patient);
         } catch(Exception e){
-            throw new RuntimeException(e.getMessage()); //TODO Da cambiare
+            throw new DAOException(e.getMessage(), e);
         }
     }
 }

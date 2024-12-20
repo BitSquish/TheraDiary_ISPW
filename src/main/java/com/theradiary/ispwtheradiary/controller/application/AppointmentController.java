@@ -5,6 +5,7 @@ import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.enums.TimeSlot;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
 import com.theradiary.ispwtheradiary.engineering.others.beans.AppointmentBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
@@ -73,7 +74,7 @@ public class AppointmentController {
             try {
                 UpdateDAO.modifyPsychologist(psychologist);
             } catch (SQLException e) {
-                throw new RuntimeException(e);  //TODO gestione eccezione
+                throw new DAOException(e.getMessage(), e);
             }
         }
         return hasChanged;

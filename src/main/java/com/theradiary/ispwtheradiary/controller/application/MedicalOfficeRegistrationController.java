@@ -3,6 +3,7 @@ package com.theradiary.ispwtheradiary.controller.application;
 import com.theradiary.ispwtheradiary.engineering.dao.RegistrationDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
 import com.theradiary.ispwtheradiary.model.MedicalOffice;
 import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
 
@@ -14,7 +15,7 @@ public class MedicalOfficeRegistrationController {
         try{
             RegistrationDAO.registerMedicalOffice(medicalOffice);
         }catch(SQLException exception){
-            throw new RuntimeException(exception.getMessage()); //ECCEZIONE DA VERIFICARE
+            throw new DAOException(exception.getMessage(),exception); //ECCEZIONE DA VERIFICARE
         }
     }
 
@@ -36,7 +37,7 @@ public class MedicalOfficeRegistrationController {
         try{
             UpdateDAO.modifyMedicalOffice(medicalOffice);
         }catch(SQLException exception){
-            throw new RuntimeException(exception.getMessage()); //ECCEZIONE DA VERIFICARE
+            throw new DAOException(exception.getMessage(),exception);//ECCEZIONE DA VERIFICARE
         }
     }
 }

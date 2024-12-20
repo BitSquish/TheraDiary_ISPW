@@ -32,11 +32,11 @@ public class Main extends Application {
         while (!validInput) {
             try {
                 showMenu();
-                int scelta = scanner.nextInt();
+                int choice = scanner.nextInt();
                 scanner.nextLine();
-                switch (scelta) {
+                switch (choice) {
                     case 1:
-                        interfacciaGrafica(stage);
+                        interfaceGrafika(stage);
                         validInput = true;
                         break;
                     case 2:
@@ -52,7 +52,7 @@ public class Main extends Application {
             }
         }
     }
-    public void interfacciaGrafica(Stage stage) throws IOException {
+    public void interfaceGrafika(Stage stage) throws IOException {
         FXMLPathConfig fxmlPathConfig = new FXMLPathConfig("/viewPaths.properties");
         Session session = new Session();
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath("HOMEPAGE_NOT_LOGGED_PATH")));

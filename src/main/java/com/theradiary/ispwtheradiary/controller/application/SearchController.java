@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.controller.application;
 
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.MedicalOffice;
@@ -37,7 +38,7 @@ public class SearchController {
                 medicalOfficeBean.setOtherInfo(medicalOffice.getOtherInfo());
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e); //DA VERIFICARE ECCEZIONE
+            throw new DAOException(e.getMessage(), e);
         }
     }
 

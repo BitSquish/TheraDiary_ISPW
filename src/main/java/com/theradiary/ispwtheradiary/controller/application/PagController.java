@@ -7,10 +7,9 @@ import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 
-import java.sql.SQLException;
 
 public class PagController {
-    public void joinPag(LoggedUserBean loggedUserBean) throws SQLException {
+    public void joinPag(LoggedUserBean loggedUserBean) {
         if(loggedUserBean.getCredentialsBean().getRole().equals(Role.PSYCHOLOGIST)){
             Psychologist psychologist = new Psychologist(new Credentials(loggedUserBean.getCredentialsBean().getMail(), loggedUserBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), loggedUserBean.getName(), loggedUserBean.getSurname(), loggedUserBean.getCity(), loggedUserBean.getDescription(), loggedUserBean.isInPerson(), loggedUserBean.isOnline());
             UpdateDAO.joinPagPsychologist(psychologist);
