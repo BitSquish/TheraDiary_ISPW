@@ -28,7 +28,7 @@ public class UpdateDAO {
     }
     public static void modifyMedicalOffice(MedicalOffice medicalOffice) throws SQLException {
         try(Connection conn = ConnectionFactory.getConnection()){
-            UpdateQuery.modifyMedicalOffice(conn, medicalOffice.getMail(), medicalOffice.getCity(), medicalOffice.getPostCode(), medicalOffice.getAddress(), medicalOffice.getOtherInfo());
+            UpdateQuery.modifyMedicalOffice(conn, medicalOffice.getPsychologist(), medicalOffice.getCity(), medicalOffice.getPostCode(), medicalOffice.getAddress(), medicalOffice.getOtherInfo());
         } catch(SQLException e){
             throw new DatabaseOperationException("Errore nella modifica dello studio medico", e);
         }

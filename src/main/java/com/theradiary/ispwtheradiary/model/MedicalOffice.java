@@ -1,26 +1,26 @@
 package com.theradiary.ispwtheradiary.model;
 
 public class MedicalOffice {
-    private String mail;
+    private String psychologist;
     private String postCode;
     private String address;
     private String city;
     private String otherInfo;
 
-    public MedicalOffice (String mail, String city, String postCode, String address, String otherInfo){
-        this.mail = mail;
+    public MedicalOffice (String psychologist, String city, String postCode, String address, String otherInfo){
+        this.psychologist = psychologist;
         this.postCode = postCode;
         this.address = address;
         this.city = city;
         this.otherInfo = otherInfo;
     }
 
-    public String getMail() {
-        return mail;
+    public String getPsychologist() {
+        return psychologist;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setPsychologist(String psychologist) {
+        this.psychologist = psychologist;
     }
 
     public String getCity() {

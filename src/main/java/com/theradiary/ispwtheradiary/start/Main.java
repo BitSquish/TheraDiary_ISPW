@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import com.theradiary.ispwtheradiary.engineering.others.mappers.MapperRegistration;
 
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        MapperRegistration.registerMappers();   //Registrazione dei mappers che convertono bean in model e viceversa
         Scanner scanner = new Scanner(System.in);
         boolean validInput = false;
         while (!validInput) {
