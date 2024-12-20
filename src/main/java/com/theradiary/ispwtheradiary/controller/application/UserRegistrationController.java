@@ -3,6 +3,7 @@ package com.theradiary.ispwtheradiary.controller.application;
 
 import com.theradiary.ispwtheradiary.engineering.dao.RegistrationDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
@@ -36,7 +37,7 @@ public class UserRegistrationController {
         try {
             RegistrationDAO.registerPatient(patient);
         } catch (SQLException exception) {
-            throw new RuntimeException(exception);  //DA VERIFICARE IL TIPO DI ECCEZIONE
+            throw new DAOException(exception.getMessage(),exception);  //DA VERIFICARE IL TIPO DI ECCEZIONE
         } catch (MailAlreadyExistsException exception) {
             throw new MailAlreadyExistsException(exception.getMessage());
         }
@@ -47,7 +48,7 @@ public class UserRegistrationController {
         try {
             RegistrationDAO.registerPsychologist(psychologist);
         } catch (SQLException exception) {
-            throw new RuntimeException(exception);
+            throw new DAOException(exception.getMessage(),exception);  //DA VERIFICARE IL TIPO DI ECCEZIONE
         } catch (MailAlreadyExistsException exception){
             throw new MailAlreadyExistsException(exception.getMessage());
         }
