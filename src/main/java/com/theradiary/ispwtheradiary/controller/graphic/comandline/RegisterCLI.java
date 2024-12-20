@@ -22,7 +22,7 @@ public class RegisterCLI extends AbstractState {
 
     private final Scanner scanner = new Scanner(System.in);
     private final LoginController login = new LoginController();
-
+    private final UserRegistrationController userRegistration = new UserRegistrationController();
 
     @Override
     public void action(StateMachineImpl contextSM) {
@@ -46,14 +46,14 @@ public class RegisterCLI extends AbstractState {
             switch (role){
                 case "psicologo":
                     PsychologistBean psychologistBean = new PsychologistBean(new CredentialsBean(email,password,Role.PSYCHOLOGIST),nome,surname,city,description,visitModes[0],visitModes[1]);
-                    UserRegistrationController.registerPsychologist(psychologistBean);
+                    userRegistration.registerPsychologist(psychologistBean);
                     Printer.println("Registrazione avvenuta con successo");
                     login.log(psychologistBean.getCredentialsBean());
                     goNext(contextSM,new HomePsychologistCLI(psychologistBean));
                     break;
                 case "paziente":
                     PatientBean patientBean = new PatientBean(new CredentialsBean(email,password,Role.PATIENT),nome,surname,city,description,visitModes[0],visitModes[1]);
-                    UserRegistrationController.registerPatient(patientBean);
+                    userRegistration.registerPatient(patientBean);
                     Printer.println("Registrazione avvenuta con successo");
                     login.log(patientBean.getCredentialsBean());
                     goNext(contextSM,new HomePatientCLI(patientBean));
