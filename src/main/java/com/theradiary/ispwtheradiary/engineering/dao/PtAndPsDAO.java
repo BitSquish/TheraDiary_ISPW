@@ -1,8 +1,7 @@
 package com.theradiary.ispwtheradiary.engineering.dao;
 
 import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
-import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
-import com.theradiary.ispwtheradiary.engineering.others.Printer;
+import com.theradiary.ispwtheradiary.engineering.patterns.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.PtAndPsQuery;
 
 import com.theradiary.ispwtheradiary.model.Patient;

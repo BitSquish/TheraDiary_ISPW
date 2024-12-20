@@ -86,10 +86,6 @@ public class RequestCLI extends AbstractState {
     }
     /*Accetta o rifiuta la richiesta*/
     private void handleRequest(boolean accept){
-        if(requestBeans.isEmpty()){
-            Printer.println("Non ci sono richieste");
-            return;
-        }
         displayRequests();
         boolean validInput = false;
         while(!validInput){

@@ -1,7 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
 import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
-import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
 
 import java.sql.*;
 import java.time.LocalDate;

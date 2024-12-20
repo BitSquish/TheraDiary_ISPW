@@ -4,7 +4,7 @@ package com.theradiary.ispwtheradiary.engineering.dao;
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
-import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
+import com.theradiary.ispwtheradiary.engineering.patterns.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.AccountQuery;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;

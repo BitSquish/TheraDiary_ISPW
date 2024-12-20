@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
 import com.theradiary.ispwtheradiary.controller.application.UserRegistrationController;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.Validator;
 import com.theradiary.ispwtheradiary.engineering.others.beans.CredentialsBean;
@@ -18,84 +19,85 @@ public class RegisterCLI extends AbstractState {
 
     private final Scanner scanner = new Scanner(System.in);
 
+
     @Override
     public void action(StateMachineImpl contextSM) {
         //metodo effettivo per la registrazione
-
-        Printer.print("Nome: ");
-        String nome = scanner.next();
-
-        Printer.print("Cognome: ");
-        String cognome = scanner.next();
-        Printer.print("Città:");
-        String city = scanner.next();
-
-
-        Printer.print("Email: ");
-        String email = scanner.next();
-
         try {
-            Validator.isValidMail(email, null);
+            //Chiedo informazioni
+            Printer.println("Inserite le informazioni necessarie per la registrazione.");
+
+            Printer.print("Nome: ");
+            String nome = scanner.nextLine();
+
+            Printer.print("Cognome: ");
+            String surname = scanner.nextLine();
+
+            Printer.print("Città:");
+            String city = scanner.nextLine();
+
+
+            Printer.print("Email: ");
+            String email = scanner.nextLine();
+
+            if (!Validator.isValidMail(email,null)) {
+                Printer.errorPrint("Email non valida");
+                return;
+            }
+
+            Printer.print("Password: ");
+            String password = scanner.next();
+            Printer.print("Conferma password: ");
+            String confermaPassword = scanner.next();
+            if (!password.equals(confermaPassword)) {
+                Printer.errorPrint("Le password non corrispondono");
+                return;
+            }
+
+            // Chiedo ruolo
+            UserRegistrationController userRegistrationController = new UserRegistrationController();
+            Printer.print("Ruolo[psicolgo/paziente]: ");
+            String role = scanner.next();
+            // Gestione del ruolo
+            switch (role) {
+                case "psicologo" -> {
+                    PsychologistBean psychologistBean = new PsychologistBean(
+                            new CredentialsBean(email, password, Role.PSYCHOLOGIST),
+                            nome, surname, city, null, false, false
+                    );
+                    userRegistrationController.registerPsychologist(psychologistBean);
+                    Printer.printlnGreen("Registrazione effettuata con successo come psicologo.");
+                    goNext(contextSM,new HomePsychologistCLI(psychologistBean));
+                }
+                case "paziente" -> {
+                    PatientBean patientBean = new PatientBean(
+                            new CredentialsBean(email, password, Role.PATIENT),
+                            nome, surname, city, null, false, false
+                    );
+                    userRegistrationController.registerPatient(patientBean);
+                    Printer.printlnGreen("Registrazione effettuata con successo come paziente.");
+                    goNext(contextSM,new HomePatientCLI(patientBean));
+                }
+                default -> Printer.errorPrint("Ruolo non valido. Inserire 'psicologo' o 'paziente'.");
+            }
+        } catch (MailAlreadyExistsException e) {
+            Printer.errorPrint("Errore: " + e.getMessage());
         } catch (Exception e) {
-            Printer.errorPrint("Email non valida");
-            return;
-        }
-
-        Printer.print("Password: ");
-        String password = scanner.next();
-        Printer.print("Conferma password: ");
-        String confermaPassword = scanner.next();
-
-
-        boolean sbagliato = true;
-        boolean isPsychologist = false;
-
-        while (sbagliato) {
-
-            Printer.print("   Ruolo[psicolgo/paziente]: ");
-            String ruolo = scanner.next();
-
-            switch (ruolo) {
-                case ("psicologo"):
-                    isPsychologist = true;
-                    sbagliato = false;
-                    break;
-                case ("paziente"):
-                    sbagliato = false;
-                    break;
-                default:
-                    Printer.errorPrint("Input invalido. Seleziona un'opzione valida.");
-                    break;
-            }
-        }
-
-        try {
-            if (isPsychologist) {
-                PsychologistBean psychologistBean = new PsychologistBean(new CredentialsBean(email, password, Role.PSYCHOLOGIST), nome, cognome, city, null, false, false);
-                UserRegistrationController.registerPsychologist(psychologistBean);
-            } else {
-                PatientBean patientBean = new PatientBean(new CredentialsBean(email, password, Role.PATIENT), nome, cognome, city, null, false, false);
-                UserRegistrationController.registerPatient(patientBean);
-            }
-            Printer.println("---------------------------------------------------------");
-            Printer.println("L'utente è stato correttamente registrato.");
-        }catch(Exception e){
-                Printer.errorPrint("Email già in uso.");
+            Printer.errorPrint("Errore durante la registrazione. Riprova più tardi.");
         }
     }
+
+
+
+
     /*Pattern state*/
 
     @Override
     public void enter(StateMachineImpl contextSM) {
-        /* capire se è necessaria qualche inizializzazione per lo stato*/
         stampa();
     }
 
-    @Override
-    public void exit(StateMachineImpl contextSM) {
-        //qui dobbiamo specificare azioni particolari relative all'uscita da questo stato
-        Printer.println("Verrete reindirizzati alla Home");
-    }
+
 
     @Override
     public void stampa() {

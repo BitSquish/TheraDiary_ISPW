@@ -4,7 +4,7 @@ package com.theradiary.ispwtheradiary.engineering.dao;
 import com.theradiary.ispwtheradiary.engineering.enums.*;
 import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
-import com.theradiary.ispwtheradiary.engineering.others.ConnectionFactory;
+import com.theradiary.ispwtheradiary.engineering.patterns.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.RetrieveQuery;
 import com.theradiary.ispwtheradiary.model.*;
 

@@ -1,4 +1,4 @@
-package com.theradiary.ispwtheradiary.engineering.others;
+package com.theradiary.ispwtheradiary.engineering.patterns;
 
 import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
 
