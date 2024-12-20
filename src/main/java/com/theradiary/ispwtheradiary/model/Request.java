@@ -40,8 +40,4 @@ public class Request {
         this.date = date;
     }
 
-    //converte da model a bean
-    public RequestBean toBean(){
-        return new RequestBean(patient.toBean(), psychologist.toBean(), date);
-    }
 }

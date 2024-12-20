@@ -4,6 +4,7 @@ package com.theradiary.ispwtheradiary.controller.application;
 import com.theradiary.ispwtheradiary.engineering.dao.RegistrationDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
@@ -14,6 +15,10 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import java.sql.SQLException;
 
 public class UserRegistrationController {
+    BeanAndModelMapperFactory beanAndModelMapperFactory;
+    public UserRegistrationController() {
+        this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
+    }
 
 
 
@@ -31,8 +36,8 @@ public class UserRegistrationController {
     }
 
 
-    public static void registerPatient(PatientBean patientBean) throws MailAlreadyExistsException {//metodo per registrare un paziente nel database
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+    public void registerPatient(PatientBean patientBean) throws MailAlreadyExistsException {//metodo per registrare un paziente nel database
+        Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         try {
             RegistrationDAO.registerPatient(patient);
         } catch (SQLException exception) {
@@ -42,12 +47,12 @@ public class UserRegistrationController {
         }
     }
 
-    public static void registerPsychologist(PsychologistBean psychologistBean) throws MailAlreadyExistsException {
-        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST) ,psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
+    public void registerPsychologist(PsychologistBean psychologistBean) throws MailAlreadyExistsException {
+        Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         try {
             RegistrationDAO.registerPsychologist(psychologist);
         } catch (SQLException exception) {
-            throw new RuntimeException(exception);
+            throw new RuntimeException(exception);      //TODO DA VERIFICARE IL TIPO DI ECCEZIONE
         } catch (MailAlreadyExistsException exception){
             throw new MailAlreadyExistsException(exception.getMessage());
         }

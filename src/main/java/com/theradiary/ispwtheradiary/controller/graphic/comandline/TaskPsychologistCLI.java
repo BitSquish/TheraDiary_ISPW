@@ -18,6 +18,7 @@ import java.util.Scanner;
 public class TaskPsychologistCLI extends AbstractState {
     protected PatientBean selectedPatient;
     protected PsychologistBean user;
+    private TaskAndToDoController taskAndToDoController = new TaskAndToDoController();
     StateMachineImpl context;
     public TaskPsychologistCLI(PsychologistBean user,PatientBean selectedPatient) {
         this.selectedPatient = selectedPatient;
@@ -64,7 +65,7 @@ public class TaskPsychologistCLI extends AbstractState {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedDate= LocalDate.now().format(formatter);
         Printer.println("Data:" + formattedDate);
-        String diary = TaskAndToDoController.getDiaryForToday(selectedPatient);
+        String diary = taskAndToDoController.getDiaryForToday(selectedPatient);
         if (diary.isEmpty()) {
             Printer.println("Il diario è vuoto");
         } else {
@@ -76,7 +77,7 @@ public class TaskPsychologistCLI extends AbstractState {
         //mostra la lista delle cose da fare
         Printer.printlnBlue("-------------------Lista cose da fare-------------------");
         Printer.println("Lista cose da fare di " + selectedPatient.getFullName() + ":");
-        TaskAndToDoController.toDoList(selectedPatient);
+        taskAndToDoController.toDoList(selectedPatient);
         List<ToDoItemBean> toDoList = selectedPatient.getToDoList();
         //Nell todoitembean ho creato un metodo tostring che mi restituisce la stringa da stampare
         if(toDoList.isEmpty()){
@@ -92,7 +93,7 @@ public class TaskPsychologistCLI extends AbstractState {
     private void viewTasks(){
         Printer.printlnBlue("-------------------Lista task-------------------");
         Printer.println("Lista task di "+selectedPatient.getFullName()+":");
-        TaskAndToDoController.retrieveTasks(selectedPatient);
+        taskAndToDoController.retrieveTasks(selectedPatient);
         List<TaskBean> taskList = selectedPatient.getTasks();
         if(taskList.isEmpty()){
             Printer.println("Non ci sono task");

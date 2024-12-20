@@ -3,14 +3,20 @@ package com.theradiary.ispwtheradiary.controller.application;
 import com.theradiary.ispwtheradiary.engineering.dao.RegistrationDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
+import com.theradiary.ispwtheradiary.engineering.others.mappers.BeanAndModelMapper;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.model.MedicalOffice;
 import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
 
 import java.sql.SQLException;
 
 public class MedicalOfficeRegistrationController {
+    BeanAndModelMapperFactory beanAndModelMapperFactory;
+    public MedicalOfficeRegistrationController() {
+        this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
+    }
     public void register(MedicalOfficeBean medicalOfficeBean) throws SQLException {
-        MedicalOffice medicalOffice = new MedicalOffice(medicalOfficeBean.getPsychologist(), medicalOfficeBean.getCity(), medicalOfficeBean.getPostCode(), medicalOfficeBean.getAddress(), medicalOfficeBean.getOtherInfo());
+        MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
         try{
             RegistrationDAO.registerMedicalOffice(medicalOffice);
         }catch(SQLException exception){
@@ -19,7 +25,7 @@ public class MedicalOfficeRegistrationController {
     }
 
     public boolean retrieveMedicalOffice(MedicalOfficeBean medicalOfficeBean) throws SQLException{
-        MedicalOffice medicalOffice = new MedicalOffice(medicalOfficeBean.getPsychologist(), medicalOfficeBean.getCity(), medicalOfficeBean.getPostCode(), medicalOfficeBean.getAddress(), medicalOfficeBean.getOtherInfo());
+        MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
         boolean medOffAlreadyInserted = RetrieveDAO.retrieveMedicalOffice(medicalOffice);
         if(medOffAlreadyInserted){
             medicalOfficeBean.setPsychologist(medicalOffice.getPsychologist());
@@ -32,7 +38,7 @@ public class MedicalOfficeRegistrationController {
     }
 
     public void modify(MedicalOfficeBean medicalOfficeBean) {
-        MedicalOffice medicalOffice = new MedicalOffice(medicalOfficeBean.getPsychologist(), medicalOfficeBean.getCity(), medicalOfficeBean.getPostCode(), medicalOfficeBean.getAddress(), medicalOfficeBean.getOtherInfo());
+        MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
         try{
             UpdateDAO.modifyMedicalOffice(medicalOffice);
         }catch(SQLException exception){

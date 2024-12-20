@@ -27,7 +27,6 @@ public class PatientAccountGUI extends AccountGUI {
             goToSearch(event);
         }else{
             accountController.yourPsychologist(((PatientBean)session.getUser()), ((PatientBean)session.getUser()).getPsychologistBean());
-            System.out.println("Metodo in PatientAccountGUI, Nome: " + ((PatientBean)session.getUser()).getPsychologistBean().getFullName());
             goToPsychologistDescription(event, ((PatientBean)session.getUser()).getPsychologistBean());
         }
 

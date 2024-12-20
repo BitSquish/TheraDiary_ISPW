@@ -3,6 +3,7 @@ package com.theradiary.ispwtheradiary.controller.application;
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
@@ -14,6 +15,10 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import java.sql.SQLException;
 
 public class UserModifyController {
+    private BeanAndModelMapperFactory beanAndModelMapperFactory;
+    public UserModifyController() {
+        this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
+    }
     public void userModify(LoggedUserBean loggedUserBean, LoggedUserBean oldLoggedUserBean) throws MailAlreadyExistsException {
         try{
             if(loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT)){
@@ -31,7 +36,7 @@ public class UserModifyController {
     }
 
     private void modifyPsychologist(PsychologistBean psychologistBean, LoggedUserBean oldLoggedUserBean) throws MailAlreadyExistsException {
-        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), psychologistBean.getCredentialsBean().getRole()), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
+        Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         try{
             UpdateDAO.modifyCredentials(psychologist.getCredentials(), new Credentials(oldLoggedUserBean.getCredentialsBean().getMail(), oldLoggedUserBean.getCredentialsBean().getPassword(), oldLoggedUserBean.getCredentialsBean().getRole()));
             UpdateDAO.modifyPsychologist(psychologist);
@@ -45,13 +50,13 @@ public class UserModifyController {
         }catch (MailAlreadyExistsException e){
             throw new MailAlreadyExistsException(e.getMessage());
         }catch (SQLException e){
-            //gestione dell'eccezione
+            //TODO gestione dell'eccezione
         }
 
     }
 
     private void modifyPatient(PatientBean patientBean, LoggedUserBean oldLoggedUserBean) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), patientBean.getCredentialsBean().getRole()), patientBean.getName(), patientBean.getSurname(), patientBean.getCity(), patientBean.getDescription(), patientBean.isInPerson(), patientBean.isOnline());
+        Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         try {
             UpdateDAO.modifyCredentials(patient.getCredentials(), new Credentials(oldLoggedUserBean.getCredentialsBean().getMail(), oldLoggedUserBean.getCredentialsBean().getPassword(), oldLoggedUserBean.getCredentialsBean().getRole()));
             UpdateDAO.modifyPatient(patient);
@@ -63,7 +68,7 @@ public class UserModifyController {
             patientBean.setInPerson(patient.isInPerson());
             patientBean.setOnline(patient.isOnline());
         } catch (Exception e){
-            //gestione dell'eccezione
+            //TODO gestione dell'eccezione
         }
     }
 }

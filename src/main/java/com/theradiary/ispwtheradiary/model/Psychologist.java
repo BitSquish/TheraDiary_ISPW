@@ -48,10 +48,6 @@ public class Psychologist extends LoggedUser {
         this.majors = (ArrayList<Major>) majors;
     }
 
-    @Override
-    public PsychologistBean toBean() {
-        return new PsychologistBean(getCredentials().toBean(), getName(), getSurname(), getCity(), getDescription(), isInPerson(), isOnline());
-    }
 
 
 }

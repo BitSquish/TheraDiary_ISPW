@@ -5,7 +5,7 @@ import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.RequestBean;
-import com.theradiary.ispwtheradiary.engineering.patterns.observer.Observer;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.engineering.patterns.observer.RequestManagerConcreteSubject;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.AbstractState;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.StateMachineImpl;
@@ -15,58 +15,73 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class RequestCLI extends AbstractState implements Observer {
-
-    /****************************PATTERN OBSERVER*********************************/
-    protected final RequestApplicationController requestApplicationController = new RequestApplicationController();
-    private final RequestManagerConcreteSubject requestManagerConcreteSubject;
+public class RequestCLI extends AbstractState {
+    protected RequestApplicationController requestApplicationController = new RequestApplicationController();
+    private final BeanAndModelMapperFactory beanAndModelMapperFactory;
+    private final RequestManagerConcreteSubject requestManagerConcreteSubject = RequestManagerConcreteSubject.getInstance();
     private final List<RequestBean> requestBeans = new ArrayList<>();
     private final Scanner scanner = new Scanner(System.in);
     protected PsychologistBean user;
 
-    // Construttore
     public RequestCLI(PsychologistBean user) {
-        this.requestManagerConcreteSubject = RequestManagerConcreteSubject.getInstance();
         this.user = user;
-        initializeObserver();
+        this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
 
-    // Initialize Observer  RequestManagerConcreteSubject
-    public void initializeObserver() {
-        requestManagerConcreteSubject.addObserver(this);
-    }
-
+    /*Azione per accettare o rifiutare richiesta*/
     @Override
     public void action(StateMachineImpl context) {
+        int scelta;
         boolean running = true;
-
         while (running) {
             try {
-                int choice = Integer.parseInt(scanner.nextLine().trim());
-
-                switch (choice) {
-                    case 1 -> displayRequests();
-                    case 2 -> handleRequest(true);
-                    case 3 -> handleRequest(false);
-                    case 0 -> {
-                        goNext(context, new HomePsychologistCLI(user));
+                scelta = Integer.parseInt(scanner.nextLine().trim());
+                switch (scelta) {
+                    case (1):
+                        displayRequests();
+                        break;
+                    case (2):
+                        handleRequest(true);
+                        break;
+                    case (3):
+                        handleRequest(false);
+                        break;
+                    case (4):
+                        goBack(context);
                         running = false;
-                    }
-                    default -> Printer.errorPrint("Scelta non valida. Inserisci un numero tra 1 e 4.");
+                        break;
+                    default:
+                        Printer.errorPrint("Scelta non valida");
+                        running = false;
+                        break;
                 }
-
             } catch (NumberFormatException e) {
-                Printer.errorPrint("Input non valido. Inserisci un numero.");
+                Printer.errorPrint("Inserisci un numero");
             } catch (Exception e) {
-                Printer.errorPrint("Errore durante l'elaborazione: " + e.getMessage());
+                Printer.errorPrint("Errore durante l'elaborazione");
             }
+
         }
     }
 
-    // Fa vedere tutte le richieste
+    /*Carica le richieste*/
+    private void loadRequests() {
+        List<Request> requests = requestManagerConcreteSubject.getRequests();
+        if (requests == null || requests.isEmpty()) {
+            Printer.println("Non ci sono richieste");
+            return;
+        }
+        requestBeans.clear();
+        for (Request request : requests) {
+            requestBeans.add(beanAndModelMapperFactory.fromBeanToModel(request, Request.class));
+        }
+
+    }
+
+    /*Visualizza le richieste*/
     private void displayRequests() {
         if (requestBeans.isEmpty()) {
-            Printer.println("Non ci sono richieste al momento.");
+            Printer.println("Non ci sono richieste");
         } else {
             Printer.println("\n----- Lista delle Richieste -----\n");
             int index = 1;
@@ -79,77 +94,68 @@ public class RequestCLI extends AbstractState implements Observer {
         }
     }
 
-    // Gestione delle richieste accetta o rifiuta
+    /*Accetta o rifiuta la richiesta*/
     private void handleRequest(boolean accept) {
-        displayRequests();
-
         if (requestBeans.isEmpty()) {
+            Printer.println("Non ci sono richieste");
             return;
         }
-
-        Printer.println("Inserisci il numero della richiesta che vuoi gestire:");
-        try {
-            int selectedIndex = Integer.parseInt(scanner.nextLine().trim());
-
-            if (selectedIndex > 0 && selectedIndex <= requestBeans.size()) {
-                RequestBean requestBean = requestBeans.get(selectedIndex - 1);
-                requestApplicationController.deleteRequest(requestBean);
-
-                if (accept) {
-                    PatientBean patientBean = requestBean.getPatientBean();
-                    patientBean.setPsychologistBean(requestBean.getPsychologistBean());
-                    requestApplicationController.addPsychologistToPatient(patientBean);
-                    user.getPatientsBean().add(patientBean);
+        displayRequests();
+        boolean validInput = false;
+        while (!validInput) {
+            try {
+                Printer.println("Inserisci il numero della richiesta che vuoi gestire");
+                String input = scanner.nextLine().trim();
+                int requestIndex = Integer.parseInt(input.trim()) - 1;
+                if (requestIndex < 0 || requestIndex >= requestBeans.size()) {
+                    Printer.errorPrint("Numero non valido riprova");
+                } else {
+                    validInput = true;
+                    //Elabora la richiesta
+                    RequestBean requestBean = requestBeans.get(requestIndex);
+                    requestApplicationController.deleteRequest(requestBean);
+                    if (accept) {
+                        PatientBean patientBean = requestBean.getPatientBean();
+                        patientBean.setPsychologistBean(requestBean.getPsychologistBean());
+                        requestApplicationController.addPsychologistToPatient(patientBean);
+                        user.getPatientsBean().add(patientBean);
+                        Printer.println("Richiesta accettata per:" + patientBean.getFullName());
+                    } else {
+                        Printer.println("Richiesta rifiutata per:" + requestBean.getPatientBean().getFullName());
+                    }
+                    requestBeans.remove(requestIndex);
                 }
-
-                requestBeans.remove(requestBean);
-                Printer.printlnGreen("Richiesta gestita con successo.");
-            } else {
-                Printer.errorPrint("Scelta non valida. Inserisci un numero tra 1 e " + requestBeans.size() + ".");
-            }
-        } catch (NumberFormatException e) {
-            Printer.errorPrint("Input non valido. Inserisci un numero.");
-        }
-    }
-
-    // Update lista richiesta
-    @Override
-    public void update() {
-        List<Request> requests = requestManagerConcreteSubject.getRequests();
-
-        requestBeans.clear();
-        if (requests != null) {
-            for (Request request : requests) {
-                requestBeans.add(request.toBean());
+            } catch (NumberFormatException e) {
+                Printer.errorPrint("Inserisci un numero");
             }
         }
+
     }
 
-
-
-    /****************************PATTERN STATE*********************************/
+    /*-----------------Pattern state---------------*/
     @Override
     public void showMenu() {
-        Printer.println("\n1. Visualizza le richieste");
-        Printer.println("2. Accetta richiesta");
-        Printer.println("3. Rifiuta richiesta");
-        Printer.println("0. Indietro");
-        Printer.print("Opzione scelta: ");
+        Printer.println("1.Visualizza le richieste");
+        Printer.println("2.Accetta richiesta");
+        Printer.println("3.Rifiuta richiesta");
+        Printer.println("4.Indietro");
+        Printer.print("Opzione scelta:");
     }
-
 
     @Override
     public void stampa() {
-        Printer.println("\n------------------- Richieste -------------------");
-        Printer.println("Ciao " + user.getFullName() + ", scegli cosa vuoi fare:");
+        Printer.println(" ");
+        Printer.printlnBlue("-------------------Richieste-------------------");
+        Printer.println("Ciao" + " " + this.user.getFullName() + ",scegli cosa vuoi fare:");
     }
 
     @Override
     public void enter(StateMachineImpl context) {
-        update(); // Load requests when entering the state
+        loadRequests();
         stampa();
         showMenu();
     }
 }
+
 
 

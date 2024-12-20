@@ -119,7 +119,6 @@ public abstract class LoggedUser {
         return modality.equals("In presenza e online") || modality.equals("Online");
     }
 
-    public abstract LoggedUserBean toBean();
 
 }
 

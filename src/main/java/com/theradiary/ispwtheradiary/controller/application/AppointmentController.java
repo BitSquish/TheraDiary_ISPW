@@ -8,6 +8,7 @@ import com.theradiary.ispwtheradiary.engineering.enums.TimeSlot;
 import com.theradiary.ispwtheradiary.engineering.others.beans.AppointmentBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.model.Appointment;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
@@ -19,13 +20,17 @@ import java.util.List;
 import java.util.Objects;
 
 public class AppointmentController {
+    BeanAndModelMapperFactory beanAndModelMapperFactory;
+    public AppointmentController() {
+        this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
+    }
     //Questo metodo recupera tutte le disponibilità dello psicologo
     public void loadAllAppointments(List<AppointmentBean> appointmentsBean, PsychologistBean psychologistBean) {
-        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
+        Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         List<Appointment> appointments = new ArrayList<>();
         RetrieveDAO.retrieveAllAppointments(psychologist, appointments);
         for(Appointment appointment : appointments) {
-            AppointmentBean appointmentBean = appointment.toBean();
+            AppointmentBean appointmentBean = beanAndModelMapperFactory.fromModelToBean(appointment, Appointment.class);
             if(appointment.getPatient() != null){
                 appointmentBean.setPatientBean(appointment.getPatient().getCredentials().getMail());
             }
@@ -84,10 +89,8 @@ public class AppointmentController {
         allAppointments.removeIf(appointmentBean -> !appointmentBean.isAvailable() || (appointmentBean.isAvailable() && Objects.equals(appointmentBean.getPatientBean(), patientBean.getCredentialsBean().getMail())));
     }
 
-    public void askForAnAppointment(PsychologistBean psychologistBean, PatientBean patientBean, DayOfTheWeek day, TimeSlot timeSlot) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), Role.PATIENT));
-        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), Role.PSYCHOLOGIST));
-        Appointment appointment = new Appointment(psychologist, day, timeSlot, patient);
+    public void askForAnAppointment(AppointmentBean appointmentBean) {
+        Appointment appointment = beanAndModelMapperFactory.fromBeanToModel(appointmentBean, AppointmentBean.class);
         UpdateDAO.setRequestForAppointment(appointment);
     }
 
@@ -107,4 +110,5 @@ public class AppointmentController {
     public boolean hasAlreadySentARequest(PatientBean patientBean, DayOfTheWeek day, TimeSlot timeSlot, List<AppointmentBean> allAppointments) {
         return allAppointments.stream().anyMatch(appointmentBean -> appointmentBean.getPatientBean() != null && appointmentBean.getPatientBean().equals(patientBean.getCredentialsBean().getMail()) && appointmentBean.getDay().equals(day) && appointmentBean.getTimeSlot().equals(timeSlot) && !appointmentBean.isAvailable());
     }
+
 }

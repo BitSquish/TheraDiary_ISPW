@@ -4,7 +4,11 @@ import com.theradiary.ispwtheradiary.engineering.dao.LoginDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
+import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
+import com.theradiary.ispwtheradiary.engineering.others.mappers.BeanAndModelMapper;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.model.Credentials;
+import com.theradiary.ispwtheradiary.model.LoggedUser;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 import com.theradiary.ispwtheradiary.engineering.others.beans.CredentialsBean;
@@ -14,12 +18,17 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import java.sql.SQLException;
 
 public class LoginController {
+    private final BeanAndModelMapperFactory beanAndModelMapperFactory;
+    public LoginController() {
+        this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
+    }
+
     public void log(CredentialsBean credentialsBean) throws WrongEmailOrPasswordException {
         try {
-            Credentials credentials = new Credentials(credentialsBean.getMail(), credentialsBean.getPassword(), credentialsBean.getRole());
+            Credentials credentials = beanAndModelMapperFactory.fromBeanToModel(credentialsBean, CredentialsBean.class);
             LoginDAO.login(credentials);
             credentialsBean.setRole(credentials.getRole());
-        } catch(SQLException e) { //CONTROLLARE ECCEZIONI
+        } catch(SQLException e) { //TODO CONTROLLARE ECCEZIONI
             throw new RuntimeException(e);
         } catch (WrongEmailOrPasswordException e) {
             throw new WrongEmailOrPasswordException(e.getMessage());
@@ -27,27 +36,32 @@ public class LoginController {
     }
 
     public void retrievePatient(PatientBean patientBean) {
-        Patient patient = new Patient(new Credentials(patientBean.getCredentialsBean().getMail(), patientBean.getCredentialsBean().getPassword(), Role.PATIENT));
-        RetrieveDAO.retrievePatient(patient);
-        patientBean.setName(patient.getName());
-        patientBean.setSurname(patient.getSurname());
-        patientBean.setCity(patient.getCity());
-        patientBean.setDescription(patient.getDescription());
-        patientBean.setInPerson(patient.isInPerson());
-        patientBean.setOnline(patient.isOnline());
-        patientBean.setPag(patient.isPag());
-        patientBean.setPsychologistBean(patient.getPsychologist().toBean());
+        Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
+        retrieveUser(patient, patientBean);
     }
 
     public void retrievePsychologist(PsychologistBean psychologistBean) {
-        Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCredentialsBean().getPassword(), Role.PSYCHOLOGIST), null, null, null, null, false, false);
-        RetrieveDAO.retrievePsychologist(psychologist);
-        psychologistBean.setName(psychologist.getName());
-        psychologistBean.setSurname(psychologist.getSurname());
-        psychologistBean.setCity(psychologist.getCity());
-        psychologistBean.setDescription(psychologist.getDescription());
-        psychologistBean.setInPerson(psychologist.isInPerson());
-        psychologistBean.setOnline(psychologist.isOnline());
-        psychologistBean.setPag(psychologist.isPag());
+        Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
+        retrieveUser(psychologist, psychologistBean);
+    }
+
+    private <M extends LoggedUser, B extends LoggedUserBean> void retrieveUser (M user, B userBean) {
+        // Recupera l'utente dal DAO
+        if (user.getCredentials().getRole().equals(Role.PATIENT)) {
+            RetrieveDAO.retrievePatient((Patient) user);
+            PsychologistBean psychologistBean = beanAndModelMapperFactory.fromModelToBean((((Patient) user).getPsychologist()), Psychologist.class);
+            ((PatientBean)userBean).setPsychologistBean(psychologistBean);
+        }else if (user.getCredentials().getRole().equals(Role.PSYCHOLOGIST)) {
+            RetrieveDAO.retrievePsychologist((Psychologist) user);
+        }
+        // Imposta i dati nel bean
+        userBean.setName(user.getName());
+        userBean.setSurname(user.getSurname());
+        userBean.setCity(user.getCity());
+        userBean.setDescription(user.getDescription());
+        userBean.setInPerson(user.isInPerson());
+        userBean.setOnline(user.isOnline());
+        userBean.setPag(user.isPag());
+
     }
 }
