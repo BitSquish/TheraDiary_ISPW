@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConnectionFactory {
-    //Impedisce che la classe ConnectionFactory possa essere inizializzata da altre classi (singleton)
+    //Impedisce che la classe ConnectionFactory possa essere inizializzata da altre classi (singleton)z
     private ConnectionFactory() {}
 
     public static Connection getConnection() throws SQLException {

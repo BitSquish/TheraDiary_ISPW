@@ -27,6 +27,12 @@ module com.theradiary.ispwtheradiary {
     opens com.theradiary.ispwtheradiary.engineering.exceptions to javafx.fxml;
     exports com.theradiary.ispwtheradiary.engineering.others;
     opens com.theradiary.ispwtheradiary.engineering.others to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.engineering.patterns.factory;
+    opens com.theradiary.ispwtheradiary.engineering.patterns.factory to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.engineering.patterns.observer;
+    opens com.theradiary.ispwtheradiary.engineering.patterns.observer to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.engineering.dao;
+    opens com.theradiary.ispwtheradiary.engineering.dao to javafx.fxml;
     //Model
     exports com.theradiary.ispwtheradiary.model;
     opens com.theradiary.ispwtheradiary.model to javafx.fxml;
@@ -38,6 +44,8 @@ module com.theradiary.ispwtheradiary {
     opens com.theradiary.ispwtheradiary.controller.graphic.task to javafx.fxml;
     exports com.theradiary.ispwtheradiary.engineering.patterns;
     opens com.theradiary.ispwtheradiary.engineering.patterns to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.engineering.others.mappers;
+    opens com.theradiary.ispwtheradiary.engineering.others.mappers to javafx.fxml;
 
 
 }

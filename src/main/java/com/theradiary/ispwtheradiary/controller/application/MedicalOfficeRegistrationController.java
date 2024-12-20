@@ -22,7 +22,7 @@ public class MedicalOfficeRegistrationController {
         MedicalOffice medicalOffice = new MedicalOffice(medicalOfficeBean.getPsychologist(), medicalOfficeBean.getCity(), medicalOfficeBean.getPostCode(), medicalOfficeBean.getAddress(), medicalOfficeBean.getOtherInfo());
         boolean medOffAlreadyInserted = RetrieveDAO.retrieveMedicalOffice(medicalOffice);
         if(medOffAlreadyInserted){
-            medicalOfficeBean.setPsychologist(medicalOffice.getMail());
+            medicalOfficeBean.setPsychologist(medicalOffice.getPsychologist());
             medicalOfficeBean.setCity(medicalOffice.getCity());
             medicalOfficeBean.setPostCode(medicalOffice.getPostCode());
             medicalOfficeBean.setAddress(medicalOffice.getAddress());

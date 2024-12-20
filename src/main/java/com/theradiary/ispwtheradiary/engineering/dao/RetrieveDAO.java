@@ -46,7 +46,7 @@ public class RetrieveDAO {
 
     public static boolean retrieveMedicalOffice(MedicalOffice medicalOffice) throws SQLException {
         try (Connection conn = ConnectionFactory.getConnection();
-             ResultSet rs = RetrieveQuery.retrieveMedicalOffice(conn, medicalOffice.getMail())) {
+             ResultSet rs = RetrieveQuery.retrieveMedicalOffice(conn, medicalOffice.getPsychologist())) {
             if (rs.next()) {
                 medicalOffice.setCity(rs.getString("city"));
                 medicalOffice.setPostCode(rs.getString("postCode"));
