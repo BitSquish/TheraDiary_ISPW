@@ -5,14 +5,12 @@ import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
-import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 
 
 public class PagController {
-    public void joinPag(LoggedUserBean loggedUserBean) {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
     public PagController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();

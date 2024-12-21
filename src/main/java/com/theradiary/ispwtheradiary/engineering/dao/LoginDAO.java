@@ -3,7 +3,7 @@ package com.theradiary.ispwtheradiary.engineering.dao;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
-import com.theradiary.ispwtheradiary.engineering.patterns.ConnectionFactory;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.LoginAndRegistrationQuery;
 import com.theradiary.ispwtheradiary.model.Credentials;
 

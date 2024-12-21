@@ -90,16 +90,6 @@ public class TaskAndToDoQuery {
     }
     /*-------------------------TASK-------------------------*/
 
-    public static ResultSet getTasks(Connection conn, String mail) {
-        String query="SELECT description,deadline,status FROM task WHERE patient=?";
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, mail);
-            return pstmt.executeQuery();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public static void saveTask(Connection conn, String mail, Task task) {
         String query = "INSERT INTO task (description,deadline,status,patient) VALUES (?,?,?,?)";
@@ -139,5 +129,12 @@ public class TaskAndToDoQuery {
         } catch (SQLException e) {
             throw new DatabaseOperationException("Errore nell'aggiornamento del task",e);
         }
+    }
+
+    public static ResultSet retrieveTasks(Connection conn, String mail) throws SQLException {
+        String query = "SELECT description,deadline,status FROM task WHERE patient=?";
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setString(1, mail);
+        return pstmt.executeQuery();
     }
 }

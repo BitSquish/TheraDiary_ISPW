@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TaskPatientGUI extends CommonGUI {
     public TaskPatientGUI(FXMLPathConfig fxmlPathConfig, Session session) {
@@ -24,6 +25,8 @@ public class TaskPatientGUI extends CommonGUI {
     }
     TaskAndToDoController taskAndToDoController = new TaskAndToDoController();
     PatientBean patientBean = (PatientBean) session.getUser();
+    private final ObservableList<TaskBean> tasks = FXCollections.observableArrayList();
+    private final List<TaskBean> modifiedTasks = new ArrayList<>();
     @FXML
     private TableView<TaskBean> taskTableView;
     @FXML
@@ -35,17 +38,21 @@ public class TaskPatientGUI extends CommonGUI {
     @FXML
     private TableColumn<TaskBean, String> taskStatusColumn;
 
-
     public void initializeTaskList(PatientBean patientBean) {
-        ObservableList<TaskBean> taskList = FXCollections.observableArrayList();
+        //recupero i task
         taskAndToDoController.retrieveTasks(patientBean);
-        taskList.addAll(patientBean.getTasks());
+        tasks.clear();
+        List<TaskBean> uniqueTasks = removeDuplicates(patientBean.getTasks());
+        tasks.addAll(uniqueTasks);
+
+        //configuro le colonne
         taskNameColumn.setCellValueFactory(new PropertyValueFactory<>("taskName"));
         taskDeadlineColumn.setCellValueFactory(new PropertyValueFactory<>("taskDeadline"));
         taskStatusColumn.setCellValueFactory(new PropertyValueFactory<>("taskStatus"));
-        taskTableView.setItems(taskList);
+        //imposto gli elementi della tabella
+        taskTableView.setItems(tasks);
     }
-    private final List<TaskBean> modifiedTasks = new ArrayList<>();
+
     @FXML
     public void modifyTask(MouseEvent event){
         TaskBean selectedTask = taskTableView.getSelectionModel().getSelectedItem();
@@ -54,10 +61,10 @@ public class TaskPatientGUI extends CommonGUI {
             if(newStatus!=null){
                 try{
                     selectedTask.setTaskStatus(newStatus);
-                    taskTableView.refresh();
-                    if(!modifiedTasks.contains(selectedTask)){
+                    if (!modifiedTasks.contains(selectedTask)) {
                         modifiedTasks.add(selectedTask);
                     }
+                    taskTableView.refresh();
 
                     showMessage(Alert.AlertType.INFORMATION,"Modifica completata","Modifica completata con successo");
                 }catch(Exception e){
@@ -70,15 +77,21 @@ public class TaskPatientGUI extends CommonGUI {
     @FXML
     public void saveTask(MouseEvent event){
         if(!modifiedTasks.isEmpty()){
-            for(TaskBean task:modifiedTasks){
-                taskAndToDoController.updateTasks(patientBean,task);
-
+            try {
+                for (TaskBean task : modifiedTasks) {
+                    taskAndToDoController.updateTasks(patientBean, task);
+                }
+                modifiedTasks.clear();
+                showMessage(Alert.AlertType.INFORMATION, "Salvataggio completato", "Salvataggio completato con successo");
+            }catch(Exception e){
+                showMessage(Alert.AlertType.ERROR,"Errore","Errore durante il salvataggio");
             }
-            modifiedTasks.clear();
-            showMessage(Alert.AlertType.INFORMATION,"Salvataggio completato","Salvataggio completato con successo");
         }else {
             showMessage(Alert.AlertType.INFORMATION,"Salvataggio completato","Nessuna modifica da salvare");
         }
 
+    }
+    private List<TaskBean> removeDuplicates(List<TaskBean> tasks){
+        return tasks.stream().distinct().toList();
     }
 }

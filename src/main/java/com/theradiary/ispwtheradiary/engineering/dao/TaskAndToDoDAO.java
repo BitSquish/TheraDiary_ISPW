@@ -1,11 +1,12 @@
 package com.theradiary.ispwtheradiary.engineering.dao;
 
 import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
-import com.theradiary.ispwtheradiary.engineering.patterns.ConnectionFactory;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.TaskAndToDoQuery;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Task;
 import com.theradiary.ispwtheradiary.model.ToDoItem;
+import javafx.collections.ObservableList;
 
 
 import java.sql.Connection;
@@ -87,18 +88,6 @@ public class TaskAndToDoDAO {
         }
     }
     /*********************************task**********************************/
-    public static List<Task> retriveTasks(Patient patient) {
-        List<Task> tasks=new ArrayList<>();
-        try(Connection conn= ConnectionFactory.getConnection()) {
-            ResultSet rs=TaskAndToDoQuery.getTasks(conn, patient.getCredentials().getMail());
-            while(rs.next()){
-                tasks.add(new Task(rs.getString("description"),rs.getDate("deadline").toLocalDate(),rs.getString("status")));
-            }
-        }catch (SQLException e){
-            throw new DatabaseOperationException("Errore nel recupero dei task",e);
-        }
-        return tasks;
-    }
 
     public static void saveTask(Patient patient, Task task) {
         try(Connection conn= ConnectionFactory.getConnection()) {
@@ -121,5 +110,18 @@ public class TaskAndToDoDAO {
         }catch (SQLException e){
             throw new DatabaseOperationException("Errore nell'aggiornamento del task",e);
         }
+    }
+
+    public static List<Task> retrieveTasks(Patient patient) {
+        List<Task> task=new ArrayList<>();
+        try(Connection conn= ConnectionFactory.getConnection()) {
+            ResultSet rs=TaskAndToDoQuery.retrieveTasks(conn, patient.getCredentials().getMail());
+            while(rs.next()){
+                task.add(new Task(rs.getString("description"),rs.getDate("deadline").toLocalDate(),rs.getString("status")));
+            }
+        }catch (SQLException e){
+            throw new DatabaseOperationException("Errore nel recupero dei task",e);
+        }
+        return task;
     }
 }

@@ -83,9 +83,10 @@ public class TaskAndToDoController {
     /*-------------------------TASKS-------------------------*/
     public void retrieveTasks(PatientBean patientBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
-        List<Task> tasks = TaskAndToDoDAO.retriveTasks(patient);
+        List<Task> tasks = TaskAndToDoDAO.retrieveTasks(patient);
+        patientBean.clearTasks();
         for (Task task : tasks) {
-            patientBean.addTask(new TaskBean(task.getTaskName(),task.getTaskDeadline(), task.getTaskStatus()));
+            patientBean.addTask(new TaskBean(task.getTaskName(), task.getTaskDeadline(), task.getTaskStatus()));
         }
     }
     public void saveTasks(PatientBean patientBean,TaskBean taskBean) {
@@ -105,5 +106,6 @@ public class TaskAndToDoController {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         Task task = new Task(taskBean.getTaskName(),taskBean.getTaskDeadline(), taskBean.getTaskStatus());
         TaskAndToDoDAO.updateTask(patient,task);
+        patientBean.removeTask(taskBean);
     }
 }

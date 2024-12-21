@@ -35,11 +35,6 @@ public class PatientDetailsGUI extends CommonGUI {
 
     @FXML
     private Label fullName;
-
-    @FXML
-    private TabPane tabPane;
-
-
     @FXML
     private TableView<TaskBean> taskTableView;
 

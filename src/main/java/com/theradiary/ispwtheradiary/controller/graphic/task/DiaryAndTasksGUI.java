@@ -8,6 +8,7 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
@@ -23,8 +24,11 @@ public class DiaryAndTasksGUI extends com.theradiary.ispwtheradiary.controller.g
 
     @FXML
     protected void goToTest(MouseEvent event){
-        //TODO
+        showMessage(Alert.AlertType.INFORMATION, "Test", "Work in progress");
     }
+
+
+
     @FXML
     protected void goToDo(MouseEvent event){
         try{

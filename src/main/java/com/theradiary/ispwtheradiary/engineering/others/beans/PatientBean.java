@@ -36,6 +36,9 @@ public class PatientBean extends LoggedUserBean{
     public void addTask(TaskBean task){
         tasks.add(task);
     }
+    public void clearTasks(){
+        tasks.clear();
+    }
     public void setTasks(List<TaskBean> tasks) {
         this.tasks = tasks;
     }

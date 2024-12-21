@@ -4,7 +4,7 @@ package com.theradiary.ispwtheradiary.engineering.dao;
 
 import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
-import com.theradiary.ispwtheradiary.engineering.patterns.ConnectionFactory;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.LoginAndRegistrationQuery;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.MedicalOffice;
