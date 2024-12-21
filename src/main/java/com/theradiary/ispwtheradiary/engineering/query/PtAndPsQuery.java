@@ -33,18 +33,19 @@ public class PtAndPsQuery {
     }
 
     public static boolean hasAlreadyAPsychologist(Connection conn, String mail) {
-        String query = "SELECT psychologist FROM patient WHERE patient = ?";
-        try{
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setString(1, mail);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getString("psychologist_id") != null; // True se ha uno psicologo
+        String query = "SELECT psychologist FROM patient WHERE mail = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, mail);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String psychologist = rs.getString("psychologist");
+                    return psychologist != null && !psychologist.isEmpty();
                 }
             }
         } catch (SQLException e) {
-            throw new DatabaseOperationException("Errore nel controllo del paziente", e);
+            throw new DatabaseOperationException("Errore nel controllo dello psicologo", e);
         }
+
         return false;
     }
 }

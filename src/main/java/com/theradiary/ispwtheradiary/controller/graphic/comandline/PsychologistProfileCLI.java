@@ -24,25 +24,27 @@ public class PsychologistProfileCLI extends AbstractState {
     @Override
     public void action(StateMachineImpl context) {
         try {
-            Printer.println("Vuoi inviare una richiesta a questo psicologo? (s/n)");
             String answer = scanner.next().trim().toLowerCase();
             if (answer.equals("s")) {
                 handleRequest(context);
-            } else {
+            } else if (answer.equals("n")) {
+                goNext(context, new HomePatientCLI(user));
+            }else {
+                Printer.errorPrint("Scelta non valida");
                 goNext(context, new HomePatientCLI(user));
             }
-        }catch (Exception e){
+        }catch (Exception e) {
             Printer.errorPrint(e.getMessage());
-            scanner.nextLine();
         }
     }
     private void handleRequest(StateMachineImpl context) {
-        RequestBean requestBean = new RequestBean(user, selectedPsychologist, LocalDate.now());
         if (psychologistDescriptionController.hasAlreadySentARequest(user,selectedPsychologist)){
             Printer.errorPrint("Hai già inviato una richiesta a questo psicologo");
         } else if (psychologistDescriptionController.hasAlreadyAPsychologist(user)) {
             Printer.errorPrint("Hai già un psicologo");
         } else {
+            //crea e invia richiesta
+            RequestBean requestBean = new RequestBean(user, selectedPsychologist, LocalDate.now());
             psychologistDescriptionController.sendRequest(requestBean);
             Printer.println("Richiesta inviata con successo");
         }
@@ -61,5 +63,6 @@ public class PsychologistProfileCLI extends AbstractState {
         Printer.println("Descrizione: " + selectedPsychologist.getDescription());
         Printer.println("Visita in presenza: " + selectedPsychologist.getModality());
         Printer.println("Visita online: " + selectedPsychologist.getMajors());
+        Printer.println("\nVuoi inviare una richiesta a questo psicologo? (s/n)");
     }
 }

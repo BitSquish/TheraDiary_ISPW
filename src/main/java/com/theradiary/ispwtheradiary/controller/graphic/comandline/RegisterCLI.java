@@ -69,7 +69,7 @@ public class RegisterCLI extends AbstractState {
     }
     //metodo per chiedere l'input
     private String prompt(String message) {
-        Printer.print(message+":");
+        Printer.print(message);
         String input = scanner.nextLine().trim();
         if (input.isEmpty()) {
             Printer.errorPrint("Inserire un valore valido");
