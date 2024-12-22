@@ -16,6 +16,7 @@ import java.util.Scanner;
 
 public class AppointmentPatientCLI extends AbstractState {
     private final PsychologistBean psychologistBean;
+    private final Scanner scanner = new Scanner(System.in);
     private final PatientBean user;
     private final List<AppointmentBean> allAppointments = new ArrayList<>();
     private final AppointmentController appointmentController = new AppointmentController();
@@ -23,7 +24,6 @@ public class AppointmentPatientCLI extends AbstractState {
         this.psychologistBean = user.getPsychologistBean();
         this.user=user;
     }
-    Scanner scanner = new Scanner(System.in);
     @Override
     public void action(StateMachineImpl context) {
         boolean exit = false;
@@ -31,19 +31,12 @@ public class AppointmentPatientCLI extends AbstractState {
             try {
                 int choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
-                    case 1:
-                        viewAppointments();
-                        break;
-                    case 2:
-                        bookAppointment();
-                        break;
-                    case 3:
+                    case 1 -> viewAppointments();
+                    case 2 ->bookAppointment();
+                    case 3 -> {
                         exit = true;
-                        goNext(context, new HomePatientCLI(user));
-                        break;
-                    default:
-                        Printer.errorPrint("Input non valido");
-                        break;
+                        goNext(context, new HomePatientCLI(user));}
+                    default -> Printer.errorPrint("Input non valido");
                 }
             } catch (NumberFormatException e) {
                 Printer.errorPrint("Errore scelta non valida");
@@ -61,56 +54,89 @@ public class AppointmentPatientCLI extends AbstractState {
         appointmentController.loadAllAppointments(allAppointments,psychologistBean);
         if(allAppointments.isEmpty()){
             Printer.errorPrint("Non hai appuntamenti prenotati");
-        }
-        Printer.printlnBlue("Appuntamenti disponibili:");
-        for(AppointmentBean appointment:allAppointments){
-            Printer.println("-"+appointment);
+        }else {
+            Printer.printlnBlue("Appuntamenti disponibili:");
+            allAppointments.forEach(appointment -> Printer.println("- " + appointment));
         }
     }
     private void bookAppointment(){
         if(psychologistBean==null){
-            Printer.errorPrint("Non hai uno psicologo associato. Cerca uno psicologo per poter prenotare un appuntamento");
-            goNext(new StateMachineImpl(),new SearchCLI(user));
+            handleNoPsychologist();
+            return;
         }
         appointmentController.loadAvailableAppointments(allAppointments,user);
         if(allAppointments.isEmpty()){
             Printer.errorPrint("Non ci sono appuntamenti disponibili da prenotare");
             return;
         }
-        Printer.printlnBlue("Giorni disponibili:");
-        List<String> days=allAppointments.stream().map(app-> DayOfTheWeek.translateDay(app.getDay().getId())).distinct().toList();
-        for(int i=0;i<days.size();i++){
-            Printer.println((i+1)+". "+days.get(i));
-        }
-        Printer.print("Seleziona il giorno (numero):");
-        int dayIndex=Integer.parseInt(scanner.nextLine())-1;
-        if (dayIndex<0 || dayIndex>=days.size()){
-            Printer.errorPrint("Scelta non valida");
-        }
-        String selectedDay=days.get(dayIndex);
-        DayOfTheWeek day=DayOfTheWeek.valueOf(selectedDay);
+        DayOfTheWeek selectedDay = chooseDay();
+        if (selectedDay == null) return;
 
-        Printer.printlnBlue("Fasce orarie disponibili per"+ selectedDay+":");
-        List<String> timeSlots=allAppointments.stream().filter(app->DayOfTheWeek.translateDay(app.getDay().getId()).equals(selectedDay)).map(app-> TimeSlot.translateTimeSlot(app.getTimeSlot().getId())).distinct().toList();
-        for(int i=0;i<timeSlots.size();i++){
-            Printer.println((i+1)+". "+timeSlots.get(i));
-        }
-        Printer.print("Seleziona la fascia oraria (numero):");
-        int timeSlotIndex=Integer.parseInt(scanner.nextLine())-1;
-        if (timeSlotIndex<0 || timeSlotIndex>=timeSlots.size()){
-            Printer.errorPrint("Scelta non valida");
-        }
-        String selectedTimeSlot=timeSlots.get(timeSlotIndex);
-        TimeSlot timeSlot=TimeSlot.fromStringToTimeSlot(selectedTimeSlot);
-        if(!appointmentController.hasAlreadySentARequest(user,day,timeSlot,allAppointments)){
-            AppointmentBean appointmentBean=new AppointmentBean(psychologistBean,day,timeSlot,user.getCredentialsBean().getMail());
+        TimeSlot selectedTimeSlot = chooseTimeSlot(selectedDay);
+        if (selectedTimeSlot == null) return;
+
+        if (!appointmentController.hasAlreadySentARequest(user, selectedDay, selectedTimeSlot, allAppointments)) {
+            AppointmentBean appointmentBean = new AppointmentBean(psychologistBean, selectedDay, selectedTimeSlot, user.getCredentialsBean().getMail());
             appointmentController.askForAnAppointment(appointmentBean);
-            Printer.printGreen("Richiesta inviata con successo");
-        }else{
-            Printer.errorPrint("Hai già fatto richiesta per questa fascia oraria. Attendi che il tuo psicologo confermi o rifiuti l'appuntamento.");
+            Printer.printGreen("Richiesta inviata con successo.");
+        } else {
+            Printer.errorPrint("Hai già fatto richiesta per questa fascia oraria. Attendi una conferma o un rifiuto.");
         }
     }
-    @Override
+    private void handleNoPsychologist() {
+        Printer.errorPrint("Non hai uno psicologo associato. Cerca uno psicologo per poter prenotare un appuntamento.");
+        goNext(new StateMachineImpl(), new SearchCLI(user));
+    }
+    private DayOfTheWeek chooseDay() {
+        List<String> days = allAppointments.stream()
+                .map(app -> DayOfTheWeek.translateDay(app.getDay().getId()))
+                .distinct()
+                .toList();
+
+        Printer.printlnBlue("Giorni disponibili:");
+        for (int i = 0; i < days.size(); i++) {
+            Printer.println((i + 1) + ". " + days.get(i));
+        }
+
+        Printer.print("Seleziona il giorno (numero):");
+        try {
+            int dayIndex = Integer.parseInt(scanner.nextLine()) - 1;
+            if (dayIndex >= 0 && dayIndex < days.size()) {
+                return DayOfTheWeek.valueOf(days.get(dayIndex));
+            } else {
+                Printer.errorPrint("Scelta non valida. Inserisci un numero valido.");
+            }
+        } catch (NumberFormatException e) {
+            Printer.errorPrint("Errore: Inserisci un numero valido.");
+        }
+        return null;
+    }
+    private TimeSlot chooseTimeSlot(DayOfTheWeek selectedDay) {
+        List<String> timeSlots = allAppointments.stream()
+                .filter(app -> DayOfTheWeek.translateDay(app.getDay().getId()).equals(selectedDay.name()))
+                .map(app -> TimeSlot.translateTimeSlot(app.getTimeSlot().getId()))
+                .distinct()
+                .toList();
+
+        Printer.printlnBlue("Fasce orarie disponibili per " + selectedDay + ":");
+        for (int i = 0; i < timeSlots.size(); i++) {
+            Printer.println((i + 1) + ". " + timeSlots.get(i));
+        }
+        Printer.print("Seleziona la fascia oraria (numero):");
+        try {
+            int timeSlotIndex = Integer.parseInt(scanner.nextLine()) - 1;
+            if (timeSlotIndex >= 0 && timeSlotIndex < timeSlots.size()) {
+                return TimeSlot.fromStringToTimeSlot(timeSlots.get(timeSlotIndex));
+            } else {
+                Printer.errorPrint("Scelta non valida. Inserisci un numero valido.");
+            }
+        } catch (NumberFormatException e) {
+            Printer.errorPrint("Errore: Inserisci un numero valido.");
+        }
+        return null;
+    }
+
+        @Override
     public void showMenu() {
         Printer.println("1.Visualizza appuntamenti");
         Printer.println("2.Prenota appuntamento");

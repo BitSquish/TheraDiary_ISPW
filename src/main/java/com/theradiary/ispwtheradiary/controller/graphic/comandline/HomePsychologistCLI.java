@@ -16,25 +16,20 @@ public class HomePsychologistCLI extends AbstractState {
     /* Opzione menu dove voglio andare */
     @Override
     public void action(StateMachineImpl context) {
-        int scelta;
-        while ((scelta = scanner.nextInt()) != 0) {
+        boolean exit=false;
+        while (!exit) {
             try {
-                switch (scelta) {
-                    case (1):
-                        goNext(context, new PatientListCLI((PsychologistBean) user));
-                        break;
-                    case (2):
-                        goNext(context, new AppointmentPsychologistCLI((PsychologistBean) user));
-                        break;
-                    case (3):
-                        goNext(context, new MedicalOfficeCLI(user));
-                        break;
-                    case(4):
-                        goNext(context,new RequestCLI((PsychologistBean) user));
-                        break;
-                    default:
-                        Printer.errorPrint("Scelta non valida");
-                        break;
+                int choice= Integer.parseInt(scanner.nextLine());
+                switch (choice) {
+                    case 1 -> goNext(context, new PatientListCLI((PsychologistBean) user));
+                    case 2 -> goNext(context, new AppointmentPsychologistCLI((PsychologistBean) user));
+                    case 3 -> goNext(context, new MedicalOfficeCLI(user));
+                    case 4 -> goNext(context, new RequestCLI((PsychologistBean) user));
+                    case 0 -> {
+                        exit = true;
+                        goNext(context, new InitialState());
+                    }
+                    default -> Printer.errorPrint("Input non valido");
                 }
             } catch (Exception e) {
                 Printer.errorPrint("Errore scelta non valida");
@@ -42,7 +37,6 @@ public class HomePsychologistCLI extends AbstractState {
             }
 
         }
-        goNext(context, new InitialState());
     }
     /*-----------------Pattern state---------------*/
     @Override
