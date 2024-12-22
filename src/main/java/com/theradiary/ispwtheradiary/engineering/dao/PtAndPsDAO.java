@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.dao;
 
-import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.PtAndPsQuery;
 
@@ -19,7 +19,7 @@ public class PtAndPsDAO {
         try(Connection conn = ConnectionFactory.getConnection()) {
             PtAndPsQuery.sendRequest(conn, request.getPsychologist().getCredentials().getMail(), request.getPatient().getCredentials().getMail(), request.getDate());
         } catch (Exception e){
-            throw new DatabaseOperationException("Errore nell'invio della richiesta", e);
+            throw new PersistenceOperationException("Errore nell'invio della richiesta", e);
         }
     }
 
@@ -31,7 +31,7 @@ public class PtAndPsDAO {
             }
             return false;
         } catch (SQLException e) {
-            throw new DatabaseOperationException("Errore nel recupero della richiesta", e);
+            throw new PersistenceOperationException("Errore nel recupero della richiesta", e);
         }
     }
 
@@ -39,7 +39,7 @@ public class PtAndPsDAO {
         try (Connection conn = ConnectionFactory.getConnection()) {
             return PtAndPsQuery.hasAlreadyAPsychologist(conn, patient.getCredentials().getMail());
         } catch (SQLException e) {
-            throw new DatabaseOperationException("Errore nel recupero del paziente", e);
+            throw new PersistenceOperationException("Errore nel recupero del paziente", e);
         }
     }
 }

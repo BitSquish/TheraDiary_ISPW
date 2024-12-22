@@ -24,7 +24,7 @@ public class HomePsychologistCLI extends AbstractState {
                         goNext(context, new PatientListCLI((PsychologistBean) user));
                         break;
                     case (2):
-                        goNext(context, new AppointmentPsychologistCLI());
+                        goNext(context, new AppointmentPsychologistCLI((PsychologistBean) user));
                         break;
                     case (3):
                         goNext(context, new MedicalOfficeCLI(user));

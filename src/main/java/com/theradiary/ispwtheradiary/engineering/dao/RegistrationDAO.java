@@ -2,7 +2,7 @@ package com.theradiary.ispwtheradiary.engineering.dao;
 
 
 
-import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.LoginAndRegistrationQuery;
@@ -49,7 +49,7 @@ public class RegistrationDAO {
                 LoginAndRegistrationQuery.registerPatient(conn, patient);
             }
             catch(SQLException e){
-                throw new DatabaseOperationException(REGISTER_ERROR, e);
+                throw new PersistenceOperationException(REGISTER_ERROR, e);
             }
         }
         else
@@ -67,7 +67,7 @@ public class RegistrationDAO {
                 LoginAndRegistrationQuery.registerPsychologist(conn, psychologist);
             }
             catch(SQLException e){
-                    throw new DatabaseOperationException(REGISTER_ERROR, e);
+                    throw new PersistenceOperationException(REGISTER_ERROR, e);
             }
         }
         else
@@ -78,7 +78,7 @@ public class RegistrationDAO {
         try(Connection conn = ConnectionFactory.getConnection()){
             LoginAndRegistrationQuery.registerMedicalOffice(conn, medicalOffice.getPsychologist(), medicalOffice.getCity(), medicalOffice.getPostCode(), medicalOffice.getAddress(), medicalOffice.getOtherInfo());
         } catch(SQLException e){
-            throw new DatabaseOperationException(REGISTER_ERROR, e);
+            throw new PersistenceOperationException(REGISTER_ERROR, e);
         }
     }
 

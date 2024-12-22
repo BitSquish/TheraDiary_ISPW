@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
-import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -16,7 +16,7 @@ public class PtAndPsQuery {
             preparedStatement.setDate(3, Date.valueOf(date));
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DatabaseOperationException("Errore nell'invio della richiesta", e);
+            throw new PersistenceOperationException("Errore nell'invio della richiesta", e);
         }
     }
 
@@ -28,7 +28,7 @@ public class PtAndPsQuery {
             preparedStatement.setString(2, patient);
             return preparedStatement.executeQuery();
         } catch (SQLException e) {
-            throw new DatabaseOperationException("Errore nel controllo della richiesta", e);
+            throw new PersistenceOperationException("Errore nel controllo della richiesta", e);
         }
     }
 
@@ -43,7 +43,7 @@ public class PtAndPsQuery {
                 }
             }
         } catch (SQLException e) {
-            throw new DatabaseOperationException("Errore nel controllo dello psicologo", e);
+            throw new PersistenceOperationException("Errore nel controllo dello psicologo", e);
         }
 
         return false;

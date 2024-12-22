@@ -36,7 +36,7 @@ public class Main extends Application {
                 scanner.nextLine();
                 switch (choice) {
                     case 1:
-                        interfaceGrafika(stage);
+                        graphicInterface(stage);
                         validInput = true;
                         break;
                     case 2:
@@ -49,10 +49,11 @@ public class Main extends Application {
             } catch (Exception e) {
                 Printer.errorPrint(e.getMessage());
                 scanner.nextLine();
+
             }
         }
     }
-    public void interfaceGrafika(Stage stage) throws IOException {
+    public void graphicInterface(Stage stage) throws IOException {
         FXMLPathConfig fxmlPathConfig = new FXMLPathConfig("/viewPaths.properties");
         Session session = new Session();
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath("HOMEPAGE_NOT_LOGGED_PATH")));

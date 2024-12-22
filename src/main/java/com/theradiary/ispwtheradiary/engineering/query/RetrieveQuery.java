@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
-import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -54,7 +54,7 @@ public class RetrieveQuery {
             }
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new DatabaseOperationException("Errore nella ricerca", e);
+            throw new PersistenceOperationException("Errore nella ricerca", e);
         }
 
     }
@@ -102,7 +102,7 @@ public class RetrieveQuery {
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new DatabaseOperationException("Errore nel recupero della lista pazienti", e);
+            throw new PersistenceOperationException("Errore nel recupero della lista pazienti", e);
         }
 
     }
@@ -115,7 +115,7 @@ public class RetrieveQuery {
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new DatabaseOperationException("Errore nel recupero del pag", e);
+            throw new PersistenceOperationException("Errore nel recupero del pag", e);
         }
     }
 
@@ -126,7 +126,7 @@ public class RetrieveQuery {
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new DatabaseOperationException("Errore nel recupero del pag", e);
+            throw new PersistenceOperationException("Errore nel recupero del pag", e);
         }
     }
 
@@ -154,7 +154,7 @@ public class RetrieveQuery {
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new DatabaseOperationException("Errore nel recupero del proprio psicologo", e);
+            throw new PersistenceOperationException("Errore nel recupero del proprio psicologo", e);
         }
     }
 
@@ -165,7 +165,7 @@ public class RetrieveQuery {
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new DatabaseOperationException("Errore nel recupero degli appuntamenti", e);
+            throw new PersistenceOperationException("Errore nel recupero degli appuntamenti", e);
         }
     }
 
@@ -178,7 +178,7 @@ public class RetrieveQuery {
             pstmt.setString(3, timeSlot);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new DatabaseOperationException("Errore nel recupero dell'appuntamento", e);
+            throw new PersistenceOperationException("Errore nel recupero dell'appuntamento", e);
         }
     }
 }

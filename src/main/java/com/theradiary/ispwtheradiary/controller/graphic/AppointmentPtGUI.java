@@ -21,7 +21,7 @@ import java.util.List;
 public class AppointmentPtGUI extends CommonGUI {
 
     private final PsychologistBean psychologistBean = ((PatientBean)session.getUser()).getPsychologistBean();
-    private List<AppointmentBean> allAppointments = new ArrayList<>();
+    private final List<AppointmentBean> allAppointments = new ArrayList<>();
     private final AppointmentController appointmentController = new AppointmentController();
     public AppointmentPtGUI(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig, session);

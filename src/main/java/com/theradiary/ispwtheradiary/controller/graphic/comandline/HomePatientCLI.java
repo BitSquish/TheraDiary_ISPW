@@ -26,7 +26,7 @@ public class HomePatientCLI extends AbstractState {
                         goNext(context, new TaskPatientCLI((PatientBean) user));
                         break;
                     case (2):
-                        goNext(context, new AppointmentPatientCLI());
+                        goNext(context, new AppointmentPatientCLI((PatientBean) user));
                         break;
                     case (3):
                         goNext(context, new SearchCLI((PatientBean) user));

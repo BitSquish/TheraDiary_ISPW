@@ -3,7 +3,7 @@ package com.theradiary.ispwtheradiary.engineering.dao;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
-import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.AccountQuery;
 import com.theradiary.ispwtheradiary.model.Patient;
@@ -20,7 +20,7 @@ public class CategoryAndMajorDAO {
         try(Connection conn= ConnectionFactory.getConnection()) {
             AccountQuery.addCategory(conn, category.toString(), patient.getCredentials().getMail());
         }catch (SQLException e){
-            throw new DatabaseOperationException("Errore nell'aggiunta della categoria",e);
+            throw new PersistenceOperationException("Errore nell'aggiunta della categoria",e);
         }
     }
     public static void addMajor(Psychologist psychologist, Major major) {
@@ -29,7 +29,7 @@ public class CategoryAndMajorDAO {
             if(success)
                 psychologist.getMajors().add(major);
         }catch (SQLException e){
-            throw new DatabaseOperationException("Errore nell'aggiunta della specializzazione",e);
+            throw new PersistenceOperationException("Errore nell'aggiunta della specializzazione",e);
         }
     }
 
@@ -40,7 +40,7 @@ public class CategoryAndMajorDAO {
             if(success)
                 patient.getCategories().remove(category);
         }catch (SQLException e){
-            throw new DatabaseOperationException("Errore nella rimozione della categoria",e);
+            throw new PersistenceOperationException("Errore nella rimozione della categoria",e);
         }
     }
 
@@ -50,7 +50,7 @@ public class CategoryAndMajorDAO {
             if(success)
                 psychologist.getMajors().remove(major);
         }catch (SQLException e){
-            throw new DatabaseOperationException("Errore nella rimozione della specializzazione",e);
+            throw new PersistenceOperationException("Errore nella rimozione della specializzazione",e);
         }
     }
 }
