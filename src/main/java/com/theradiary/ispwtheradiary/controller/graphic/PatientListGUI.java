@@ -73,13 +73,7 @@ public class PatientListGUI extends CommonGUI {
         patientTable.setItems(patientBeansList);
     }
 
-    /**
-     * Metodo ausiliario per creare una cell factory con un bottone.
-     *
-     * @param buttonText Testo del bottone
-     * @param action     Azione da eseguire al click del bottone
-     * @return Callback per la cell factory
-     */
+    //Metodo per creare una cell factory con un bottone. Prende come parametri il testo del bottone e l'azione da eseguire al suo click.
     private Callback<TableColumn<PatientBean, Void>, TableCell<PatientBean, Void>> createButtonCellFactory(
             String buttonText, BiConsumer<MouseEvent, PatientBean> action) {
         return param -> new TableCell<>() {

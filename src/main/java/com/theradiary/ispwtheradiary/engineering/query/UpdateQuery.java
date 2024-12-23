@@ -181,13 +181,17 @@ public class UpdateQuery {
         }
     }
 
-    public static void setRequestForAppointment(Connection conn, String psychologist, DayOfTheWeek day, TimeSlot timeSlot, String patient) {
-        String query = "UPDATE appointment SET patient = ? WHERE psychologist = ? AND day = ? AND timeSlot = ?";
+    public static void setRequestForAppointment(Connection conn, String psychologist, DayOfTheWeek day, TimeSlot timeSlot, String patient, boolean inPerson, boolean online, boolean available) {
+        String query = "UPDATE appointment SET patient = ?, inPerson = ?, online = ?, available = ? WHERE psychologist = ? AND day = ? AND timeSlot = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, patient);
-            pstmt.setString(2, psychologist);
-            pstmt.setString(3, day.toString());
-            pstmt.setString(4, timeSlot.toString());
+            pstmt.setBoolean(2, inPerson);
+            pstmt.setBoolean(3, online);
+            pstmt.setBoolean(4, available);
+            pstmt.setString(5, psychologist);
+            pstmt.setString(6, day.toString());
+            pstmt.setString(7, timeSlot.toString());
+
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new PersistenceOperationException("Errore nella richiesta di appuntamento", e);

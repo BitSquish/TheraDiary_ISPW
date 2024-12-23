@@ -75,13 +75,9 @@ public class AppointmentPatientCLI extends AbstractState {
         TimeSlot selectedTimeSlot = chooseTimeSlot(selectedDay);
         if (selectedTimeSlot == null) return;
 
-        if (!appointmentController.hasAlreadySentARequest(user, selectedDay, selectedTimeSlot, allAppointments)) {
-            AppointmentBean appointmentBean = new AppointmentBean(psychologistBean, selectedDay, selectedTimeSlot, user.getCredentialsBean().getMail());
-            appointmentController.askForAnAppointment(appointmentBean);
-            Printer.printGreen("Richiesta inviata con successo.");
-        } else {
-            Printer.errorPrint("Hai già fatto richiesta per questa fascia oraria. Attendi una conferma o un rifiuto.");
-        }
+        AppointmentBean appointmentBean = new AppointmentBean(psychologistBean, selectedDay, selectedTimeSlot, user.getCredentialsBean().getMail());
+        appointmentController.askForAnAppointment(appointmentBean);
+        Printer.printGreen("Richiesta inviata con successo.");
     }
     private void handleNoPsychologist() {
         Printer.errorPrint("Non hai uno psicologo associato. Cerca uno psicologo per poter prenotare un appuntamento.");

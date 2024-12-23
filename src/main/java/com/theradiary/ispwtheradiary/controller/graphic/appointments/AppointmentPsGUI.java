@@ -1,14 +1,19 @@
-package com.theradiary.ispwtheradiary.controller.graphic;
+package com.theradiary.ispwtheradiary.controller.graphic.appointments;
 
 import com.theradiary.ispwtheradiary.controller.application.AppointmentController;
+import com.theradiary.ispwtheradiary.controller.graphic.CommonGUI;
+import com.theradiary.ispwtheradiary.controller.graphic.PatientListGUI;
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.enums.TimeSlot;
+import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.AppointmentBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -17,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +36,7 @@ public class AppointmentPsGUI extends CommonGUI {
     private List<AppointmentBean> allAppointments = new ArrayList<>();
 
 
-    protected AppointmentPsGUI(FXMLPathConfig fxmlPathConfig, Session session) {
+    public AppointmentPsGUI(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig, session);
     }
 
@@ -160,6 +166,27 @@ public class AppointmentPsGUI extends CommonGUI {
             session.getUser().setOnline(true);
             modalityChangedMessage.setVisible(true);
         }
+    }
+
+    @FXML
+    private void goToSummary(MouseEvent event) {
+        try{
+            if(session.getUser() == null){
+                goToLogin(event);
+            } else{
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(APPOINTMENT_SUMMARY_PATH)));
+                loader.setControllerFactory(c -> new AppointmentSummaryGUI(fxmlPathConfig, session));
+                Parent root = loader.load();
+                List<AppointmentBean> allPatientAppointments = allAppointments.stream()
+                        .filter(AppointmentBean::isAvailable)  // Filtra gli appuntamenti dove 'available' è true
+                        .toList();         // Raccoglie i risultati in una nuova lista
+                ((AppointmentSummaryGUI)loader.getController()).printAppointment(event, allPatientAppointments);
+                changeScene(root, event);
+            }
+        }catch(IOException e){
+            throw new LoadingException(LOADING_SCENE, e);
+        }
+
     }
 
 }

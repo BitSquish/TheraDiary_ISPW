@@ -23,11 +23,9 @@ public class Appointment {
         this.available = true;
     }
 
-    //Costruttore usato per inviare la richiesta
-    public Appointment(Psychologist psychologist, DayOfTheWeek day, TimeSlot timeSlot, Patient patient) {
+    //Costruttore usato per stampare un eventuale appuntamento fissato sul profilo del paziente
+    public Appointment(Psychologist psychologist, Patient patient) {
         this.psychologist = psychologist;
-        this.day = day;
-        this.timeSlot = timeSlot;
         this.patient = patient;
     }
 

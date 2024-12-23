@@ -3,6 +3,8 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 import com.theradiary.ispwtheradiary.controller.application.AccountController;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PatientAccountGUI;
 import com.theradiary.ispwtheradiary.controller.graphic.account.PsychologistAccountGUI;
+import com.theradiary.ispwtheradiary.controller.graphic.appointments.AppointmentPsGUI;
+import com.theradiary.ispwtheradiary.controller.graphic.appointments.AppointmentPtGUI;
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepageGUI;
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePsGUI;
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtGUI;
@@ -68,6 +70,7 @@ public abstract class CommonGUI {
     protected static final String TODO_PATH="TODO_PATH";
     protected static final String LIST_TASK_PATIENT_PATH="LIST_TASK_PATIENT_PATH";
     public static final String LOADING_SCENE ="Errore durante il caricamento della scena";
+    protected static final String APPOINTMENT_SUMMARY_PATH = "APPOINTMENT_SUMMARY_PATH";
 
 
     @FXML
@@ -241,7 +244,7 @@ public abstract class CommonGUI {
         }
     }
     @FXML
-    private void goToLogin(MouseEvent event) {
+    protected void goToLogin(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LOGIN_PATH)));
             loader.setControllerFactory(c -> new LoginGUI(fxmlPathConfig, session));

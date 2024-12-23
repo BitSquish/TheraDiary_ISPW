@@ -17,6 +17,8 @@ module com.theradiary.ispwtheradiary {
     opens com.theradiary.ispwtheradiary.controller.graphic.login to javafx.fxml;
     exports com.theradiary.ispwtheradiary.controller.graphic.modify;
     opens com.theradiary.ispwtheradiary.controller.graphic.modify to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.controller.graphic.appointments;
+    opens com.theradiary.ispwtheradiary.controller.graphic.appointments to javafx.fxml;
     //Controller applicativi
     exports com.theradiary.ispwtheradiary.controller.application;
     opens com.theradiary.ispwtheradiary.controller.application to javafx.fxml;

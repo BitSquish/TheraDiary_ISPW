@@ -291,7 +291,7 @@ public class RetrieveDAO {
         boolean availability = false;
         try(Connection conn = ConnectionFactory.getConnection();
             ResultSet rs = RetrieveQuery.retrievePatientAppointment(conn, psychologist.getCredentials().getMail(), patient.getCredentials().getMail(), availability)){
-            Appointment appointment = new Appointment(psychologist, null, null, patient);
+            Appointment appointment = new Appointment(psychologist, patient);
             while(rs.next()){
                 appointment = new Appointment(
                         psychologist,

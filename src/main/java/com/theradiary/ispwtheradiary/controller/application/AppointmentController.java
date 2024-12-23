@@ -92,6 +92,8 @@ public class AppointmentController {
 
     public void askForAnAppointment(AppointmentBean appointmentBean) {
         Appointment appointment = beanAndModelMapperFactory.fromBeanToModel(appointmentBean, AppointmentBean.class);
+        appointment.setPatient(new Patient(new Credentials(appointmentBean.getPatientBean(), Role.PATIENT)));
+        appointment.setAvailable(false);
         UpdateDAO.setRequestForAppointment(appointment);
     }
 
@@ -104,12 +106,6 @@ public class AppointmentController {
                         && !appointmentBean.isAvailable())
                 .findFirst() // Trova al massimo il primo appuntamento che soddisfa la condizione
                 .orElse(null); // Restituisce null se non c'è alcun appuntamento che soddisfa la condizione
-    }
-
-
-    //Controlla se il paziente ha già fatto richiesta per l'appuntamento corrispondente a quella fascia oraria e a quel giorno
-    public boolean hasAlreadySentARequest(PatientBean patientBean, DayOfTheWeek day, TimeSlot timeSlot, List<AppointmentBean> allAppointments) {
-        return allAppointments.stream().anyMatch(appointmentBean -> appointmentBean.getPatientBean() != null && appointmentBean.getPatientBean().equals(patientBean.getCredentialsBean().getMail()) && appointmentBean.getDay().equals(day) && appointmentBean.getTimeSlot().equals(timeSlot) && !appointmentBean.isAvailable());
     }
 
 }

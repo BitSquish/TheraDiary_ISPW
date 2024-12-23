@@ -1,6 +1,7 @@
-package com.theradiary.ispwtheradiary.controller.graphic;
+package com.theradiary.ispwtheradiary.controller.graphic.appointments;
 
 import com.theradiary.ispwtheradiary.controller.application.AppointmentController;
+import com.theradiary.ispwtheradiary.controller.graphic.CommonGUI;
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.enums.TimeSlot;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
@@ -152,14 +153,12 @@ public class AppointmentPtGUI extends CommonGUI {
     private void askForAnAppointment(MouseEvent event) {
         DayOfTheWeek day = DayOfTheWeek.fromStringToDay(chooseDay.getValue());
         TimeSlot timeSlot = TimeSlot.fromStringToTimeSlot(chooseTimeSlot.getValue());
-        if(!appointmentController.hasAlreadySentARequest((PatientBean) session.getUser(), day, timeSlot, allAppointments)) {
-            AppointmentBean appointmentBean = new AppointmentBean(psychologistBean, day, timeSlot, session.getUser().getCredentialsBean().getMail());
-            appointmentController.askForAnAppointment(appointmentBean);
-            success.setText("Richiesta inviata con successo.");
-        }
-        else {
-            success.setText("Hai già fatto richiesta per questa fascia oraria. Attendi che il tuo psicologo confermi o rifiuti l'appuntamento.");
-        }
+        boolean modality = chooseModality.getValue().equals("In presenza");
+        AppointmentBean appointmentBean = new AppointmentBean(psychologistBean, day, timeSlot, modality, !modality);
+        appointmentBean.setAvailable(false);
+        appointmentBean.setPatientBean(session.getUser().getCredentialsBean().getMail());
+        appointmentController.askForAnAppointment(appointmentBean);
+        success.setText("Richiesta inviata con successo.");
         success.setVisible(true);
     }
 

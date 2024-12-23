@@ -127,7 +127,7 @@ public class UpdateDAO {
 
     public static void setRequestForAppointment(Appointment appointment) {
         try(Connection conn = ConnectionFactory.getConnection()){
-            UpdateQuery.setRequestForAppointment(conn, appointment.getPsychologist().getCredentials().getMail(), appointment.getDay(), appointment.getTimeSlot(), appointment.getPatient().getCredentials().getMail());
+            UpdateQuery.setRequestForAppointment(conn, appointment.getPsychologist().getCredentials().getMail(), appointment.getDay(), appointment.getTimeSlot(), appointment.getPatient().getCredentials().getMail(), appointment.isInPerson(), appointment.isOnline(), appointment.isAvailable());
         } catch(SQLException e){
             throw new PersistenceOperationException("Errore nella richiesta di appuntamento", e);
         }
