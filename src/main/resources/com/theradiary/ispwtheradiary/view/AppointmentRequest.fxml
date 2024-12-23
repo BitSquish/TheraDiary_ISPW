@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.appointments.AppointmentRequestGUI">
+    <fx:include source="CommonPanel.fxml" />
+   <Text fill="#242038" layoutX="270.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Richieste appuntamenti" textAlignment="CENTER">
+      <font>
+         <Font name="System Bold" size="30.0" />
+      </font>
+   </Text>
+   <Button fx:id="back" layoutX="60.0" layoutY="119.0" mnemonicParsing="false" onMouseClicked="#goToAppointment" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+   <TableView fx:id="appointmentsReqTableView" layoutX="37.0" layoutY="197.0" prefHeight="324.0" prefWidth="800.0">
+      <columns>
+         <TableColumn fx:id="fullNameCol" prefWidth="154.4000244140625" text="Nome e Cognome" />
+         <TableColumn fx:id="cityCol" prefWidth="144.0" text="Città" />
+         <TableColumn fx:id="dayOfTheWeekCol" prefWidth="140.0" text="Giorno della settimana" />
+         <TableColumn fx:id="timeSlotCol" prefWidth="129.60003662109375" text="Fascia oraria" />
+         <TableColumn fx:id="acceptButton" minWidth="0.0" prefWidth="119.20001220703125" />
+         <TableColumn fx:id="rejectButton" prefWidth="109.5999755859375" />
+      </columns>
+   </TableView>
+   <Text layoutX="140.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quando accetterai un appuntamento, comparirà sul profilo del paziente" textAlignment="CENTER" wrappingWidth="595.4293823242188">
+      <font>
+         <Font name="System Italic" size="18.0" />
+      </font>
+   </Text>
+</AnchorPane>

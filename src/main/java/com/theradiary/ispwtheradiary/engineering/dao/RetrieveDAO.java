@@ -287,5 +287,26 @@ public class RetrieveDAO {
     }
 
 
+    public static Appointment retrievePatientAppointment(Patient patient, Psychologist psychologist) {
+        boolean availability = false;
+        try(Connection conn = ConnectionFactory.getConnection();
+            ResultSet rs = RetrieveQuery.retrievePatientAppointment(conn, psychologist.getCredentials().getMail(), patient.getCredentials().getMail(), availability)){
+            Appointment appointment = new Appointment(psychologist, null, null, patient);
+            while(rs.next()){
+                appointment = new Appointment(
+                        psychologist,
+                        DayOfTheWeek.valueOf(rs.getString("day")),
+                        TimeSlot.valueOf(rs.getString("timeSlot")),
+                        rs.getBoolean("inPerson"),
+                        rs.getBoolean("online")
+                );
+                appointment.setPatient(patient);
+                appointment.setAvailable(availability);
+            }
+            return appointment;
+        }catch (SQLException e){
+            throw new PersistenceOperationException("Errore nel recupero degli appuntamenti", e);
+        }
+    }
 }
 

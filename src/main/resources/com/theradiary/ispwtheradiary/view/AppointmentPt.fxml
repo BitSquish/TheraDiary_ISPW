@@ -49,12 +49,15 @@
          </Button>
       </children>
    </VBox>
-   <VBox fx:id="appointmentVbox" layoutX="506.0" layoutY="202.0" prefHeight="292.0" prefWidth="254.0" visible="false">
+   <VBox fx:id="appointmentVbox" layoutX="506.0" layoutY="173.0" prefHeight="344.0" prefWidth="254.0">
       <children>
          <Text fill="#231f36cc" strokeType="OUTSIDE" strokeWidth="0.0" text="Scegli il giorno della settimana" textAlignment="CENTER" wrappingWidth="254.39999999999998">
             <font>
                <Font name="System Italic" size="18.0" />
             </font>
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
          </Text>
          <ComboBox fx:id="chooseDay" prefWidth="150.0">
             <VBox.margin>
@@ -66,7 +69,7 @@
                <Font name="System Italic" size="18.0" />
             </font>
             <VBox.margin>
-               <Insets top="30.0" />
+               <Insets top="15.0" />
             </VBox.margin>
          </Text>
          <ComboBox fx:id="chooseTimeSlot" prefWidth="150.0">
@@ -74,7 +77,20 @@
                <Insets left="50.0" top="15.0" />
             </VBox.margin>
          </ComboBox>
-         <Label fx:id="success" prefHeight="66.0" prefWidth="218.0" style="-fx-alignment: center;" text="Richiesta inviata." textAlignment="CENTER" textFill="#52b148" visible="false" wrapText="true">
+         <Text fill="#231f36cc" strokeType="OUTSIDE" strokeWidth="0.0" text="Scegli la modalità di visita" textAlignment="CENTER" wrappingWidth="254.39999999999998">
+            <font>
+               <Font name="System Italic" size="18.0" />
+            </font>
+            <VBox.margin>
+               <Insets top="15.0" />
+            </VBox.margin>
+         </Text>
+         <ComboBox fx:id="chooseModality" prefWidth="150.0">
+            <VBox.margin>
+               <Insets left="50.0" top="15.0" />
+            </VBox.margin>
+         </ComboBox>
+         <Label fx:id="success" prefHeight="30.0" prefWidth="218.0" style="-fx-alignment: center;" text="Richiesta inviata." textAlignment="CENTER" textFill="#52b148" visible="false" wrapText="true">
             <font>
                <Font name="System Bold" size="12.0" />
             </font>

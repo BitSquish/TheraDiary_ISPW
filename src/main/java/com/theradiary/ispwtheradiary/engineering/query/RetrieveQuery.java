@@ -181,4 +181,17 @@ public class RetrieveQuery {
             throw new PersistenceOperationException("Errore nel recupero dell'appuntamento", e);
         }
     }
+
+    public static ResultSet retrievePatientAppointment(Connection conn, String psychologist, String patient, boolean availability) {
+        String query = "SELECT day, timeSlot, inPerson, online FROM appointment WHERE psychologist = ? AND patient = ? AND available = ?";
+        try{
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, psychologist);
+            pstmt.setString(2, patient);
+            pstmt.setBoolean(3, availability);
+            return pstmt.executeQuery();
+        } catch (SQLException e){
+            throw new PersistenceOperationException("Errore nel recupero dell'appuntamento", e);
+        }
+    }
 }

@@ -54,12 +54,12 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="225.0" layoutY="302.0" prefHeight="26.0" prefWidth="58.0" text="Città:">
+      <Label layoutX="225.0" layoutY="296.0" prefHeight="26.0" prefWidth="58.0" text="Città:">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="city" layoutX="267.0" layoutY="302.0" prefHeight="26.0" prefWidth="260.0" text="Città: Falconara Marittima">
+      <Label fx:id="city" layoutX="267.0" layoutY="298.0" prefHeight="26.0" prefWidth="260.0" text="Città: Falconara Marittima">
          <font>
             <Font size="16.0" />
          </font>
@@ -77,6 +77,16 @@
       <Label fx:id="description" layoutX="44.0" layoutY="387.0" prefHeight="60.0" prefWidth="791.0" text="Descrizione: inserire tante tante tante specializzazioni, ma proprio tantissime, ma tante eh, Specializzazioni: inserire tante tante tante specializzazioni, ma proprio tantissime, ma tante eh" wrapText="true">
          <font>
             <Font name="System Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="222.0" layoutY="328.0" prefHeight="26.0" prefWidth="224.0" text="Appuntamento settimanale:">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="appointment" layoutX="446.0" layoutY="328.0" prefHeight="26.0" prefWidth="378.0" text="Nessun appuntamento fissato.">
+         <font>
+            <Font size="16.0" />
          </font>
       </Label>
    </children>

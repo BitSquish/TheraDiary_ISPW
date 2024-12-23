@@ -29,8 +29,8 @@ public class Appointment {
         this.day = day;
         this.timeSlot = timeSlot;
         this.patient = patient;
-
     }
+
 
     public Psychologist getPsychologist() {
         return psychologist;

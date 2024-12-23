@@ -4,9 +4,7 @@ import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
-import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
 import com.theradiary.ispwtheradiary.engineering.patterns.observer.RequestManagerConcreteSubject;
-import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 import com.theradiary.ispwtheradiary.model.Request;
@@ -38,7 +36,7 @@ public class RequestApplicationController {
             patient.setPsychologist(psychologist);
             UpdateDAO.setPatientsPsychologist(patient);
         } catch(Exception e){
-            throw new DAOException(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage()); //TODO Da cambiare
         }
     }
 

@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class AppointmentPtGUI extends CommonGUI {
 
@@ -36,6 +37,8 @@ public class AppointmentPtGUI extends CommonGUI {
     private ComboBox<String> chooseDay;
     @FXML
     private ComboBox<String> chooseTimeSlot;
+    @FXML
+    private ComboBox<String> chooseModality;
     @FXML
     private Text psychologistMail;
     @FXML
@@ -87,19 +90,60 @@ public class AppointmentPtGUI extends CommonGUI {
     @FXML
     private void initializeCombobox() {
         // Carica tutti gli appuntamenti disponibili
-        appointmentController.loadAvailableAppointments(allAppointments, (PatientBean)session.getUser());
+        appointmentController.loadAvailableAppointments(allAppointments, (PatientBean) session.getUser());
+
         // Popola la prima ComboBox con i giorni disponibili (senza duplicati)
-        List<String> days = allAppointments.stream().map(appointmentBean -> DayOfTheWeek.translateDay(appointmentBean.getDay().getId())).distinct().toList();
+        List<String> days = allAppointments.stream()
+                .map(appointmentBean -> DayOfTheWeek.translateDay(appointmentBean.getDay().getId()))
+                .distinct()
+                .toList();
         chooseDay.getItems().addAll(days);
+
         // Listener sulla prima ComboBox: aggiorna la seconda ComboBox con le fasce orarie
         chooseDay.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 // Filtra le fasce orarie basate sul giorno selezionato
-                // Converte TimeSlot in stringa
-                List<String> timeSlots = allAppointments.stream().filter(appointmentBean -> DayOfTheWeek.translateDay(appointmentBean.getDay().getId()).equals(newValue)).map(appointmentBean -> TimeSlot.translateTimeSlot(appointmentBean.getTimeSlot().getId())).distinct().toList();
+                List<String> timeSlots = allAppointments.stream()
+                        .filter(appointmentBean -> DayOfTheWeek.translateDay(appointmentBean.getDay().getId()).equals(newValue))
+                        .map(appointmentBean -> TimeSlot.translateTimeSlot(appointmentBean.getTimeSlot().getId()))
+                        .distinct()
+                        .toList();
                 // Aggiorna la seconda ComboBox
                 chooseTimeSlot.getItems().setAll(timeSlots);
                 chooseTimeSlot.getSelectionModel().clearSelection(); // Pulisce selezioni precedenti
+                chooseModality.getItems().clear(); // Pulisce la modalità precedente
+            }
+        });
+
+        // Listener sulla seconda ComboBox: aggiorna la terza ComboBox con le modalità
+        chooseTimeSlot.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && chooseDay.getSelectionModel().getSelectedItem() != null) {
+                String selectedDay = chooseDay.getSelectionModel().getSelectedItem();
+                // Filtra gli appuntamenti in base al giorno e alla fascia oraria selezionati
+                List<String> modalities = allAppointments.stream()
+                        .filter(appointmentBean -> DayOfTheWeek.translateDay(appointmentBean.getDay().getId()).equals(selectedDay) &&
+                                TimeSlot.translateTimeSlot(appointmentBean.getTimeSlot().getId()).equals(newValue))
+                        .flatMap(appointmentBean -> {
+                            boolean inPerson = appointmentBean.isInPerson();
+                            boolean online = appointmentBean.isOnline();
+
+                            // Genera una lista di modalità basata sui valori di inPerson e online
+                            if (inPerson && online) {
+                                return Stream.of("In presenza", "Online");
+                            } else if (inPerson) {
+                                return Stream.of("In presenza");
+                            } else if (online) {
+                                return Stream.of("Online");
+                            } else {
+                                return Stream.empty(); // Nessuna modalità disponibile
+                            }
+                        })
+                        .distinct()
+                        .toList();
+
+                // Aggiorna la terza ComboBox con le modalità
+                chooseModality.getItems().setAll(modalities);
+                chooseModality.getSelectionModel().clearSelection(); // Pulisce selezioni precedenti
             }
         });
     }

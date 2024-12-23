@@ -9,7 +9,6 @@ import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 
-
 public class PagController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
     public PagController() {

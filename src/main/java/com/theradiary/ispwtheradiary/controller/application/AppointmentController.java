@@ -32,7 +32,7 @@ public class AppointmentController {
         RetrieveDAO.retrieveAllAppointments(psychologist, appointments);
         for(Appointment appointment : appointments) {
             AppointmentBean appointmentBean = beanAndModelMapperFactory.fromModelToBean(appointment, Appointment.class);
-            if(appointment.getPatient() != null){
+            if(appointment.getPatient().getCredentials().getMail() != null){
                 appointmentBean.setPatientBean(appointment.getPatient().getCredentials().getMail());
             }
             appointmentBean.setAvailable(appointment.isAvailable());

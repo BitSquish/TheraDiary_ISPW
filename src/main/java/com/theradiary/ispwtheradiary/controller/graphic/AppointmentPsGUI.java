@@ -82,6 +82,7 @@ public class AppointmentPsGUI extends CommonGUI {
             //Ricavo gli orari di visita dello psicologo già registrati
             List<TimeSlot> inPersonTimeSlots = new ArrayList<>();
             List<TimeSlot> onlineTimeSlots = new ArrayList<>();
+            //Recupero gli appuntamenti del giorno selezionato
             appointmentPs.getDayOfTheWeekAppointments(allAppointments,dayOfTheWeek, inPersonTimeSlots,onlineTimeSlots);
             //Setto le checkbox
             for(int i = 0; i<inPersonCheckboxes.size(); i++) {
@@ -109,7 +110,7 @@ public class AppointmentPsGUI extends CommonGUI {
                 CheckBox onlineCheckBox = (CheckBox) vBoxOnline.getChildren().get(i);   //checkbox fasce orarie online
                 if(inPersonCheckBox.isSelected() || onlineCheckBox.isSelected()){
                     AppointmentBean appointmentBean = getAppointmentBean(tab.getId(), TimeSlot.values()[i], inPersonCheckBox, onlineCheckBox);
-                    setPatient(appointmentBean);
+                    setPatientAndAvailability(appointmentBean);
                     appointmentToAdd.add(appointmentBean);
                 }
             }
@@ -134,10 +135,12 @@ public class AppointmentPsGUI extends CommonGUI {
                 );
     }
 
-    private void setPatient(AppointmentBean appointmentBean) {
+    private void setPatientAndAvailability(AppointmentBean appointmentBean) {
         for(AppointmentBean app: allAppointments){
-            if(app.getDay().equals(appointmentBean.getDay()) && app.getTimeSlot().equals(appointmentBean.getTimeSlot())){
+            if(app.getDay().equals(appointmentBean.getDay()) && app.getTimeSlot().equals(appointmentBean.getTimeSlot()) && app.getPatientBean() != null){
                 appointmentBean.setPatientBean(app.getPatientBean());
+                appointmentBean.setAvailable(app.isAvailable());
+                return;
             }
         }
     }
