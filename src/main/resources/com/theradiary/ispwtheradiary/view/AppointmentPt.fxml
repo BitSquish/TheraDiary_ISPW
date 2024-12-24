@@ -49,7 +49,7 @@
          </Button>
       </children>
    </VBox>
-   <VBox fx:id="appointmentVbox" layoutX="506.0" layoutY="173.0" prefHeight="344.0" prefWidth="254.0">
+   <VBox fx:id="appointmentVbox" layoutX="506.0" layoutY="173.0" prefHeight="344.0" prefWidth="254.0" visible="false">
       <children>
          <Text fill="#231f36cc" strokeType="OUTSIDE" strokeWidth="0.0" text="Scegli il giorno della settimana" textAlignment="CENTER" wrappingWidth="254.39999999999998">
             <font>

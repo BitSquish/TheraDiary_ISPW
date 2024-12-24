@@ -14,8 +14,12 @@ public class AppointmentMapper implements BeanAndModelMapper<AppointmentBean, Ap
     PatientMapper patientMapper = new PatientMapper();
     @Override
     public Appointment fromBeanToModel(AppointmentBean bean) {
-        if(bean.getDay() != null)
-            return new Appointment(psychologistMapper.fromBeanToModel(bean.getPsychologistBean()), bean.getDay(), bean.getTimeSlot(), bean.isInPerson(), bean.isOnline());
+        if(bean.getDay() != null){
+            Appointment appointment = new  Appointment(psychologistMapper.fromBeanToModel(bean.getPsychologistBean()), bean.getDay(), bean.getTimeSlot(), bean.isInPerson(), bean.isOnline());
+            appointment.setPatient(null);
+            appointment.setAvailable(true);
+            return appointment;
+        }
         else
             return new Appointment(psychologistMapper.fromBeanToModel(bean.getPsychologistBean()), new Patient(new Credentials(bean.getPatientBean(), Role.PATIENT)));
     }

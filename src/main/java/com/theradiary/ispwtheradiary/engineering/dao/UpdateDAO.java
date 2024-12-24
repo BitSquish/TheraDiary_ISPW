@@ -97,10 +97,13 @@ public class UpdateDAO {
     }
 
 
-    public static void addAppointments(Appointment appointmentsToAdd) {
-        String psychologist = appointmentsToAdd.getPsychologist().getCredentials().getMail();
+    public static void addAppointments(Appointment appointmentToAdd) {
+        String psychologist = appointmentToAdd.getPsychologist().getCredentials().getMail();
         try(Connection conn = ConnectionFactory.getConnection()){
-            UpdateQuery.addAppointment(conn, psychologist, appointmentsToAdd.getDay(), appointmentsToAdd.getTimeSlot(), appointmentsToAdd.isInPerson(), appointmentsToAdd.isOnline(), appointmentsToAdd.getPatient().getCredentials().getMail(), appointmentsToAdd.isAvailable());
+            if(appointmentToAdd.getPatient() == null)
+                UpdateQuery.addAppointment(conn, psychologist, appointmentToAdd.getDay(), appointmentToAdd.getTimeSlot(), appointmentToAdd.isInPerson(), appointmentToAdd.isOnline(), null, appointmentToAdd.isAvailable());
+            else
+                UpdateQuery.addAppointment(conn, psychologist, appointmentToAdd.getDay(), appointmentToAdd.getTimeSlot(), appointmentToAdd.isInPerson(), appointmentToAdd.isOnline(), appointmentToAdd.getPatient().getCredentials().getMail(), appointmentToAdd.isAvailable());
         } catch(SQLException e){
             throw new PersistenceOperationException("Errore nella rimozione degli appuntamenti", e);
         }

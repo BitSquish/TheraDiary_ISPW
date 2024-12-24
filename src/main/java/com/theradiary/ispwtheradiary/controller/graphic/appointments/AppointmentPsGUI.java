@@ -1,3 +1,4 @@
+
 package com.theradiary.ispwtheradiary.controller.graphic.appointments;
 
 import com.theradiary.ispwtheradiary.controller.application.AppointmentController;
@@ -138,7 +139,7 @@ public class AppointmentPsGUI extends CommonGUI {
                 timeSlot,
                 inPersonCheckBox.isSelected(),
                 onlineCheckBox.isSelected()
-                );
+        );
     }
 
     private void setPatientAndAvailability(AppointmentBean appointmentBean) {
@@ -146,7 +147,11 @@ public class AppointmentPsGUI extends CommonGUI {
             if(app.getDay().equals(appointmentBean.getDay()) && app.getTimeSlot().equals(appointmentBean.getTimeSlot()) && app.getPatientBean() != null){
                 appointmentBean.setPatientBean(app.getPatientBean());
                 appointmentBean.setAvailable(app.isAvailable());
-                return;
+                if(appointmentBean.getPatientBean() != null) {
+                    appointmentBean.setInPerson(app.isInPerson());
+                    appointmentBean.setOnline(app.isOnline());
+                }
+                break;
             }
         }
     }
@@ -178,7 +183,7 @@ public class AppointmentPsGUI extends CommonGUI {
                 loader.setControllerFactory(c -> new AppointmentSummaryGUI(fxmlPathConfig, session));
                 Parent root = loader.load();
                 List<AppointmentBean> allPatientAppointments = allAppointments.stream()
-                        .filter(AppointmentBean::isAvailable)  // Filtra gli appuntamenti dove 'available' è true
+                        .filter(appointmentBean -> !appointmentBean.isAvailable())  // Filtra gli appuntamenti non disponibili
                         .toList();         // Raccoglie i risultati in una nuova lista
                 ((AppointmentSummaryGUI)loader.getController()).printAppointment(event, allPatientAppointments);
                 changeScene(root, event);

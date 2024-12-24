@@ -17,7 +17,7 @@
    <Button fx:id="back" layoutX="60.0" layoutY="119.0" mnemonicParsing="false" onMouseClicked="#goToAppointment" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
    <TableView fx:id="appointmentsReqTableView" layoutX="114.0" layoutY="191.0" prefHeight="324.0" prefWidth="645.0">
       <columns>
-         <TableColumn fx:id="fullNameCol" prefWidth="184.0" text="Nome e Cognome" />
+         <TableColumn fx:id="patientCol" prefWidth="184.0" text="Mail del paziente" />
          <TableColumn fx:id="dayOfTheWeekCol" prefWidth="164.0" text="Giorno della settimana" />
          <TableColumn fx:id="timeSlotCol" prefWidth="148.79998779296875" text="Fascia oraria" />
          <TableColumn fx:id="modalityCol" minWidth="0.0" prefWidth="148.00002441406252" text="Modalità di visita" />

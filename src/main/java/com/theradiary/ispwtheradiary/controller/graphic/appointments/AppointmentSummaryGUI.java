@@ -1,17 +1,17 @@
 package com.theradiary.ispwtheradiary.controller.graphic.appointments;
 
-import com.theradiary.ispwtheradiary.controller.application.AppointmentSummaryController;
 import com.theradiary.ispwtheradiary.controller.graphic.CommonGUI;
+import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
+import com.theradiary.ispwtheradiary.engineering.enums.TimeSlot;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.AppointmentBean;
-import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class AppointmentSummaryGUI extends CommonGUI {
     @FXML
     private TableView<AppointmentBean> appointmentsReqTableView;
     @FXML
-    private TableColumn<AppointmentBean, String> fullNameCol;
+    private TableColumn<AppointmentBean, String> patientCol;
     @FXML
     private TableColumn<AppointmentBean, String> dayOfTheWeekCol;
     @FXML
@@ -37,15 +37,14 @@ public class AppointmentSummaryGUI extends CommonGUI {
         // Creazione della lista osservabile
         ObservableList<AppointmentBean> appointmentBeanObservableList = FXCollections.observableArrayList(appointmentBeans);
         // Configurazione delle colonne
-        fullNameCol.setCellValueFactory(new PropertyValueFactory<>("patient"));
-        dayOfTheWeekCol.setCellValueFactory(new PropertyValueFactory<>("day"));
-        timeSlotCol.setCellValueFactory(new PropertyValueFactory<>("timeSlot"));
+        patientCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPatientBean()));
+        dayOfTheWeekCol.setCellValueFactory(cellData -> new SimpleStringProperty(DayOfTheWeek.translateDay(cellData.getValue().getDay().getId())));
+        timeSlotCol.setCellValueFactory(cellData -> new SimpleStringProperty(TimeSlot.translateTimeSlot(cellData.getValue().getTimeSlot().getId())));
         modalityCol.setCellValueFactory(cellData -> {
             boolean inPerson = cellData.getValue().isInPerson();
             return new javafx.beans.property.SimpleStringProperty(inPerson ? "In presenza" : "Online");
         });
         appointmentsReqTableView.setItems(appointmentBeanObservableList);
-
     }
 
 
