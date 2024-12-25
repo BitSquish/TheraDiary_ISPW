@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.engineering.dao;
 
 
 
+import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.ConnectionFactory;
@@ -120,9 +121,9 @@ public class UpdateDAO {
         }
     }
 
-    public static void clearAppointments(Psychologist psychologist) {
+    public static void clearAppointments(Psychologist psychologist, DayOfTheWeek day) {
         try(Connection conn = ConnectionFactory.getConnection()){
-            UpdateQuery.clearAppointments(conn, psychologist.getCredentials().getMail());
+            UpdateQuery.clearAppointments(conn, psychologist.getCredentials().getMail(), day.toString());
         } catch(SQLException e){
             throw new PersistenceOperationException("Errore nella cancellazione degli appuntamenti", e);
         }

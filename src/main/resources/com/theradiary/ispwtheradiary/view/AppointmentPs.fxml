@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.image.Image?>
@@ -23,11 +24,11 @@
          <Font name="System Bold" size="30.0" />
       </font>
    </Text>
-   <TabPane fx:id="tabPane" layoutX="73.0" layoutY="164.0" prefHeight="282.0" prefWidth="727.0" tabClosingPolicy="UNAVAILABLE">
+   <TabPane fx:id="tabPane" layoutX="73.0" layoutY="164.0" prefHeight="366.0" prefWidth="727.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
          <Tab fx:id="MONDAY" onSelectionChanged="#loadCheckboxes" text="Lunedì">
             <content>
-               <AnchorPane fx:id="anchorPaneMONDAY" minHeight="0.0" minWidth="0.0" prefHeight="239.0" prefWidth="727.0">
+               <AnchorPane fx:id="anchorPaneMONDAY" minHeight="0.0" minWidth="0.0" prefHeight="318.0" prefWidth="727.0">
                   <children>
                      <VBox fx:id="inPersonMONDAY" layoutX="206.0" layoutY="47.0" prefHeight="200.0" prefWidth="100.0">
                         <children>
@@ -171,6 +172,11 @@
                            <Image url="@img/onlineMeeting.png" />
                         </image>
                      </ImageView>
+                     <Button layoutX="294.0" layoutY="276.0" mnemonicParsing="false" onMouseClicked="#save" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva appuntamenti per lunedì" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                        <font>
+                           <Font size="13.0" />
+                        </font>
+                     </Button>
 
                   </children>
                </AnchorPane>
@@ -322,6 +328,11 @@
                            <Image url="@img/onlineMeeting.png" />
                         </image>
                      </ImageView>
+                     <Button layoutX="294.0" layoutY="276.0" mnemonicParsing="false" onMouseClicked="#save" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva appuntamenti per martedì" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                        <font>
+                           <Font size="13.0" />
+                        </font>
+                     </Button>
 
                   </children>
                </AnchorPane>
@@ -473,6 +484,11 @@
                            <Image url="@img/onlineMeeting.png" />
                         </image>
                      </ImageView>
+                     <Button layoutX="294.0" layoutY="276.0" mnemonicParsing="false" onMouseClicked="#save" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva appuntamenti per mercoledì" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                        <font>
+                           <Font size="13.0" />
+                        </font>
+                     </Button>
                   </children>
                </AnchorPane>
             </content>
@@ -623,6 +639,11 @@
                            <Image url="@img/onlineMeeting.png" />
                         </image>
                      </ImageView>
+                     <Button layoutX="294.0" layoutY="276.0" mnemonicParsing="false" onMouseClicked="#save" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva appuntamenti per giovedì" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                        <font>
+                           <Font size="13.0" />
+                        </font>
+                     </Button>
 
                   </children>
                </AnchorPane>
@@ -774,6 +795,11 @@
                            <Image url="@img/onlineMeeting.png" />
                         </image>
                      </ImageView>
+                     <Button layoutX="294.0" layoutY="276.0" mnemonicParsing="false" onMouseClicked="#save" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva appuntamenti per venerdì" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                        <font>
+                           <Font size="13.0" />
+                        </font>
+                     </Button>
 
                   </children>
                </AnchorPane>
@@ -781,20 +807,25 @@
          </Tab>
       </tabs>
    </TabPane>
-   <Button layoutX="370.0" layoutY="473.0" mnemonicParsing="false" onMouseClicked="#save" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Salva" textFill="WHITE">
-      <font>
-         <Font size="18.0" />
-      </font>
-   </Button>
    <Button layoutX="713.0" layoutY="116.0" mnemonicParsing="false" onMouseClicked="#goToSummary" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Appuntamenti fissati" textFill="WHITE" />
    <Text fx:id="successMessage" fill="#52b148" layoutX="329.0" layoutY="462.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Salvataggio effettuato" textAlignment="CENTER" visible="false" wrappingWidth="215.33355712890625">
       <font>
          <Font name="System Bold" size="14.0" />
       </font>
    </Text>
-   <Text fx:id="modalityChangedMessage" fill="#df5353" layoutX="76.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nota: le modalità di visita sul tuo profilo sono state aggiornate in accordo alle selezioni inserite" visible="false" wrappingWidth="248.93353271484375">
+   <Text fx:id="modalityChangedMessage" fill="#df5353" layoutX="564.0" layoutY="484.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nota: le modalità di visita sul tuo profilo sono state aggiornate in accordo alle selezioni inserite" visible="false" wrappingWidth="248.93353271484375">
       <font>
          <Font name="System Bold" size="14.0" />
       </font>
    </Text>
+   <Label fx:id="infoLabel" layoutX="277.0" layoutY="441.0" prefHeight="88.0" prefWidth="419.0" style="-fx-background-color: #ffffff; -fx-border-color: #9067C6;" text="L'aggiunta di una modalità di visita a una fascia oraria già prenotata da un paziente non verrà salvata. La rimozione di una fascia oraria prenotata eliminerà anche l'appuntamento fissato col paziente" textAlignment="CENTER" visible="false" wrapText="true">
+      <font>
+         <Font name="System Italic" size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="clickForInfo" layoutX="30.0" layoutY="471.0" onMouseClicked="#clickForInformation" prefHeight="48.0" prefWidth="258.0" text="Clicca qui per informazioni aggiuntive sul salvataggio degli appuntamenti" textFill="#9067c6" wrapText="true">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </Label>
 </AnchorPane>

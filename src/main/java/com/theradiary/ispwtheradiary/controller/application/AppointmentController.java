@@ -53,7 +53,9 @@ public class AppointmentController {
 
     public void saveAppointments(PsychologistBean psychologistBean, List<AppointmentBean> appointmentToAdd) {
         Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
-        UpdateDAO.clearAppointments(psychologist);
+        DayOfTheWeek day = appointmentToAdd.get(0).getDay();
+        UpdateDAO.clearAppointments(psychologist, day);
+        //Da qui in giù da controllare
         for(AppointmentBean appointmentBean : appointmentToAdd) {
             Appointment appointment = new Appointment(psychologist, appointmentBean.getDay(), appointmentBean.getTimeSlot(), appointmentBean.isInPerson(), appointmentBean.isOnline());
             appointment.setPatient(new Patient(new Credentials(appointmentBean.getPatientBean(), Role.PATIENT)));

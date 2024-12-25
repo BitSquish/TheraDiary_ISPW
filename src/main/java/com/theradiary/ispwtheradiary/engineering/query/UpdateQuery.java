@@ -171,10 +171,11 @@ public class UpdateQuery {
         }
     }
 
-    public static void clearAppointments(Connection conn, String mail) {
-        String query = "DELETE FROM appointment WHERE psychologist = ?";
+    public static void clearAppointments(Connection conn, String mail, String day) {
+        String query = "DELETE FROM appointment WHERE psychologist = ? AND day = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, mail);
+            pstmt.setString(2, day);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new PersistenceOperationException("Errore nella rimozione degli appuntamenti", e);
