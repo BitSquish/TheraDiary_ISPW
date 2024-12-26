@@ -46,10 +46,10 @@ public class AppointmentPsychologistCLI extends AbstractState {
         }
     }
     private void modifyAppointments(){
-        loadAppointments();
+        getAllAppointments();
         Printer.println("Seleziona il giorno della settimana");
-        for(DayOfTheWeek day : DayOfTheWeek.values()){
-            Printer.println(day.ordinal() + 1 + ". " + day);
+        for(int i=0;i<DayOfTheWeek.values().length;i++){
+            Printer.println((i+1)+". "+DayOfTheWeek.translateDay(i));
         }
         try {
             int dayChoice = Integer.parseInt(scanner.nextLine()) - 1;
@@ -87,11 +87,8 @@ public class AppointmentPsychologistCLI extends AbstractState {
             Printer.errorPrint("Errore scelta non valida");
         }
     }
-    private void loadAppointments(){
-        appointmentPs.loadAllAppointments(allAppointments, user);
-    }
     private void goToSummary(){
-        loadAppointments();
+        getAllAppointments();
         Printer.println("-------------Riepilogo Appuntamenti-------------");
         for (AppointmentBean appointment : allAppointments) {
             if(!appointment.isAvailable()){
@@ -121,6 +118,9 @@ public class AppointmentPsychologistCLI extends AbstractState {
         } else {
             timeSlots.forEach(timeSlot->Printer.println("|"+timeSlot+"|"));
         }
+    }
+    private void getAllAppointments(){
+        appointmentPs.loadAllAppointments(allAppointments, user);
     }
 
     /**********************************Pattern State*********************************************/
