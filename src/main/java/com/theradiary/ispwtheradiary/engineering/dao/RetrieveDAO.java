@@ -269,10 +269,11 @@ public class RetrieveDAO {
     public static void retrieveAllAppointments(Psychologist psychologist, List<Appointment> appointments) {
         try(Connection conn = ConnectionFactory.getConnection();
             ResultSet rs = RetrieveQuery.retrieveAllAppointments(conn, psychologist.getCredentials().getMail())){
-            while(rs.next()){
+            while(rs.next()) {
+                DayOfTheWeek day = DayOfTheWeek.fromStringToDay(rs.getString("day"));
                 Appointment appointment = new Appointment(
                         psychologist,
-                        DayOfTheWeek.valueOf(rs.getString("day")),
+                        day,
                         TimeSlot.valueOf(rs.getString("timeSlot")),
                         rs.getBoolean("inPerson"),
                         rs.getBoolean("online")

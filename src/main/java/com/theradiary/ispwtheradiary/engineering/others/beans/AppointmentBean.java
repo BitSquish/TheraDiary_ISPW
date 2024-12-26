@@ -3,6 +3,8 @@ package com.theradiary.ispwtheradiary.engineering.others.beans;
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.enums.TimeSlot;
 
+import static com.theradiary.ispwtheradiary.engineering.enums.TimeSlot.translateTimeSlot;
+
 public class AppointmentBean {
     private PsychologistBean psychologistBean;
     private DayOfTheWeek day;
@@ -85,5 +87,14 @@ public class AppointmentBean {
 
     public void setPatientBean(String patientBean) {
         this.patientBean = patientBean;
+    }
+    @Override
+    public String toString() {
+        return "Appuntamento:" +
+                "|" + day.toString() +
+                "|" + translateTimeSlot(timeSlot.getId()) +
+                "|" + (inPerson ? "In presenza" : "Non in presenza") +
+                "|"+ (online ? "Online" : "Non online") +
+                "|" + (available ? "Disponibile" : "Non disponibile") + "|" ;
     }
 }
