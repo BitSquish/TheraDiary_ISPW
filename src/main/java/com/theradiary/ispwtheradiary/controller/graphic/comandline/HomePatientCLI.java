@@ -18,22 +18,19 @@ public class HomePatientCLI extends AbstractState {
     /* Opzione menu dove voglio andare */
     @Override
     public void action(StateMachineImpl context) {
-        int scelta;
-        while ((scelta = scanner.nextInt()) != 0) {
+        boolean exit=false;
+        while (!exit) {
             try {
-                switch (scelta) {
-                    case (1):
-                        goNext(context, new TaskPatientCLI((PatientBean) user));
-                        break;
-                    case (2):
-                        goNext(context, new AppointmentPatientCLI((PatientBean) user));
-                        break;
-                    case (3):
-                        goNext(context, new SearchCLI((PatientBean) user));
-                        break;
-                    default:
-                        Printer.errorPrint("Scelta non valida");
-                        break;
+                int choice= Integer.parseInt(scanner.nextLine());
+                switch (choice) {
+                    case 1 -> goNext(context, new TaskPatientCLI((PatientBean) user));
+                    case 2 -> goNext(context, new AppointmentPatientCLI((PatientBean) user));
+                    case 3 -> goNext(context, new SearchCLI((PatientBean) user));
+                    case 0 -> {
+                        exit = true;
+                        goNext(context, new InitialState());
+                    }
+                    default -> Printer.errorPrint("Input non valido");
                 }
             } catch (Exception e) {
                 Printer.errorPrint("Errore nella scelta");
@@ -41,13 +38,12 @@ public class HomePatientCLI extends AbstractState {
             }
 
         }
-        goNext(context, new InitialState());
     }
     /*-----------------Pattern state---------------*/
     @Override
     public void showMenu() {
         Printer.println("1.Visualizza le task");
-        Printer.println("2.Visualizza appuntamenti");
+        Printer.println("2.Appuntamenti");
         Printer.println("3.Cerca uno psicologo");
         Printer.println("0.Logout");
         Printer.print("Opzione scelta:");

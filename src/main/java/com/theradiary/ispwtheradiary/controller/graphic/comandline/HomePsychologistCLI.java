@@ -1,12 +1,15 @@
 package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
+import com.theradiary.ispwtheradiary.controller.application.AppointmentController;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
+import com.theradiary.ispwtheradiary.engineering.others.beans.AppointmentBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.AbstractState;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.InitialState;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.StateMachineImpl;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class HomePsychologistCLI extends AbstractState {
@@ -17,6 +20,7 @@ public class HomePsychologistCLI extends AbstractState {
     @Override
     public void action(StateMachineImpl context) {
         boolean exit=false;
+        // Inizializza i dati richiesti per gli stati
         while (!exit) {
             try {
                 int choice= Integer.parseInt(scanner.nextLine());

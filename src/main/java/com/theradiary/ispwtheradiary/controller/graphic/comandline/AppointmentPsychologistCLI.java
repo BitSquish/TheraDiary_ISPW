@@ -20,8 +20,9 @@ public class AppointmentPsychologistCLI extends AbstractState {
     private final Scanner scanner = new Scanner(System.in);
     public AppointmentPsychologistCLI(PsychologistBean user) {
         this.user = user;
-        loadAllAppointments();
     }
+
+
 
     @Override
     public void action(StateMachineImpl context) {
@@ -30,9 +31,9 @@ public class AppointmentPsychologistCLI extends AbstractState {
             try {
                 int choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
-                    case 1 -> showDayAppointments();
-                    case 2 -> saveAppointment();
-                    case 3 -> {
+                    case 1 -> modifyAppointments();
+                    case 2 ->goToSummary();
+                    case 0 -> {
                         exit = true;
                         goNext(context, new HomePsychologistCLI(user));
                     }
@@ -44,7 +45,8 @@ public class AppointmentPsychologistCLI extends AbstractState {
             }
         }
     }
-    private void showDayAppointments(){
+    private void modifyAppointments(){
+        loadAppointments();
         Printer.println("Seleziona il giorno della settimana");
         for(DayOfTheWeek day : DayOfTheWeek.values()){
             Printer.println(day.ordinal() + 1 + ". " + day);
@@ -62,83 +64,77 @@ public class AppointmentPsychologistCLI extends AbstractState {
             Printer.println("Appuntamenti per" + selectedDay + ":");
             printAppointments("In presenza", inPersonTimeSlots);
             printAppointments("Online", onlineTimeSlots);
+            Printer.print("Modifica le fasce orarie. Inserisci 1 per in presenza, 2 per online 3 per entrambi, 0 per nessuno.");
+            List<AppointmentBean> newAppointments = new ArrayList<>();
+            for(int i=0;i<TimeSlot.values().length;i++){
+               TimeSlot slot=TimeSlot.values()[i];
+                Printer.print(slot+":" );
+                int modality = Integer.parseInt(scanner.nextLine());
+                if(modality>0){
+                    boolean inPerson = modality == 1 || modality == 3;
+                    boolean online = modality == 2 || modality == 3;
+                    AppointmentBean appointmentBean = getAppointmentBean(selectedDay, slot, inPerson, online);
+                    setPatientAndAvailability(appointmentBean);
+                    newAppointments.add(appointmentBean);
+                }
+
+            }
+            allAppointments.removeIf(appointment-> appointment.getDay().equals(selectedDay));
+            allAppointments.addAll(newAppointments);
+            appointmentPs.saveAppointments(user,allAppointments);
+            Printer.println("Appuntamenti modificati e salvati  con successo");
         } catch (NumberFormatException e) {
             Printer.errorPrint("Errore scelta non valida");
-        }catch (Exception e){
-            Printer.errorPrint("Errore nella visualizzazione degli appuntamenti");
         }
     }
-    private void saveAppointment(){
-        List<AppointmentBean> appointmentToAdd=new ArrayList<>();
-        for(DayOfTheWeek day: DayOfTheWeek.values()){
-            Printer.println("Inserisci gli appuntamenti per il giorno"+day+":");
-            for(TimeSlot timeSlot:TimeSlot.values()){
-                Printer.print("Vuoi inserire un appuntamento per la fascia oraria"+timeSlot+"? (in presenza: 'p', online: 'o', entrambi: 'b', nessuno: 'n')");
-                String input= scanner.nextLine().toLowerCase();
-                if(input.equals("p")||input.equals("b")||input.equals("o")){
-                    boolean inPerson=input.equals("p")||input.equals("b");
-                    boolean online=input.equals("o")||input.equals("b");
-                    AppointmentBean appointmentBean=createAppointmentBean(day,timeSlot,inPerson,online);
-                    setPatient(appointmentBean);
-                    appointmentToAdd.add(appointmentBean);
-                }
+    private void loadAppointments(){
+        appointmentPs.loadAllAppointments(allAppointments, user);
+    }
+    private void goToSummary(){
+        loadAppointments();
+        Printer.println("-------------Riepilogo Appuntamenti-------------");
+        for (AppointmentBean appointment : allAppointments) {
+            if(!appointment.isAvailable()){
+                Printer.println(appointment.toString());
             }
-
-        }
-        if(!appointmentToAdd.isEmpty()){
-            appointmentPs.saveAppointments(user,appointmentToAdd);
-            allAppointments.clear();
-            allAppointments.addAll(appointmentToAdd);
-            updateVisitModality(appointmentToAdd);
-            Printer.println("Appuntamenti salvati con successo");
-        }else{
-            Printer.errorPrint("Nessun appuntamento da salvare");
         }
     }
-    private AppointmentBean createAppointmentBean(DayOfTheWeek day, TimeSlot timeSlot, boolean inPerson, boolean online){
+
+    private AppointmentBean getAppointmentBean(DayOfTheWeek day, TimeSlot timeSlot, boolean inPerson, boolean online){
         return new AppointmentBean(user,day,timeSlot,inPerson,online);
     }
-    private void setPatient(AppointmentBean appointmentBean){
+    private void setPatientAndAvailability(AppointmentBean appointmentBean){
         for(AppointmentBean app:allAppointments){
-            if(app.getDay().equals(appointmentBean.getDay())&&app.getTimeSlot().equals(appointmentBean.getTimeSlot())){
+            if(app.getDay().equals(appointmentBean.getDay())&&app.getTimeSlot().equals(appointmentBean.getTimeSlot()) && app.getPatientBean()!=null){
                 appointmentBean.setPatientBean(app.getPatientBean());
+                appointmentBean.setAvailable(app.isAvailable());
+                appointmentBean.setInPerson(app.isInPerson());
+                appointmentBean.setOnline(app.isOnline());
                 break;
             }
         }
-    }
-    private void loadAllAppointments(){
-        appointmentPs.loadAllAppointments(allAppointments,user);
-        Printer.println("Appuntamenti caricati con successo");
-    }
-    private void updateVisitModality(List<AppointmentBean> appointmentsToAdd){
-       boolean hasChanged=appointmentPs.changeModality(appointmentsToAdd);
-         if(hasChanged){
-              user.setInPerson(true);
-              user.setOnline(true);
-              Printer.println("Modalità cambiata con successo");
-         }
     }
     private void printAppointments(String modality, List<TimeSlot> timeSlots){
         Printer.println("----"+modality+"---");
         if (timeSlots.isEmpty()) {
             Printer.println("Nessun appuntamento disponibile.");
         } else {
-            for (TimeSlot timeSlot : timeSlots) {
-                Printer.println("| " + timeSlot + " |");
-            }
+            timeSlots.forEach(timeSlot->Printer.println("|"+timeSlot+"|"));
         }
     }
+
     /**********************************Pattern State*********************************************/
     @Override
     public void enter(StateMachineImpl context) {
         stampa();
         showMenu();
+
     }
     @Override
     public void showMenu() {
-        Printer.println("1.Visualizza appuntamenti per un giorno specifico ");
-        Printer.println("2.Salva appuntamento");
-        Printer.println("3.Esci");
+        Printer.println("1.Modifica Appuntamenti ");
+        Printer.println("2.Riepilogo appuntamenti");
+        Printer.println("0.Esci");
         Printer.print("Opzione scelta:");
     }
     @Override
@@ -146,6 +142,8 @@ public class AppointmentPsychologistCLI extends AbstractState {
         Printer.println(" ");
         Printer.printlnBlue("-------------------I tuoi appuntamenti-------------------");
     }
+
+
 }
 
 
