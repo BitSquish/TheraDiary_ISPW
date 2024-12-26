@@ -808,7 +808,7 @@
       </tabs>
    </TabPane>
    <Button layoutX="713.0" layoutY="116.0" mnemonicParsing="false" onMouseClicked="#goToSummary" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Appuntamenti fissati" textFill="WHITE" />
-   <Text fx:id="successMessage" fill="#52b148" layoutX="329.0" layoutY="462.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Salvataggio effettuato" textAlignment="CENTER" visible="false" wrappingWidth="215.33355712890625">
+   <Text fx:id="successMessage" fill="#52b148" layoutX="275.0" layoutY="458.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Salvataggio effettuato" textAlignment="CENTER" visible="false" wrappingWidth="322.5335693359375">
       <font>
          <Font name="System Bold" size="14.0" />
       </font>
@@ -818,7 +818,7 @@
          <Font name="System Bold" size="14.0" />
       </font>
    </Text>
-   <Label fx:id="infoLabel" layoutX="277.0" layoutY="441.0" prefHeight="88.0" prefWidth="419.0" style="-fx-background-color: #ffffff; -fx-border-color: #9067C6;" text="L'aggiunta di una modalità di visita a una fascia oraria già prenotata da un paziente non verrà salvata. La rimozione di una fascia oraria prenotata eliminerà anche l'appuntamento fissato col paziente" textAlignment="CENTER" visible="false" wrapText="true">
+   <Label fx:id="infoLabel" layoutX="277.0" layoutY="441.0" prefHeight="88.0" prefWidth="419.0" style="-fx-background-color: #ffffff; -fx-border-color: #9067C6;" text="La modifica di una modalità di visita relativa a una fascia oraria già prenotata da un paziente non verrà salvata. La rimozione di una fascia oraria prenotata eliminerà anche l'appuntamento fissato col paziente" textAlignment="CENTER" visible="false" wrapText="true">
       <font>
          <Font name="System Italic" size="14.0" />
       </font>

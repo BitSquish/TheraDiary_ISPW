@@ -25,14 +25,9 @@ public class AppointmentMapper implements BeanAndModelMapper<AppointmentBean, Ap
     }
 
 
-    //TODO: da modificare insieme a CLI, costruttori del bean devono combaciare con quelli del model
+    //TODO: da modificare insieme a CLI
     @Override
     public AppointmentBean fromModelToBean(Appointment model) {
-        if(!model.isInPerson() && !model.isOnline()){
-            return new AppointmentBean(psychologistMapper.fromModelToBean(model.getPsychologist()), model.getDay(), model.getTimeSlot(), patientMapper.fromModelToBean(model.getPatient()).getCredentialsBean().getMail());
-        }
-        else
-            return new AppointmentBean(psychologistMapper.fromModelToBean(model.getPsychologist()), model.getDay(), model.getTimeSlot(), model.isInPerson(), model.isOnline());
-
+        return new AppointmentBean(psychologistMapper.fromModelToBean(model.getPsychologist()), model.getDay(), model.getTimeSlot(), model.isInPerson(), model.isOnline());
     }
 }

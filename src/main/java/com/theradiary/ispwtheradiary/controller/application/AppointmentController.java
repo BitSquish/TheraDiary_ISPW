@@ -54,10 +54,10 @@ public class AppointmentController {
     public void saveAppointments(PsychologistBean psychologistBean, List<AppointmentBean> appointmentToAdd) {
         Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
         DayOfTheWeek day = appointmentToAdd.get(0).getDay();
-        UpdateDAO.clearAppointments(psychologist, day);
+        UpdateDAO.clearAppointments(psychologist, day); //rimuovo dal database tutti gli appuntamenti dove il giorno della settimana corrisponde ai nuovi appuntamenti da caricare
         //Da qui in giù da controllare
         for(AppointmentBean appointmentBean : appointmentToAdd) {
-            Appointment appointment = new Appointment(psychologist, appointmentBean.getDay(), appointmentBean.getTimeSlot(), appointmentBean.isInPerson(), appointmentBean.isOnline());
+            Appointment appointment = beanAndModelMapperFactory.fromBeanToModel(appointmentBean, AppointmentBean.class);
             appointment.setPatient(new Patient(new Credentials(appointmentBean.getPatientBean(), Role.PATIENT)));
             appointment.setAvailable(appointmentBean.isAvailable());
             UpdateDAO.addAppointments(appointment);

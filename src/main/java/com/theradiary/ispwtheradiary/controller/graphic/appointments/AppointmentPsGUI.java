@@ -111,13 +111,15 @@ public class AppointmentPsGUI extends CommonGUI {
 
     @FXML
     private void save(MouseEvent event){
-        List<AppointmentBean> appointmentToAdd = new ArrayList<>(); //array da riempire con gli appuntamenti da salvare (vecchi e nuovi)
+        List<AppointmentBean> appointmentToAdd = new ArrayList<>(); //lista da riempire con gli appuntamenti da salvare (vecchi e nuovi)
+        //Ottengo il giorno della settimana
         Tab tab = tabPane.getSelectionModel().getSelectedItem();
         DayOfTheWeek day = DayOfTheWeek.valueOf(tab.getId());
+
         AnchorPane anchorPane = (AnchorPane) tab.getContent();
-        VBox vBoxInPerson = (VBox) anchorPane.getChildren().get(0);
-        VBox vBoxOnline = (VBox) anchorPane.getChildren().get(1);
-        for(int i = 0; i<vBoxInPerson.getChildren().size(); i++){
+        VBox vBoxInPerson = (VBox) anchorPane.getChildren().get(0); //vbox delle visite in presenza
+        VBox vBoxOnline = (VBox) anchorPane.getChildren().get(1);   //vbox delle visite online
+        for(int i = 0; i<vBoxInPerson.getChildren().size(); i++){   //itero tutte le fasce orarie
             CheckBox inPersonCheckBox = (CheckBox) vBoxInPerson.getChildren().get(i);   //checkbox fasce orarie in presenza
             CheckBox onlineCheckBox = (CheckBox) vBoxOnline.getChildren().get(i);   //checkbox fasce orarie online
             if(inPersonCheckBox.isSelected() || onlineCheckBox.isSelected()){
@@ -128,9 +130,10 @@ public class AppointmentPsGUI extends CommonGUI {
         }
         if(!appointmentToAdd.isEmpty()){
             appointmentPs.saveAppointments((PsychologistBean) session.getUser(), appointmentToAdd);
-            allAppointments.removeIf(appointment -> appointment.getDay() == day);
-            allAppointments.addAll(appointmentToAdd);
+            allAppointments.removeIf(appointment -> appointment.getDay() == day);   //aggiorno la lista
+            allAppointments.addAll(appointmentToAdd);   //aggiorno la lista
             changeModality(appointmentToAdd);
+            successMessage.setText("Appuntamenti di " + DayOfTheWeek.translateDay(day.getId()) + " salvati.");
             successMessage.setVisible(true);
         }
     }
@@ -145,7 +148,6 @@ public class AppointmentPsGUI extends CommonGUI {
                 inPersonCheckBox.isSelected(),
                 onlineCheckBox.isSelected()
         );
-
     }
 
     private void setPatientAndAvailability(AppointmentBean appointmentBean) {
@@ -171,6 +173,8 @@ public class AppointmentPsGUI extends CommonGUI {
         initializeCheckboxes(DayOfTheWeek.MONDAY, tabPane.getTabs().get(0));
     }
 
+
+    //Se lo psicologo ha inserito una visita non concorde alle modalità specificate in fase di registrazione, aggiorna il profilo
     private void changeModality(List<AppointmentBean> appointmentsToAdd){
         boolean hasChanged = appointmentPs.changeModality(appointmentsToAdd);
         if(hasChanged){

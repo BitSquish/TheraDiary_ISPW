@@ -22,7 +22,7 @@ public class AppointmentBean {
         this.available = true;
     }
 
-    //TODO Costruttore usato per inviare la richiesta -> Da rimuovere, si deve usare costruttore base
+    //TODO Costruttore usato per inviare la richiesta -> Da rimuovere, si deve usare costruttore base (se non si può, uno che abbia senso)
     public AppointmentBean(PsychologistBean psychologistBean, DayOfTheWeek day, TimeSlot timeSlot, String patientBean) {
         this.psychologistBean = psychologistBean;
         this.day = day;
