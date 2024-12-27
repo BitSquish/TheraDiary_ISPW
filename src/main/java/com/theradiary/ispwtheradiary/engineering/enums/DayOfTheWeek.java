@@ -7,7 +7,14 @@ public enum DayOfTheWeek {
     THURSDAY(4),
     FRIDAY(5);
 
-    private int id;
+
+    private static final String LUNE = "Lunedì";
+    private static final String MART = "Martedì";
+    private static final String MERC = "Mercoledì";
+    private static  final String GIOV = "Giovedì";
+    private  static final String VENE = "Venerdì";
+
+    private final int id;
 
     DayOfTheWeek(int id) {
         this.id = id;
@@ -18,24 +25,36 @@ public enum DayOfTheWeek {
     }
 
     public static String translateDay(int id){
+        if(id<1 || id>5){
+            return "Giorno non valido";
+        }
         return switch (id) {
-            case 1 -> "Lunedì";
-            case 2 -> "Martedì";
-            case 3 -> "Mercoledì";
-            case 4 -> "Giovedì";
-            case 5 -> "Venerdì";
-            default -> null;
+            case 1 -> LUNE;
+            case 2 -> MART;
+            case 3 -> MERC;
+            case 4 -> GIOV;
+            case 5 -> VENE;
+            default -> "Giorno non valido";
         };
     }
 
     public static DayOfTheWeek fromStringToDay(String day){
         return switch (day){
-            case "Lunedì","Monday" -> MONDAY;
-            case "Martedì","Tuesday" -> TUESDAY;
-            case "Mercoledì","Wednesday" -> WEDNESDAY;
-            case "Giovedì","Thursday" -> THURSDAY;
-            case "Venerdì","Friday" -> FRIDAY;
+            case LUNE,"Monday" -> MONDAY;
+            case MART,"Tuesday" -> TUESDAY;
+            case MERC,"Wednesday" -> WEDNESDAY;
+            case GIOV,"Thursday" -> THURSDAY;
+            case VENE,"Friday" -> FRIDAY;
             default -> null;
+        };
+    }
+    public static String fromDayToString(DayOfTheWeek day){
+        return switch (day){
+            case MONDAY -> LUNE;
+            case TUESDAY -> MART;
+            case WEDNESDAY -> MERC;
+            case THURSDAY -> GIOV;
+            case FRIDAY -> VENE;
         };
     }
 

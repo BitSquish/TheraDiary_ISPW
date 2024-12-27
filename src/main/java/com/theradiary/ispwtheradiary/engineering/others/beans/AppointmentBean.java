@@ -3,6 +3,7 @@ package com.theradiary.ispwtheradiary.engineering.others.beans;
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.enums.TimeSlot;
 
+import static com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek.fromDayToString;
 import static com.theradiary.ispwtheradiary.engineering.enums.TimeSlot.translateTimeSlot;
 
 public class AppointmentBean {
@@ -91,10 +92,11 @@ public class AppointmentBean {
     @Override
     public String toString() {
         return "Appuntamento:" +
-                "|" + day.toString() +
+                "|" + fromDayToString(day) +
                 "|" + translateTimeSlot(timeSlot.getId()) +
-                "|" + (inPerson ? "In presenza" : "Non in presenza") +
-                "|"+ (online ? "Online" : "Non online") +
-                "|" + (available ? "Disponibile" : "Non disponibile") + "|" ;
+                "|" + (inPerson ? "In presenza" : "") +
+                "|"+ (online ? "Online" : "") +
+                "|" + (available ? "Non prenotato" : "Prenotato") +
+                "|" + getPatientBean()+ "|";
     }
 }

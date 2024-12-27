@@ -10,8 +10,12 @@ import com.theradiary.ispwtheradiary.engineering.patterns.state.AbstractState;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.StateMachineImpl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+import static com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek.translateDay;
+import static com.theradiary.ispwtheradiary.engineering.enums.TimeSlot.translateTimeSlot;
 
 public class AppointmentPsychologistCLI extends AbstractState {
     protected PsychologistBean user;
@@ -20,7 +24,7 @@ public class AppointmentPsychologistCLI extends AbstractState {
     private final Scanner scanner = new Scanner(System.in);
     public AppointmentPsychologistCLI(PsychologistBean user) {
         this.user = user;
-        getAllAppointments();
+        loadAppointments();
     }
 
 
@@ -46,81 +50,99 @@ public class AppointmentPsychologistCLI extends AbstractState {
             }
         }
     }
+    private int promptUserInput(){
+        Printer.print("Opzione scelta:");
+        return Integer.parseInt(scanner.nextLine());
+    }
     private void modifyAppointments(){
         Printer.println("Seleziona il giorno della settimana");
-        for(int i=0;i<DayOfTheWeek.values().length;i++){
-            Printer.println((i+1)+". "+DayOfTheWeek.translateDay(i));
+        DayOfTheWeek selectedDay=selectedDayOfTheWeek();
+        if(selectedDay==null) return;
+        List<TimeSlot> inPersonSlots= new ArrayList<>();
+        List<TimeSlot> onlineSlots= new ArrayList<>();
+        appointmentPs.getDayOfTheWeekAppointments(allAppointments,selectedDay,inPersonSlots,onlineSlots);
+        displayAppointments(selectedDay,inPersonSlots,onlineSlots);
+        updateAppointment(selectedDay);
+        saveAppointments(selectedDay);
+    }
+    private DayOfTheWeek selectedDayOfTheWeek(){
+        for (DayOfTheWeek day : DayOfTheWeek.values()) {
+            Printer.println(day.getId() + ". " + DayOfTheWeek.translateDay(day.getId()));
         }
         try {
-            int dayChoice = Integer.parseInt(scanner.nextLine()) - 1;
-            if (dayChoice < 0 || dayChoice >= DayOfTheWeek.values().length) {
-                Printer.errorPrint("Scelta non valida");
-                return;
-            }
-            DayOfTheWeek selectedDay = DayOfTheWeek.values()[dayChoice];
-            List<TimeSlot> inPersonTimeSlots = new ArrayList<>();
-            List<TimeSlot> onlineTimeSlots = new ArrayList<>();
-            appointmentPs.getDayOfTheWeekAppointments(allAppointments, selectedDay, inPersonTimeSlots, onlineTimeSlots);
-            Printer.println("Appuntamenti per" + selectedDay + ":");
-            printAppointments("In presenza", inPersonTimeSlots);
-            printAppointments("Online", onlineTimeSlots);
-            Printer.print("Modifica le fasce orarie. Inserisci 1 per in presenza, 2 per online 3 per entrambi, 0 per nessuno.");
-            List<AppointmentBean> newAppointments = new ArrayList<>();
-            for(int i=0;i<TimeSlot.values().length;i++){
-               TimeSlot slot=TimeSlot.values()[i];
-                Printer.print(slot+":" );
-                int modality = Integer.parseInt(scanner.nextLine());
-                if(modality>0){
-                    boolean inPerson = modality == 1 || modality == 3;
-                    boolean online = modality == 2 || modality == 3;
-                    AppointmentBean appointmentBean = getAppointmentBean(selectedDay, slot, inPerson, online);
-                    setPatientAndAvailability(appointmentBean);
-                    newAppointments.add(appointmentBean);
-                }
-
-            }
-            allAppointments.removeIf(appointment-> appointment.getDay().equals(selectedDay));
-            allAppointments.addAll(newAppointments);
-            appointmentPs.saveAppointments(user,allAppointments);
-            Printer.println("Appuntamenti modificati e salvati  con successo");
-        } catch (NumberFormatException e) {
-            Printer.errorPrint("Errore scelta non valida");
+            int choice = promptUserInput();
+            return Arrays.stream(DayOfTheWeek.values())// converto l'array in uno stream su cui poi lavorare
+                    .filter(day -> day.getId() == choice)
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("Scelta non valida"));
+        } catch (IllegalArgumentException e) {
+            Printer.errorPrint(e.getMessage());
+            return null;
         }
     }
-    private void goToSummary(){
+    private void displayAppointments(DayOfTheWeek selectedDay, List<TimeSlot> inPersonSlots, List<TimeSlot> onlineSlots) {
+        Printer.println("Appuntamenti per " + DayOfTheWeek.translateDay(selectedDay.getId()) + ":");
+        printAppointments("In presenza", inPersonSlots);
+        printAppointments("Online", onlineSlots);
+    }
+    private void updateAppointment(DayOfTheWeek selectedDay) {
+        List<AppointmentBean> newAppointments = new ArrayList<>();
+        Printer.println("Modifica le fasce orarie (1 per in presenza, 2 per online, 3 per entrambi, 0 per nessuno):");
+
+        for (TimeSlot slot : TimeSlot.values()) {
+            Printer.print(translateTimeSlot(slot.getId()) + ": ");
+            int modality = Integer.parseInt(scanner.nextLine());
+            if (modality > 0) {
+                newAppointments.add(createAppointment(selectedDay, slot, modality));
+            }
+        }
+
+        allAppointments.removeIf(app -> app.getDay().equals(selectedDay));
+        allAppointments.addAll(newAppointments);
+    }
+    private AppointmentBean createAppointment(DayOfTheWeek day, TimeSlot slot, int modality) {
+        boolean inPerson = modality == 1 || modality == 3;
+        boolean online = modality == 2 || modality == 3;
+        AppointmentBean appointment = new AppointmentBean(user, day, slot, inPerson, online);
+        copyExistingDetails(appointment);
+        return appointment;
+    }
+    private void copyExistingDetails(AppointmentBean appointment) {
+        allAppointments.stream()
+                .filter(app -> app.getDay().equals(appointment.getDay()) &&
+                        app.getTimeSlot().equals(appointment.getTimeSlot()) &&
+                        app.getPatientBean() != null)
+                .findFirst()
+                .ifPresent(existing -> {
+                    appointment.setPatientBean(existing.getPatientBean());
+                    appointment.setAvailable(existing.isAvailable());
+                    appointment.setInPerson(existing.isInPerson());
+                    appointment.setOnline(existing.isOnline());
+                });
+    }
+    private void saveAppointments(DayOfTheWeek selectedDay) {
+        appointmentPs.saveAppointments(user, allAppointments);
+        Printer.println("Appuntamenti per " + DayOfTheWeek.translateDay(selectedDay.getId()) + " salvati con successo.");
+    }
+    private void goToSummary() {
         Printer.println("-------------Riepilogo Appuntamenti-------------");
-        for (AppointmentBean appointment : allAppointments) {
-            if(!appointment.isAvailable()){
-                Printer.println(appointment.toString());
-            }
-        }
+        allAppointments.stream()
+                .filter(appointment -> !appointment.isAvailable())
+                .forEach(appointment -> Printer.println(appointment.toString()));
     }
-
-    private AppointmentBean getAppointmentBean(DayOfTheWeek day, TimeSlot timeSlot, boolean inPerson, boolean online){
-        return new AppointmentBean(user,day,timeSlot,inPerson,online);
-    }
-    private void setPatientAndAvailability(AppointmentBean appointmentBean){
-        for(AppointmentBean app:allAppointments){
-            if(app.getDay().equals(appointmentBean.getDay())&&app.getTimeSlot().equals(appointmentBean.getTimeSlot()) && app.getPatientBean()!=null){
-                appointmentBean.setPatientBean(app.getPatientBean());
-                appointmentBean.setAvailable(app.isAvailable());
-                appointmentBean.setInPerson(app.isInPerson());
-                appointmentBean.setOnline(app.isOnline());
-                break;
-            }
-        }
-    }
-    private void printAppointments(String modality, List<TimeSlot> timeSlots){
-        Printer.println("----"+modality+"---");
+    private void printAppointments(String modality, List<TimeSlot> timeSlots) {
+        Printer.println("---- " + modality + " ----");
         if (timeSlots.isEmpty()) {
             Printer.println("Nessun appuntamento disponibile.");
         } else {
-            timeSlots.forEach(timeSlot->Printer.println("|"+timeSlot+"|"));
+            timeSlots.forEach(slot -> Printer.println("| " + slot + " |"));
         }
     }
-    private void getAllAppointments(){
+    private void loadAppointments() {
         appointmentPs.loadAllAppointments(allAppointments, user);
     }
+
+
 
     /**********************************Pattern State*********************************************/
     @Override
