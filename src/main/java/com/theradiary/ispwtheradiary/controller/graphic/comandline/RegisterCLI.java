@@ -39,7 +39,7 @@ public class RegisterCLI extends AbstractState {
             }
             String password=prompt("Password: ");
             boolean[] visitModes=getVisitModes();
-            if(visitModes==null) return; //se la scelta non è valida
+            if( visitModes.length==0) {Printer.errorPrint("Errore durante la scelta delle modalità di visita");return;}//se la scelta non è valida
             String description=prompt("Descrizione: ");
             String role=prompt("Ruolo (psicologo/paziente): ").toLowerCase();
             //Creazione oggetti e registrazione utente
@@ -87,17 +87,15 @@ public class RegisterCLI extends AbstractState {
         try {
             int choice = scanner.nextInt();
             scanner.nextLine();
-            switch (choice) {
-                case 1:
-                    return new boolean[]{true, false};
-                case 2:
-                    return new boolean[]{false, true};
-                case 3:
-                    return new boolean[]{true, true};
-                default:
-                    Printer.errorPrint("Scelta non valida");
-                    return new boolean[0];
-            }
+            return switch (choice) {
+                case 1 -> new boolean[]{true, false};
+                case 2 -> new boolean[]{false, true};
+                case 3 -> new boolean[]{true, true};
+                default -> {
+                    Printer.errorPrint(SCELTA_NON_VALIDA);
+                    yield new boolean[0];
+                }
+            };
         } catch (InputMismatchException e) {
             Printer.errorPrint("Input non valido. Inserisci un numero tra 1 e 3");
             return new boolean[0];

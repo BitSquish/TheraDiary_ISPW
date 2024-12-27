@@ -18,7 +18,7 @@ import java.util.Scanner;
 public class TaskPsychologistCLI extends AbstractState {
     protected PatientBean selectedPatient;
     protected PsychologistBean user;
-    private TaskAndToDoController taskAndToDoController = new TaskAndToDoController();
+    private final TaskAndToDoController taskAndToDoController = new TaskAndToDoController();
     StateMachineImpl context;
     public TaskPsychologistCLI(PsychologistBean user,PatientBean selectedPatient) {
         this.selectedPatient = selectedPatient;
@@ -32,27 +32,15 @@ public class TaskPsychologistCLI extends AbstractState {
         while ((scelta = scanner.nextInt()) != 0) {
             try {
                 switch (scelta) {
-                    case (1):
-                        showDiary();
-                        break;
-                    case (2):
-                        showToDoList();
-                        break;
-                    case (3):
-                        goNext(context,new ToDoCLI(user,selectedPatient));
-                        break;
-                    case (4):
-                        viewTasks();
-                        break;
-                    case (5):
-                        goNext(context,new TaskCLI(user,selectedPatient));
-                        break;
-                    default:
-                        Printer.errorPrint("Scelta non valida");
-                        break;
+                    case 1 -> showDiary();
+                    case 2 -> showToDoList();
+                    case 3 -> goNext(context, new ToDoCLI(user, selectedPatient));
+                    case 4 -> viewTasks();
+                    case 5 -> goNext(context, new TaskCLI(user, selectedPatient));
+                    default -> Printer.errorPrint(SCELTA_NON_VALIDA);
                 }
             } catch (Exception e) {
-                Printer.errorPrint("Errore nella scelta");
+                Printer.errorPrint(SCELTA_NON_VALIDA);
                 scanner.nextLine();
             }
         }

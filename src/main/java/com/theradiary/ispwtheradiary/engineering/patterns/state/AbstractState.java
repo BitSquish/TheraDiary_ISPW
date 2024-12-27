@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.engineering.patterns.state;
 
 public abstract class AbstractState {
     //specifica l'interfaccia che incapsula la logica del comportamento associato ad un determinato stato
+    public static final String SCELTA_NON_VALIDA = "Scelta non valida";
     protected AbstractState(){}
     //transizione di stato
     public void enter(StateMachineImpl context){}

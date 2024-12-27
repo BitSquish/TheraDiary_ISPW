@@ -21,6 +21,8 @@ public class AppointmentPatientCLI extends AbstractState {
     private final PatientBean user;
     private final List<AppointmentBean> allAppointments = new ArrayList<>();
     private final AppointmentController appointmentController = new AppointmentController();
+    private static final String PRESENZA="In presenza";
+    private static final String ONLINE="Online";
     public AppointmentPatientCLI(PatientBean user){
         this.psychologistBean = user.getPsychologistBean();
         this.user=user;
@@ -101,9 +103,9 @@ public class AppointmentPatientCLI extends AbstractState {
                 .flatMap(appointment -> {
                     boolean inPerson = appointment.isInPerson();
                     boolean online = appointment.isOnline();
-                    if (inPerson && online) return Stream.of("In presenza", "Online");
-                    else if (inPerson) return Stream.of("In presenza");
-                    else if (online) return Stream.of("Online");
+                    if (inPerson && online) return Stream.of(PRESENZA, ONLINE);
+                    else if (inPerson) return Stream.of(PRESENZA);
+                    else if (online) return Stream.of(ONLINE);
                     else return Stream.empty();
                 })
                 .distinct()
@@ -122,14 +124,14 @@ public class AppointmentPatientCLI extends AbstractState {
         int choice = Integer.parseInt(scanner.nextLine()) - 1;
 
         if (choice < 0 || choice >= options.size()) {
-            Printer.errorPrint("Scelta non valida");
-            throw new IllegalArgumentException("Invalid selection");
+            Printer.errorPrint(SCELTA_NON_VALIDA);
+            throw new IllegalArgumentException(SCELTA_NON_VALIDA);
         }
         return options.get(choice);
     }
 
     private void confirmAppointment(String selectedDay, String selectedTimeSlot, String selectedModality) {
-        boolean inPerson = selectedModality.equals("In presenza");
+        boolean inPerson = selectedModality.equals(PRESENZA);
         boolean online = !inPerson;
 
         DayOfTheWeek day = DayOfTheWeek.fromStringToDay(selectedDay);

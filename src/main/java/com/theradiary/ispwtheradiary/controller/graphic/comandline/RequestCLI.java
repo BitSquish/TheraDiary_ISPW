@@ -5,7 +5,6 @@ import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.RequestBean;
-import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.engineering.patterns.observer.Observer;
 import com.theradiary.ispwtheradiary.engineering.patterns.observer.RequestManagerConcreteSubject;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.AbstractState;
@@ -19,19 +18,19 @@ import java.util.Scanner;
 public class RequestCLI extends AbstractState implements Observer {
     /*****************************Pattern observer**********************************/
     protected RequestApplicationController requestApplicationController = new RequestApplicationController();
-    private final BeanAndModelMapperFactory beanAndModelMapperFactory;
+
     private final RequestManagerConcreteSubject requestManagerConcreteSubject = RequestManagerConcreteSubject.getInstance();
     private final List<RequestBean> requestBeans = new ArrayList<>();
 
     public RequestCLI(PsychologistBean user) {
         this.user = user;
-        this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
         this.requestManagerConcreteSubject.addObserver(this);
     }
 
     /*****************************************************************************/
     private final Scanner scanner = new Scanner(System.in);
     protected PsychologistBean user;
+    private static final String NON_SONO_PRESENTI_RICHIESTE = "Non sono presenti richieste";
 
     /*Azione per accettare o rifiutare richiesta*/
     @Override
@@ -41,26 +40,20 @@ public class RequestCLI extends AbstractState implements Observer {
             try {
                 int choice = Integer.parseInt(scanner.nextLine().trim());
                 switch (choice) {
-                    case (1):
-                        displayRequests();
-                        break;
-                    case (2):
-                        handleRequest(true);//accetta richiesta
-                        break;
-                    case (3):
-                        handleRequest(false);//rifiuta richiesta
-                        break;
-                    case (4):
+                    case 1 -> displayRequests();
+                    case 2 -> handleRequest(true); // accetta richiesta
+                    case 3 -> handleRequest(false); // rifiuta richiesta
+                    case 4 -> {
                         goBack(context);
                         running = false;
-                        break;
-                    default:
-                        Printer.errorPrint("Scelta non valida");
+                    }
+                    default -> {
+                        Printer.errorPrint(SCELTA_NON_VALIDA);
                         running = false;
-                        break;
+                    }
                 }
             } catch (NumberFormatException e) {
-                Printer.errorPrint("Inserisci un numero");
+                Printer.errorPrint(SCELTA_NON_VALIDA);
             } catch (Exception e) {
                 Printer.errorPrint("Errore durante l'elaborazione");
             }
@@ -72,7 +65,7 @@ public class RequestCLI extends AbstractState implements Observer {
     private void loadRequests() {
         List<Request> requests = requestManagerConcreteSubject.getRequests();
         if (requests == null || requests.isEmpty()) {
-            Printer.println("Non sono presenti richieste");
+            Printer.println(NON_SONO_PRESENTI_RICHIESTE);
             return;
         }
         requestBeans.clear();
@@ -85,7 +78,7 @@ public class RequestCLI extends AbstractState implements Observer {
     /*Visualizza le richieste*/
     private void displayRequests() {
         if (requestBeans.isEmpty()) {
-            Printer.println("Non sono presenti richieste");
+            Printer.println(NON_SONO_PRESENTI_RICHIESTE);
         }else {
             Printer.println("\n----- Lista delle Richieste -----\n");
             int index = 1;
@@ -101,7 +94,7 @@ public class RequestCLI extends AbstractState implements Observer {
     /*Accetta o rifiuta la richiesta*/
     private void handleRequest(boolean accept) {
         if(requestBeans.isEmpty()) {
-            Printer.errorPrint("Non sono presenti richieste");
+            Printer.errorPrint(NON_SONO_PRESENTI_RICHIESTE);
             return;
         }
         displayRequests();
@@ -121,12 +114,12 @@ public class RequestCLI extends AbstractState implements Observer {
                 Printer.print("Inserisci il numero della richiesta da gestire: ");
                 requestIndex = Integer.parseInt(scanner.nextLine().trim()) - 1;
                 if(requestIndex<0 || requestIndex>=requestBeans.size()) {
-                    Printer.errorPrint("Numero non valido");
+                    Printer.errorPrint(SCELTA_NON_VALIDA);
                 } else {
                     validInput = true;
                 }
             } catch (NumberFormatException e) {
-                Printer.errorPrint("Inserisci un numero");
+                Printer.errorPrint(SCELTA_NON_VALIDA);
             }
         }
         return requestIndex;
@@ -172,7 +165,7 @@ public class RequestCLI extends AbstractState implements Observer {
     public void update() {
         loadRequests();
         if(requestBeans.isEmpty()) {
-            Printer.println("Non sono presenti richieste");
+            Printer.println(NON_SONO_PRESENTI_RICHIESTE);
         } else {
             Printer.println("Aggiornamento richieste");
         }

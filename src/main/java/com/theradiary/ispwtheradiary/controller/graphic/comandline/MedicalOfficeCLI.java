@@ -32,8 +32,8 @@ public class MedicalOfficeCLI extends AbstractState {
             MedicalOfficeRegistrationController medicalOfficeRegistrationController = new MedicalOfficeRegistrationController();
             if(medicalOfficeRegistrationController.retrieveMedicalOffice(medicalOfficeBean)){
                 Printer.println("Studio medico già registrato, vuoi modificarlo? (s/n)");
-                String risposta = scanner.next();
-                if(risposta.equals("s")){
+                String answer = scanner.next();
+                if(answer.equals("s")){
                     medicalOfficeRegistrationController.modify(medicalOfficeBean);
                     Printer.printlnBlue("Studio medico modificato con successo");
                     goNext(context, new HomePsychologistCLI(user));

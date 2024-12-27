@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TaskPatientCLI extends AbstractState {
-    private TaskAndToDoController taskAndToDoController = new TaskAndToDoController();
+    private final TaskAndToDoController taskAndToDoController = new TaskAndToDoController();
     protected PatientBean patientBean;
     public TaskPatientCLI(PatientBean patientBean) {
         this.patientBean = patientBean;
@@ -28,30 +28,16 @@ public class TaskPatientCLI extends AbstractState {
         while ((scelta = scanner.nextInt()) != 0) {
             try {
                 switch (scelta) {
-                    case (1):
-                        showDiary();
-                        break;
-                    case (2):
-                        showToDoList();
-                        break;
-                    case (3):
-                        addToDiary(scanner);
-                        break;
-                    case (4):
-                        completeToDo(scanner);
-                        break;
-                    case(5):
-                        viewTasks();
-                        break;
-                    case(6):
-                        doTask(scanner);
-                        break;
-                    default:
-                        Printer.errorPrint("Scelta non valida");
-                        break;
+                case 1 -> showDiary();
+                case 2 -> showToDoList();
+                case 3 -> addToDiary(scanner);
+                case 4 -> completeToDo(scanner);
+                case 5 -> viewTasks();
+                case 6 -> doTask(scanner);
+                default -> Printer.errorPrint(SCELTA_NON_VALIDA);
                 }
             } catch (Exception e) {
-                Printer.errorPrint("Errore nella scelta");
+                Printer.errorPrint(SCELTA_NON_VALIDA);
                 scanner.nextLine();
             }
         }
@@ -93,10 +79,7 @@ public class TaskPatientCLI extends AbstractState {
     //metodo per controllare se il paziente ha già scritto il diario per oggi
     private boolean hasDiaryForToday(){
         taskAndToDoController.getDiaryForToday(patientBean);
-        if(patientBean.getDiary().isEmpty()){
-            return false;
-        }
-        return true;
+        return !patientBean.getDiary().isEmpty();
     }
     //metodo per raccogliere l'input del paziente
     private String collectDiaryEntry(Scanner scanner){

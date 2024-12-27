@@ -28,21 +28,13 @@ public class TaskCLI extends AbstractState {
         while((scelta=scanner.nextInt())!=0) {
             try {
                 switch (scelta) {
-                    case (1):
-                        addNewTask(scanner);
-                        break;
-                    case (2):
-                        modifyTask(scanner);
-                        break;
-                    case (3):
-                        deleteTask(scanner);
-                        break;
-                    default:
-                        Printer.errorPrint("Scelta non valida");
-                        break;
+                    case 1 -> addNewTask(scanner);
+                    case 2 -> modifyTask(scanner);
+                    case 3 -> deleteTask(scanner);
+                    default -> Printer.errorPrint(SCELTA_NON_VALIDA);
                 }
             } catch (Exception e) {
-                Printer.errorPrint("Errore nella scelta");
+                Printer.errorPrint(SCELTA_NON_VALIDA);
                 scanner.nextLine();
             }
         }

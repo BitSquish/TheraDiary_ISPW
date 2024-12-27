@@ -26,21 +26,13 @@ public class ToDoCLI extends AbstractState {
         while((scelta=scanner.nextInt())!=0) {
             try {
                 switch (scelta) {
-                    case (1):
-                        addNewToDo(scanner);
-                        break;
-                    case (2):
-                        modifyToDo(scanner);
-                        break;
-                    case (3):
-                        deleteToDoItem(scanner);
-                        break;
-                    default:
-                        Printer.errorPrint("Scelta non valida");
-                        break;
+                    case 1 -> addNewToDo(scanner);
+                    case 2 -> modifyToDo(scanner);
+                    case 3 -> deleteToDoItem(scanner);
+                    default -> Printer.errorPrint(SCELTA_NON_VALIDA);
                 }
             } catch (Exception e) {
-                Printer.errorPrint("Errore nella scelta");
+                Printer.errorPrint(SCELTA_NON_VALIDA);
                 scanner.nextLine();
             }
         }
@@ -66,10 +58,10 @@ public class ToDoCLI extends AbstractState {
                 taskAndToDoController.deleteToDo(doList.get(position-1),selectedPatient);
                 Printer.printlnGreen("Elemento eliminato correttamente");
             }else{
-                Printer.errorPrint("Scelta non valida");
+                Printer.errorPrint(SCELTA_NON_VALIDA);
             }
         }catch (Exception e){
-            Printer.errorPrint("Errore nella selezione");
+            Printer.errorPrint(SCELTA_NON_VALIDA);
             scanner.nextLine();
         }
     }
@@ -89,10 +81,10 @@ public class ToDoCLI extends AbstractState {
                 taskAndToDoController.saveToDo(toDo,selectedPatient);
                 Printer.printlnGreen("Elemento modificato correttamente");
             }else{
-                Printer.errorPrint("Scelta non valida");
+                Printer.errorPrint(SCELTA_NON_VALIDA);
             }
         }catch (Exception e){
-            Printer.errorPrint("Errore nella selezione");
+            Printer.errorPrint(SCELTA_NON_VALIDA);
             scanner.nextLine();
         }
     }

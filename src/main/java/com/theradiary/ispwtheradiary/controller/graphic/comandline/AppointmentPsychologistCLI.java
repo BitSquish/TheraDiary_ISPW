@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import static com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek.translateDay;
 import static com.theradiary.ispwtheradiary.engineering.enums.TimeSlot.translateTimeSlot;
 
 public class AppointmentPsychologistCLI extends AbstractState {
@@ -42,10 +41,10 @@ public class AppointmentPsychologistCLI extends AbstractState {
                         exit = true;
                         goNext(context, new HomePsychologistCLI(user));
                     }
-                    default -> Printer.errorPrint("Input non valido");
+                    default -> Printer.errorPrint(SCELTA_NON_VALIDA);
                 }
             } catch (NumberFormatException e) {
-                Printer.errorPrint("Errore scelta non valida");
+                Printer.errorPrint(SCELTA_NON_VALIDA);
 
             }
         }
@@ -74,7 +73,7 @@ public class AppointmentPsychologistCLI extends AbstractState {
             return Arrays.stream(DayOfTheWeek.values())// converto l'array in uno stream su cui poi lavorare
                     .filter(day -> day.getId() == choice)
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("Scelta non valida"));
+                    .orElseThrow(() -> new IllegalArgumentException(SCELTA_NON_VALIDA));
         } catch (IllegalArgumentException e) {
             Printer.errorPrint(e.getMessage());
             return null;
@@ -135,7 +134,7 @@ public class AppointmentPsychologistCLI extends AbstractState {
         if (timeSlots.isEmpty()) {
             Printer.println("Nessun appuntamento disponibile.");
         } else {
-            timeSlots.forEach(slot -> Printer.println("| " + slot + " |"));
+            timeSlots.forEach(slot -> Printer.println("| " + translateTimeSlot(slot.getId()) + " |"));
         }
     }
     private void loadAppointments() {

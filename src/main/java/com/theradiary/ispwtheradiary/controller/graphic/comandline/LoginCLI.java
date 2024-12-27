@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
-import com.theradiary.ispwtheradiary.controller.application.AccountController;
+
 import com.theradiary.ispwtheradiary.controller.application.LoginController;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
@@ -46,7 +46,7 @@ public class LoginCLI extends AbstractState {
             }
             goNext(context, homeCLI);
         } catch (WrongEmailOrPasswordException e) {
-            System.out.println("Email o password errati");
+            Printer.errorPrint("Email o password errati");
             action(context);
         }
     }
@@ -65,10 +65,6 @@ public class LoginCLI extends AbstractState {
     @Override
     public void enter(StateMachineImpl context) {
         stampa();
-    }
-
-    @Override
-    public void exit(StateMachineImpl context) {
     }
 
     @Override

@@ -30,7 +30,7 @@ public class PsychologistProfileCLI extends AbstractState {
             } else if (answer.equals("n")) {
                 goNext(context, new HomePatientCLI(user));
             }else {
-                Printer.errorPrint("Scelta non valida");
+                Printer.errorPrint(SCELTA_NON_VALIDA);
                 goNext(context, new HomePatientCLI(user));
             }
         }catch (Exception e) {

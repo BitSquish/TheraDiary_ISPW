@@ -30,10 +30,10 @@ public class HomePatientCLI extends AbstractState {
                         exit = true;
                         goNext(context, new InitialState());
                     }
-                    default -> Printer.errorPrint("Input non valido");
+                    default -> Printer.errorPrint(SCELTA_NON_VALIDA);
                 }
             } catch (Exception e) {
-                Printer.errorPrint("Errore nella scelta");
+                Printer.errorPrint(SCELTA_NON_VALIDA);
                 scanner.nextLine();
             }
 
