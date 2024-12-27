@@ -24,11 +24,11 @@ public class AppointmentPatientCLI extends AbstractState {
     public AppointmentPatientCLI(PatientBean user){
         this.psychologistBean = user.getPsychologistBean();
         this.user=user;
+        loadAppointments();
 
     }
     @Override
     public void action(StateMachineImpl context) {
-        appointmentController.loadAllAppointments(allAppointments,psychologistBean);
         if(psychologistBean.getCredentialsBean().getMail()==null){
             Printer.println("Non hai uno psicologo associato. Vuoi cercarne uno? (s/n)");
             String choice = scanner.nextLine();
@@ -139,6 +139,9 @@ public class AppointmentPatientCLI extends AbstractState {
         newAppointment.setAvailable(false);
         newAppointment.setPatientBean(user.getCredentialsBean().getMail());
         appointmentController.askForAnAppointment(newAppointment);
+    }
+    public void loadAppointments(){
+        appointmentController.loadAllAppointments(allAppointments,psychologistBean);
     }
 
 

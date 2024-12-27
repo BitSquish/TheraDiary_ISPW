@@ -20,6 +20,7 @@ public class AppointmentPsychologistCLI extends AbstractState {
     private final Scanner scanner = new Scanner(System.in);
     public AppointmentPsychologistCLI(PsychologistBean user) {
         this.user = user;
+        getAllAppointments();
     }
 
 
@@ -46,7 +47,6 @@ public class AppointmentPsychologistCLI extends AbstractState {
         }
     }
     private void modifyAppointments(){
-        getAllAppointments();
         Printer.println("Seleziona il giorno della settimana");
         for(int i=0;i<DayOfTheWeek.values().length;i++){
             Printer.println((i+1)+". "+DayOfTheWeek.translateDay(i));
@@ -88,7 +88,6 @@ public class AppointmentPsychologistCLI extends AbstractState {
         }
     }
     private void goToSummary(){
-        getAllAppointments();
         Printer.println("-------------Riepilogo Appuntamenti-------------");
         for (AppointmentBean appointment : allAppointments) {
             if(!appointment.isAvailable()){
