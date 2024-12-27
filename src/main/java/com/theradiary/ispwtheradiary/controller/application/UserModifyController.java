@@ -15,7 +15,7 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import java.sql.SQLException;
 
 public class UserModifyController {
-    private BeanAndModelMapperFactory beanAndModelMapperFactory;
+    private final BeanAndModelMapperFactory beanAndModelMapperFactory;
     public UserModifyController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }

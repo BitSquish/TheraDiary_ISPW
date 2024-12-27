@@ -2,7 +2,6 @@ package com.theradiary.ispwtheradiary.controller.application;
 
 import com.theradiary.ispwtheradiary.engineering.dao.PtAndPsDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
-import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
 import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;

@@ -5,7 +5,6 @@ import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
-import com.theradiary.ispwtheradiary.engineering.others.mappers.BeanAndModelMapper;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.LoggedUser;
@@ -29,7 +28,7 @@ public class LoginController {
             LoginDAO.login(credentials);
             credentialsBean.setRole(credentials.getRole());
         } catch(SQLException e) { //TODO CONTROLLARE ECCEZIONI
-            throw new RuntimeException(e);
+            throw new WrongEmailOrPasswordException(e.getMessage());
         } catch (WrongEmailOrPasswordException e) {
             throw new WrongEmailOrPasswordException(e.getMessage());
         }

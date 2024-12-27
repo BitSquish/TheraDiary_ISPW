@@ -40,11 +40,11 @@ public enum DayOfTheWeek {
 
     public static DayOfTheWeek fromStringToDay(String day){
         return switch (day){
-            case LUNE,"Monday" -> MONDAY;
-            case MART,"Tuesday" -> TUESDAY;
-            case MERC,"Wednesday" -> WEDNESDAY;
-            case GIOV,"Thursday" -> THURSDAY;
-            case VENE,"Friday" -> FRIDAY;
+            case LUNE,"MONDAY" -> MONDAY;
+            case MART,"TUESDAY" -> TUESDAY;
+            case MERC,"WEDNESDAY" -> WEDNESDAY;
+            case GIOV,"THURSDAY" -> THURSDAY;
+            case VENE,"FRIDAY" -> FRIDAY;
             default -> null;
         };
     }
