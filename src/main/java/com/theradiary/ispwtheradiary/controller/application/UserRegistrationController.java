@@ -15,24 +15,19 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import java.sql.SQLException;
 
 public class UserRegistrationController {
-    BeanAndModelMapperFactory beanAndModelMapperFactory;
-    public UserRegistrationController() {
+    private final BeanAndModelMapperFactory beanAndModelMapperFactory;
+
+    public UserRegistrationController(){
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
 
-
-
-    //NOTA: Su registrazione il metodo è privato e viene chiamato dal costruttore. Su login il metodo è statico e non serve istanziare la classe.
-    //VEDERE QUALE DELLE DUE SOLUZIONI È MIGLIORE
-
-    public UserRegistrationController(LoggedUserBean loggedUserBean) throws MailAlreadyExistsException {
+    public void registerUser(LoggedUserBean loggedUserBean) throws MailAlreadyExistsException{
         if(loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT)){
             registerPatient(new PatientBean(loggedUserBean.getCredentialsBean(), loggedUserBean.getName(), loggedUserBean.getSurname(), loggedUserBean.getCity(), loggedUserBean.getDescription(), loggedUserBean.isInPerson(), loggedUserBean.isOnline()));
         }
         else if (loggedUserBean.getCredentialsBean().getRole().equals(Role.PSYCHOLOGIST)){
             registerPsychologist(new PsychologistBean(loggedUserBean.getCredentialsBean(), loggedUserBean.getName(), loggedUserBean.getSurname(), loggedUserBean.getCity(), loggedUserBean.getDescription(), loggedUserBean.isInPerson(), loggedUserBean.isOnline()));
         }
-
     }
 
 

@@ -40,6 +40,8 @@ public abstract class UserRegistrationGUI extends CommonGUI {
     @FXML
     Label errorMessage;
 
+    private final UserRegistrationController userRegistrationController = new UserRegistrationController();
+
     @FXML
     protected void checkFields(TextField[] fields,CheckBox[] checkBoxes, PasswordField password,Label errorMessage) throws EmptyFieldException {
         for (TextField field : fields) {
@@ -67,7 +69,7 @@ public abstract class UserRegistrationGUI extends CommonGUI {
             if (!Validator.isValidMail(mail.getText(), errorMessage) ){ // Se la mail non è valida
                 return;
             }
-            new UserRegistrationController(loggedUserBean);
+            userRegistrationController.registerUser(loggedUserBean);
             // Pop-up che segnala successo registrazione
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Registrazione");
