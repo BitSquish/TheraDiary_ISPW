@@ -15,12 +15,9 @@ import com.theradiary.ispwtheradiary.model.Psychologist;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class RegistrationDAO {
-    private RegistrationDAO() {
-    }
-    protected static final String REGISTER_ERROR="Errore nella registrazione";
+public class RegistrationDAOSQL implements RegistrationGenericDAO{
     //controllo se l'email è presente o meno
-    private static boolean emailExists(String mail) throws SQLException {
+    public boolean emailExists(String mail) throws SQLException {
         try (Connection conn = ConnectionFactory.getConnection()){
             int rs = LoginAndRegistrationQuery.checkMail(conn, mail);
              if (rs != 0)
@@ -29,7 +26,7 @@ public class RegistrationDAO {
         return false;
     }
     //inserisco l'utente (credenziali) nel database
-    public static boolean insertUser(Credentials credentials) throws SQLException {
+    public boolean insertUser(Credentials credentials) throws SQLException {
         try (Connection conn = ConnectionFactory.getConnection()) {
             int rs = LoginAndRegistrationQuery.registerUser(conn, credentials);
             return rs != 0;
@@ -39,7 +36,7 @@ public class RegistrationDAO {
     //CREI IL BEAN NEL CONTROLLER GRAFICO E LO PASSI ALL'APPLICATIVO
     //CREI L'ISTANZA NELL'APPLICATIVO COPIANDOLO DAL BEAN E LO PASSI AL DAO
     //NEL DAO MODIFICHI L'ENTITA'
-    public static void registerPatient(Patient patient) throws SQLException, MailAlreadyExistsException {
+    public void registerPatient(Patient patient) throws SQLException, MailAlreadyExistsException {
         if(emailExists(patient.getCredentials().getMail())) {
             throw new MailAlreadyExistsException(("Mail già registrata"));
         }//inserisco la password e l'email in user
@@ -57,7 +54,7 @@ public class RegistrationDAO {
     }
 
 
-    public static void registerPsychologist(Psychologist psychologist) throws SQLException, MailAlreadyExistsException {//stessa cosa che ho fatto sopra ma per lo psicologo
+    public void registerPsychologist(Psychologist psychologist) throws SQLException, MailAlreadyExistsException {//stessa cosa che ho fatto sopra ma per lo psicologo
         if (emailExists(psychologist.getCredentials().getMail())) {
             throw new MailAlreadyExistsException("Mail già presente");
         }
@@ -74,7 +71,7 @@ public class RegistrationDAO {
             throw new SQLException(); //DA SOSTITUIRE CON ECCEZIONE SPECIFICA PER INSERIMENTO SU UTENTI NON A BUON FINE (O FORSE NO?)
     }
 
-    public static void registerMedicalOffice(MedicalOffice medicalOffice) throws SQLException {
+    public void registerMedicalOffice(MedicalOffice medicalOffice) throws SQLException {
         try(Connection conn = ConnectionFactory.getConnection()){
             LoginAndRegistrationQuery.registerMedicalOffice(conn, medicalOffice.getPsychologist(), medicalOffice.getCity(), medicalOffice.getPostCode(), medicalOffice.getAddress(), medicalOffice.getOtherInfo());
         } catch(SQLException e){

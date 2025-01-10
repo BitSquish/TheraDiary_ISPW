@@ -1,7 +1,8 @@
 package com.theradiary.ispwtheradiary.controller.application;
 
 
-import com.theradiary.ispwtheradiary.engineering.dao.RegistrationDAO;
+import com.theradiary.ispwtheradiary.engineering.dao.RegistrationDAOSQL;
+import com.theradiary.ispwtheradiary.engineering.dao.RegistrationGenericDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 
 public class UserRegistrationController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;
+    private final RegistrationDAOSQL registrationGenericDAO = new RegistrationDAOSQL();  //TODO Da modificare con GenericDAO appena si fa la factory
 
     public UserRegistrationController(){
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
@@ -34,7 +36,7 @@ public class UserRegistrationController {
     public void registerPatient(PatientBean patientBean) throws MailAlreadyExistsException {//metodo per registrare un paziente nel database
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         try {
-            RegistrationDAO.registerPatient(patient);
+            registrationGenericDAO.registerPatient(patient);
         } catch (SQLException exception) {
             throw new DAOException(exception.getMessage(),exception);  //DA VERIFICARE IL TIPO DI ECCEZIONE
         } catch (MailAlreadyExistsException exception) {
@@ -45,7 +47,7 @@ public class UserRegistrationController {
     public void registerPsychologist(PsychologistBean psychologistBean) throws MailAlreadyExistsException {
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         try {
-            RegistrationDAO.registerPsychologist(psychologist);
+            registrationGenericDAO.registerPsychologist(psychologist);
         } catch (SQLException exception) {
             throw new DAOException(exception.getMessage(),exception);  //DA VERIFICARE IL TIPO DI ECCEZIONE
         } catch (MailAlreadyExistsException exception){

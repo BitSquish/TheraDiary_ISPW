@@ -11,14 +11,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-//I BEAN NON VANNO PASSATI NEL DAO
 
+public class LoginDAOSQL implements LoginGenericDAO {
 
-public class LoginDAO {
-    private LoginDAO() {
-    }
-
-    public static void login(Credentials credentials) throws SQLException, WrongEmailOrPasswordException {
+    public void login(Credentials credentials) throws SQLException, WrongEmailOrPasswordException {
         try (Connection conn = ConnectionFactory.getConnection();
              ResultSet rs = LoginAndRegistrationQuery.logQuery(conn, credentials)) {
             if (rs.next()) {

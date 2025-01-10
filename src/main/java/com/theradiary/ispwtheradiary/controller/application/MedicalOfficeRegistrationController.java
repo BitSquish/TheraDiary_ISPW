@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.controller.application;
 
-import com.theradiary.ispwtheradiary.engineering.dao.RegistrationDAO;
+import com.theradiary.ispwtheradiary.engineering.dao.RegistrationDAOSQL;
+import com.theradiary.ispwtheradiary.engineering.dao.RegistrationGenericDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
@@ -12,13 +13,14 @@ import java.sql.SQLException;
 
 public class MedicalOfficeRegistrationController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
+    private final RegistrationDAOSQL registrationDAO = new RegistrationDAOSQL();     //TODO Da modificare con GenericDAO appena si fa la factory
     public MedicalOfficeRegistrationController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
     public void register(MedicalOfficeBean medicalOfficeBean) throws SQLException {
         MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
         try{
-            RegistrationDAO.registerMedicalOffice(medicalOffice);
+            registrationDAO.registerMedicalOffice(medicalOffice);
         }catch(SQLException exception){
             throw new DAOException(exception.getMessage(),exception); //ECCEZIONE DA VERIFICARE
         }
