@@ -11,12 +11,13 @@ import com.theradiary.ispwtheradiary.model.Psychologist;
 
 public class PatientProfileController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
+    private final RetrieveDAO retrieveDAO = new RetrieveDAO();
     public PatientProfileController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
     public void retrieveCategories(PatientBean patientBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
-        boolean categoriesAlreadyInserted = RetrieveDAO.retrieveCategories(patient);
+        boolean categoriesAlreadyInserted = retrieveDAO.retrieveCategories(patient);
         if (categoriesAlreadyInserted) {
             patientBean.setCategories(patient.getCategories());
         }
@@ -25,7 +26,7 @@ public class PatientProfileController {
     public AppointmentBean retrieveAppointment(PatientBean patientBean, PsychologistBean psychologistBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
-        Appointment appointment = RetrieveDAO.retrievePatientAppointment(patient, psychologist);
+        Appointment appointment = retrieveDAO.retrievePatientAppointment(patient, psychologist);
         return beanAndModelMapperFactory.fromModelToBean(appointment, Appointment.class);
     }
 }

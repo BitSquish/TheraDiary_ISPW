@@ -18,6 +18,8 @@ import java.util.List;
 
 public class AccountController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
+    private final RetrieveDAO retrieveDAO = new RetrieveDAO();
+    private final CategoryAndMajorDAO categoryAndMajorDAO = new CategoryAndMajorDAO();
     public AccountController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
@@ -25,19 +27,19 @@ public class AccountController {
 
     public void addCategory(PatientBean patientBean, Category category) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
-        CategoryAndMajorDAO.addCategory(patient, category);
+        categoryAndMajorDAO.addCategory(patient, category);
         patientBean.setCategories(patient.getCategories());
     }
 
     public void addMajor(PsychologistBean psychologistBean, Major major) {
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
-        CategoryAndMajorDAO.addMajor(psychologist, major);
+        categoryAndMajorDAO.addMajor(psychologist, major);
         psychologistBean.setMajor(psychologist.getMajors());
     }
 
     public void retrieveCategories(PatientBean patientBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
-        boolean categoriesAlreadyInserted = RetrieveDAO.retrieveCategories(patient);
+        boolean categoriesAlreadyInserted = retrieveDAO.retrieveCategories(patient);
         if (categoriesAlreadyInserted) {
             patientBean.setCategories(patient.getCategories());
         }
@@ -45,7 +47,7 @@ public class AccountController {
 
     public void retrieveMajors(PsychologistBean psychologistBean) {
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
-        boolean majorsAlreadyInserted = RetrieveDAO.retrieveMajors(psychologist);
+        boolean majorsAlreadyInserted = retrieveDAO.retrieveMajors(psychologist);
         if (majorsAlreadyInserted) {
             psychologistBean.setMajor(psychologist.getMajors());
         }
@@ -53,14 +55,14 @@ public class AccountController {
 
     public void removeCategory(PatientBean patientBean, Category category) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
-        CategoryAndMajorDAO.removeCategory(patient, category);
+        categoryAndMajorDAO.removeCategory(patient, category);
         patientBean.setCategories(patient.getCategories());
 
     }
 
     public void removeMajor(PsychologistBean psychologistBean, Major major) {
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
-        CategoryAndMajorDAO.removeMajor(psychologist, major);
+        categoryAndMajorDAO.removeMajor(psychologist, major);
         psychologistBean.setMajor(psychologist.getMajors());
     }
 
@@ -71,7 +73,7 @@ public class AccountController {
         List<PatientBean> patientBeans = new ArrayList<>();
 
         // Recupero la lista di pazienti dal DAO
-        List<Patient> patients = RetrieveDAO.retrievePatientList(psychologist);
+        List<Patient> patients = retrieveDAO.retrievePatientList(psychologist);
 
         // Conversione da Patient (entità) a PatientBean
         for (Patient patient : patients) {
@@ -86,7 +88,7 @@ public class AccountController {
             Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
 
             // Recupero il Psychologist dal DAO
-            Psychologist psychologist = RetrieveDAO.yourPsychologist(patient);
+            Psychologist psychologist = retrieveDAO.yourPsychologist(patient);
             // Conversione da Psychologist (entità) a PsychologistBean
             if(psychologist != null){
                 psychologistBean.setName(psychologist.getName());

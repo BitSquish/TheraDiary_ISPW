@@ -17,9 +17,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class UpdateDAO {
-    private UpdateDAO(){}
 
-    private static boolean emailExists(String mail) throws SQLException {
+    private boolean emailExists(String mail) throws SQLException {
         try (Connection conn = ConnectionFactory.getConnection()){
             int rs = LoginAndRegistrationQuery.checkMail(conn, mail);
             if (rs != 0)
@@ -27,7 +26,7 @@ public class UpdateDAO {
         }
         return false;
     }
-    public static void modifyMedicalOffice(MedicalOffice medicalOffice) throws SQLException {
+    public void modifyMedicalOffice(MedicalOffice medicalOffice) throws SQLException {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.modifyMedicalOffice(conn, medicalOffice.getPsychologist(), medicalOffice.getCity(), medicalOffice.getPostCode(), medicalOffice.getAddress(), medicalOffice.getOtherInfo());
         } catch(SQLException e){
@@ -35,7 +34,7 @@ public class UpdateDAO {
         }
     }
 
-    public static void modifyCredentials(Credentials newCredentials, Credentials oldCredentials) throws SQLException, MailAlreadyExistsException {
+    public void modifyCredentials(Credentials newCredentials, Credentials oldCredentials) throws SQLException, MailAlreadyExistsException {
         try(Connection conn = ConnectionFactory.getConnection()){
             if(!Objects.equals(newCredentials.getMail(), oldCredentials.getMail()) && emailExists(newCredentials.getMail()))
                 throw new MailAlreadyExistsException(("Mail già registrata"));
@@ -48,7 +47,7 @@ public class UpdateDAO {
         }
     }
 
-    public static void modifyPsychologist(Psychologist psychologist) throws SQLException {
+    public void modifyPsychologist(Psychologist psychologist) throws SQLException {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.modifyPsychologist(conn, psychologist.getCredentials().getMail(), psychologist.getName(), psychologist.getSurname(), psychologist.getCity(), psychologist.getDescription(), psychologist.isInPerson(), psychologist.isOnline());
         } catch(SQLException e){
@@ -56,7 +55,7 @@ public class UpdateDAO {
         }
     }
 
-    public static void modifyPatient(Patient patient) throws SQLException {
+    public void modifyPatient(Patient patient) throws SQLException {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.modifyPatient(conn, patient.getCredentials().getMail(), patient.getName(), patient.getSurname(), patient.getCity(), patient.getDescription(), patient.isInPerson(), patient.isOnline());
         } catch(SQLException e){
@@ -64,7 +63,7 @@ public class UpdateDAO {
         }
     }
 
-    public static void joinPagPsychologist(Psychologist psychologist) {
+    public void joinPagPsychologist(Psychologist psychologist) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.joinPagPsychologist(conn, psychologist.getCredentials().getMail());
         } catch(SQLException e){
@@ -72,7 +71,7 @@ public class UpdateDAO {
         }
     }
 
-    public static void joinPagPatient(Patient patient) {
+    public void joinPagPatient(Patient patient) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.joinPagPatient(conn, patient.getCredentials().getMail());
         } catch(SQLException e){
@@ -88,7 +87,7 @@ public class UpdateDAO {
         }
     }
 
-    public static void setPatientsPsychologist(Patient patient) {
+    public void setPatientsPsychologist(Patient patient) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.setPatientsPsychologist(conn, patient.getCredentials().getMail(), patient.getPsychologist().getCredentials().getMail());
             UpdateQuery.deleteOtherRequests(conn, patient);
@@ -98,7 +97,7 @@ public class UpdateDAO {
     }
 
 
-    public static void addAppointments(Appointment appointmentToAdd) {
+    public void addAppointments(Appointment appointmentToAdd) {
         String psychologist = appointmentToAdd.getPsychologist().getCredentials().getMail();
         try(Connection conn = ConnectionFactory.getConnection()){
             if(appointmentToAdd.getPatient() == null)
@@ -110,7 +109,7 @@ public class UpdateDAO {
         }
     }
 
-    public static void modifyAppointments(List<Appointment> appointmentsToModify) {
+    public void modifyAppointments(List<Appointment> appointmentsToModify) {
         String psychologist = appointmentsToModify.get(0).getPsychologist().getCredentials().getMail();
         try(Connection conn = ConnectionFactory.getConnection()){
             for(Appointment appointment : appointmentsToModify){
@@ -121,7 +120,7 @@ public class UpdateDAO {
         }
     }
 
-    public static void clearAppointments(Psychologist psychologist, DayOfTheWeek day) {
+    public void clearAppointments(Psychologist psychologist, DayOfTheWeek day) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.clearAppointments(conn, psychologist.getCredentials().getMail(), day.toString());
         } catch(SQLException e){
@@ -129,7 +128,7 @@ public class UpdateDAO {
         }
     }
 
-    public static void setRequestForAppointment(Appointment appointment) {
+    public void setRequestForAppointment(Appointment appointment) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.setRequestForAppointment(conn, appointment.getPsychologist().getCredentials().getMail(), appointment.getDay(), appointment.getTimeSlot(), appointment.getPatient().getCredentials().getMail(), appointment.isInPerson(), appointment.isOnline(), appointment.isAvailable());
         } catch(SQLException e){

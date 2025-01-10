@@ -16,6 +16,8 @@ import java.sql.SQLException;
 
 public class PsychologistDescriptionController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
+    private final PtAndPsDAO ptAndPsDAO = new PtAndPsDAO();
+    private final RetrieveDAO retrieveDAO = new RetrieveDAO();
     public PsychologistDescriptionController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
@@ -24,12 +26,12 @@ public class PsychologistDescriptionController {
         //Ricavo studio medico e specializzazioni
         try{
             MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
-            RetrieveDAO.retrieveMedicalOffice(medicalOffice);
+            retrieveDAO.retrieveMedicalOffice(medicalOffice);
             medicalOfficeBean.setPostCode(medicalOffice.getPostCode());
             medicalOfficeBean.setAddress(medicalOffice.getAddress());
             medicalOfficeBean.setOtherInfo(medicalOffice.getOtherInfo());
             Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
-            RetrieveDAO.retrieveMajors(psychologist);
+            retrieveDAO.retrieveMajors(psychologist);
             psychologistBean.setMajor(psychologist.getMajors());
         } catch(SQLException e){
             throw new DAOException(e.getMessage(), e);
@@ -39,7 +41,7 @@ public class PsychologistDescriptionController {
     public void sendRequest(RequestBean requestBean) {
         Request request = beanAndModelMapperFactory.fromBeanToModel(requestBean, RequestBean.class);
         try{
-            PtAndPsDAO.sendRequest(request);
+            ptAndPsDAO.sendRequest(request);
             RequestManagerConcreteSubject requestManagerConcreteSubject = RequestManagerConcreteSubject.getInstance();
             requestManagerConcreteSubject.addRequest(request);
         } catch (Exception e){
@@ -52,7 +54,7 @@ public class PsychologistDescriptionController {
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         Request request= new Request(patient, psychologist);
         try{
-            return PtAndPsDAO.hasAlreadySentARequest(request);
+            return ptAndPsDAO.hasAlreadySentARequest(request);
         } catch (Exception e){
             throw new DAOException(e.getMessage(), e);
         }
@@ -60,7 +62,7 @@ public class PsychologistDescriptionController {
     public boolean hasAlreadyAPsychologist(PatientBean patientBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         try{
-            return PtAndPsDAO.hasAlreadyAPsychologist(patient);
+            return ptAndPsDAO.hasAlreadyAPsychologist(patient);
         } catch (Exception e){
             throw new DAOException(e.getMessage(), e);
         }

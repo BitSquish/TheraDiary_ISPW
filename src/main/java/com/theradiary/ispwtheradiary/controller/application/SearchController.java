@@ -10,14 +10,15 @@ import java.util.List;
 
 public class SearchController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
+    private final RetrieveDAO retrieveDAO = new RetrieveDAO();
     public SearchController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
     public void searchPsychologists(List<PsychologistBean> psychologistBeans, String nomeP, String cognomeP, String cittaP, boolean inPresenza, boolean online, boolean pag) throws NoResultException {
         List<Psychologist> psychologists = new ArrayList<>();
-        RetrieveDAO.searchPsychologists(psychologists, nomeP, cognomeP, cittaP, inPresenza, online, pag);
+        retrieveDAO.searchPsychologists(psychologists, nomeP, cognomeP, cittaP, inPresenza, online, pag);
         for(Psychologist psychologist : psychologists){
-            RetrieveDAO.checkPag(psychologist);
+            retrieveDAO.checkPag(psychologist);
             PsychologistBean psychologistBean = beanAndModelMapperFactory.fromModelToBean(psychologist, Psychologist.class);
             psychologistBean.setPag(psychologist.isPag());
             psychologistBeans.add(psychologistBean);

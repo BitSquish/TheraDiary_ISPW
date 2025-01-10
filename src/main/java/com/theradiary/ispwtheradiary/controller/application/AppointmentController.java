@@ -22,6 +22,8 @@ import java.util.Objects;
 
 public class AppointmentController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
+    private final RetrieveDAO retrieveDAO = new RetrieveDAO();
+    private final UpdateDAO updateDAO = new UpdateDAO();
     public AppointmentController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
@@ -29,7 +31,7 @@ public class AppointmentController {
     public void loadAllAppointments(List<AppointmentBean> appointmentsBean, PsychologistBean psychologistBean) {
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         List<Appointment> appointments = new ArrayList<>();
-        RetrieveDAO.retrieveAllAppointments(psychologist, appointments);
+        retrieveDAO.retrieveAllAppointments(psychologist, appointments);
         for(Appointment appointment : appointments) {
             AppointmentBean appointmentBean = beanAndModelMapperFactory.fromModelToBean(appointment, Appointment.class);
             if(appointment.getPatient().getCredentials().getMail() != null){
@@ -54,13 +56,13 @@ public class AppointmentController {
     public void saveAppointments(PsychologistBean psychologistBean, List<AppointmentBean> appointmentToAdd) {
         Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
         DayOfTheWeek day = appointmentToAdd.get(0).getDay();
-        UpdateDAO.clearAppointments(psychologist, day); //rimuovo dal database tutti gli appuntamenti dove il giorno della settimana corrisponde ai nuovi appuntamenti da caricare
+        updateDAO.clearAppointments(psychologist, day); //rimuovo dal database tutti gli appuntamenti dove il giorno della settimana corrisponde ai nuovi appuntamenti da caricare
         //Da qui in giù da controllare
         for(AppointmentBean appointmentBean : appointmentToAdd) {
             Appointment appointment = beanAndModelMapperFactory.fromBeanToModel(appointmentBean, AppointmentBean.class);
             appointment.setPatient(new Patient(new Credentials(appointmentBean.getPatientBean(), Role.PATIENT)));
             appointment.setAvailable(appointmentBean.isAvailable());
-            UpdateDAO.addAppointments(appointment);
+            updateDAO.addAppointments(appointment);
         }
     }
 
@@ -79,7 +81,7 @@ public class AppointmentController {
         }
         if(hasChanged) {
             try {
-                UpdateDAO.modifyPsychologist(psychologist);
+                updateDAO.modifyPsychologist(psychologist);
             } catch (SQLException e) {
                 throw new DAOException(e.getMessage(), e);
             }
@@ -96,7 +98,7 @@ public class AppointmentController {
         Appointment appointment = beanAndModelMapperFactory.fromBeanToModel(appointmentBean, AppointmentBean.class);
         appointment.setPatient(new Patient(new Credentials(appointmentBean.getPatientBean(), Role.PATIENT)));
         appointment.setAvailable(false);
-        UpdateDAO.setRequestForAppointment(appointment);
+        updateDAO.setRequestForAppointment(appointment);
     }
 
 

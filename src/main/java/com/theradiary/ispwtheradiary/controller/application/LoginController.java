@@ -19,6 +19,7 @@ import java.sql.SQLException;
 
 public class LoginController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;
+    private final RetrieveDAO retrieveDAO = new RetrieveDAO();
     private final LoginDAOSQL loginGenericDAO = new LoginDAOSQL();        //TODO Da modificare con LoginGenericDAO appena si fa la factory
     public LoginController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
@@ -49,11 +50,11 @@ public class LoginController {
     private <M extends LoggedUser, B extends LoggedUserBean> void retrieveUser (M user, B userBean) {
         // Recupera l'utente dal DAO
         if (user.getCredentials().getRole().equals(Role.PATIENT)) {
-            RetrieveDAO.retrievePatient((Patient) user);
+            retrieveDAO.retrievePatient((Patient) user);
             PsychologistBean psychologistBean = beanAndModelMapperFactory.fromModelToBean((((Patient) user).getPsychologist()), Psychologist.class);
             ((PatientBean)userBean).setPsychologistBean(psychologistBean);
         }else if (user.getCredentials().getRole().equals(Role.PSYCHOLOGIST)) {
-            RetrieveDAO.retrievePsychologist((Psychologist) user);
+            retrieveDAO.retrievePsychologist((Psychologist) user);
         }
         // Imposta i dati nel bean
         userBean.setName(user.getName());

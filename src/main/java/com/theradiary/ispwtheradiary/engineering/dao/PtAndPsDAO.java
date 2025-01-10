@@ -13,9 +13,7 @@ import java.sql.SQLException;
 
 
 public class PtAndPsDAO {
-    private PtAndPsDAO() {
-    }
-    public static void sendRequest(Request request) {
+    public void sendRequest(Request request) {
         try(Connection conn = ConnectionFactory.getConnection()) {
             PtAndPsQuery.sendRequest(conn, request.getPsychologist().getCredentials().getMail(), request.getPatient().getCredentials().getMail(), request.getDate());
         } catch (Exception e){
@@ -23,7 +21,7 @@ public class PtAndPsDAO {
         }
     }
 
-    public static boolean hasAlreadySentARequest(Request request) {
+    public boolean hasAlreadySentARequest(Request request) {
         try (Connection conn = ConnectionFactory.getConnection()) {
             ResultSet rs = PtAndPsQuery.hasAlreadySentARequest(conn, request.getPsychologist().getCredentials().getMail(), request.getPatient().getCredentials().getMail());
             if(rs.next()){
@@ -35,7 +33,7 @@ public class PtAndPsDAO {
         }
     }
 
-    public static boolean hasAlreadyAPsychologist(Patient patient) {
+    public boolean hasAlreadyAPsychologist(Patient patient) {
         try (Connection conn = ConnectionFactory.getConnection()) {
             return PtAndPsQuery.hasAlreadyAPsychologist(conn, patient.getCredentials().getMail());
         } catch (SQLException e) {

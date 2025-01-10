@@ -16,6 +16,8 @@ import java.util.List;
 
 public class RequestApplicationController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
+    private final RetrieveDAO retrieveDAO = new RetrieveDAO();
+    private final UpdateDAO updateDAO = new UpdateDAO();
     public RequestApplicationController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
@@ -24,7 +26,7 @@ public class RequestApplicationController {
         Request request = beanAndModelMapperFactory.fromBeanToModel(requestBean, RequestBean.class);
         UpdateDAO.deleteRequest(request);
         List<Request> requests = new ArrayList<>();
-        RetrieveDAO.retrievePatientsRequest(request.getPsychologist(), requests);
+        retrieveDAO.retrievePatientsRequest(request.getPsychologist(), requests);
         requestManagerConcreteSubject.loadRequests(requests);
         requestManagerConcreteSubject.removeRequest(request);
     }
@@ -34,7 +36,7 @@ public class RequestApplicationController {
             Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
             Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(patientBean.getPsychologistBean(), PsychologistBean.class);
             patient.setPsychologist(psychologist);
-            UpdateDAO.setPatientsPsychologist(patient);
+            updateDAO.setPatientsPsychologist(patient);
         } catch(Exception e){
             throw new RuntimeException(e.getMessage()); //TODO Da cambiare
         }

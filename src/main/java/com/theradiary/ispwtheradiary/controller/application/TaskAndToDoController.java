@@ -15,13 +15,14 @@ import java.util.Optional;
 
 public class TaskAndToDoController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
+    private final TaskAndToDoDAO taskAndToDoDAO = new TaskAndToDoDAO();
     public TaskAndToDoController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
     /*-------------------------DIARIO-------------------------*/
     public String getDiaryForToday(PatientBean patientBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
-        Optional<String> diaryContent = TaskAndToDoDAO.getDiaryForToday(patient);
+        Optional<String> diaryContent = taskAndToDoDAO.getDiaryForToday(patient);
         if (diaryContent.isPresent()) {
             patientBean.setDiary(diaryContent.get()); // Imposta il diario nel PatientBean
             return diaryContent.get(); // Restituisci il contenuto del diario
@@ -33,21 +34,21 @@ public class TaskAndToDoController {
 
     public void saveDiary(String diaryContent, PatientBean patientBean,LocalDate selectedDate) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
-        TaskAndToDoDAO.Diary(patient,diaryContent,selectedDate);
+        taskAndToDoDAO.Diary(patient,diaryContent,selectedDate);
         patientBean.setDiary(diaryContent);
     }
 
     public void deleteTask(TaskBean selectedTask, PatientBean patientBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         Task task = new Task(selectedTask.getTaskName(),selectedTask.getTaskDeadline(), selectedTask.getTaskStatus());
-        TaskAndToDoDAO.deleteTask(patient,task);
+        taskAndToDoDAO.deleteTask(patient,task);
         patientBean.removeTask(selectedTask);
     }
 
 
     public String getDiaryEntry(LocalDate selectedDate, PatientBean patientBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
-        Optional<String> diaryContent = TaskAndToDoDAO.getDiaryEntry(selectedDate,patient);
+        Optional<String> diaryContent = taskAndToDoDAO.getDiaryEntry(selectedDate,patient);
         return diaryContent.orElse("");
     }
     /*-------------------------TODOLIST-------------------------*/
@@ -55,7 +56,7 @@ public class TaskAndToDoController {
     public void deleteToDo(ToDoItemBean toDoItemBean, PatientBean patientBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         ToDoItem toDoItem = new ToDoItem(toDoItemBean.getToDo(), toDoItemBean.isCompleted());
-        TaskAndToDoDAO.deleteToDoItem(patient,toDoItem);
+        taskAndToDoDAO.deleteToDoItem(patient,toDoItem);
         patientBean.removeToDoItem(toDoItemBean);
     }
 
@@ -64,16 +65,16 @@ public class TaskAndToDoController {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         ToDoItem toDoItem = new ToDoItem(toDoItemBean.getToDo(), toDoItemBean.isCompleted());
         if(!patient.getToDoList().contains(toDoItem) ){
-            TaskAndToDoDAO.saveToDo(patient,toDoItem);
+            taskAndToDoDAO.saveToDo(patient,toDoItem);
             patientBean.addToDoItem(toDoItemBean);
         }else{
-            TaskAndToDoDAO.deleteToDoItem(patient,toDoItem);
+            taskAndToDoDAO.deleteToDoItem(patient,toDoItem);
             patientBean.removeToDoItem(toDoItemBean);
         }
     }
     public void toDoList(PatientBean patientBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
-        List<ToDoItem> toDoItems = TaskAndToDoDAO.retriveToDoList(patient);
+        List<ToDoItem> toDoItems = taskAndToDoDAO.retriveToDoList(patient);
         for (ToDoItem toDoItem : toDoItems) {
             patientBean.addToDoItem(new ToDoItemBean(toDoItem.getToDo(), toDoItem.isCompleted()));
         }
@@ -81,7 +82,7 @@ public class TaskAndToDoController {
     /*-------------------------TASKS-------------------------*/
     public void retrieveTasks(PatientBean patientBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
-        List<Task> tasks = TaskAndToDoDAO.retrieveTasks(patient);
+        List<Task> tasks = taskAndToDoDAO.retrieveTasks(patient);
         patientBean.clearTasks();
         for (Task task : tasks) {
             patientBean.addTask(new TaskBean(task.getTaskName(), task.getTaskDeadline(), task.getTaskStatus()));
@@ -91,10 +92,10 @@ public class TaskAndToDoController {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         Task task = new Task(taskBean.getTaskName(),taskBean.getTaskDeadline(), taskBean.getTaskStatus());
         if(!patient.getTasks().contains(task)) {
-            TaskAndToDoDAO.saveTask(patient, task);
+            taskAndToDoDAO.saveTask(patient, task);
             patientBean.addTask(taskBean);
         }else{
-            TaskAndToDoDAO.deleteTask(patient,task);
+            taskAndToDoDAO.deleteTask(patient,task);
             patientBean.removeTask(taskBean);
         }
 
@@ -103,7 +104,7 @@ public class TaskAndToDoController {
     public void updateTasks(PatientBean patientBean,TaskBean taskBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         Task task = new Task(taskBean.getTaskName(),taskBean.getTaskDeadline(), taskBean.getTaskStatus());
-        TaskAndToDoDAO.updateTask(patient,task);
+        taskAndToDoDAO.updateTask(patient,task);
         patientBean.removeTask(taskBean);
     }
 }

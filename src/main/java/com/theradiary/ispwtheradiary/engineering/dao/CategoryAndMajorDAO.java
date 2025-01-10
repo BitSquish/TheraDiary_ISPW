@@ -15,15 +15,14 @@ import java.sql.SQLException;
 
 
 public class CategoryAndMajorDAO {
-    private CategoryAndMajorDAO(){}
-    public static void addCategory(Patient patient, Category category) {
+    public void addCategory(Patient patient, Category category) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             AccountQuery.addCategory(conn, category.toString(), patient.getCredentials().getMail());
         }catch (SQLException e){
             throw new PersistenceOperationException("Errore nell'aggiunta della categoria",e);
         }
     }
-    public static void addMajor(Psychologist psychologist, Major major) {
+    public void addMajor(Psychologist psychologist, Major major) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             boolean success = AccountQuery.addMajor(conn,major.toString(), psychologist.getCredentials().getMail());
             if(success)
@@ -34,7 +33,7 @@ public class CategoryAndMajorDAO {
     }
 
 
-    public static void removeCategory(Patient patient, Category category) {
+    public void removeCategory(Patient patient, Category category) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             boolean success = AccountQuery.removeCategory(conn,patient.getCredentials().getMail(), category.toString());
             if(success)
@@ -44,7 +43,7 @@ public class CategoryAndMajorDAO {
         }
     }
 
-    public static void removeMajor(Psychologist psychologist, Major major) {
+    public void removeMajor(Psychologist psychologist, Major major) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             boolean success = AccountQuery.removeMajor(conn,psychologist.getCredentials().getMail(),major.toString());
             if(success)

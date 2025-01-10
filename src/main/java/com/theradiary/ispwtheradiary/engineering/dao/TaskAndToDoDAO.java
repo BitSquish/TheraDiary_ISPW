@@ -17,9 +17,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class TaskAndToDoDAO {
-    private TaskAndToDoDAO(){}
     /**************diario***************/
-    public static void Diary(Patient patient, String diaryContent, LocalDate selectedDate) {
+    public void Diary(Patient patient, String diaryContent, LocalDate selectedDate) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.Diary(conn, diaryContent, patient.getCredentials().getMail(), selectedDate);
         }catch (SQLException e){
@@ -28,7 +27,7 @@ public class TaskAndToDoDAO {
     }
 
 
-    public static Optional<String> getDiaryForToday(Patient patient) {
+    public Optional<String> getDiaryForToday(Patient patient) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             ResultSet rs=TaskAndToDoQuery.getDiaryForToday(conn, patient.getCredentials().getMail());
             if(rs.next()){
@@ -42,7 +41,7 @@ public class TaskAndToDoDAO {
         }
 
     }
-    public static Optional<String> getDiaryEntry(LocalDate selectedDate,Patient patient) {
+    public Optional<String> getDiaryEntry(LocalDate selectedDate,Patient patient) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             ResultSet rs=TaskAndToDoQuery.getDiaryEntry(conn, selectedDate, patient.getCredentials().getMail());
             if(rs.next()){
@@ -56,7 +55,7 @@ public class TaskAndToDoDAO {
     }
 
     /**************to do***************/
-    public static void saveToDo(Patient patient, ToDoItem toDoItem) {
+    public void saveToDo(Patient patient, ToDoItem toDoItem) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.saveToDoItem(conn, patient.getCredentials().getMail(), toDoItem);
         }catch (SQLException e){
@@ -66,7 +65,7 @@ public class TaskAndToDoDAO {
 
 
 
-    public static List<ToDoItem> retriveToDoList(Patient patient) {
+    public List<ToDoItem> retriveToDoList(Patient patient) {
         List<ToDoItem> toDoItems=new ArrayList<>();
         try(Connection conn= ConnectionFactory.getConnection()) {
             ResultSet rs=TaskAndToDoQuery.getToDoList(conn, patient.getCredentials().getMail());
@@ -79,7 +78,7 @@ public class TaskAndToDoDAO {
         return toDoItems;
     }
 
-    public static void deleteToDoItem(Patient patient, ToDoItem toDoItem) {
+    public void deleteToDoItem(Patient patient, ToDoItem toDoItem) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.deleteToDoItem(conn, patient.getCredentials().getMail(), toDoItem);
         }catch (SQLException e){
@@ -88,14 +87,14 @@ public class TaskAndToDoDAO {
     }
     /*********************************task**********************************/
 
-    public static void saveTask(Patient patient, Task task) {
+    public void saveTask(Patient patient, Task task) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.saveTask(conn, patient.getCredentials().getMail(), task);
         }catch (SQLException e){
             throw new PersistenceOperationException("Errore nel salvataggio del task",e);
         }
     }
-    public static void deleteTask(Patient patient, Task task) {
+    public void deleteTask(Patient patient, Task task) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.deleteTask(conn, patient.getCredentials().getMail(), task);
         }catch (SQLException e){
@@ -103,7 +102,7 @@ public class TaskAndToDoDAO {
         }
     }
 
-    public static void updateTask(Patient patient, Task task) {
+    public void updateTask(Patient patient, Task task) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.updateTask(conn, patient.getCredentials().getMail(), task);
         }catch (SQLException e){
@@ -111,7 +110,7 @@ public class TaskAndToDoDAO {
         }
     }
 
-    public static List<Task> retrieveTasks(Patient patient) {
+    public List<Task> retrieveTasks(Patient patient) {
         List<Task> task=new ArrayList<>();
         try(Connection conn= ConnectionFactory.getConnection()) {
             ResultSet rs=TaskAndToDoQuery.retrieveTasks(conn, patient.getCredentials().getMail());
