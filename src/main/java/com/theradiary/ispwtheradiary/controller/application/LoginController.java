@@ -1,7 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.application;
 
 import com.theradiary.ispwtheradiary.engineering.dao.LoginDAOSQL;
-import com.theradiary.ispwtheradiary.engineering.dao.LoginGenericDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;

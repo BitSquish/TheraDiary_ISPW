@@ -11,17 +11,18 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 
 public class PagController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
+    private final UpdateDAO updateDAO = new UpdateDAO();
     public PagController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
     public void joinPag(LoggedUserBean loggedUserBean) {
         if(loggedUserBean.getCredentialsBean().getRole().equals(Role.PSYCHOLOGIST)){
             Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel((PsychologistBean)loggedUserBean, PsychologistBean.class);
-            UpdateDAO.joinPagPsychologist(psychologist);
+            updateDAO.joinPagPsychologist(psychologist);
         }
         else if(loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT)){
             Patient patient = beanAndModelMapperFactory.fromBeanToModel((PatientBean)loggedUserBean, PatientBean.class);
-            UpdateDAO.joinPagPatient(patient);
+            updateDAO.joinPagPatient(patient);
         }
     }
 }

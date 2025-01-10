@@ -2,7 +2,6 @@ package com.theradiary.ispwtheradiary.controller.application;
 
 
 import com.theradiary.ispwtheradiary.engineering.dao.RegistrationDAOSQL;
-import com.theradiary.ispwtheradiary.engineering.dao.RegistrationGenericDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;

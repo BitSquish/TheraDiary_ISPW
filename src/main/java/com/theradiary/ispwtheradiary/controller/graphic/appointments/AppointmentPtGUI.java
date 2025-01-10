@@ -49,6 +49,9 @@ public class AppointmentPtGUI extends CommonGUI {
     @FXML
     private Text contactInfo;
 
+    private static final String IN_PERSON = "In presenza";
+    private static final String ONLINE = "Online";
+
     /*
         Casi da distinguere:
         1) Nessuno psicologo
@@ -130,11 +133,11 @@ public class AppointmentPtGUI extends CommonGUI {
 
                             // Genera una lista di modalità basata sui valori di inPerson e online
                             if (inPerson && online) {
-                                return Stream.of("In presenza", "Online");
+                                return Stream.of(IN_PERSON, ONLINE);
                             } else if (inPerson) {
-                                return Stream.of("In presenza");
+                                return Stream.of(IN_PERSON);
                             } else if (online) {
-                                return Stream.of("Online");
+                                return Stream.of(ONLINE);
                             } else {
                                 return Stream.empty(); // Nessuna modalità disponibile
                             }
@@ -153,7 +156,7 @@ public class AppointmentPtGUI extends CommonGUI {
     private void askForAnAppointment(MouseEvent event) {
         DayOfTheWeek day = DayOfTheWeek.fromStringToDay(chooseDay.getValue());
         TimeSlot timeSlot = TimeSlot.fromStringToTimeSlot(chooseTimeSlot.getValue());
-        boolean modality = chooseModality.getValue().equals("In presenza");
+        boolean modality = chooseModality.getValue().equals(IN_PERSON);
         AppointmentBean appointmentBean = new AppointmentBean(psychologistBean, day, timeSlot, modality, !modality);
         appointmentBean.setAvailable(false);
         appointmentBean.setPatientBean(session.getUser().getCredentialsBean().getMail());

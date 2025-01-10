@@ -51,8 +51,7 @@ public class AppointmentPsGUI extends CommonGUI {
     protected void loadCheckboxes() { //metodo chiamato quando viene cambiata la tab
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
         if(selectedTab == null) {
-            System.out.println("Nessuna tab selezionata");  //TODO: gestire l'eccezione
-            return;
+            throw new IllegalStateException("Nessuna tab selezionata");
         }
         String selectedTabText = selectedTab.getText();
         switch (selectedTabText) {

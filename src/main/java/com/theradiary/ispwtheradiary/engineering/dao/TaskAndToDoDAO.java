@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class TaskAndToDoDAO {
+    private static final String CONTENT = "contenuto";
     /**************diario***************/
-    public void Diary(Patient patient, String diaryContent, LocalDate selectedDate) {
+    public void diary(Patient patient, String diaryContent, LocalDate selectedDate) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.Diary(conn, diaryContent, patient.getCredentials().getMail(), selectedDate);
         }catch (SQLException e){
@@ -31,8 +32,8 @@ public class TaskAndToDoDAO {
         try(Connection conn= ConnectionFactory.getConnection()) {
             ResultSet rs=TaskAndToDoQuery.getDiaryForToday(conn, patient.getCredentials().getMail());
             if(rs.next()){
-                patient.setDiary(rs.getString("contenuto"));
-                return Optional.of(rs.getString("contenuto"));
+                patient.setDiary(rs.getString(CONTENT));
+                return Optional.of(rs.getString(CONTENT));
             }else {
                 return Optional.empty();
             }
@@ -45,7 +46,7 @@ public class TaskAndToDoDAO {
         try(Connection conn= ConnectionFactory.getConnection()) {
             ResultSet rs=TaskAndToDoQuery.getDiaryEntry(conn, selectedDate, patient.getCredentials().getMail());
             if(rs.next()){
-                return Optional.of(rs.getString("contenuto"));
+                return Optional.of(rs.getString(CONTENT));
             }else {
                 return Optional.empty();
             }

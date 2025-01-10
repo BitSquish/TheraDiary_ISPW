@@ -34,7 +34,7 @@ public class TaskAndToDoController {
 
     public void saveDiary(String diaryContent, PatientBean patientBean,LocalDate selectedDate) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
-        taskAndToDoDAO.Diary(patient,diaryContent,selectedDate);
+        taskAndToDoDAO.diary(patient,diaryContent,selectedDate);
         patientBean.setDiary(diaryContent);
     }
 

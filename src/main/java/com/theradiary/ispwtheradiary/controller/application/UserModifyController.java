@@ -16,6 +16,7 @@ import java.sql.SQLException;
 
 public class UserModifyController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;
+    private final UpdateDAO updateDAO = new UpdateDAO();
     public UserModifyController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
@@ -38,8 +39,8 @@ public class UserModifyController {
     private void modifyPsychologist(PsychologistBean psychologistBean, LoggedUserBean oldLoggedUserBean) throws MailAlreadyExistsException {
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         try{
-            UpdateDAO.modifyCredentials(psychologist.getCredentials(), new Credentials(oldLoggedUserBean.getCredentialsBean().getMail(), oldLoggedUserBean.getCredentialsBean().getPassword(), oldLoggedUserBean.getCredentialsBean().getRole()));
-            UpdateDAO.modifyPsychologist(psychologist);
+            updateDAO.modifyCredentials(psychologist.getCredentials(), new Credentials(oldLoggedUserBean.getCredentialsBean().getMail(), oldLoggedUserBean.getCredentialsBean().getPassword(), oldLoggedUserBean.getCredentialsBean().getRole()));
+            updateDAO.modifyPsychologist(psychologist);
             psychologistBean.setCredentialsBean(new CredentialsBean(psychologist.getCredentials().getMail(), psychologist.getCredentials().getPassword(), psychologist.getCredentials().getRole()));
             psychologistBean.setName(psychologist.getName());
             psychologistBean.setSurname(psychologist.getSurname());
@@ -58,8 +59,8 @@ public class UserModifyController {
     private void modifyPatient(PatientBean patientBean, LoggedUserBean oldLoggedUserBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         try {
-            UpdateDAO.modifyCredentials(patient.getCredentials(), new Credentials(oldLoggedUserBean.getCredentialsBean().getMail(), oldLoggedUserBean.getCredentialsBean().getPassword(), oldLoggedUserBean.getCredentialsBean().getRole()));
-            UpdateDAO.modifyPatient(patient);
+            updateDAO.modifyCredentials(patient.getCredentials(), new Credentials(oldLoggedUserBean.getCredentialsBean().getMail(), oldLoggedUserBean.getCredentialsBean().getPassword(), oldLoggedUserBean.getCredentialsBean().getRole()));
+            updateDAO.modifyPatient(patient);
             patientBean.setCredentialsBean(new CredentialsBean(patient.getCredentials().getMail(), patient.getCredentials().getPassword(), patient.getCredentials().getRole()));
             patientBean.setName(patient.getName());
             patientBean.setSurname(patient.getSurname());

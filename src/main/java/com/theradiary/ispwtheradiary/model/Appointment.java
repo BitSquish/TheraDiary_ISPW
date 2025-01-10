@@ -2,7 +2,6 @@ package com.theradiary.ispwtheradiary.model;
 
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.enums.TimeSlot;
-import com.theradiary.ispwtheradiary.engineering.others.beans.AppointmentBean;
 
 public class Appointment {
     private Psychologist psychologist;

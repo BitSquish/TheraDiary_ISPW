@@ -1,7 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.application;
 
 import com.theradiary.ispwtheradiary.engineering.dao.RegistrationDAOSQL;
-import com.theradiary.ispwtheradiary.engineering.dao.RegistrationGenericDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;

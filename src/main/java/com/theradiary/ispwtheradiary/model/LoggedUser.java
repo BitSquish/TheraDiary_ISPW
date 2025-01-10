@@ -1,7 +1,5 @@
 package com.theradiary.ispwtheradiary.model;
 
-import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
-
 public abstract class LoggedUser {
     private Credentials credentials;
     private String name;
@@ -11,6 +9,9 @@ public abstract class LoggedUser {
     private boolean inPerson;
     private boolean online;
     private boolean pag;
+    private static final String IN_PERSON_AND_ONLINE = "In presenza e online";
+    private static final String IN_PERSON = "In presenza";
+    private static final String ONLINE_MODALITY = "Online";
 
     protected LoggedUser(Credentials credentials, String name, String surname, String city, String description, boolean isInPerson, boolean isOnline) {
         this.credentials = credentials;
@@ -102,21 +103,21 @@ public abstract class LoggedUser {
     public String getModality() {
         String modality = "";
         if (this.isInPerson() && this.isOnline()) {
-            modality += "In presenza e online";
+            modality += IN_PERSON_AND_ONLINE;
         } else if (this.isInPerson()) {
-            modality += "In presenza";
+            modality += IN_PERSON;
         } else {
-            modality += "Online";
+            modality += ONLINE_MODALITY;
         }
         return modality;
     }
 
     public boolean getInPersonFromModality(String modality){
-        return modality.equals("In presenza e online") || modality.equals("In presenza");
+        return modality.equals(IN_PERSON_AND_ONLINE) || modality.equals(IN_PERSON);
     }
 
     public boolean getOnlineFromModality(String modality){
-        return modality.equals("In presenza e online") || modality.equals("Online");
+        return modality.equals(IN_PERSON_AND_ONLINE) || modality.equals(ONLINE_MODALITY);
     }
 
 

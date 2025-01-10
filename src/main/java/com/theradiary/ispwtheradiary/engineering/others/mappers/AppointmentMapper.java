@@ -2,8 +2,6 @@ package com.theradiary.ispwtheradiary.engineering.others.mappers;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.others.beans.AppointmentBean;
-import com.theradiary.ispwtheradiary.engineering.others.beans.CredentialsBean;
-import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.model.Appointment;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
@@ -25,7 +23,6 @@ public class AppointmentMapper implements BeanAndModelMapper<AppointmentBean, Ap
     }
 
 
-    //TODO: da modificare insieme a CLI
     @Override
     public AppointmentBean fromModelToBean(Appointment model) {
         return new AppointmentBean(psychologistMapper.fromModelToBean(model.getPsychologist()), model.getDay(), model.getTimeSlot(), model.isInPerson(), model.isOnline());

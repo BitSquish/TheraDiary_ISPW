@@ -10,6 +10,9 @@ public abstract class LoggedUserBean {
     private boolean inPerson;
     private boolean online;
     private boolean pag;
+    private static final String IN_PERSON_AND_ONLINE = "In presenza e online";
+    private static final String IN_PERSON = "In presenza";
+    private static final String ONLINE_MODALITY = "Online";
 
 
     protected LoggedUserBean(CredentialsBean credentialsBean, String name, String surname, String city, String description, boolean isInPerson, boolean isOnline) {
@@ -106,20 +109,20 @@ public abstract class LoggedUserBean {
     public String getModality() {
         String modality = "";
         if (this.isInPerson() && this.isOnline()) {
-            modality += "In presenza e online";
+            modality += IN_PERSON_AND_ONLINE;
         } else if (this.isInPerson()) {
-            modality += "In presenza";
+            modality += IN_PERSON;
         } else {
-            modality += "Online";
+            modality += ONLINE_MODALITY;
         }
         return modality;
     }
 
     public boolean getInPersonFromModality(String modality){
-        return modality.equals("In presenza e online") || modality.equals("In presenza");
+        return modality.equals(IN_PERSON_AND_ONLINE) || modality.equals(IN_PERSON);
     }
 
     public boolean getOnlineFromModality(String modality){
-        return modality.equals("In presenza e online") || modality.equals("Online");
+        return modality.equals(IN_PERSON_AND_ONLINE) || modality.equals(ONLINE_MODALITY);
     }
 }

@@ -6,9 +6,11 @@ import com.theradiary.ispwtheradiary.model.*;
 
 public class MapperRegistration {
     //Questo metodo viene chiamato nel main per registrare tutti i mappers
+
+    private MapperRegistration() {
+    }
     public static void registerMappers() {
         BeanAndModelMapperFactory factory = BeanAndModelMapperFactory.getInstance();
-        //factory.registerMapper(LoggedUserBean.class, LoggedUser.class, new LoggedUserMapper());
         factory.registerMapper(PatientBean.class, Patient.class, new PatientMapper());
         factory.registerMapper(PsychologistBean.class, Psychologist.class, new PsychologistMapper());
         factory.registerMapper(CredentialsBean.class, Credentials.class, new CredentialsMapper());
