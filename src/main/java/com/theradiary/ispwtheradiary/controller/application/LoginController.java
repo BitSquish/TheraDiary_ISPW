@@ -1,11 +1,12 @@
 package com.theradiary.ispwtheradiary.controller.application;
 
-import com.theradiary.ispwtheradiary.engineering.dao.LoginDAOSQL;
+import com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.LoggedUser;
 import com.theradiary.ispwtheradiary.model.Patient;
@@ -19,10 +20,8 @@ import java.sql.SQLException;
 public class LoginController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final RetrieveDAO retrieveDAO = new RetrieveDAO();
-    private final LoginDAOSQL loginGenericDAO = new LoginDAOSQL();        //TODO Da modificare con LoginGenericDAO appena si fa la factory
-    public LoginController() {
-        this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
-    }
+    private final LoginAndRegistrationDAO loginGenericDAO = FactoryDAO.getDAO();
+    public LoginController() {this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();}
 
     public void log(CredentialsBean credentialsBean) throws WrongEmailOrPasswordException {
         try {

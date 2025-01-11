@@ -1,9 +1,9 @@
 package com.theradiary.ispwtheradiary.engineering.dao;
 
-
-
-import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
+import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.LoginAndRegistrationQuery;
 import com.theradiary.ispwtheradiary.model.Credentials;
@@ -11,17 +11,27 @@ import com.theradiary.ispwtheradiary.model.MedicalOffice;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 
-
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class RegistrationDAOSQL implements RegistrationGenericDAO{
+public class LoginAndRegistrationDAOSQL implements LoginAndRegistrationDAO{
+    public void login(Credentials credentials) throws SQLException, WrongEmailOrPasswordException {
+        try (Connection conn = ConnectionFactory.getConnection();
+             ResultSet rs = LoginAndRegistrationQuery.logQuery(conn, credentials)) {
+            if (rs.next()) {
+                credentials.setRole(Role.valueOf(rs.getString("role")));
+            }
+        } catch (SQLException e) {
+            throw new WrongEmailOrPasswordException("Mail o password errati");
+        }
+    }
     //controllo se l'email è presente o meno
     public boolean emailExists(String mail) throws SQLException {
         try (Connection conn = ConnectionFactory.getConnection()){
             int rs = LoginAndRegistrationQuery.checkMail(conn, mail);
-             if (rs != 0)
-                    return true;
+            if (rs != 0)
+                return true;
         }
         return false;
     }
@@ -64,14 +74,14 @@ public class RegistrationDAOSQL implements RegistrationGenericDAO{
                 LoginAndRegistrationQuery.registerPsychologist(conn, psychologist);
             }
             catch(SQLException e){
-                    throw new PersistenceOperationException(REGISTER_ERROR, e);
+                throw new PersistenceOperationException(REGISTER_ERROR, e);
             }
         }
         else
             throw new SQLException(); //DA SOSTITUIRE CON ECCEZIONE SPECIFICA PER INSERIMENTO SU UTENTI NON A BUON FINE (O FORSE NO?)
     }
 
-    public void registerMedicalOffice(MedicalOffice medicalOffice) throws SQLException {
+    public void registerMedicalOffice(MedicalOffice medicalOffice) {
         try(Connection conn = ConnectionFactory.getConnection()){
             LoginAndRegistrationQuery.registerMedicalOffice(conn, medicalOffice.getPsychologist(), medicalOffice.getCity(), medicalOffice.getPostCode(), medicalOffice.getAddress(), medicalOffice.getOtherInfo());
         } catch(SQLException e){
@@ -82,5 +92,3 @@ public class RegistrationDAOSQL implements RegistrationGenericDAO{
 
 
 }
-
-

@@ -1,11 +1,12 @@
 package com.theradiary.ispwtheradiary.controller.application;
 
 
-import com.theradiary.ispwtheradiary.engineering.dao.RegistrationDAOSQL;
+import com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 
 public class UserRegistrationController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;
-    private final RegistrationDAOSQL registrationGenericDAO = new RegistrationDAOSQL();  //TODO Da modificare con GenericDAO appena si fa la factory
+    private final LoginAndRegistrationDAO registrationGenericDAO = FactoryDAO.getDAO();
 
     public UserRegistrationController(){
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();

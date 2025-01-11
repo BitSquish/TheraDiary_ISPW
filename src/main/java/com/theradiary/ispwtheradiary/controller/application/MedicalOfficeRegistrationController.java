@@ -1,10 +1,11 @@
 package com.theradiary.ispwtheradiary.controller.application;
 
-import com.theradiary.ispwtheradiary.engineering.dao.RegistrationDAOSQL;
+import com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.MedicalOffice;
 import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
 
@@ -14,7 +15,7 @@ public class MedicalOfficeRegistrationController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final UpdateDAO updateDAO = new UpdateDAO();
     private final RetrieveDAO retrieveDAO = new RetrieveDAO();
-    private final RegistrationDAOSQL registrationDAO = new RegistrationDAOSQL();     //TODO Da modificare con GenericDAO appena si fa la factory
+    private final LoginAndRegistrationDAO registrationDAO = FactoryDAO.getDAO();
     public MedicalOfficeRegistrationController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
