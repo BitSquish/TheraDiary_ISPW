@@ -1,1 +1,4 @@
-ema@gmail.com,zeus,PSYCHOLOGIST,Emanuela,Gallinelli,Roma,Sono una psicologa specializzata in psicologia infantile, true, true, true
+ema@gmail.com,zeus,PSYCHOLOGIST,Emanuela,Gallinelli,Roma,Sono una psicologa specializzata in psicologia infantile, true, truemailpaziente@test.com,password,PATIENT,NomePaziente,CognomePaziente,CittàPaziente,Descrizione paziente,false,true
+testpaz@gmail.com,password,PATIENT,TestPaziente,Test,Città,---,false,true
+test@gmail.com,password,PSYCHOLOGIST,TestPsicologo,testcognome,testcittà,-,false,true
+mario@gmail.com,password,PSYCHOLOGIST,Mario,Rossi,Milano,Dr.Mario Rossi,true,false

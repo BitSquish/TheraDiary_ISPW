@@ -2,13 +2,12 @@ package com.theradiary.ispwtheradiary.engineering.dao.full.json;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO;
+import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.model.*;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,29 +55,71 @@ public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO {
 
     @Override
     public boolean emailExists(String mail) {
-        return false;
+        return userList.stream().anyMatch(p -> p.getCredentials().getMail().equals(mail));
     }
 
     @Override
     public boolean insertUser(Credentials credentials) {
-        return false;
+        return !emailExists(credentials.getMail());
     }
 
 
     @Override
-    public void registerPatient(Patient patient)  {
-
+    public void registerPatient(Patient patient) throws MailAlreadyExistsException {
+        if(insertUser(patient.getCredentials())){
+            userList.add(patient);
+            loggedUserHashMap.put(patient.getCredentials().getMail(), patient);
+            addToFile(patient);
+        }
+        else
+           throw new MailAlreadyExistsException("Mail già registrata");
     }
 
     @Override
-    public void registerPsychologist(Psychologist psychologist) {
+    public void registerPsychologist(Psychologist psychologist) throws MailAlreadyExistsException {
+        if(insertUser(psychologist.getCredentials())){
+            userList.add(psychologist); //Nota: qui gli utenti vengono aggiunti, anche quelli vecchi
+            loggedUserHashMap.put(psychologist.getCredentials().getMail(), psychologist);
+            addToFile(psychologist);
+        }
+        else
+            throw new MailAlreadyExistsException("Mail già registrata");
+    }
 
+    private void addToFile(LoggedUser  loggedUser ) {
+        // Close the file after writing
+        try (FileWriter writer = new FileWriter(PERSISTENCE_FILE, true)) { // 'true' to append
+            Credentials credentials = loggedUser .getCredentials();
+            StringBuilder sb = new StringBuilder();
+
+            // Build the line to write to the file
+            sb.append(credentials.getMail()).append(",") // Email
+                    .append(credentials.getPassword()).append(",") // Password
+                    .append(credentials.getRole()).append(",") // Role
+                    .append(loggedUser .getName()).append(",") // Name
+                    .append(loggedUser .getSurname()).append(",") // Surname
+                    .append(loggedUser .getCity()).append(",") // City
+                    .append(loggedUser .getDescription()).append(",") // Description
+                    .append(loggedUser .isInPerson()).append(",") // In-person
+                    .append(loggedUser .isOnline()); // Online
+
+            writer.write(sb.toString() + "\n"); // Write the line to the file
+        } catch (IOException e) {
+            Printer.errorPrint("Impossibile salvare l'utente sul file JSON.");
+        }
+
+        // Riapro il file per applicare subito i cambiamenti
+        try (FileReader reader = new FileReader(PERSISTENCE_FILE)) {
+            loadFile();
+        } catch (IOException e) {
+            Printer.errorPrint("Errore durante l'apertura del file.");
+        }
     }
 
     @Override
     public void login(Credentials credentials) throws WrongEmailOrPasswordException {
-        LoggedUser loggedUser = loggedUserHashMap.get(credentials.getMail());
-        if (loggedUser.getCredentials().getMail() == null || !loggedUser.getCredentials().getPassword().equals(credentials.getPassword())) {
+        LoggedUser loggedUser = userList.stream().findAny().filter(p -> p.getCredentials().getMail().equals(credentials.getMail())).orElse(null);
+        if (loggedUser == null || !loggedUser.getCredentials().getPassword().equals(credentials.getPassword())) {
             throw new WrongEmailOrPasswordException("Mail o password errati");
         }
         credentials.setRole(loggedUser.getCredentials().getRole());
@@ -86,11 +127,26 @@ public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO {
 
     @Override
     public void retrievePatient(Patient patient) {
-
+        Patient app = (Patient) userList.stream().findAny().filter(p -> p.getCredentials().getMail().equals(patient.getCredentials().getMail())).orElse(null);
+        if(app != null){
+            setUserParameters(patient, app);
+        }
     }
 
     @Override
     public void retrievePsychologist(Psychologist psychologist) {
+        Psychologist app = (Psychologist) userList.stream().findAny().filter(p -> p.getCredentials().getMail().equals(psychologist.getCredentials().getMail())).orElse(null);
+        if(app != null){
+            setUserParameters(psychologist, app);
+        }
+    }
 
+    private void setUserParameters(LoggedUser user, LoggedUser app) {
+        user.setName(app.getName());
+        user.setSurname(app.getSurname());
+        user.setCity(app.getCity());
+        user.setDescription(app.getDescription());
+        user.setInPerson(app.isInPerson());
+        user.setOnline(app.isOnline());
     }
 }
