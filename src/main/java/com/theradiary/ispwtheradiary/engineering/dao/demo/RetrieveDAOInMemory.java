@@ -3,7 +3,6 @@ package com.theradiary.ispwtheradiary.engineering.dao.demo;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
-import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.model.*;
 
 import java.util.ArrayList;
@@ -20,15 +19,7 @@ public class RetrieveDAOInMemory implements RetrieveDAO {
         return false;
     }
 
-    @Override
-    public void retrievePatient(Patient patient) {
 
-    }
-
-    @Override
-    public void retrievePsychologist(Psychologist psychologist) {
-
-    }
 
     @Override
     public boolean retrieveCategories(Patient patient) {

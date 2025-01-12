@@ -14,9 +14,7 @@ public interface RetrieveDAO {
 
     boolean retrieveMedicalOffice(MedicalOffice medicalOffice);
 
-    void retrievePatient(Patient patient);
 
-    void retrievePsychologist(Psychologist psychologist);
 
     boolean retrieveCategories(Patient patient);
 

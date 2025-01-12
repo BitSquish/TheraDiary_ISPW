@@ -4,7 +4,6 @@ import com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.model.Credentials;
-import com.theradiary.ispwtheradiary.model.MedicalOffice;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 
@@ -14,6 +13,15 @@ public class LoginAndRegistrationDAOInMemory implements LoginAndRegistrationDAO 
     @Override
     public boolean emailExists(String mail) throws SQLException {
         return false;
+    }
+    @Override
+    public void retrievePatient(Patient patient) {
+
+    }
+
+    @Override
+    public void retrievePsychologist(Psychologist psychologist) {
+
     }
 
     @Override

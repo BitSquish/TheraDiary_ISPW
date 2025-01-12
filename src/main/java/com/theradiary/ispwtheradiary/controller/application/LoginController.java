@@ -1,7 +1,7 @@
 package com.theradiary.ispwtheradiary.controller.application;
 
 import com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO;
-import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
+
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
@@ -19,7 +19,6 @@ import java.sql.SQLException;
 
 public class LoginController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;
-    private final RetrieveDAO retrieveDAO = FactoryDAO.getRetrieveDAO();
     private final LoginAndRegistrationDAO loginGeneric = FactoryDAO.getDAO();
     public LoginController() {this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();}
 
@@ -48,11 +47,11 @@ public class LoginController {
     private <M extends LoggedUser, B extends LoggedUserBean> void retrieveUser (M user, B userBean) {
         // Recupera l'utente dal DAO
         if (user.getCredentials().getRole().equals(Role.PATIENT)) {
-            retrieveDAO.retrievePatient((Patient) user);
+           loginGeneric.retrievePatient((Patient) user);
             PsychologistBean psychologistBean = beanAndModelMapperFactory.fromModelToBean((((Patient) user).getPsychologist()), Psychologist.class);
             ((PatientBean)userBean).setPsychologistBean(psychologistBean);
         }else if (user.getCredentials().getRole().equals(Role.PSYCHOLOGIST)) {
-            retrieveDAO.retrievePsychologist((Psychologist) user);
+            loginGeneric.retrievePsychologist((Psychologist) user);
         }
         // Imposta i dati nel bean
         userBean.setName(user.getName());

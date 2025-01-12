@@ -1,6 +1,5 @@
 package com.theradiary.ispwtheradiary.controller.application;
 
-import com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
 import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
@@ -10,7 +9,6 @@ import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.MedicalOffice;
 import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
 
-import java.sql.SQLException;
 
 public class MedicalOfficeRegistrationController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
@@ -19,7 +17,7 @@ public class MedicalOfficeRegistrationController {
     public MedicalOfficeRegistrationController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
-    public void register(MedicalOfficeBean medicalOfficeBean) throws SQLException {
+    public void register(MedicalOfficeBean medicalOfficeBean) {
         MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
         try{
             updateDAO.registerMedicalOffice(medicalOffice);
@@ -28,7 +26,7 @@ public class MedicalOfficeRegistrationController {
         }
     }
 
-    public boolean retrieveMedicalOffice(MedicalOfficeBean medicalOfficeBean) throws SQLException{
+    public boolean retrieveMedicalOffice(MedicalOfficeBean medicalOfficeBean) {
         MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
         boolean medOffAlreadyInserted = retrieveDAO.retrieveMedicalOffice(medicalOffice);
         if(medOffAlreadyInserted){

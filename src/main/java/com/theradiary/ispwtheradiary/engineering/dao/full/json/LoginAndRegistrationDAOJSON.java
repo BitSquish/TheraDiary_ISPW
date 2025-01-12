@@ -85,4 +85,14 @@ public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO {
         }
         credentials.setRole(loggedUser.getCredentials().getRole());
     }
+
+    @Override
+    public void retrievePatient(Patient patient) {
+
+    }
+
+    @Override
+    public void retrievePsychologist(Psychologist psychologist) {
+
+    }
 }

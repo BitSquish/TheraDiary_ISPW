@@ -67,8 +67,6 @@ public class MedicalOfficeGUI extends CommonGUI {
         }catch(EmptyFieldException exception){
             errorMessage.setText(exception.getMessage());
             errorMessage.setVisible(true);
-        } catch (SQLException e) {
-            throw new LoadingException(LOADING_SCENE, e);
         }
 
     }
