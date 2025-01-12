@@ -25,7 +25,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         MapperRegistration.registerMappers();   //Registrazione dei mappers che convertono bean in model e viceversa
         Scanner scanner = new Scanner(System.in);
         boolean validInput = false;
@@ -49,7 +49,6 @@ public class Main extends Application {
             } catch (Exception e) {
                 Printer.errorPrint(e.getMessage());
                 scanner.nextLine();
-
             }
         }
     }

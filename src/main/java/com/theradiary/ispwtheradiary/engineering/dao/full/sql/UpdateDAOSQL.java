@@ -17,6 +17,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
+import static com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO.REGISTER_ERROR;
+
 public class UpdateDAOSQL implements UpdateDAO {
 
     public boolean emailExists(String mail) throws SQLException {
@@ -32,6 +34,14 @@ public class UpdateDAOSQL implements UpdateDAO {
             UpdateQuery.modifyMedicalOffice(conn, medicalOffice.getPsychologist(), medicalOffice.getCity(), medicalOffice.getPostCode(), medicalOffice.getAddress(), medicalOffice.getOtherInfo());
         } catch(SQLException e){
             throw new PersistenceOperationException("Errore nella modifica dello studio medico", e);
+        }
+    }
+
+    public void registerMedicalOffice(MedicalOffice medicalOffice) {
+        try(Connection conn = ConnectionFactory.getConnection()){
+            LoginAndRegistrationQuery.registerMedicalOffice(conn, medicalOffice.getPsychologist(), medicalOffice.getCity(), medicalOffice.getPostCode(), medicalOffice.getAddress(), medicalOffice.getOtherInfo());
+        } catch(SQLException e){
+            throw new PersistenceOperationException(REGISTER_ERROR, e);
         }
     }
 

@@ -21,10 +21,6 @@ public class LoginAndRegistrationDAOInMemory implements LoginAndRegistrationDAO 
         return false;
     }
 
-    @Override
-    public void registerMedicalOffice(MedicalOffice medicalOffice) throws SQLException {
-
-    }
 
     @Override
     public void registerPatient(Patient patient) throws SQLException, MailAlreadyExistsException {

@@ -13,7 +13,6 @@ public interface LoginAndRegistrationDAO {
     String REGISTER_ERROR="Errore nella registrazione";
     boolean emailExists(String mail) throws SQLException;
     boolean insertUser(Credentials credentials) throws SQLException;
-    void registerMedicalOffice(MedicalOffice medicalOffice) throws SQLException;
     void registerPatient(Patient patient) throws SQLException, MailAlreadyExistsException;
     void registerPsychologist(Psychologist psychologist) throws SQLException, MailAlreadyExistsException;
     void login(Credentials credentials) throws SQLException, WrongEmailOrPasswordException;

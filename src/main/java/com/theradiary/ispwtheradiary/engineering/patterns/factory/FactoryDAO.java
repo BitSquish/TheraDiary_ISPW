@@ -12,7 +12,7 @@ import java.util.Properties;
 import java.util.function.Supplier;
 
 public class FactoryDAO {
-
+    private FactoryDAO(){}
     private static final String CONFIG_FILE = "config.properties";
     private static final Properties properties = new Properties();
     private static boolean isPropertiesLoaded = false;

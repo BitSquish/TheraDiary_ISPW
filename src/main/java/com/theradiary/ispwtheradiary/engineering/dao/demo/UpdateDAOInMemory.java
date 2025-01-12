@@ -64,5 +64,10 @@ public class UpdateDAOInMemory implements UpdateDAO {
     public void setPatientsPsychologist(Patient patient) {
 
     }
+
+    @Override
+    public void registerMedicalOffice(MedicalOffice medicalOffice) {
+        //TODO
+    }
     //TODO
 }

@@ -19,6 +19,7 @@ public interface UpdateDAO {
     void clearAppointments(Psychologist psychologist, DayOfTheWeek day);
     void addAppointments(Appointment appointmentToAdd);
     void setPatientsPsychologist(Patient patient);
+    void registerMedicalOffice(MedicalOffice medicalOffice);
 
 
 

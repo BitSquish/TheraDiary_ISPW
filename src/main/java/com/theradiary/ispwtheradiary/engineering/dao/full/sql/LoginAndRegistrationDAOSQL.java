@@ -8,7 +8,6 @@ import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPassword
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.LoginAndRegistrationQuery;
 import com.theradiary.ispwtheradiary.model.Credentials;
-import com.theradiary.ispwtheradiary.model.MedicalOffice;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 
@@ -80,14 +79,6 @@ public class LoginAndRegistrationDAOSQL implements LoginAndRegistrationDAO {
         }
         else
             throw new SQLException(); //DA SOSTITUIRE CON ECCEZIONE SPECIFICA PER INSERIMENTO SU UTENTI NON A BUON FINE (O FORSE NO?)
-    }
-
-    public void registerMedicalOffice(MedicalOffice medicalOffice) {
-        try(Connection conn = ConnectionFactory.getConnection()){
-            LoginAndRegistrationQuery.registerMedicalOffice(conn, medicalOffice.getPsychologist(), medicalOffice.getCity(), medicalOffice.getPostCode(), medicalOffice.getAddress(), medicalOffice.getOtherInfo());
-        } catch(SQLException e){
-            throw new PersistenceOperationException(REGISTER_ERROR, e);
-        }
     }
 
 
