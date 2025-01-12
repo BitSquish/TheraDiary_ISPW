@@ -2,7 +2,6 @@ package com.theradiary.ispwtheradiary.engineering.dao.full.json;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO;
-import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.model.*;
@@ -10,7 +9,6 @@ import com.theradiary.ispwtheradiary.model.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,23 +55,23 @@ public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO {
     }
 
     @Override
-    public boolean emailExists(String mail) throws SQLException {
+    public boolean emailExists(String mail) {
         return false;
     }
 
     @Override
-    public boolean insertUser(Credentials credentials) throws SQLException {
+    public boolean insertUser(Credentials credentials) {
         return false;
     }
 
 
     @Override
-    public void registerPatient(Patient patient) throws SQLException, MailAlreadyExistsException {
+    public void registerPatient(Patient patient)  {
 
     }
 
     @Override
-    public void registerPsychologist(Psychologist psychologist) throws SQLException, MailAlreadyExistsException {
+    public void registerPsychologist(Psychologist psychologist) {
 
     }
 
