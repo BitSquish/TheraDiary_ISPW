@@ -3,6 +3,7 @@ package com.theradiary.ispwtheradiary.controller.application;
 import com.theradiary.ispwtheradiary.engineering.dao.TaskAndToDoDAO;
 import com.theradiary.ispwtheradiary.engineering.others.beans.TaskBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Task;
 import com.theradiary.ispwtheradiary.model.ToDoItem;
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 public class TaskAndToDoController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
-    private final TaskAndToDoDAO taskAndToDoDAO = new TaskAndToDoDAO();
+    private final TaskAndToDoDAO taskAndToDoDAO = FactoryDAO.getTaskAndToDoDAO();
     public TaskAndToDoController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }

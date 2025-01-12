@@ -13,8 +13,8 @@ import java.sql.SQLException;
 
 public class MedicalOfficeRegistrationController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
-    private final UpdateDAO updateDAO = new UpdateDAO();
-    private final RetrieveDAO retrieveDAO = new RetrieveDAO();
+    private final UpdateDAO updateDAO = FactoryDAO.getUpdateDAO();
+    private final RetrieveDAO retrieveDAO = FactoryDAO.getRetrieveDAO();
     private final LoginAndRegistrationDAO registrationDAO = FactoryDAO.getDAO();
     public MedicalOfficeRegistrationController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
@@ -43,10 +43,6 @@ public class MedicalOfficeRegistrationController {
 
     public void modify(MedicalOfficeBean medicalOfficeBean) {
         MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
-        try{
-            updateDAO.modifyMedicalOffice(medicalOffice);
-        }catch(SQLException exception){
-            throw new DAOException(exception.getMessage(),exception);//ECCEZIONE DA VERIFICARE
-        }
+        updateDAO.modifyMedicalOffice(medicalOffice);
     }
 }

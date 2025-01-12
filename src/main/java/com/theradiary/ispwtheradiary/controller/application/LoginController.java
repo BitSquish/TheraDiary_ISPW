@@ -19,14 +19,14 @@ import java.sql.SQLException;
 
 public class LoginController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;
-    private final RetrieveDAO retrieveDAO = new RetrieveDAO();
-    private final LoginAndRegistrationDAO loginGenericDAO = FactoryDAO.getDAO();
+    private final RetrieveDAO retrieveDAO = FactoryDAO.getRetrieveDAO();
+    private final LoginAndRegistrationDAO loginGeneric = FactoryDAO.getDAO();
     public LoginController() {this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();}
 
     public void log(CredentialsBean credentialsBean) throws WrongEmailOrPasswordException {
         try {
             Credentials credentials = beanAndModelMapperFactory.fromBeanToModel(credentialsBean, CredentialsBean.class);
-            loginGenericDAO.login(credentials);
+            loginGeneric.login(credentials);
             credentialsBean.setRole(credentials.getRole());
         } catch(SQLException e) { //TODO CONTROLLARE ECCEZIONI
             throw new WrongEmailOrPasswordException(e.getMessage());

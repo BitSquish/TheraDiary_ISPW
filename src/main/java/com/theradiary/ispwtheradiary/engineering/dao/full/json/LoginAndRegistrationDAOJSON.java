@@ -1,5 +1,6 @@
-package com.theradiary.ispwtheradiary.engineering.dao;
+package com.theradiary.ispwtheradiary.engineering.dao.full.json;
 
+import com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.model.Credentials;
@@ -9,7 +10,7 @@ import com.theradiary.ispwtheradiary.model.Psychologist;
 
 import java.sql.SQLException;
 
-public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO{
+public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO {
         //Filepath
         private static final String PERSISTENCE_FILE = "src/main/resources/com/theradiary/ispwtheradiary/login.json";
         //map <String, credentials> credentialsMap = new HashMap<>();

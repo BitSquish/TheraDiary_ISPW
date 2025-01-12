@@ -8,34 +8,30 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.RequestBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.engineering.patterns.observer.RequestManagerConcreteSubject;
 import com.theradiary.ispwtheradiary.model.*;
 
 
-import java.sql.SQLException;
 
 public class PsychologistDescriptionController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
-    private final PtAndPsDAO ptAndPsDAO = new PtAndPsDAO();
-    private final RetrieveDAO retrieveDAO = new RetrieveDAO();
+    private final PtAndPsDAO ptAndPsDAO = FactoryDAO.getPtAndPsDAO();
+    private final RetrieveDAO retrieveDAO = FactoryDAO.getRetrieveDAO();
     public PsychologistDescriptionController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
 
     public void searchPsychologistInfo(PsychologistBean psychologistBean, MedicalOfficeBean medicalOfficeBean) {
         //Ricavo studio medico e specializzazioni
-        try{
-            MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
-            retrieveDAO.retrieveMedicalOffice(medicalOffice);
-            medicalOfficeBean.setPostCode(medicalOffice.getPostCode());
-            medicalOfficeBean.setAddress(medicalOffice.getAddress());
-            medicalOfficeBean.setOtherInfo(medicalOffice.getOtherInfo());
-            Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
-            retrieveDAO.retrieveMajors(psychologist);
-            psychologistBean.setMajor(psychologist.getMajors());
-        } catch(SQLException e){
-            throw new DAOException(e.getMessage(), e);
-        }
+        MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
+        retrieveDAO.retrieveMedicalOffice(medicalOffice);
+        medicalOfficeBean.setPostCode(medicalOffice.getPostCode());
+        medicalOfficeBean.setAddress(medicalOffice.getAddress());
+        medicalOfficeBean.setOtherInfo(medicalOffice.getOtherInfo());
+        Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
+        retrieveDAO.retrieveMajors(psychologist);
+        psychologistBean.setMajor(psychologist.getMajors());
     }
 
     public void sendRequest(RequestBean requestBean) {

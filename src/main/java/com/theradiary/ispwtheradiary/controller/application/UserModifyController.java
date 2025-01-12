@@ -4,6 +4,7 @@ import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
@@ -12,11 +13,11 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 
-import java.sql.SQLException;
+
 
 public class UserModifyController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;
-    private final UpdateDAO updateDAO = new UpdateDAO();
+    private final UpdateDAO updateDAO = FactoryDAO.getUpdateDAO();
     public UserModifyController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
@@ -50,8 +51,6 @@ public class UserModifyController {
             psychologistBean.setOnline(psychologist.isOnline());
         }catch (MailAlreadyExistsException e){
             throw new MailAlreadyExistsException(e.getMessage());
-        }catch (SQLException e){
-            //TODO gestione dell'eccezione
         }
 
     }

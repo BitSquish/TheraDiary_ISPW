@@ -5,13 +5,14 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.AppointmentBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.Appointment;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 
 public class PatientProfileController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
-    private final RetrieveDAO retrieveDAO = new RetrieveDAO();
+    private final RetrieveDAO retrieveDAO = FactoryDAO.getRetrieveDAO();
     public PatientProfileController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }

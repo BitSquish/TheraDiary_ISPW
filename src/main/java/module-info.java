@@ -46,6 +46,12 @@ module com.theradiary.ispwtheradiary {
     opens com.theradiary.ispwtheradiary.controller.graphic.task to javafx.fxml;
     exports com.theradiary.ispwtheradiary.engineering.others.mappers;
     opens com.theradiary.ispwtheradiary.engineering.others.mappers to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.engineering.dao.demo;
+    opens com.theradiary.ispwtheradiary.engineering.dao.demo to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.engineering.dao.full.json;
+    opens com.theradiary.ispwtheradiary.engineering.dao.full.json to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.engineering.dao.full.sql;
+    opens com.theradiary.ispwtheradiary.engineering.dao.full.sql to javafx.fxml;
 
 
 }

@@ -7,6 +7,7 @@ import com.theradiary.ispwtheradiary.engineering.enums.Major;
 
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 
@@ -18,8 +19,8 @@ import java.util.List;
 
 public class AccountController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
-    private final RetrieveDAO retrieveDAO = new RetrieveDAO();
-    private final CategoryAndMajorDAO categoryAndMajorDAO = new CategoryAndMajorDAO();
+    private final RetrieveDAO retrieveDAO=FactoryDAO.getRetrieveDAO();
+    private final CategoryAndMajorDAO categoryAndMajorDAO =  FactoryDAO.getCategoryAndMajorDao();
     public AccountController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
@@ -82,7 +83,7 @@ public class AccountController {
         }
         return patientBeans;
     }
-    public void yourPsychologist(PatientBean patientBean, PsychologistBean psychologistBean) {
+    public void yourPsychologist(PatientBean patientBean, PsychologistBean psychologistBean){
         if(psychologistBean != null) {
             // Conversione del PatientBean in Patient (entità)
             Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);

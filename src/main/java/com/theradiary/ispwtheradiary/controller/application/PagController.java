@@ -1,17 +1,19 @@
 package com.theradiary.ispwtheradiary.controller.application;
 
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
+import com.theradiary.ispwtheradiary.engineering.dao.full.sql.UpdateDAOSQL;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 
 public class PagController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
-    private final UpdateDAO updateDAO = new UpdateDAO();
+    private final UpdateDAO updateDAO = FactoryDAO.getUpdateDAO();
     public PagController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }

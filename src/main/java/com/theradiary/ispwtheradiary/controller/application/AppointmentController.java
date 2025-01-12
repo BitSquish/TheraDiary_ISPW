@@ -5,25 +5,24 @@ import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.enums.TimeSlot;
-import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
 import com.theradiary.ispwtheradiary.engineering.others.beans.AppointmentBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.Appointment;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class AppointmentController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
-    private final RetrieveDAO retrieveDAO = new RetrieveDAO();
-    private final UpdateDAO updateDAO = new UpdateDAO();
+    private final RetrieveDAO retrieveDAO= FactoryDAO.getRetrieveDAO();
+    private final UpdateDAO updateDAO= FactoryDAO.getUpdateDAO();
     public AppointmentController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
@@ -80,11 +79,7 @@ public class AppointmentController {
             }
         }
         if(hasChanged) {
-            try {
-                updateDAO.modifyPsychologist(psychologist);
-            } catch (SQLException e) {
-                throw new DAOException(e.getMessage(), e);
-            }
+            updateDAO.modifyPsychologist(psychologist);
         }
         return hasChanged;
     }

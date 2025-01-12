@@ -1,5 +1,6 @@
-package com.theradiary.ispwtheradiary.engineering.dao;
+package com.theradiary.ispwtheradiary.engineering.dao.full.sql;
 
+import com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
@@ -15,7 +16,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LoginAndRegistrationDAOSQL implements LoginAndRegistrationDAO{
+public class LoginAndRegistrationDAOSQL implements LoginAndRegistrationDAO {
     public void login(Credentials credentials) throws SQLException, WrongEmailOrPasswordException {
         try (Connection conn = ConnectionFactory.getConnection();
              ResultSet rs = LoginAndRegistrationQuery.logQuery(conn, credentials)) {

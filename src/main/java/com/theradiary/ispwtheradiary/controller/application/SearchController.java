@@ -3,6 +3,7 @@ package com.theradiary.ispwtheradiary.controller.application;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
+import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class SearchController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
-    private final RetrieveDAO retrieveDAO = new RetrieveDAO();
+    private final RetrieveDAO retrieveDAO = FactoryDAO.getRetrieveDAO();
     public SearchController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
