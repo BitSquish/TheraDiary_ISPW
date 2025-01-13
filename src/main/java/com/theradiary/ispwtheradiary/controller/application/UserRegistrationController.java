@@ -4,6 +4,7 @@ package com.theradiary.ispwtheradiary.controller.application;
 import com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.LoginAndRegistrationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
@@ -17,10 +18,11 @@ import java.sql.SQLException;
 
 public class UserRegistrationController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;
-    private final LoginAndRegistrationDAO registrationGenericDAO = FactoryDAO.getDAO();
+    private final LoginAndRegistrationDAO registrationGenericDAO;
 
     public UserRegistrationController(){
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
+        this.registrationGenericDAO = FactoryDAO.getDAO();
     }
 
     public void registerUser(LoggedUserBean loggedUserBean) throws MailAlreadyExistsException{
@@ -41,6 +43,8 @@ public class UserRegistrationController {
             throw new DAOException(exception.getMessage(),exception);  //DA VERIFICARE IL TIPO DI ECCEZIONE
         } catch (MailAlreadyExistsException exception) {
             throw new MailAlreadyExistsException(exception.getMessage());
+        } catch (LoginAndRegistrationException e) {
+            throw new DAOException(e.getMessage(),e);
         }
     }
 
@@ -50,7 +54,7 @@ public class UserRegistrationController {
             registrationGenericDAO.registerPsychologist(psychologist);
         } catch (SQLException exception) {
             throw new DAOException(exception.getMessage(),exception);  //DA VERIFICARE IL TIPO DI ECCEZIONE
-        } catch (MailAlreadyExistsException exception){
+        } catch (MailAlreadyExistsException | LoginAndRegistrationException exception){
             throw new MailAlreadyExistsException(exception.getMessage());
         }
     }

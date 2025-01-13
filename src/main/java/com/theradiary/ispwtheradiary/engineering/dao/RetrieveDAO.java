@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface RetrieveDAO {
-    void searchPsychologists(List<Psychologist> psychologists, String name, String surname, String city, boolean inPerson, boolean online, boolean pag) ;
+    void searchPsychologists(List<Psychologist> psychologists, String name, String surname, String city, boolean inPerson, boolean online, boolean pag) throws NoResultException;
 
     boolean retrieveMedicalOffice(MedicalOffice medicalOffice);
 

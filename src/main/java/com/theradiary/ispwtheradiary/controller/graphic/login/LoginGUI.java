@@ -6,6 +6,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePsGUI;
 import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtGUI;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
@@ -61,6 +62,8 @@ public class LoginGUI extends CommonGUI {
         }catch(WrongEmailOrPasswordException | EmptyFieldException exception){
             errorMessage.setText(exception.getMessage());
             errorMessage.setVisible(true);
+        } catch (NoResultException e) {
+            throw new LoadingException(LOADING_SCENE, e);
         }
     }
 

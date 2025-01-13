@@ -11,7 +11,6 @@ import com.theradiary.ispwtheradiary.engineering.query.RetrieveQuery;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
-import javafx.fxml.FXML;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

@@ -17,6 +17,7 @@ public class FactoryDAO {
     private static final Properties properties = new Properties();
     private static boolean isPropertiesLoaded = false;
     private static final String PERSISTENCE_TYPE = "persistence.type";
+    private static LoginAndRegistrationDAO daoInstance;
 
     // Caricamento delle proprietà una sola volta
     private static void loadProperties() {
@@ -27,6 +28,7 @@ public class FactoryDAO {
                 }
                 properties.load(input);
                 isPropertiesLoaded = true;
+                Printer.println("Properties:" + properties);
             } catch (IOException e) {
                 Printer.errorPrint("Error loading properties file: " + e.getMessage());
             }
@@ -71,6 +73,12 @@ public class FactoryDAO {
 
     public static LoginAndRegistrationDAO getDAO() {
         String daoType = getPersistenceType();
+        if(daoType.equals("demo")){
+            if(daoInstance == null){
+                daoInstance = new LoginAndRegistrationDAOInMemory();
+            }
+            return daoInstance;
+        }
         return createJsonSupportedDAO(
                 daoType,
                 LoginAndRegistrationDAOSQL::new,

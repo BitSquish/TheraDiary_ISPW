@@ -3,6 +3,7 @@ package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
 import com.theradiary.ispwtheradiary.controller.application.LoginController;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.beans.CredentialsBean;
@@ -45,17 +46,17 @@ public class LoginCLI extends AbstractState {
                 homeCLI = new HomePatientCLI(user);
             }
             goNext(context, homeCLI);
-        } catch (WrongEmailOrPasswordException e) {
+        } catch (WrongEmailOrPasswordException | NoResultException e) {
             Printer.errorPrint("Email o password errati");
             action(context);
         }
     }
-    private PsychologistBean setupPsychologist(LoginController login, CredentialsBean credentials) {
+    private PsychologistBean setupPsychologist(LoginController login, CredentialsBean credentials) throws NoResultException {
         PsychologistBean psychologistBean = new PsychologistBean(credentials);
         login.retrievePsychologist(psychologistBean);
         return psychologistBean;
     }
-    private PatientBean setupPatient(LoginController login, CredentialsBean credentials) {
+    private PatientBean setupPatient(LoginController login, CredentialsBean credentials) throws NoResultException {
         PatientBean patientBean = new PatientBean(credentials);
         login.retrievePatient(patientBean);
         return patientBean;

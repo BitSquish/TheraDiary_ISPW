@@ -3,6 +3,7 @@ package com.theradiary.ispwtheradiary.controller.application;
 import com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
@@ -19,8 +20,11 @@ import java.sql.SQLException;
 
 public class LoginController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;
-    private final LoginAndRegistrationDAO loginGeneric = FactoryDAO.getDAO();
-    public LoginController() {this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();}
+    private final LoginAndRegistrationDAO loginGeneric;
+    public LoginController() {
+        this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
+        this.loginGeneric = FactoryDAO.getDAO();
+    }
 
     public void log(CredentialsBean credentialsBean) throws WrongEmailOrPasswordException {
         try {
@@ -34,17 +38,17 @@ public class LoginController {
         }
     }
 
-    public void retrievePatient(PatientBean patientBean) {
+    public void retrievePatient(PatientBean patientBean) throws NoResultException {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         retrieveUser(patient, patientBean);
     }
 
-    public void retrievePsychologist(PsychologistBean psychologistBean) {
+    public void retrievePsychologist(PsychologistBean psychologistBean) throws NoResultException {
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         retrieveUser(psychologist, psychologistBean);
     }
 
-    private <M extends LoggedUser, B extends LoggedUserBean> void retrieveUser (M user, B userBean) {
+    private <M extends LoggedUser, B extends LoggedUserBean> void retrieveUser (M user, B userBean) throws NoResultException {
         // Recupera l'utente dal DAO
         if (user.getCredentials().getRole().equals(Role.PATIENT)) {
            loginGeneric.retrievePatient((Patient) user);
