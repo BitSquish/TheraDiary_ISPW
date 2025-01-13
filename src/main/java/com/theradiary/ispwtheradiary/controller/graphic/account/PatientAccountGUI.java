@@ -29,11 +29,10 @@ public class PatientAccountGUI extends AccountGUI {
             accountController.yourPsychologist(((PatientBean)session.getUser()), ((PatientBean)session.getUser()).getPsychologistBean());
             goToPsychologistDescription(event, ((PatientBean)session.getUser()).getPsychologistBean());
         }
-
     }
 
     public void initializePsychologistField(){
-        if(((PatientBean)session.getUser()).getPsychologistBean().getCredentialsBean().getMail() == null){
+        if(((PatientBean)session.getUser()).getPsychologistBean() == null){
             psychologist.setText("Nessuno psicologo");
         }else{
             accountController.yourPsychologist(((PatientBean)session.getUser()), ((PatientBean)session.getUser()).getPsychologistBean());

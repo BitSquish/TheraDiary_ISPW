@@ -2,3 +2,22 @@ ema@gmail.com,zeus,PSYCHOLOGIST,Emanuela,Gallinelli,Roma,Sono una psicologa spec
 testpaz@gmail.com,password,PATIENT,TestPaziente,Test,Città,---,false,true
 test@gmail.com,password,PSYCHOLOGIST,TestPsicologo,testcognome,testcittà,-,false,true
 mario@gmail.com,password,PSYCHOLOGIST,Mario,Rossi,Milano,Dr.Mario Rossi,true,false
+mail@mail.com,passors,PSYCHOLOGIST,Nome,Cognome,Città,descrizione,true,true
+mail@mail2.com,pass,PATIENT,aaaa,mmmm,Roma,...,false,true
+paolo@paolo.com,paolo,PSYCHOLOGIST,Paolo,Paoli,Palermo,Paolo,true,false
+testpsi@gmail.com,password,PSYCHOLOGIST,TestPsicologo,TestPsicologo,Test,...,false,true
+aaa@gmail.com,aaa,PSYCHOLOGIST,a,a,a,test,true,false
+a@mail.com,a,PSYCHOLOGIST,aaaa,aaaa,aaaaa,a,true,falseq@mail.com,q,PATIENT,q,q,q,q,false,true
+w@gmail.com,w,PATIENT,w,w,w,w,true,false
+viola@gmail.com,password,PSYCHOLOGIST,Viola,Benedetti,Firenze,Psicologa con 20 anni di esperienza,true,false
+giovanni@gmail.com,password,PATIENT,Giovanni,Rana,Genova,Giovanni Rana,false,true
+fiona@gmail.com,password,PATIENT,Fiona,Paolini,Ravenna,Bullismo,false,true
+simone@gmail.com,password,PSYCHOLOGIST,Simone,Sanna,Palermo,-,true,false
+tylerjoseph@gmail.com,password,PATIENT,Tyler,Joseph,Roma,Disturbo bipolare,true,false
+davide@gmail.com,password,PSYCHOLOGIST,Davide,Lanotti,L'Aquila,Descrizione,true,true
+tania@gmail.com,password,PATIENT,Tania,Gilberti,Catanzaro,---,true,false
+siria@gmail.com,password,PSYCHOLOGIST,Siria,Rotelli,Lavinio,...,true,false
+dorian@gmail.com,password,PSYCHOLOGIST,Dorian,Gray,Torino,-,false,true
+carlo@gmail.com,password,PSYCHOLOGIST,Carlo,Carli,Cremona,Ciao! Sono il Dr. Carlo Carli,true,false
+giorgia@gmail.com,password,PSYCHOLOGIST,Giorgia,Giorgi,Genova,Descrizione,true,false
+ignazio@gmail.com,password,PATIENT,Ignazio,Ignazi,Imola,Lutto,false,true

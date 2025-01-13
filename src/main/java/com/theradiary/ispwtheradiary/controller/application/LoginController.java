@@ -54,8 +54,10 @@ public class LoginController {
         // Recupera l'utente dal DAO
         if (user.getCredentials().getRole().equals(Role.PATIENT)) {
            loginGeneric.retrievePatient((Patient) user);
-            PsychologistBean psychologistBean = beanAndModelMapperFactory.fromModelToBean((((Patient) user).getPsychologist()), Psychologist.class);
-            ((PatientBean)userBean).setPsychologistBean(psychologistBean);
+           if(((Patient) user).getPsychologist() != null){
+                PsychologistBean psychologistBean = beanAndModelMapperFactory.fromModelToBean((((Patient) user).getPsychologist()), Psychologist.class);
+                ((PatientBean)userBean).setPsychologistBean(psychologistBean);
+            }
         }else if (user.getCredentials().getRole().equals(Role.PSYCHOLOGIST)) {
             loginGeneric.retrievePsychologist((Psychologist) user);
         }

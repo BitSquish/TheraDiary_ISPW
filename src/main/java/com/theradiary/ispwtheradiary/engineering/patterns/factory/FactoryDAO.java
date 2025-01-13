@@ -83,7 +83,7 @@ public class FactoryDAO {
                 daoType,
                 LoginAndRegistrationDAOSQL::new,
                 LoginAndRegistrationDAOInMemory::new,
-                LoginAndRegistrationDAOJSON::new
+                LoginAndRegistrationDAOJSON::getInstance
         );
     }
 

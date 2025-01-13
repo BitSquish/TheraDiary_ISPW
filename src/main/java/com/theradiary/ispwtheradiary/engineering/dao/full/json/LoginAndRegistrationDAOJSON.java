@@ -9,18 +9,25 @@ import com.theradiary.ispwtheradiary.model.*;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO {
         //Filepath
         private static final String PERSISTENCE_FILE = "src/main/resources/com/theradiary/ispwtheradiary/login.json";
-        Map<String, LoggedUser> loggedUserHashMap = new HashMap<>();
         List<LoggedUser> userList = new ArrayList<>();
-        public LoginAndRegistrationDAOJSON() {
-            loadFile();
+    //Singleton
+    private static LoginAndRegistrationDAOJSON instance;
+    // Costruttore privato per evitare la creazione di nuove istanze
+    private LoginAndRegistrationDAOJSON() {
+        loadFile();
+    }
+    // Metodo per ottenere l'istanza unica
+    public static LoginAndRegistrationDAOJSON getInstance() {
+        if(instance==null){
+            instance=new LoginAndRegistrationDAOJSON();
         }
+        return instance;
+    }
         private void loadFile() {
             //qui leggo il file e carico i dati in loggedUserHashMap
             try (BufferedReader reader = new BufferedReader(new FileReader(PERSISTENCE_FILE))) {
@@ -32,7 +39,6 @@ public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO {
                         throw new IllegalArgumentException("Invalid role");
                     else{
                         LoggedUser loggedUser = getLoggedUser(credentials, data);
-                        loggedUserHashMap.put(credentials.getMail(), loggedUser);
                         userList.add(loggedUser);
                     }
                 }
@@ -68,7 +74,6 @@ public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO {
     public void registerPatient(Patient patient) throws MailAlreadyExistsException {
         if(insertUser(patient.getCredentials())){
             userList.add(patient);
-            loggedUserHashMap.put(patient.getCredentials().getMail(), patient);
             addToFile(patient);
         }
         else
@@ -78,8 +83,7 @@ public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO {
     @Override
     public void registerPsychologist(Psychologist psychologist) throws MailAlreadyExistsException {
         if(insertUser(psychologist.getCredentials())){
-            userList.add(psychologist); //Nota: qui gli utenti vengono aggiunti, anche quelli vecchi
-            loggedUserHashMap.put(psychologist.getCredentials().getMail(), psychologist);
+            userList.add(psychologist);
             addToFile(psychologist);
         }
         else
@@ -87,39 +91,33 @@ public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO {
     }
 
     private void addToFile(LoggedUser  loggedUser ) {
-        // Close the file after writing
         try (FileWriter writer = new FileWriter(PERSISTENCE_FILE, true)) { // 'true' to append
-            Credentials credentials = loggedUser .getCredentials();
+            Credentials credentials = loggedUser.getCredentials();
             StringBuilder sb = new StringBuilder();
 
-            // Build the line to write to the file
-            sb.append(credentials.getMail()).append(",") // Email
+            // Costruisce la stringa da aggqingere al file
+            sb.append(credentials.getMail()).append(",") // Mail
                     .append(credentials.getPassword()).append(",") // Password
                     .append(credentials.getRole()).append(",") // Role
-                    .append(loggedUser .getName()).append(",") // Name
-                    .append(loggedUser .getSurname()).append(",") // Surname
-                    .append(loggedUser .getCity()).append(",") // City
-                    .append(loggedUser .getDescription()).append(",") // Description
-                    .append(loggedUser .isInPerson()).append(",") // In-person
-                    .append(loggedUser .isOnline()); // Online
+                    .append(loggedUser.getName()).append(",") // Name
+                    .append(loggedUser.getSurname()).append(",") // Surname
+                    .append(loggedUser.getCity()).append(",") // City
+                    .append(loggedUser.getDescription()).append(",") // Description
+                    .append(loggedUser.isInPerson()).append(",") // InPerson
+                    .append(loggedUser.isOnline()); // Online
 
-            writer.write(sb.toString() + "\n"); // Write the line to the file
+            writer.write(sb.toString() + "\n"); //Aggiunge l'utente al file
+            loadFile(); // Ricarica i dati dopo aver aggiunto un nuovo utente
         } catch (IOException e) {
             Printer.errorPrint("Impossibile salvare l'utente sul file JSON.");
-        }
-
-        // Riapro il file per applicare subito i cambiamenti
-        try (FileReader reader = new FileReader(PERSISTENCE_FILE)) {
-            loadFile();
-        } catch (IOException e) {
-            Printer.errorPrint("Errore durante l'apertura del file.");
         }
     }
 
     @Override
     public void login(Credentials credentials) throws WrongEmailOrPasswordException {
-        LoggedUser loggedUser = userList.stream().findAny().filter(p -> p.getCredentials().getMail().equals(credentials.getMail())).orElse(null);
+        LoggedUser  loggedUser  = userList.stream().filter(p -> p.getCredentials().getMail().equals(credentials.getMail())).findFirst().orElse(null);
         if (loggedUser == null || !loggedUser.getCredentials().getPassword().equals(credentials.getPassword())) {
+            System.out.println("Entra nell'if del login");
             throw new WrongEmailOrPasswordException("Mail o password errati");
         }
         credentials.setRole(loggedUser.getCredentials().getRole());
@@ -127,7 +125,7 @@ public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO {
 
     @Override
     public void retrievePatient(Patient patient) {
-        Patient app = (Patient) userList.stream().findAny().filter(p -> p.getCredentials().getMail().equals(patient.getCredentials().getMail())).orElse(null);
+        Patient app = (Patient) userList.stream().filter(p -> p.getCredentials().getMail().equals(patient.getCredentials().getMail())).findFirst().orElse(null);
         if(app != null){
             setUserParameters(patient, app);
         }
@@ -135,7 +133,7 @@ public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO {
 
     @Override
     public void retrievePsychologist(Psychologist psychologist) {
-        Psychologist app = (Psychologist) userList.stream().findAny().filter(p -> p.getCredentials().getMail().equals(psychologist.getCredentials().getMail())).orElse(null);
+        Psychologist app = (Psychologist) userList.stream().filter(p -> p.getCredentials().getMail().equals(psychologist.getCredentials().getMail())).findFirst().orElse(null);
         if(app != null){
             setUserParameters(psychologist, app);
         }
