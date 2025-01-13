@@ -18,6 +18,11 @@ public class FactoryDAO {
     private static boolean isPropertiesLoaded = false;
     private static final String PERSISTENCE_TYPE = "persistence.type";
     private static LoginAndRegistrationDAO daoInstance;
+    private static TaskAndToDoDAO taskAndToDoDAOInstance;
+    private static UpdateDAO updateDAOInstance;
+    private static CategoryAndMajorDAO categoryAndMajorDAOInstance;
+    private static PtAndPsDAO ptAndPsDAOInstance;
+    private static RetrieveDAO retrieveDAOInstance;
 
     // Caricamento delle proprietà una sola volta
     private static void loadProperties() {
@@ -89,6 +94,12 @@ public class FactoryDAO {
 
     public static TaskAndToDoDAO getTaskAndToDoDAO() {
         String daoType = getPersistenceType();
+        if(daoType.equals("demo")){
+            if(taskAndToDoDAOInstance == null){
+                taskAndToDoDAOInstance = new TaskAndToDoDAOInMemory();
+            }
+            return taskAndToDoDAOInstance;
+        }
         return createDAO(
                 daoType,
                 TaskAndToDoDAOSQL::new,
@@ -98,6 +109,12 @@ public class FactoryDAO {
 
     public static UpdateDAO getUpdateDAO() {
         String daoType = getPersistenceType();
+        if(daoType.equals("demo")){
+            if(updateDAOInstance == null){
+                updateDAOInstance = new UpdateDAOInMemory();
+            }
+            return updateDAOInstance;
+        }
         return createDAO(
                 daoType,
                 UpdateDAOSQL::new,
@@ -107,6 +124,12 @@ public class FactoryDAO {
 
     public static CategoryAndMajorDAO getCategoryAndMajorDao() {
         String daoType = getPersistenceType();
+        if (daoType.equals("demo")) {
+            if (categoryAndMajorDAOInstance == null) {
+                categoryAndMajorDAOInstance = new CategoryAndMajorDAOInMemory();
+            }
+            return categoryAndMajorDAOInstance;
+        }
         return createDAO(
                 daoType,
                 CategoryAndMajorDAOSQL::new,
@@ -116,6 +139,12 @@ public class FactoryDAO {
 
     public static PtAndPsDAO getPtAndPsDAO() {
         String daoType = getPersistenceType();
+        if(daoType.equals("demo")){
+            if(ptAndPsDAOInstance == null){
+                ptAndPsDAOInstance = new PtAndPsDAOInMemory();
+            }
+            return ptAndPsDAOInstance;
+        }
         return createDAO(
                 daoType,
                 PtAndPsDAOSQL::new,
@@ -125,6 +154,12 @@ public class FactoryDAO {
 
     public static RetrieveDAO getRetrieveDAO() {
         String daoType = getPersistenceType();
+        if (daoType.equals("demo")) {
+            if (retrieveDAOInstance == null) {
+                retrieveDAOInstance = new RetrieveDAOInMemory();
+            }
+            return retrieveDAOInstance;
+        }
         return createDAO(
                 daoType,
                 RetrieveDAOSQL::new,

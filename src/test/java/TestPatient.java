@@ -1,5 +1,6 @@
 
-import com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO;
+import com.theradiary.ispwtheradiary.engineering.dao.*;
+import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.LoginAndRegistrationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
@@ -7,21 +8,46 @@ import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import org.junit.jupiter.api.Assertions;
-
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.util.Optional;
 
 
 class TestPatient {
 
+    /*  Sofia Tosti 0308023 */
+
+
     private static final String TEST_MAIL = "test@gmail.com";
     private String password;
+    private static final String TEST_DIARY_CONTENT = "Test content";
+    private static final String TEST_TASK_NAME = "Test task";
+    private static final String TEST_SURNAME = "TestSurname";
+    private static final String TEST_CITY = "TestCity";
+    private static final String TEST_DESCRIPTION = "TestDescription";
+    private static final boolean TEST_INPERSON = true;
+    private static final boolean TEST_ONLINE = false;
 
+    public Patient createPatient(){
+        return new Patient(
+                new Credentials(TEST_MAIL, password, Role.PATIENT),
+                TEST_TASK_NAME,
+                TEST_SURNAME,
+                TEST_CITY,
+                TEST_DESCRIPTION,
+                TEST_INPERSON,
+                TEST_ONLINE
+
+        );
+    }
+
+    //testo il metodo di login per le credenziali
     @Test
     void testCredential() {
         int res ;
-        password = generatePassword();
         try {
+            password = generatePassword();
             // Prima registriamo il paziente
             registraTester();
 
@@ -50,7 +76,7 @@ class TestPatient {
     }
 
     // Metodo che si occupa di registrare il paziente
-    public void registraTester() throws LoginAndRegistrationException{
+    public void registraTester(){
         LoginAndRegistrationDAO loginAndRegistrationDAO = FactoryDAO.getDAO();
         try {
             // Tentiamo il login con le credenziali fornite
@@ -65,10 +91,58 @@ class TestPatient {
 
         } catch (LoginAndRegistrationException e) {
             // Gestiamo l'eccezione generica di registrazione
-            throw new LoginAndRegistrationException("Errore nella registrazione: " + e.getMessage(), e);
+            Assertions.fail("Test fallito a causa di un'eccezione inattesa: " + e.getMessage());
         }
     }
+    //testo il metodo di inserimento del diario
+    @Test
+    void testDiary() {
+        // Creazione diretta di un Patient
+       Patient patient=createPatient();
+
+        // Simulated environment
+        LocalDate today = LocalDate.now();
+        TaskAndToDoDAO taskAndToDoDAO = FactoryDAO.getTaskAndToDoDAO();
+
+        try {
+            // Salva il diario per oggi
+            taskAndToDoDAO.diary(patient, TEST_DIARY_CONTENT, today);
+
+            // Recupera il diario per oggi
+            Optional<String> retrievedDiaryOpt = taskAndToDoDAO.getDiaryForToday(patient);
+            String retrievedDiary = retrievedDiaryOpt.orElse("");
+
+            // Asserts
+            Assertions.assertEquals(TEST_DIARY_CONTENT, retrievedDiary,
+                    "Il contenuto del diario recuperato non corrisponde a quello previsto.");
+
+        } catch (Exception e) {
+            Assertions.fail("Test fallito a causa di un'eccezione inattesa: " + e.getMessage());
+        }
+    }
+    //test del metodo per lil recupero delle categorie del paziente
+    @Test
+    void testRetrieveCategories(){
+        Patient patient=createPatient(); // Creazione diretta di un Patient
+        Category category=Category.OTHER; // Creazione di una categoria
+        CategoryAndMajorDAO categoryAndMajorDAO = FactoryDAO.getCategoryAndMajorDao(); // Simulated environment
+        RetrieveDAO retrieveDAO = FactoryDAO.getRetrieveDAO();
+        categoryAndMajorDAO.addCategory(patient, category);
+        try{
+            retrieveDAO.retrieveCategories(patient); // Recupera le categorie del paziente
+            Assertions.assertTrue(patient.getCategories().contains(category),
+                    "La categoria aggiunta non è presente nella lista delle categorie del paziente.");
+        }catch (Exception e){
+            Assertions.fail("Test fallito a causa di un'eccezione inattesa: " + e.getMessage());
+        }
+    }
+
+
+
+
 }
+
+
 
 
 

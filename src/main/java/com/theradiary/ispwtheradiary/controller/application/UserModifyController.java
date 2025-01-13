@@ -3,6 +3,7 @@ package com.theradiary.ispwtheradiary.controller.application;
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
+import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.Credentials;
@@ -68,7 +69,7 @@ public class UserModifyController {
             patientBean.setInPerson(patient.isInPerson());
             patientBean.setOnline(patient.isOnline());
         } catch (Exception e){
-            //TODO gestione dell'eccezione
+            Printer.errorPrint(e.getMessage());
         }
     }
 }
