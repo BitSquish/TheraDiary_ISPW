@@ -12,11 +12,11 @@ import java.sql.SQLException;
 
 public interface LoginAndRegistrationDAO {
     String REGISTER_ERROR="Errore nella registrazione";
-    boolean emailExists(String mail) throws SQLException;
-    boolean insertUser(Credentials credentials) throws SQLException;
-    void registerPatient(Patient patient) throws SQLException, MailAlreadyExistsException, LoginAndRegistrationException;
-    void registerPsychologist(Psychologist psychologist) throws SQLException, MailAlreadyExistsException, LoginAndRegistrationException;
-    void login(Credentials credentials) throws SQLException, WrongEmailOrPasswordException;
+    boolean emailExists(String mail) ;
+    boolean insertUser(Credentials credentials) ;
+    void registerPatient(Patient patient) throws MailAlreadyExistsException, LoginAndRegistrationException;
+    void registerPsychologist(Psychologist psychologist) throws MailAlreadyExistsException, LoginAndRegistrationException;
+    void login(Credentials credentials) throws WrongEmailOrPasswordException,LoginAndRegistrationException;
     void retrievePatient(Patient patient) throws NoResultException;
 
     void retrievePsychologist(Psychologist psychologist) throws NoResultException;

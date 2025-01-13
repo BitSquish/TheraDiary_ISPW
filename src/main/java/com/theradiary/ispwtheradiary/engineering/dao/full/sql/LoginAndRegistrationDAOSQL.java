@@ -26,7 +26,7 @@ public class LoginAndRegistrationDAOSQL implements LoginAndRegistrationDAO {
     private static final String PAG = "pag";
     private static final String PSYCHOLOGIST = "psychologist";
     @Override
-    public void login(Credentials credentials) throws SQLException, WrongEmailOrPasswordException {
+    public void login(Credentials credentials) throws WrongEmailOrPasswordException {
         try (Connection conn = ConnectionFactory.getConnection();
              ResultSet rs = LoginAndRegistrationQuery.logQuery(conn, credentials)) {
             if (rs.next()) {
@@ -38,24 +38,28 @@ public class LoginAndRegistrationDAOSQL implements LoginAndRegistrationDAO {
     }
     //controllo se l'email è presente o meno
     @Override
-    public boolean emailExists(String mail) throws SQLException {
+    public boolean emailExists(String mail)  {
         try (Connection conn = ConnectionFactory.getConnection()){
             int rs = LoginAndRegistrationQuery.checkMail(conn, mail);
             if (rs != 0)
                 return true;
+        }catch (SQLException e){
+            throw new PersistenceOperationException("Errore nel controllo dell'email", e);
         }
         return false;
     }
     //inserisco l'utente (credenziali) nel database
-    public boolean insertUser(Credentials credentials) throws SQLException {
+    public boolean insertUser(Credentials credentials)  {
         try (Connection conn = ConnectionFactory.getConnection()) {
             int rs = LoginAndRegistrationQuery.registerUser(conn, credentials);
             return rs != 0;
+        }catch (SQLException e){
+            throw new PersistenceOperationException("Errore nell'inserimento dell'utente", e);
         }
     }
 
     @Override
-    public void registerPatient(Patient patient) throws SQLException, MailAlreadyExistsException {
+    public void registerPatient(Patient patient)throws MailAlreadyExistsException {
         if(emailExists(patient.getCredentials().getMail())) {
             throw new MailAlreadyExistsException(("Mail già registrata"));
         }//inserisco la password e l'email in user
@@ -68,13 +72,12 @@ public class LoginAndRegistrationDAOSQL implements LoginAndRegistrationDAO {
                 throw new PersistenceOperationException(REGISTER_ERROR, e);
             }
         }
-        else
-            throw new SQLException(); //DA SOSTITUIRE CON ECCEZIONE SPECIFICA (O FORSE NO?)
+
     }
 
 
     @Override
-    public void registerPsychologist(Psychologist psychologist) throws SQLException, MailAlreadyExistsException {//stessa cosa che ho fatto sopra ma per lo psicologo
+    public void registerPsychologist(Psychologist psychologist) throws  MailAlreadyExistsException {//stessa cosa che ho fatto sopra ma per lo psicologo
         if (emailExists(psychologist.getCredentials().getMail())) {
             throw new MailAlreadyExistsException("Mail già presente");
         }
@@ -87,8 +90,7 @@ public class LoginAndRegistrationDAOSQL implements LoginAndRegistrationDAO {
                 throw new PersistenceOperationException(REGISTER_ERROR, e);
             }
         }
-        else
-            throw new SQLException(); //DA SOSTITUIRE CON ECCEZIONE SPECIFICA PER INSERIMENTO SU UTENTI NON A BUON FINE (O FORSE NO?)
+
     }
     @Override
     public void retrievePatient(Patient patient) {

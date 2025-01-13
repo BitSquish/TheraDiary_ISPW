@@ -3,8 +3,10 @@ package com.theradiary.ispwtheradiary.controller.application;
 import com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.exceptions.LoginAndRegistrationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
+import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
@@ -31,10 +33,10 @@ public class LoginController {
             Credentials credentials = beanAndModelMapperFactory.fromBeanToModel(credentialsBean, CredentialsBean.class);
             loginGeneric.login(credentials);
             credentialsBean.setRole(credentials.getRole());
-        } catch(SQLException e) { //TODO CONTROLLARE ECCEZIONI
-            throw new WrongEmailOrPasswordException(e.getMessage());
         } catch (WrongEmailOrPasswordException e) {
             throw new WrongEmailOrPasswordException(e.getMessage());
+        } catch (LoginAndRegistrationException e) {
+            Printer.errorPrint(e.getMessage());
         }
     }
 

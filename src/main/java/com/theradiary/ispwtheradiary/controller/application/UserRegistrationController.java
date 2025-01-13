@@ -25,7 +25,7 @@ public class UserRegistrationController {
         this.registrationGenericDAO = FactoryDAO.getDAO();
     }
 
-    public void registerUser(LoggedUserBean loggedUserBean) throws MailAlreadyExistsException{
+    public void registerUser(LoggedUserBean loggedUserBean) throws MailAlreadyExistsException, LoginAndRegistrationException {
         if(loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT)){
             registerPatient(new PatientBean(loggedUserBean.getCredentialsBean(), loggedUserBean.getName(), loggedUserBean.getSurname(), loggedUserBean.getCity(), loggedUserBean.getDescription(), loggedUserBean.isInPerson(), loggedUserBean.isOnline()));
         }
@@ -35,12 +35,10 @@ public class UserRegistrationController {
     }
 
 
-    public void registerPatient(PatientBean patientBean) throws MailAlreadyExistsException {//metodo per registrare un paziente nel database
+    public void registerPatient(PatientBean patientBean) throws MailAlreadyExistsException, LoginAndRegistrationException {//metodo per registrare un paziente nel database
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         try {
             registrationGenericDAO.registerPatient(patient);
-        } catch (SQLException exception) {
-            throw new DAOException(exception.getMessage(),exception);  //DA VERIFICARE IL TIPO DI ECCEZIONE
         } catch (MailAlreadyExistsException exception) {
             throw new MailAlreadyExistsException(exception.getMessage());
         } catch (LoginAndRegistrationException e) {
@@ -52,8 +50,7 @@ public class UserRegistrationController {
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         try {
             registrationGenericDAO.registerPsychologist(psychologist);
-        } catch (SQLException exception) {
-            throw new DAOException(exception.getMessage(),exception);  //DA VERIFICARE IL TIPO DI ECCEZIONE
+         //DA VERIFICARE IL TIPO DI ECCEZIONE
         } catch (MailAlreadyExistsException | LoginAndRegistrationException exception){
             throw new MailAlreadyExistsException(exception.getMessage());
         }
