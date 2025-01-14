@@ -65,9 +65,7 @@ public class AppointmentPtGUI extends CommonGUI {
     @FXML
     public void initializeVbox() {
         //Se il paziente non ha un psicologo associato mostra un bottone che riporta alla ricerca dello psicologo
-        if(psychologistBean.getCredentialsBean().getMail() == null) {
-            psychologistNotSetted.setVisible(true);
-        } else {
+        if(psychologistBean != null && psychologistBean.getCredentialsBean().getMail() != null) {
             //Carica tutte le fasce orarie registrate dallo psicologo
             appointmentController.loadAllAppointments(allAppointments, psychologistBean);
             //Se lo psicologo associato non ha ancora registrato nessun orario per gli appuntamenti, avvisa il paziente
@@ -88,6 +86,8 @@ public class AppointmentPtGUI extends CommonGUI {
                     initializeCombobox();
                 }
             }
+        } else {
+            psychologistNotSetted.setVisible(true);
         }
     }
 

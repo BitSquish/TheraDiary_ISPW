@@ -48,9 +48,10 @@ public class PsychologistDescriptionGUI extends CommonGUI {
     public void printPsychologist(PsychologistBean psychologistBean) {
         boolean hasAlreadySentARequest = psychologistDescriptionController.hasAlreadySentARequest((PatientBean)session.getUser(), psychologistBean);
         //Se il paziente ha già uno psicologo associato o ha già inviato una richiesta per quello psicologo, nasconde il bottone per inviare la richiesta
-        if(((PatientBean)session.getUser()).getPsychologistBean().getCredentialsBean().getMail() != null || hasAlreadySentARequest){
+        if((((PatientBean) session.getUser()).getPsychologistBean() != null && ((PatientBean) session.getUser()).getPsychologistBean().getCredentialsBean().getMail() != null) || hasAlreadySentARequest){
             request.setVisible(false);
         }
+
         MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCity());
         psychologistDescriptionController.searchPsychologistInfo(psychologistBean, medicalOfficeBean);
         nameField.setText(psychologistBean.getName());

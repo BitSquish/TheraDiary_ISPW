@@ -23,20 +23,23 @@ public class PatientAccountGUI extends AccountGUI {
 
     @FXML
     private void yourPsychologist(MouseEvent event) {
-        if(((PatientBean)session.getUser()).getPsychologistBean().getCredentialsBean().getMail() == null){
-            goToSearch(event);
-        }else{
+        if(((PatientBean)session.getUser()).getPsychologistBean() != null && ((PatientBean)session.getUser()).getPsychologistBean().getCredentialsBean().getMail() != null){
             accountController.yourPsychologist(((PatientBean)session.getUser()), ((PatientBean)session.getUser()).getPsychologistBean());
             goToPsychologistDescription(event, ((PatientBean)session.getUser()).getPsychologistBean());
+        }else{
+            goToSearch(event);
+
         }
     }
 
     public void initializePsychologistField(){
-        if(((PatientBean)session.getUser()).getPsychologistBean() == null){
-            psychologist.setText("Nessuno psicologo");
-        }else{
-            accountController.yourPsychologist(((PatientBean)session.getUser()), ((PatientBean)session.getUser()).getPsychologistBean());
-            psychologist.setText(((PatientBean) session.getUser()).getPsychologistBean().getFullName());
+        if(((PatientBean)session.getUser()).getPsychologistBean() != null) {
+            if (((PatientBean) session.getUser()).getPsychologistBean().getCredentialsBean().getMail() == null) {
+                psychologist.setText("Nessuno psicologo");
+            } else {
+                accountController.yourPsychologist(((PatientBean) session.getUser()), ((PatientBean) session.getUser()).getPsychologistBean());
+                psychologist.setText(((PatientBean) session.getUser()).getPsychologistBean().getFullName());
+            }
         }
     }
 

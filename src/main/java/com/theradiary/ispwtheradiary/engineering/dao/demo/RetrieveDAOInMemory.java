@@ -18,7 +18,8 @@ public class RetrieveDAOInMemory implements RetrieveDAO {
     @Override
     public void searchPsychologists(List<Psychologist> psychologists, String name, String surname, String city, boolean inPerson, boolean online, boolean pag) throws NoResultException {
         List<Psychologist> results = new ArrayList<>();
-        for (Psychologist psychologist : SharedResources.getInstance().getPsychologists().values()) {
+
+        for (Psychologist psychologist : SharedResources.getInstance().getPsychologists().values()) {   //Qui vengono caricati correttamente
             if (matchesCriteria(psychologist, name, surname, city, inPerson, online, pag)) {
                 results.add(psychologist);
             }
@@ -37,6 +38,7 @@ public class RetrieveDAOInMemory implements RetrieveDAO {
                 matchesInPerson(psychologist, inPerson) &&
                 matchesOnline(psychologist, online) &&
                 matchesPag(psychologist, pag);
+
     }
 
     private boolean matchesName(Psychologist psychologist, String name) {
@@ -52,15 +54,24 @@ public class RetrieveDAOInMemory implements RetrieveDAO {
     }
 
     private boolean matchesInPerson(Psychologist psychologist, boolean inPerson) {
-        return !inPerson || psychologist.isInPerson();
+        if(inPerson)
+            return psychologist.isInPerson();
+        else
+            return true;
     }
 
     private boolean matchesOnline(Psychologist psychologist, boolean online) {
-        return !online || psychologist.isOnline();
+        if(online)
+            return psychologist.isOnline();
+        else
+            return true;
     }
 
     private boolean matchesPag(Psychologist psychologist, boolean pag) {
-        return !pag || psychologist.isPag();
+        if(pag)
+            return psychologist.isPag();
+        else
+            return true;
     }
 
 
@@ -147,6 +158,7 @@ public class RetrieveDAOInMemory implements RetrieveDAO {
                     Request request = new Request(patient, psychologist, LocalDate.now());
                     requests.add(request);
                 });
+        //TODO vedi se c'è mapper per richieste
     }
 
     @Override

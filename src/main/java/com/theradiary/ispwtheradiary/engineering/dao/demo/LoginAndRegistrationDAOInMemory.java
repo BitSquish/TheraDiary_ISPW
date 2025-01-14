@@ -45,6 +45,7 @@ public class LoginAndRegistrationDAOInMemory implements LoginAndRegistrationDAO 
                 SharedResources.getInstance().getPatients(),
                 patient
         );
+
     }
 
     @Override
@@ -55,6 +56,7 @@ public class LoginAndRegistrationDAOInMemory implements LoginAndRegistrationDAO 
                 SharedResources.getInstance().getPsychologists(),
                 psychologist
         );
+
 
     }
 
