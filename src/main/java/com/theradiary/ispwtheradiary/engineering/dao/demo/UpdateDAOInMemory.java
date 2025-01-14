@@ -65,11 +65,14 @@ public class UpdateDAOInMemory implements UpdateDAO {
 
     @Override
     public void deleteRequest(Request request) {
-        List<Request> requests = SharedResources.getInstance().getRequestsSent().get(request.getPsychologist().getCredentials().getMail());  //TODO questo elimina tutte le richieste, non voglio questo
+        //Prendo la lista delle richieste inviate dallo psicologo
+        List<Request> requests = SharedResources.getInstance().getRequestsSent().get(request.getPsychologist().getCredentials().getMail());
+        //Rimuovo la richiesta dalla lista di appoggio
         requests.removeIf(r -> r.getPatient().getCredentials().getMail().equals(request.getPatient().getCredentials().getMail()));
+        //Elimino tutte le richieste di quello psicologo dalla lista
         SharedResources.getInstance().getRequestsSent().remove(request.getPsychologist().getCredentials().getMail());
+        //Reinserisco le richieste (tranne quella eliminata)
         SharedResources.getInstance().getRequestsSent().put(request.getPsychologist().getCredentials().getMail(), requests);
-        Printer.print("Richiesta eliminata per " + request.getPatient().getCredentials().getMail());
     }
 
     @Override
