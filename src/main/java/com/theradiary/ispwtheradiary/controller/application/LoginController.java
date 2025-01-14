@@ -18,7 +18,6 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.CredentialsBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 
-import java.sql.SQLException;
 
 public class LoginController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;

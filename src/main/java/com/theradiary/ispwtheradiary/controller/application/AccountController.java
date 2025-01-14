@@ -20,7 +20,7 @@ import java.util.List;
 public class AccountController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final RetrieveDAO retrieveDAO=FactoryDAO.getRetrieveDAO();
-    private final CategoryAndMajorDAO categoryAndMajorDAO =  FactoryDAO.getCategoryAndMajorDao();
+    private final CategoryAndMajorDAO categoryAndMajorDAO =  FactoryDAO.getCategoryAndMajorDAO();
     public AccountController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }

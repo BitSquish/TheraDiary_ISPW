@@ -14,7 +14,6 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 
-import java.sql.SQLException;
 
 public class UserRegistrationController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;
@@ -35,7 +34,7 @@ public class UserRegistrationController {
     }
 
 
-    public void registerPatient(PatientBean patientBean) throws MailAlreadyExistsException, LoginAndRegistrationException {//metodo per registrare un paziente nel database
+    public void registerPatient(PatientBean patientBean) throws MailAlreadyExistsException {//metodo per registrare un paziente nel database
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         try {
             registrationGenericDAO.registerPatient(patient);

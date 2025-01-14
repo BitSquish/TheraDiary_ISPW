@@ -2,6 +2,7 @@ package com.theradiary.ispwtheradiary.controller.application;
 
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
+import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
@@ -39,7 +40,7 @@ public class RequestApplicationController {
             patient.setPsychologist(psychologist);
             updateDAO.setPatientsPsychologist(patient);
         } catch(Exception e){
-            throw new RuntimeException(e.getMessage()); //TODO Da cambiare
+            Printer.errorPrint(e.getMessage());
         }
     }
 

@@ -1,77 +1,94 @@
 package com.theradiary.ispwtheradiary.engineering.dao.demo;
 
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
+import com.theradiary.ispwtheradiary.engineering.dao.demo.shared.SharedResources;
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.model.*;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class UpdateDAOInMemory implements UpdateDAO {
-    private final Map<String, MedicalOffice> medicalOffices = new HashMap<>();
-    private final Map<String, Psychologist> psychologists = new HashMap<>();
-    private final Map<String, Patient> patients = new HashMap<>();
-    private final Map<String, Appointment> appointments = new HashMap<>();
+
     @Override
-    public boolean emailExists(String mail) {return psychologists.containsKey(mail) || patients.containsKey(mail);}
+    public boolean emailExists(String mail) {
+        return SharedResources.getInstance().getPsychologists().containsKey(mail) || SharedResources.getInstance().getPatients().containsKey(mail);
+    }
+
     @Override
-    public void modifyMedicalOffice(MedicalOffice medicalOffice) {medicalOffices.put(medicalOffice.getPsychologist(), medicalOffice);}
+    public void modifyMedicalOffice(MedicalOffice medicalOffice) {
+        SharedResources.getInstance().getMedicalOffices().put(medicalOffice.getPsychologist(), medicalOffice);
+    }
+
     @Override
     public void modifyCredentials(Credentials newCredentials, Credentials oldCredentials) throws MailAlreadyExistsException {
         if (!Objects.equals(newCredentials.getMail(), oldCredentials.getMail()) && emailExists(newCredentials.getMail())) {
             throw new MailAlreadyExistsException("Mail già registrata");
         }
+
         // Aggiornamento delle credenziali dell'utente
-        if (psychologists.containsKey(oldCredentials.getMail())) {
-            Psychologist psychologist = psychologists.remove(oldCredentials.getMail());
+        if (SharedResources.getInstance().getPsychologists().containsKey(oldCredentials.getMail())) {
+            Psychologist psychologist = SharedResources.getInstance().getPsychologists().remove(oldCredentials.getMail());
             psychologist.setCredentials(newCredentials);
-            psychologists.put(newCredentials.getMail(), psychologist);
-        } else if (patients.containsKey(oldCredentials.getMail())) {
-            Patient patient = patients.remove(oldCredentials.getMail());
+            SharedResources.getInstance().getPsychologists().put(newCredentials.getMail(), psychologist);
+        } else if (SharedResources.getInstance().getPatients().containsKey(oldCredentials.getMail())) {
+            Patient patient = SharedResources.getInstance().getPatients().remove(oldCredentials.getMail());
             patient.setCredentials(newCredentials);
-            patients.put(newCredentials.getMail(), patient);
+            SharedResources.getInstance().getPatients().put(newCredentials.getMail(), patient);
         } else {
             throw new PersistenceOperationException("Utente non trovato", new Throwable());
         }
     }
 
     @Override
-    public void modifyPatient(Patient patient) { patients.put(patient.getCredentials().getMail(), patient); }
+    public void modifyPatient(Patient patient) {
+        SharedResources.getInstance().getPatients().put(patient.getCredentials().getMail(), patient);
+    }
+
     @Override
-    public void modifyPsychologist(Psychologist psychologist) { psychologists.put(psychologist.getCredentials().getMail(), psychologist); }
+    public void modifyPsychologist(Psychologist psychologist) {
+        SharedResources.getInstance().getPsychologists().put(psychologist.getCredentials().getMail(), psychologist);
+    }
+
     @Override
-    public void joinPagPsychologist(Psychologist psychologist) { psychologists.put(psychologist.getCredentials().getMail(), psychologist); }
+    public void joinPagPsychologist(Psychologist psychologist) {
+        SharedResources.getInstance().getPsychologists().put(psychologist.getCredentials().getMail(), psychologist);
+    }
+
     @Override
-    public void joinPagPatient(Patient patient) { patients.put(patient.getCredentials().getMail(), patient); }
+    public void joinPagPatient(Patient patient) {
+        SharedResources.getInstance().getPatients().put(patient.getCredentials().getMail(), patient);
+    }
+
     @Override
     public void deleteRequest(Request request) {
-        Printer.print("Richiesta eliminata per"+request.getPatient().getCredentials().getMail());
+        Printer.print("Richiesta eliminata per " + request.getPatient().getCredentials().getMail());
     }
 
     @Override
     public void setRequestForAppointment(Appointment appointment) {
         String key = appointment.getPsychologist().getCredentials().getMail() + "_" + appointment.getDay() + "_" + appointment.getTimeSlot();
-        appointments.put(key, appointment);
+        SharedResources.getInstance().getAppointments().put(key, appointment);
     }
 
     @Override
-    public void clearAppointments(Psychologist psychologist, DayOfTheWeek day) {appointments.entrySet().removeIf(entry -> entry.getKey().startsWith(psychologist.getCredentials().getMail()) && entry.getKey().contains(day.toString()));}
+    public void clearAppointments(Psychologist psychologist, DayOfTheWeek day) {
+        SharedResources.getInstance().getAppointments().entrySet().removeIf(entry ->
+                entry.getKey().startsWith(psychologist.getCredentials().getMail()) && entry.getKey().contains(day.toString()));
+    }
 
     @Override
     public void addAppointments(Appointment appointmentToAdd) {
         String key = appointmentToAdd.getPsychologist().getCredentials().getMail() + "_" + appointmentToAdd.getDay() + "_" + appointmentToAdd.getTimeSlot();
-        appointments.put(key, appointmentToAdd);
+        SharedResources.getInstance().getAppointments().put(key, appointmentToAdd);
     }
 
     @Override
     public void setPatientsPsychologist(Patient patient) {
-        if (psychologists.containsKey(patient.getPsychologist().getCredentials().getMail())) {
+        if (SharedResources.getInstance().getPsychologists().containsKey(patient.getPsychologist().getCredentials().getMail())) {
             patient.setPsychologist(patient.getPsychologist());
-            patients.put(patient.getCredentials().getMail(), patient);
+            SharedResources.getInstance().getPatients().put(patient.getCredentials().getMail(), patient);
         } else {
             throw new PersistenceOperationException("Psicologo non trovato", new Throwable());
         }
@@ -79,10 +96,11 @@ public class UpdateDAOInMemory implements UpdateDAO {
 
     @Override
     public void registerMedicalOffice(MedicalOffice medicalOffice) {
-        if (medicalOffices.containsKey(medicalOffice.getPsychologist())) {
+        if (SharedResources.getInstance().getMedicalOffices().containsKey(medicalOffice.getPsychologist())) {
             throw new PersistenceOperationException("Lo studio medico è già registrato", new Throwable());
         }
-        medicalOffices.put(medicalOffice.getPsychologist(), medicalOffice);
+        SharedResources.getInstance().getMedicalOffices().put(medicalOffice.getPsychologist(), medicalOffice);
     }
+
 
 }

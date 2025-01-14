@@ -1,42 +1,40 @@
 package com.theradiary.ispwtheradiary.engineering.dao.demo;
 
 import com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO;
+import com.theradiary.ispwtheradiary.engineering.dao.demo.shared.SharedResources;
 import com.theradiary.ispwtheradiary.engineering.exceptions.*;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 public class LoginAndRegistrationDAOInMemory implements LoginAndRegistrationDAO {
     // Strutture dati in memoria
-    private final Map<String, Credentials> userTable = new ConcurrentHashMap<>();
-    private final Map<String, Patient> patientTable = new ConcurrentHashMap<>();
-    private final Map<String, Psychologist> psychologistTable = new ConcurrentHashMap<>();
+
 
     @Override
     public boolean emailExists(String mail) {
-        return userTable.containsKey(normalizeEmail(mail));
+        return SharedResources.getInstance().getUserTable().containsKey(normalizeEmail(mail));
     }
+
     private String normalizeEmail(String mail) {
         return mail.trim().toLowerCase();
     }
 
     @Override
     public void login(Credentials credentials) throws WrongEmailOrPasswordException {
-        Credentials storedCredentials = userTable.get(credentials.getMail());
+        Credentials storedCredentials = SharedResources.getInstance().getUserTable().get(credentials.getMail());
         if (storedCredentials == null || !storedCredentials.getMail().equals(credentials.getMail())) {
             throw new WrongEmailOrPasswordException("Email o password errati");
         }
         credentials.setRole(storedCredentials.getRole());
-
     }
 
     @Override
     public boolean insertUser(Credentials credentials) {
-        return userTable.putIfAbsent(credentials.getMail(), credentials) == null;
+        return SharedResources.getInstance().getUserTable().putIfAbsent(credentials.getMail(), credentials) == null;
     }
 
     @Override
@@ -44,7 +42,7 @@ public class LoginAndRegistrationDAOInMemory implements LoginAndRegistrationDAO 
         registerEntity(
                 patient.getCredentials(),
                 patient.getCredentials().getMail(),
-                patientTable,
+                SharedResources.getInstance().getPatients(),
                 patient
         );
     }
@@ -54,9 +52,10 @@ public class LoginAndRegistrationDAOInMemory implements LoginAndRegistrationDAO 
         registerEntity(
                 psychologist.getCredentials(),
                 psychologist.getCredentials().getMail(),
-                psychologistTable,
+                SharedResources.getInstance().getPsychologists(),
                 psychologist
         );
+
     }
 
     private <T> void registerEntity(Credentials credentials, String email, Map<String, T> entityTable, T entity)
@@ -73,7 +72,7 @@ public class LoginAndRegistrationDAOInMemory implements LoginAndRegistrationDAO 
 
     @Override
     public void retrievePatient(Patient patient) throws NoResultException {
-        retrieveEntity(patientTable, patient.getCredentials().getMail(), patient, storedPatient -> {
+        retrieveEntity(SharedResources.getInstance().getPatients(), patient.getCredentials().getMail(), patient, storedPatient -> {
             patient.setName(storedPatient.getName());
             patient.setSurname(storedPatient.getSurname());
             patient.setCity(storedPatient.getCity());
@@ -87,16 +86,21 @@ public class LoginAndRegistrationDAOInMemory implements LoginAndRegistrationDAO 
 
     @Override
     public void retrievePsychologist(Psychologist psychologist) throws NoResultException {
-        retrieveEntity(psychologistTable, psychologist.getCredentials().getMail(), psychologist, storedPsychologist -> {
-            psychologist.setName(storedPsychologist.getName());
-            psychologist.setSurname(storedPsychologist.getSurname());
-            psychologist.setCity(storedPsychologist.getCity());
-            psychologist.setDescription(storedPsychologist.getDescription());
-            psychologist.setPag(storedPsychologist.isPag());
-            psychologist.setOnline(storedPsychologist.isOnline());
-            psychologist.setInPerson(storedPsychologist.isInPerson());
-        });
+            if (psychologist == null || psychologist.getCredentials() == null || psychologist.getCredentials().getMail() == null) {
+                throw new IllegalArgumentException("Psychologist or credentials or email is null");
+            }
+            retrieveEntity(SharedResources.getInstance().getPsychologists(), psychologist.getCredentials().getMail(), psychologist, storedPsychologist -> {
+                psychologist.setName(storedPsychologist.getName());
+                psychologist.setSurname(storedPsychologist.getSurname());
+                psychologist.setCity(storedPsychologist.getCity());
+                psychologist.setDescription(storedPsychologist.getDescription());
+                psychologist.setPag(storedPsychologist.isPag());
+                psychologist.setOnline(storedPsychologist.isOnline());
+                psychologist.setInPerson(storedPsychologist.isInPerson());
+            });
+
     }
+
     // Metodo generico per recuperare un'entità da una tabella
     private <T> void retrieveEntity(Map<String, T> entityTable, String email, T entity, Consumer<T> populateFields) // <T> è un tipo generico
             throws NoResultException { // parametri: tabella, email, entità, funzione per popolare i campi
@@ -106,6 +110,7 @@ public class LoginAndRegistrationDAOInMemory implements LoginAndRegistrationDAO 
         }
         populateFields.accept(storedEntity); // popola i campi dell'entità
     }
+
 }
 
 
