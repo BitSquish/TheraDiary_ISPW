@@ -9,7 +9,6 @@ import com.theradiary.ispwtheradiary.model.Patient;
 public class AppointmentMapper implements BeanAndModelMapper<AppointmentBean, Appointment>{
 
     PsychologistMapper psychologistMapper = new PsychologistMapper();
-    PatientMapper patientMapper = new PatientMapper();
     @Override
     public Appointment fromBeanToModel(AppointmentBean bean) {
         if(bean.getDay() != null){

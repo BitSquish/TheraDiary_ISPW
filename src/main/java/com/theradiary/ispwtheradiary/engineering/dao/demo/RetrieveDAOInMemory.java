@@ -152,13 +152,10 @@ public class RetrieveDAOInMemory implements RetrieveDAO {
 
     @Override
     public void retrievePatientsRequest(Psychologist psychologist, List<Request> requests) {
-        SharedResources.getInstance().getPatients().values().stream()
-                .filter(patient -> patient.getPsychologist().getCredentials().getMail().equals(psychologist.getCredentials().getMail()))
-                .forEach(patient -> {
-                    Request request = new Request(patient, psychologist, LocalDate.now());
-                    requests.add(request);
-                });
-        //TODO vedi se c'è mapper per richieste
+        List<Request> requestsSentForPsychologist = SharedResources.getInstance().getRequestsSent().get(psychologist.getCredentials().getMail());
+        if (requestsSentForPsychologist != null) {
+            requests.addAll(requestsSentForPsychologist);
+        }
     }
 
     @Override
@@ -182,7 +179,6 @@ public class RetrieveDAOInMemory implements RetrieveDAO {
         if (psychologist == null || patient == null) {
             return null;
         }
-
         return SharedResources.getInstance().getAppointments().get(patient.getCredentials().getMail() + "_" + psychologist.getCredentials().getMail());
     }
 
