@@ -6,15 +6,12 @@ import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.model.*;
-
-import java.time.LocalDate;
 import java.util.*;
 
 public class RetrieveDAOInMemory implements RetrieveDAO {
 
 
-    private static final String ERROR_INVALID_CATEGORY = "Categoria non valida: ";
-    private static final String ERROR_INVALID_MAJOR = "Specializzazione non valida: ";
+
     @Override
     public void searchPsychologists(List<Psychologist> psychologists, String name, String surname, String city, boolean inPerson, boolean online, boolean pag) throws NoResultException {
         List<Psychologist> results = new ArrayList<>();
@@ -89,47 +86,36 @@ public class RetrieveDAOInMemory implements RetrieveDAO {
         }
     }
 
-    @Override
-    public boolean retrieveCategories(Patient patient) {
-        if (patient == null || !SharedResources.getInstance().getPatientCategories().containsKey(patient.getCredentials().getMail())) {
-            return false;
-        }
 
-        List<Category> categories = new ArrayList<>();
-        patient.setCategories(categories);
-        return true;
-    }
-
-    @Override
-    public void addCategory(ArrayList<Category> categories, String categoryName) {
-        try {
-            Category category = Category.valueOf(categoryName);
-            categories.add(category);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(ERROR_INVALID_CATEGORY + categoryName);
-        }
-    }
 
     @Override
     public boolean retrieveMajors(Psychologist psychologist) {
         if (psychologist == null || !SharedResources.getInstance().getPsychologistMajors().containsKey(psychologist.getCredentials().getMail())) {
             return false;
         }
-
-        List<Major> majors = new ArrayList<>();
-        psychologist.setMajors(majors);
+        Set<Major> major =SharedResources.getInstance().getPsychologistMajors().get(psychologist.getCredentials().getMail());
+        if(major!=null){
+            psychologist.setMajors(new ArrayList<>(major));
+        }else{
+            psychologist.setMajors(new ArrayList<>());
+        }
+        return true;
+    }
+    @Override
+    public boolean retrieveCategories(Patient patient) {
+        if (patient == null || !SharedResources.getInstance().getPatientCategories().containsKey(patient.getCredentials().getMail())) {
+            return false;
+        }
+        Set<Category> categories = SharedResources.getInstance().getPatientCategories().get(patient.getCredentials().getMail());
+        if(categories!=null) {
+            patient.setCategories(new ArrayList<>(categories));
+        }else{
+            patient.setCategories(new ArrayList<>());
+        }
         return true;
     }
 
-    @Override
-    public void addMajor(ArrayList<Major> majors, String majorName) {
-        try {
-            Major major = Major.valueOf(majorName);
-            majors.add(major);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(ERROR_INVALID_MAJOR + majorName);
-        }
-    }
+
 
     @Override
     public List<Patient> retrievePatientList(Psychologist psychologist) {

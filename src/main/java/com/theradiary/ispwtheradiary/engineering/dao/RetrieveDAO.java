@@ -18,11 +18,9 @@ public interface RetrieveDAO {
 
     boolean retrieveCategories(Patient patient);
 
-    void addCategory(ArrayList<Category> categories, String categoryName);
 
     boolean retrieveMajors(Psychologist psychologist);
 
-    void addMajor(ArrayList<Major> majors, String majorName);
 
     List<Patient> retrievePatientList(Psychologist psychologist);
 

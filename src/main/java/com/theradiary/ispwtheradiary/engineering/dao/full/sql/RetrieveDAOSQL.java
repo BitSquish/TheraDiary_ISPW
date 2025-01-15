@@ -34,7 +34,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
     private static final String AVAILABLE = "available";
     private static final String APPOINTMENT_ERROR = "Errore nel recupero degli appuntamenti";
 
-
+    @Override
     public void searchPsychologists(List<Psychologist> psychologists, String name, String surname, String city, boolean inPerson, boolean online, boolean pag) {
         try (Connection conn = ConnectionFactory.getConnection();
              ResultSet rs = RetrieveQuery.searchPsychologist(conn, name, surname, city, inPerson, online, pag)) {
@@ -59,7 +59,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
             throw new PersistenceOperationException("Errore nella ricerca", e);
         }
     }
-
+    @Override
     public boolean retrieveMedicalOffice(MedicalOffice medicalOffice) {
         try (Connection conn = ConnectionFactory.getConnection();
              ResultSet rs = RetrieveQuery.retrieveMedicalOffice(conn, medicalOffice.getPsychologist())) {
@@ -77,7 +77,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
 
     }
 
-
+    @Override
     public boolean retrieveCategories(Patient patient) {
         try (Connection conn = ConnectionFactory.getConnection();
              ResultSet rs = RetrieveQuery.retrieveCategories(conn, patient.getCredentials().getMail())) {
@@ -111,7 +111,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
             throw new IllegalArgumentException("Categoria non valida: " + categoryName);
         }
     }
-
+    @Override
     public boolean retrieveMajors(Psychologist psychologist) {
         try (Connection conn = ConnectionFactory.getConnection();
              ResultSet rs = RetrieveQuery.retrieveMajors(conn, psychologist.getCredentials().getMail())) {
@@ -146,7 +146,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
             throw new IllegalArgumentException("Specializzazione non valida: " + majorName);
         }
     }
-
+    @Override
     public List<Patient> retrievePatientList(Psychologist psychologist) {
         List<Patient> patients = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getConnection();
@@ -173,7 +173,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
         }
         return patients;
     }
-
+    @Override
     public void checkPag(LoggedUser loggedUser) {
         try (Connection conn = ConnectionFactory.getConnection()){
             ResultSet rs;
@@ -189,7 +189,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
         }
     }
 
-
+    @Override
     public void retrievePatientsRequest(Psychologist psychologist, List<Request> requests) {
         try(Connection conn = ConnectionFactory.getConnection()){
             ResultSet rs = RetrieveQuery.retrieveRequests(conn, psychologist.getCredentials().getMail());
@@ -233,7 +233,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
             throw new PersistenceOperationException(APPOINTMENT_ERROR, e);
         }
     }
-
+    @Override
     public Psychologist yourPsychologist(Patient patient) {
         try(Connection conn = ConnectionFactory.getConnection();
             ResultSet rs = RetrieveQuery.yourPsychologist(conn, patient.getCredentials().getMail())){
@@ -255,7 +255,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
             throw new PersistenceOperationException("Errore nel recupero dello psicologo", e);
         }
     }
-
+    @Override
     public void retrieveAllAppointments(Psychologist psychologist, List<Appointment> appointments) {
         try(Connection conn = ConnectionFactory.getConnection();
             ResultSet rs = RetrieveQuery.retrieveAllAppointments(conn, psychologist.getCredentials().getMail())){
@@ -277,7 +277,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
         }
     }
 
-
+    @Override
     public Appointment retrievePatientAppointment(Patient patient, Psychologist psychologist) {
         boolean availability = false;
         try(Connection conn = ConnectionFactory.getConnection();

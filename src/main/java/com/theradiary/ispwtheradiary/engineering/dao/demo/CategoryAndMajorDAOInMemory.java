@@ -6,8 +6,6 @@ import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
-
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CategoryAndMajorDAOInMemory implements CategoryAndMajorDAO {
@@ -16,27 +14,31 @@ public class CategoryAndMajorDAOInMemory implements CategoryAndMajorDAO {
     /*****************************************Gestione categorie paziente**************************************************/
     @Override
     public void addCategory(Patient patient, Category category) {
+        if (patient == null || category == null) {
+            throw new IllegalArgumentException("Patient and Category must not be null");
+        }
         SharedResources.getInstance().getPatientCategories()
                 .computeIfAbsent(patient.getCredentials().getMail(), k -> ConcurrentHashMap.newKeySet())
                 .add(category);
-    } //computeIfAbsent: se la chiave non è presente, la inserisce con il valore restituito dalla lambda
+    }
 
     @Override
     public void removeCategory(Patient patient, Category category) {
-        Set<Category> categories = SharedResources.getInstance().getPatientCategories()
-                .get(patient.getCredentials().getMail());
-        if (categories != null) { //se il paziente ha delle categorie
-            categories.remove(category);
-            if (categories.isEmpty()) { //se il paziente non ha più categorie
-                SharedResources.getInstance().getPatientCategories()
-                        .remove(patient.getCredentials().getMail());
-            }
+        if (patient == null || category == null) {
+            throw new IllegalArgumentException("Patient and Category must not be null");
         }
+        SharedResources.getInstance().getPatientCategories()
+                .computeIfPresent(patient.getCredentials().getMail(), (key, categories) -> {
+                    categories.remove(category);
+                    return categories.isEmpty() ? null : categories;
+                });
     }
-
-    /*****************************************Gestione specializzazioni psicologo**************************************************/
+    /********************************************Gestione specializzazioni***********************************************************************/
     @Override
     public void addMajor(Psychologist psychologist, Major major) {
+        if (psychologist == null || major == null) {
+            throw new IllegalArgumentException("Psychologist and Major must not be null");
+        }
         SharedResources.getInstance().getPsychologistMajors()
                 .computeIfAbsent(psychologist.getCredentials().getMail(), k -> ConcurrentHashMap.newKeySet())
                 .add(major);
@@ -44,15 +46,13 @@ public class CategoryAndMajorDAOInMemory implements CategoryAndMajorDAO {
 
     @Override
     public void removeMajor(Psychologist psychologist, Major major) {
-        Set<Major> majors = SharedResources.getInstance().getPsychologistMajors()
-                .get(psychologist.getCredentials().getMail());
-        if (majors != null) {
-            majors.remove(major);
-            if (majors.isEmpty()) {
-                SharedResources.getInstance().getPsychologistMajors()
-                        .remove(psychologist.getCredentials().getMail());
-            }
+        if (psychologist == null || major == null) {
+            throw new IllegalArgumentException("Psychologist and Major must not be null");
         }
+        SharedResources.getInstance().getPsychologistMajors()
+                .computeIfPresent(psychologist.getCredentials().getMail(), (key, majors) -> {
+                    majors.remove(major);
+                    return majors.isEmpty() ? null : majors;
+                });
     }
-
 }
