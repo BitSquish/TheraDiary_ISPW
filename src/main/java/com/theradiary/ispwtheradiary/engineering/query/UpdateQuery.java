@@ -4,7 +4,10 @@ package com.theradiary.ispwtheradiary.engineering.query;
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.enums.TimeSlot;
 import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
+import com.theradiary.ispwtheradiary.model.Appointment;
+import com.theradiary.ispwtheradiary.model.LoggedUser;
 import com.theradiary.ispwtheradiary.model.Patient;
+import com.theradiary.ispwtheradiary.model.Psychologist;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,21 +32,24 @@ public class UpdateQuery {
         }//Possono esserci problemi da gestire?
     }
 
-    public static void modifyPsychologist(Connection conn, String mail, String name, String surname, String city, String description, boolean inPerson, boolean online) throws SQLException {
-        System.out.println(mail); //Null
+    public static void modifyPsychologist(Connection conn, Psychologist psychologist) throws SQLException {
         String query = "UPDATE psychologist SET name = ?, surname = ?, city = ?, description = ?, inPerson = ?, online = ? WHERE mail = ?";
         try(PreparedStatement pstmt = conn.prepareStatement(query)){
-            pstmt.setString(1, name);
-            pstmt.setString(2, surname);
-            pstmt.setString(3, city);
-            pstmt.setString(4, description);
-            pstmt.setBoolean(5, inPerson);
-            pstmt.setBoolean(6, online);
-            pstmt.setString(7, mail);
+            setModifyParameters(pstmt, psychologist);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new PersistenceOperationException("Errore nella modifica del profilo", e);
         }
+    }
+
+    private static void setModifyParameters(PreparedStatement pstmt, LoggedUser loggedUser) throws SQLException {
+        pstmt.setString(1, loggedUser.getName());
+        pstmt.setString(2, loggedUser.getSurname());
+        pstmt.setString(3, loggedUser.getCity());
+        pstmt.setString(4, loggedUser.getDescription());
+        pstmt.setBoolean(5, loggedUser.isInPerson());
+        pstmt.setBoolean(6, loggedUser.isOnline());
+        pstmt.setString(7, loggedUser.getCredentials().getMail());
     }
 
     public static void modifyCredentials(Connection conn, String mail, String password, String oldMail) {
@@ -59,17 +65,11 @@ public class UpdateQuery {
     }
 
 
-    public static void modifyPatient(Connection conn, String mail, String name, String surname, String city, String description, boolean inPerson, boolean online) {
+    public static void modifyPatient(Connection conn, Patient patient) {
         String query = "UPDATE patient SET name = ?, surname = ?, city = ?, description = ?, inPerson = ?, online = ? WHERE mail = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, name);
-            pstmt.setString(2, surname);
-            pstmt.setString(3, city);
-            pstmt.setString(4, description);
-            pstmt.setBoolean(5, inPerson);
-            pstmt.setBoolean(6, online);
-            pstmt.setString(7, mail);  // This is the parameter for the WHERE clause
+            setModifyParameters(pstmt, patient);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new PersistenceOperationException("Errore nella modifica del profilo", e);
@@ -131,19 +131,19 @@ public class UpdateQuery {
         }
     }
 
-    public static void addAppointment(Connection conn, String psychologist, DayOfTheWeek day, TimeSlot timeSlot, boolean inPerson, boolean online, String patient, boolean available) {
+    public static void addAppointment(Connection conn, Appointment appointment, String patient) {
         String query = "INSERT INTO appointment VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, psychologist);
-            pstmt.setString(2, day.toString());
-            pstmt.setString(3, timeSlot.toString());
-            pstmt.setBoolean(4, inPerson);
-            pstmt.setBoolean(5, online);
+            pstmt.setString(1, appointment.getPsychologist().getCredentials().getMail());
+            pstmt.setString(2, appointment.getDay().toString());
+            pstmt.setString(3, appointment.getTimeSlot().toString());
+            pstmt.setBoolean(4, appointment.isInPerson());
+            pstmt.setBoolean(5, appointment.isOnline());
             if(patient == null)
                 pstmt.setNull(6, java.sql.Types.VARCHAR);
             else
                 pstmt.setString(6, patient);
-            pstmt.setBoolean(7, available);
+            pstmt.setBoolean(7, appointment.isAvailable());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new PersistenceOperationException("Errore nell'aggiunta dell'appuntamento", e);
@@ -182,16 +182,16 @@ public class UpdateQuery {
         }
     }
 
-    public static void setRequestForAppointment(Connection conn, String psychologist, DayOfTheWeek day, TimeSlot timeSlot, String patient, boolean inPerson, boolean online, boolean available) {
+    public static void setRequestForAppointment(Connection conn, Appointment appointment) {
         String query = "UPDATE appointment SET patient = ?, inPerson = ?, online = ?, available = ? WHERE psychologist = ? AND day = ? AND timeSlot = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, patient);
-            pstmt.setBoolean(2, inPerson);
-            pstmt.setBoolean(3, online);
-            pstmt.setBoolean(4, available);
-            pstmt.setString(5, psychologist);
-            pstmt.setString(6, day.toString());
-            pstmt.setString(7, timeSlot.toString());
+            pstmt.setString(1, appointment.getPatient().getCredentials().getMail());
+            pstmt.setBoolean(2, appointment.isInPerson());
+            pstmt.setBoolean(3, appointment.isOnline());
+            pstmt.setBoolean(4, appointment.isAvailable());
+            pstmt.setString(5, appointment.getPsychologist().getCredentials().getMail());
+            pstmt.setString(6, appointment.getDay().toString());
+            pstmt.setString(7, appointment.getTimeSlot().toString());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
