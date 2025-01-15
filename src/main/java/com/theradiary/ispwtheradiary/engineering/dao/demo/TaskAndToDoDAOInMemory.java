@@ -44,8 +44,8 @@ public class TaskAndToDoDAOInMemory implements TaskAndToDoDAO {
 
     @Override
     public List<ToDoItem> retriveToDoList(Patient patient) {
-        return new ArrayList<>(SharedResources.getInstance().getToDoTable()
-                .getOrDefault(patient.getCredentials().getMail(), Collections.emptyList()));
+        return SharedResources.getInstance().getToDoTable()
+                .computeIfAbsent(patient.getCredentials().getMail(), k -> new ArrayList<>());
     }
 
     @Override
@@ -53,7 +53,13 @@ public class TaskAndToDoDAOInMemory implements TaskAndToDoDAO {
         List<ToDoItem> patientToDo = SharedResources.getInstance().getToDoTable()
                 .get(patient.getCredentials().getMail());
         if (patientToDo != null) {
-            patientToDo.remove(toDoItem);
+            for (int i = 0; i < patientToDo.size(); i++) {
+                ToDoItem currentToDo = patientToDo.get(i);
+                if (currentToDo.getToDo().equals(toDoItem.getToDo())) {
+                    patientToDo.remove(i);
+                    break;
+                }
+            }
         }
     }
 
@@ -69,18 +75,24 @@ public class TaskAndToDoDAOInMemory implements TaskAndToDoDAO {
         List<Task> patientTask = SharedResources.getInstance().getTaskTable()
                 .get(patient.getCredentials().getMail());
         if (patientTask != null) {
-            patientTask.remove(task);
+            for (int i = 0; i < patientTask.size(); i++) {
+                Task currentTask = patientTask.get(i);
+                if (currentTask.getTaskName().equals(task.getTaskName()) || currentTask.getTaskDeadline().equals(task.getTaskDeadline())) {
+                    patientTask.remove(i);
+                    break;
+                }
+            }
         }
     }
 
     @Override
     public void updateTask(Patient patient, Task task) {
-        List<Task> patientTask = SharedResources.getInstance().getTaskTable()
-                .get(patient.getCredentials().getMail());
-        if (patientTask != null) {
-            for (int i = 0; i < patientTask.size(); i++) {
-                if (patientTask.get(i).equals(task)) {
-                    patientTask.set(i, task); //aggiorno il task
+        List<Task> updatedList= SharedResources.getInstance().getTaskTable().get(patient.getCredentials().getMail());
+        if(updatedList!=null){
+            for(int i=0; i<updatedList.size(); i++){
+                Task currentTask= updatedList.get(i);
+                if(currentTask.getTaskName().equals(task.getTaskName()) || currentTask.getTaskDeadline().equals(task.getTaskDeadline())){
+                    updatedList.set(i, task);
                     break;
                 }
             }
@@ -89,7 +101,7 @@ public class TaskAndToDoDAOInMemory implements TaskAndToDoDAO {
 
     @Override
     public List<Task> retrieveTasks(Patient patient) {
-        return new ArrayList<>(SharedResources.getInstance().getTaskTable()
-                .getOrDefault(patient.getCredentials().getMail(), Collections.emptyList()));
+        return SharedResources.getInstance().getTaskTable()
+                .computeIfAbsent(patient.getCredentials().getMail(), k -> new ArrayList<>());
     }
 }

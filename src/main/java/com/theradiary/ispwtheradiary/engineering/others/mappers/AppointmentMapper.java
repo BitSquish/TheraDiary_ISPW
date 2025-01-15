@@ -24,6 +24,9 @@ public class AppointmentMapper implements BeanAndModelMapper<AppointmentBean, Ap
 
     @Override
     public AppointmentBean fromModelToBean(Appointment model) {
+        if(model==null) {
+            throw new IllegalArgumentException("Model cannot be null");
+        }
         return new AppointmentBean(psychologistMapper.fromModelToBean(model.getPsychologist()), model.getDay(), model.getTimeSlot(), model.isInPerson(), model.isOnline());
     }
 }

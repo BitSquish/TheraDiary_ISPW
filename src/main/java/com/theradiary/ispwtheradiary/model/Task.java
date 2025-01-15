@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Task {
     private String taskName;
@@ -37,4 +38,5 @@ public class Task {
     public void setTaskStatus(String taskStatus) {
         this.taskStatus = taskStatus;
     }
+
 }
