@@ -1,3 +1,4 @@
+package test;
 
 import com.theradiary.ispwtheradiary.engineering.dao.*;
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
@@ -125,7 +126,7 @@ class TestPatient {
     void testRetrieveCategories(){
         Patient patient=createPatient(); // Creazione diretta di un Patient
         Category category=Category.OTHER; // Creazione di una categoria
-        CategoryAndMajorDAO categoryAndMajorDAO = FactoryDAO.getCategoryAndMajorDao(); // Simulated environment
+        CategoryAndMajorDAO categoryAndMajorDAO = FactoryDAO.getCategoryAndMajorDAO(); // Simulated environment
         RetrieveDAO retrieveDAO = FactoryDAO.getRetrieveDAO();
         categoryAndMajorDAO.addCategory(patient, category);
         try{

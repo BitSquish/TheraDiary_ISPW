@@ -1,7 +1,7 @@
 package com.theradiary.ispwtheradiary.model;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
-import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
+
 
 import java.util.ArrayList;
 import java.util.List;

@@ -24,7 +24,7 @@ public class DiaryAndTasksGUI extends com.theradiary.ispwtheradiary.controller.g
 
     @FXML
     protected void goToTest(MouseEvent event){
-        showMessage(Alert.AlertType.INFORMATION, "Test", "Work in progress");
+        showMessage(Alert.AlertType.INFORMATION, "test", "Work in progress");
     }
 
 

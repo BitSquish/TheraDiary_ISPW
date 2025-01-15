@@ -19,10 +19,10 @@ public class ConnectionFactory {
             Properties properties = new Properties();
             properties.load(input);
 
-            String connection_url = properties.getProperty("CONNECTION_URL");
+            String connectionUrl = properties.getProperty("CONNECTION_URL");
             String user = properties.getProperty("LOGIN_USER");
             String pass = properties.getProperty("LOGIN_PASS");
-            return DriverManager.getConnection(connection_url, user, pass);
+            return DriverManager.getConnection(connectionUrl, user, pass);
         } catch (IOException e) {
             throw new LoadingException("Errore nel caricamento del file di configurazione", e);
         }
