@@ -24,7 +24,7 @@ public class UserRegistrationController {
         this.registrationGenericDAO = FactoryDAO.getDAO();
     }
 
-    public void registerUser(LoggedUserBean loggedUserBean) throws MailAlreadyExistsException, LoginAndRegistrationException {
+    public void registerUser(LoggedUserBean loggedUserBean) throws MailAlreadyExistsException {
         if(loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT)){
             registerPatient(new PatientBean(loggedUserBean.getCredentialsBean(), loggedUserBean.getName(), loggedUserBean.getSurname(), loggedUserBean.getCity(), loggedUserBean.getDescription(), loggedUserBean.isInPerson(), loggedUserBean.isOnline()));
         }

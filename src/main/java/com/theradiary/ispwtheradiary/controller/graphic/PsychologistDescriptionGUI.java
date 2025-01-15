@@ -60,7 +60,7 @@ public class PsychologistDescriptionGUI extends CommonGUI {
         mailField.setText(psychologistBean.getCredentialsBean().getMail());
         modalityField.setText(psychologistBean.getModality());
         StringJoiner majorString= new StringJoiner(",");
-        AccountController account = new com.theradiary.ispwtheradiary.controller.application.AccountController();
+        AccountController account = new AccountController();
         account.retrieveMajors(psychologistBean);
         if(psychologistBean.getMajors() != null && !psychologistBean.getMajors().isEmpty()) {
             for (Major m : psychologistBean.getMajors()) {

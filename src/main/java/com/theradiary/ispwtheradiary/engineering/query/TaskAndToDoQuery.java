@@ -13,8 +13,7 @@ import java.time.LocalDate;
 public class TaskAndToDoQuery {
     private TaskAndToDoQuery(){}
     /*-------------------------DIARIO-------------------------*/
-    public static void Diary(Connection conn, String diary, String mail, LocalDate selectedDate) {
-        System.out.println("Contenuto del diario da inserire: " + diary);
+    public static void diary(Connection conn, String diary, String mail, LocalDate selectedDate) {
         String query= "INSERT INTO diary (contenuto,data_creazione,patient) VALUES (?,?,?)";
         try  {
             PreparedStatement pstmt = conn.prepareStatement(query);

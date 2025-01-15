@@ -20,15 +20,16 @@ import java.util.Optional;
 public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
     private static final String CONTENT = "contenuto";
     /**************diario***************/
+    @Override
     public void diary(Patient patient, String diaryContent, LocalDate selectedDate) {
         try(Connection conn= ConnectionFactory.getConnection()) {
-            TaskAndToDoQuery.Diary(conn, diaryContent, patient.getCredentials().getMail(), selectedDate);
+            TaskAndToDoQuery.diary(conn, diaryContent, patient.getCredentials().getMail(), selectedDate);
         }catch (SQLException e){
             throw new PersistenceOperationException("Errore nel salvataggio del diario",e);
         }
     }
 
-
+    @Override
     public Optional<String> getDiaryForToday(Patient patient) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             ResultSet rs=TaskAndToDoQuery.getDiaryForToday(conn, patient.getCredentials().getMail());
@@ -43,6 +44,7 @@ public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
         }
 
     }
+    @Override
     public Optional<String> getDiaryEntry(LocalDate selectedDate,Patient patient) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             ResultSet rs=TaskAndToDoQuery.getDiaryEntry(conn, selectedDate, patient.getCredentials().getMail());
@@ -57,6 +59,7 @@ public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
     }
 
     /**************to do***************/
+    @Override
     public void saveToDo(Patient patient, ToDoItem toDoItem) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.saveToDoItem(conn, patient.getCredentials().getMail(), toDoItem);
@@ -66,7 +69,7 @@ public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
     }
 
 
-
+    @Override
     public List<ToDoItem> retriveToDoList(Patient patient) {
         List<ToDoItem> toDoItems=new ArrayList<>();
         try(Connection conn= ConnectionFactory.getConnection()) {
@@ -79,7 +82,7 @@ public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
         }
         return toDoItems;
     }
-
+    @Override
     public void deleteToDoItem(Patient patient, ToDoItem toDoItem) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.deleteToDoItem(conn, patient.getCredentials().getMail(), toDoItem);
@@ -88,7 +91,7 @@ public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
         }
     }
     /*********************************task**********************************/
-
+    @Override
     public void saveTask(Patient patient, Task task) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.saveTask(conn, patient.getCredentials().getMail(), task);
@@ -96,6 +99,7 @@ public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
             throw new PersistenceOperationException("Errore nel salvataggio del task",e);
         }
     }
+    @Override
     public void deleteTask(Patient patient, Task task) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.deleteTask(conn, patient.getCredentials().getMail(), task);
@@ -103,7 +107,7 @@ public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
             throw new PersistenceOperationException("Errore nella cancellazione del task",e);
         }
     }
-
+    @Override
     public void updateTask(Patient patient, Task task) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.updateTask(conn, patient.getCredentials().getMail(), task);
@@ -111,7 +115,7 @@ public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
             throw new PersistenceOperationException("Errore nell'aggiornamento del task",e);
         }
     }
-
+    @Override
     public List<Task> retrieveTasks(Patient patient) {
         List<Task> task=new ArrayList<>();
         try(Connection conn= ConnectionFactory.getConnection()) {

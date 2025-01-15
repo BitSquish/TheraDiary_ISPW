@@ -49,8 +49,11 @@ public class PatientProfileGUI extends CommonGUI {
         city.setText(patientBean.getCity());
         //Recupero dell'appuntamento
         AppointmentBean appointmentBean = patientProfileController.retrieveAppointment(patientBean, (PsychologistBean) session.getUser());
-        if(appointmentBean != null && appointmentBean.getDay() != null)
+        if(appointmentBean != null && appointmentBean.getDay() != null && appointmentBean.getPsychologistBean()!=null && appointmentBean.getTimeSlot() != null )
             appointment.setText(DayOfTheWeek.translateDay(appointmentBean.getDay().getId()) + ", fascia oraria: " + TimeSlot.translateTimeSlot(appointmentBean.getTimeSlot().getId()));
+        else{
+            appointment.setText("Non presente");
+        }
         StringJoiner categoryString = new StringJoiner(",");
         patientProfileController.retrieveCategories(patientBean);
         if (patientBean.getCategories() != null && !patientBean.getCategories().isEmpty()) {

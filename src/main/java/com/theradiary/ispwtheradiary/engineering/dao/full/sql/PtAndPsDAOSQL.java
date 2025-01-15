@@ -14,6 +14,7 @@ import java.sql.SQLException;
 
 
 public class PtAndPsDAOSQL implements PtAndPsDAO {
+    @Override
     public void sendRequest(Request request) {
         try(Connection conn = ConnectionFactory.getConnection()) {
             PtAndPsQuery.sendRequest(conn, request.getPsychologist().getCredentials().getMail(), request.getPatient().getCredentials().getMail(), request.getDate());
@@ -22,6 +23,7 @@ public class PtAndPsDAOSQL implements PtAndPsDAO {
         }
     }
 
+   @Override
     public boolean hasAlreadySentARequest(Request request) {
         try (Connection conn = ConnectionFactory.getConnection()) {
             ResultSet rs = PtAndPsQuery.hasAlreadySentARequest(conn, request.getPsychologist().getCredentials().getMail(), request.getPatient().getCredentials().getMail());
@@ -34,6 +36,7 @@ public class PtAndPsDAOSQL implements PtAndPsDAO {
         }
     }
 
+   @Override
     public boolean hasAlreadyAPsychologist(Patient patient) {
         try (Connection conn = ConnectionFactory.getConnection()) {
             return PtAndPsQuery.hasAlreadyAPsychologist(conn, patient.getCredentials().getMail());

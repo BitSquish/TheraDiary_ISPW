@@ -20,7 +20,7 @@ import java.util.Objects;
 import static com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO.REGISTER_ERROR;
 
 public class UpdateDAOSQL implements UpdateDAO {
-
+    @Override
     public boolean emailExists(String mail) throws SQLException {
         try (Connection conn = ConnectionFactory.getConnection()){
             int rs = LoginAndRegistrationQuery.checkMail(conn, mail);
@@ -29,6 +29,7 @@ public class UpdateDAOSQL implements UpdateDAO {
         }
         return false;
     }
+    @Override
     public void modifyMedicalOffice(MedicalOffice medicalOffice) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.modifyMedicalOffice(conn, medicalOffice.getPsychologist(), medicalOffice.getCity(), medicalOffice.getPostCode(), medicalOffice.getAddress(), medicalOffice.getOtherInfo());
@@ -36,6 +37,7 @@ public class UpdateDAOSQL implements UpdateDAO {
             throw new PersistenceOperationException("Errore nella modifica dello studio medico", e);
         }
     }
+    @Override
 
     public void registerMedicalOffice(MedicalOffice medicalOffice) {
         try(Connection conn = ConnectionFactory.getConnection()){
@@ -44,7 +46,7 @@ public class UpdateDAOSQL implements UpdateDAO {
             throw new PersistenceOperationException(REGISTER_ERROR, e);
         }
     }
-
+    @Override
     public void modifyCredentials(Credentials newCredentials, Credentials oldCredentials) throws MailAlreadyExistsException {
         try(Connection conn = ConnectionFactory.getConnection()){
             if(!Objects.equals(newCredentials.getMail(), oldCredentials.getMail()) && emailExists(newCredentials.getMail()))
@@ -57,7 +59,7 @@ public class UpdateDAOSQL implements UpdateDAO {
             throw new MailAlreadyExistsException(e.getMessage());
         }
     }
-
+    @Override
     public void modifyPsychologist(Psychologist psychologist) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.modifyPsychologist(conn, psychologist.getCredentials().getMail(), psychologist.getName(), psychologist.getSurname(), psychologist.getCity(), psychologist.getDescription(), psychologist.isInPerson(), psychologist.isOnline());
@@ -65,7 +67,7 @@ public class UpdateDAOSQL implements UpdateDAO {
             throw new PersistenceOperationException("Errore nella modifica dello psicologo", e);
         }
     }
-
+    @Override
     public void modifyPatient(Patient patient) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.modifyPatient(conn, patient.getCredentials().getMail(), patient.getName(), patient.getSurname(), patient.getCity(), patient.getDescription(), patient.isInPerson(), patient.isOnline());
@@ -73,7 +75,7 @@ public class UpdateDAOSQL implements UpdateDAO {
             throw new PersistenceOperationException("Errore nella modifica del paziente", e);
         }
     }
-
+    @Override
     public void joinPagPsychologist(Psychologist psychologist) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.joinPagPsychologist(conn, psychologist.getCredentials().getMail());
@@ -81,7 +83,7 @@ public class UpdateDAOSQL implements UpdateDAO {
             throw new PersistenceOperationException("Errore nell'aggiunta del  pag", e);
         }
     }
-
+    @Override
     public void joinPagPatient(Patient patient) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.joinPagPatient(conn, patient.getCredentials().getMail());
@@ -89,7 +91,7 @@ public class UpdateDAOSQL implements UpdateDAO {
             throw new PersistenceOperationException("Errore nell'aggiunta del  pag", e);
         }
     }
-
+    @Override
     public void deleteRequest(Request request) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.deleteRequest(conn, request.getPatient().getCredentials().getMail(), request.getPsychologist().getCredentials().getMail(), request.getDate());
@@ -97,7 +99,7 @@ public class UpdateDAOSQL implements UpdateDAO {
             throw new PersistenceOperationException("Errore nella cancellazione della richiesta", e);
         }
     }
-
+    @Override
     public void setPatientsPsychologist(Patient patient) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.setPatientsPsychologist(conn, patient.getCredentials().getMail(), patient.getPsychologist().getCredentials().getMail());
@@ -107,7 +109,7 @@ public class UpdateDAOSQL implements UpdateDAO {
         }
     }
 
-
+    @Override
     public void addAppointments(Appointment appointmentToAdd) {
         String psychologist = appointmentToAdd.getPsychologist().getCredentials().getMail();
         try(Connection conn = ConnectionFactory.getConnection()){
@@ -130,7 +132,7 @@ public class UpdateDAOSQL implements UpdateDAO {
             throw new PersistenceOperationException("Errore nella modifica degli appuntamenti", e);
         }
     }
-
+    @Override
     public void clearAppointments(Psychologist psychologist, DayOfTheWeek day) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.clearAppointments(conn, psychologist.getCredentials().getMail(), day.toString());
@@ -138,7 +140,7 @@ public class UpdateDAOSQL implements UpdateDAO {
             throw new PersistenceOperationException("Errore nella cancellazione degli appuntamenti", e);
         }
     }
-
+    @Override
     public void setRequestForAppointment(Appointment appointment) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.setRequestForAppointment(conn, appointment.getPsychologist().getCredentials().getMail(), appointment.getDay(), appointment.getTimeSlot(), appointment.getPatient().getCredentials().getMail(), appointment.isInPerson(), appointment.isOnline(), appointment.isAvailable());

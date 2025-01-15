@@ -56,6 +56,7 @@ public class PatientDetailsGUI extends CommonGUI {
     @FXML
     private TextArea diaryTextArea;
     private PatientBean patientBean;
+    private static  final String ERROR="Errore";
 
     @FXML
     public void patientTask(PatientBean patientBean) {
@@ -104,7 +105,7 @@ public class PatientDetailsGUI extends CommonGUI {
             taskAndToDoController.deleteTask(selectedTask, patientBean);
             showMessage(Alert.AlertType.INFORMATION, "Eliminazione", "Eliminazione completata");
         } else {
-            showMessage(Alert.AlertType.ERROR, "Errore", "Seleziona un task da eliminare");
+            showMessage(Alert.AlertType.ERROR, ERROR, "Seleziona un task da eliminare");
         }
     }
 
@@ -136,7 +137,7 @@ public class PatientDetailsGUI extends CommonGUI {
 
             } catch (Exception e) {
                 // Mostra il messaggio di errore se il formato della data non è valido
-                showMessage(Alert.AlertType.ERROR, "Errore", "Formato data non valido");
+                showMessage(Alert.AlertType.ERROR, ERROR, "Formato data non valido");
             }
         }
     }
@@ -166,7 +167,7 @@ public class PatientDetailsGUI extends CommonGUI {
 
             } catch (Exception e) {
                 // Mostra il messaggio di errore se il formato della data non è valido
-                showMessage(Alert.AlertType.ERROR, "Errore", "Formato data non valido");
+                showMessage(Alert.AlertType.ERROR, ERROR, "Formato data non valido");
             }
         }
     }
@@ -207,9 +208,7 @@ public class PatientDetailsGUI extends CommonGUI {
         checkBox.setSelected(toDoItemBean.isCompleted());
         TextField textField = new TextField(toDoItemBean.getToDo());
         textField.setPrefWidth(200);
-        textField.textProperty().addListener((obs, oldValue, newValue) -> {
-            toDoItemBean.setToDo(newValue.trim());
-        });
+        textField.textProperty().addListener((obs, oldValue, newValue) -> toDoItemBean.setToDo(newValue.trim()));
         Button deleteButton = new Button("Elimina");
         deleteButton.setOnAction(e -> {
             toDoListItems.removeIf(hBox -> hBox.getChildren().contains(deleteButton));

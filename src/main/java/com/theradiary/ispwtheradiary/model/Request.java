@@ -1,6 +1,5 @@
 package com.theradiary.ispwtheradiary.model;
 
-import com.theradiary.ispwtheradiary.engineering.others.beans.RequestBean;
 
 import java.time.LocalDate;
 

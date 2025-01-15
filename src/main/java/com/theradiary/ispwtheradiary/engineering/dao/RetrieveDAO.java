@@ -1,12 +1,9 @@
 package com.theradiary.ispwtheradiary.engineering.dao;
 
-import com.theradiary.ispwtheradiary.engineering.enums.Category;
-import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.model.*;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface RetrieveDAO {

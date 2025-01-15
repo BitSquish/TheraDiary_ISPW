@@ -8,8 +8,6 @@ import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 
-import java.sql.SQLException;
-
 public interface LoginAndRegistrationDAO {
     String REGISTER_ERROR="Errore nella registrazione";
     boolean emailExists(String mail) ;

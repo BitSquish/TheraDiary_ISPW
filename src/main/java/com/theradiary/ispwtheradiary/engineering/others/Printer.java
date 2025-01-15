@@ -1,6 +1,8 @@
 package com.theradiary.ispwtheradiary.engineering.others;
 
+
 public class Printer {
+
 
         public static final String ANSI_RESET = "\u001B[0m";
         public static final String ANSI_RED = "\u001B[31m";
@@ -8,12 +10,8 @@ public class Printer {
         public static final String ANSI_RESET1= "\u001B[0m";
         public static final String ANSI_GREEN = "\u001B[32m";
         private Printer(){}
-        public static void print(String s){
-            System.out.print(s);
-        }
-        public static void println(String s){
-            System.out.println(s);
-        }
+        public static void print(String s){System.out.print(s);}
+        public static void println(String s){System.out.println(s);}
         public static void printlnBlue(String s){
             System.out.println(ANSI_BLUE+s+ANSI_RESET1);
         }

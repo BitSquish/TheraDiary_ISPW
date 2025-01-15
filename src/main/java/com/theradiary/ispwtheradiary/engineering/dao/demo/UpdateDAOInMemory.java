@@ -5,7 +5,6 @@ import com.theradiary.ispwtheradiary.engineering.dao.demo.shared.SharedResources
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
-import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.model.*;
 
 import java.util.List;

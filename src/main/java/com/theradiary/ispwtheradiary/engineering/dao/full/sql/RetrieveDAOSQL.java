@@ -103,7 +103,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
         }
         return categories;
     }
-    public void addCategory(ArrayList<Category> categories, String categoryName) {
+    public void addCategory(List<Category> categories, String categoryName) {
         try {
             Category category = Category.valueOf(categoryName);
             categories.add(category);
@@ -138,7 +138,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
         return majors;
     }
 
-    public void addMajor(ArrayList<Major> majors, String majorName) {
+    public void addMajor(List<Major> majors, String majorName) {
         try {
             Major major = Major.valueOf(majorName);
             majors.add(major);

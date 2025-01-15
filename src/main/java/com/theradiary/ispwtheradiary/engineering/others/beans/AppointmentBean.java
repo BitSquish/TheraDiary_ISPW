@@ -33,6 +33,10 @@ public class AppointmentBean {
         this.patientBean = patientBean;
     }
 
+    public AppointmentBean() {
+
+    }
+
 
     public PsychologistBean getPsychologistBean() {
         return psychologistBean;

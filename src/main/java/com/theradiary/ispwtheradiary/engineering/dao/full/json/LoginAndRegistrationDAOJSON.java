@@ -117,7 +117,6 @@ public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO {
     public void login(Credentials credentials) throws WrongEmailOrPasswordException {
         LoggedUser  loggedUser  = userList.stream().filter(p -> p.getCredentials().getMail().equals(credentials.getMail())).findFirst().orElse(null);
         if (loggedUser == null || !loggedUser.getCredentials().getPassword().equals(credentials.getPassword())) {
-            System.out.println("Entra nell'if del login");
             throw new WrongEmailOrPasswordException("Mail o password errati");
         }
         credentials.setRole(loggedUser.getCredentials().getRole());

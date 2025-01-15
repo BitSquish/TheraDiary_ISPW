@@ -16,6 +16,7 @@ import java.sql.SQLException;
 
 
 public class CategoryAndMajorDAOSQL implements CategoryAndMajorDAO {
+   @Override
     public void addCategory(Patient patient, Category category) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             AccountQuery.addCategory(conn, category.toString(), patient.getCredentials().getMail());
@@ -23,6 +24,7 @@ public class CategoryAndMajorDAOSQL implements CategoryAndMajorDAO {
             throw new PersistenceOperationException("Errore nell'aggiunta della categoria",e);
         }
     }
+    @Override
     public void addMajor(Psychologist psychologist, Major major) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             boolean success = AccountQuery.addMajor(conn,major.toString(), psychologist.getCredentials().getMail());
@@ -33,7 +35,7 @@ public class CategoryAndMajorDAOSQL implements CategoryAndMajorDAO {
         }
     }
 
-
+    @Override
     public void removeCategory(Patient patient, Category category) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             boolean success = AccountQuery.removeCategory(conn,patient.getCredentials().getMail(), category.toString());
@@ -43,7 +45,7 @@ public class CategoryAndMajorDAOSQL implements CategoryAndMajorDAO {
             throw new PersistenceOperationException("Errore nella rimozione della categoria",e);
         }
     }
-
+    @Override
     public void removeMajor(Psychologist psychologist, Major major) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             boolean success = AccountQuery.removeMajor(conn,psychologist.getCredentials().getMail(),major.toString());

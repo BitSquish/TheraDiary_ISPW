@@ -28,6 +28,9 @@ public class PatientProfileController {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         Appointment appointment = retrieveDAO.retrievePatientAppointment(patient, psychologist);
+        if(appointment == null) {
+            return null;
+        }
         return beanAndModelMapperFactory.fromModelToBean(appointment, Appointment.class);
     }
 }

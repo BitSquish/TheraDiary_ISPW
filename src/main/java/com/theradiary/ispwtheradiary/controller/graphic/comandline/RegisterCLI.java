@@ -33,7 +33,7 @@ public class RegisterCLI extends AbstractState {
             String surname=prompt("Cognome: ");
             String city=prompt("Città: ");
             String email=prompt("Email: ");
-            if (!Validator.isValidMail(email,null)) {
+            if (Validator.isValidMail(email, null)) {
                 Printer.errorPrint("Email non valida");
                 return;
             }

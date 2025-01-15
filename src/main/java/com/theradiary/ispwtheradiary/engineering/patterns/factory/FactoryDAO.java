@@ -30,8 +30,6 @@ public class FactoryDAO {
                 throw new IOException("Properties file not found: " + CONFIG_FILE);
             }
             properties.load(input);
-
-            Printer.println("Properties:" + properties);
         } catch (IOException e) {
             Printer.errorPrint("Error loading properties file: " + e.getMessage());
         }

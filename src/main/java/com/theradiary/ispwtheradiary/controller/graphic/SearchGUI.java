@@ -28,9 +28,17 @@ public class SearchGUI extends CommonGUI{
     private final SearchController searchController = new SearchController();
 
     @FXML
-    TextField nomeP, cognomeP, cittaP;
+    TextField nomeP;
     @FXML
-    CheckBox inPresenza, online, pag;
+    TextField cognomeP;
+    @FXML
+    TextField cittaP;
+    @FXML
+    CheckBox inPresenza;
+    @FXML
+    CheckBox online;
+    @FXML
+    CheckBox pag;
     @FXML
     Label errorMessage;
 

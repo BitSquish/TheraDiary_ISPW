@@ -6,6 +6,8 @@ import com.theradiary.ispwtheradiary.model.Appointment;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 
+
+
 public class AppointmentMapper implements BeanAndModelMapper<AppointmentBean, Appointment>{
 
     PsychologistMapper psychologistMapper = new PsychologistMapper();
@@ -24,8 +26,8 @@ public class AppointmentMapper implements BeanAndModelMapper<AppointmentBean, Ap
 
     @Override
     public AppointmentBean fromModelToBean(Appointment model) {
-        if(model==null) {
-            throw new IllegalArgumentException("Model cannot be null");
+        if(model==null){
+            return new AppointmentBean();
         }
         return new AppointmentBean(psychologistMapper.fromModelToBean(model.getPsychologist()), model.getDay(), model.getTimeSlot(), model.isInPerson(), model.isOnline());
     }

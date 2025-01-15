@@ -5,6 +5,7 @@ import com.theradiary.ispwtheradiary.controller.application.UserModifyController
 import com.theradiary.ispwtheradiary.controller.graphic.CommonGUI;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.Validator;
@@ -72,20 +73,20 @@ public abstract class ModifyGUI extends CommonGUI {
     }
 
     @FXML
-    protected void modifyGenericUser(MouseEvent event, LoggedUserBean loggedUserBean) throws EmptyFieldException {
+    protected void modifyGenericUser(MouseEvent event, LoggedUserBean loggedUserBean) {
         errorMessage.setVisible(false);
         successMessage.setVisible(false);
         try{
             TextField[] fields = {nome, cognome, citta, mail, descrizione};
             CheckBox[] checkboxes = {inPresenza, online};
             checkFields(fields,checkboxes,password);
-            if (!Validator.isValidMail(mail.getText(), errorMessage)){//!Validator.isValidPassword(password.getText(), errorMessage)) {
-                return; //TODO Lanciare eccezione apposita
+            if (Validator.isValidMail(mail.getText(), errorMessage)){
+                throw new WrongEmailOrPasswordException("Email non valida");
             }
             userModifyController.userModify(loggedUserBean,session.getUser());  //session.getUser().getCredentialsBean() passa le vecchie credenziali
             session.setUser(loggedUserBean);
             successMessage.setVisible(true);
-        } catch (MailAlreadyExistsException | EmptyFieldException exception) {
+        } catch (MailAlreadyExistsException | EmptyFieldException | WrongEmailOrPasswordException exception) {
             errorMessage.setText(exception.getMessage());
             errorMessage.setVisible(true);
         }
