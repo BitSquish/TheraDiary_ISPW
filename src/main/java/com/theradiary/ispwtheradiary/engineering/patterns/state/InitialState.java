@@ -59,5 +59,7 @@ public class InitialState extends AbstractState{
         Printer.printlnBlue("--------------------necessario effettuare il login o registrarsi--------------------");
     }
     @Override
-    public void exit(StateMachineImpl stateMachine){}
+    public void exit(StateMachineImpl stateMachine){
+        Printer.println("Uscita dallo stato iniziale");
+    }
 }

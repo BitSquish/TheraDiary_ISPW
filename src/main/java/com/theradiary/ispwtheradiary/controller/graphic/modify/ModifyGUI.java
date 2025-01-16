@@ -8,7 +8,6 @@ import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsExc
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
-import com.theradiary.ispwtheradiary.engineering.others.Validator;
 import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -80,7 +79,7 @@ public abstract class ModifyGUI extends CommonGUI {
             TextField[] fields = {nome, cognome, citta, mail, descrizione};
             CheckBox[] checkboxes = {inPresenza, online};
             checkFields(fields,checkboxes,password);
-            if (Validator.isValidMail(mail.getText(), errorMessage)){
+            if (isValidMail(mail.getText(), errorMessage)){
                 throw new WrongEmailOrPasswordException("Email non valida");
             }
             userModifyController.userModify(loggedUserBean,session.getUser());  //session.getUser().getCredentialsBean() passa le vecchie credenziali
@@ -91,6 +90,15 @@ public abstract class ModifyGUI extends CommonGUI {
             errorMessage.setVisible(true);
         }
 
+    }
+    public static boolean isValidMail(String mail, Label errorMessage) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        if (!mail.matches(emailRegex)) {
+            errorMessage.setText("Mail non valida");
+            errorMessage.setVisible(true);
+            return true;
+        }
+        return false;
     }
 
 }

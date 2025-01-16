@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginAndRegistrationQuery {
+    private static final String ERROR="Errore nella registrazione";
     private LoginAndRegistrationQuery() {
     }
     public static ResultSet logQuery(Connection conn, Credentials credentialsBean) throws SQLException {
@@ -35,7 +36,7 @@ public class LoginAndRegistrationQuery {
             pstmt.setString(3, credentialsBean.getRole().toString());
             return pstmt.executeUpdate(); //restituisce il numero di righe influenzate dalla query
         }catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nella registrazione", e);
+            throw new PersistenceOperationException(ERROR, e);
         }
     }
 
@@ -55,7 +56,7 @@ public class LoginAndRegistrationQuery {
                 throw new MailAlreadyExistsException("Mail già esistente");
             }
         }catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nella registrazione", e);
+            throw new PersistenceOperationException(ERROR, e);
         }
     }
 
@@ -75,7 +76,7 @@ public class LoginAndRegistrationQuery {
                 throw new MailAlreadyExistsException("Mail già esistente");
             }
         }catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nella registrazione", e);
+            throw new PersistenceOperationException(ERROR, e);
         }
     }
 
@@ -90,7 +91,7 @@ public class LoginAndRegistrationQuery {
             pstmt.executeUpdate();
             //Possono esserci problemi da gestire?
         }catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nella registrazione", e);
+            throw new PersistenceOperationException(ERROR, e);
         }
     }
 

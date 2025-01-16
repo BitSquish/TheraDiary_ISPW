@@ -6,12 +6,12 @@ import com.theradiary.ispwtheradiary.controller.application.UserRegistrationCont
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
-import com.theradiary.ispwtheradiary.engineering.others.Validator;
 import com.theradiary.ispwtheradiary.engineering.others.beans.CredentialsBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.AbstractState;
 import com.theradiary.ispwtheradiary.engineering.patterns.state.StateMachineImpl;
+import javafx.scene.control.Label;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -33,7 +33,7 @@ public class RegisterCLI extends AbstractState {
             String surname=prompt("Cognome: ");
             String city=prompt("Città: ");
             String email=prompt("Email: ");
-            if (Validator.isValidMail(email, null)) {
+            if (isValidMail(email, null)) {
                 Printer.errorPrint("Email non valida");
                 return;
             }
@@ -101,6 +101,15 @@ public class RegisterCLI extends AbstractState {
             return new boolean[0];
         }
 
+    }
+    public static boolean isValidMail(String mail, Label errorMessage) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        if (!mail.matches(emailRegex)) {
+            errorMessage.setText("Mail non valida");
+            errorMessage.setVisible(true);
+            return true;
+        }
+        return false;
     }
 
 
