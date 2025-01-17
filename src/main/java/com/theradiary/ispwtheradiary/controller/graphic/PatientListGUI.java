@@ -52,7 +52,7 @@ public class PatientListGUI extends CommonGUI {
         ObservableList<PatientBean> patientBeansList = FXCollections.observableArrayList(patientBeans);
 
         // Configurazione delle colonne
-        fullName.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        fullName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         cityName.setCellValueFactory(new PropertyValueFactory<>("city"));
 
         inPresenza.setCellValueFactory(cellData -> {
@@ -77,12 +77,15 @@ public class PatientListGUI extends CommonGUI {
     private Callback<TableColumn<PatientBean, Void>, TableCell<PatientBean, Void>> createButtonCellFactory(
             String buttonText, BiConsumer<MouseEvent, PatientBean> action) {
         return param -> new TableCell<>() {
-            private final Button btn = new Button(buttonText);
-            {
-                btn.setOnMouseClicked(event -> {
+            private final Button btn = createButton(buttonText, action);
+            //metodo di supporto
+            private Button createButton(String buttonText, BiConsumer<MouseEvent, PatientBean> action) {
+                Button button = new Button(buttonText);
+                button.setOnMouseClicked(event -> {
                     PatientBean patientBean = getTableView().getItems().get(getIndex());
                     action.accept(event, patientBean);
                 });
+                return button;
             }
 
             @Override

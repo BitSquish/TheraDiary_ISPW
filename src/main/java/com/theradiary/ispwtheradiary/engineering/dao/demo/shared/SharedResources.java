@@ -29,7 +29,7 @@ public class SharedResources {
     private final Map<String, List<Task>> taskTable= new ConcurrentHashMap<>();//<mail,listaTask>
 
     // Singleton per garantire che ci sia una sola istanza della classe
-    private static SharedResources instance;
+    private static SharedResources instance=null;
 
     private SharedResources() {
         // Costruttore privato per evitare la creazione di istanze esterne

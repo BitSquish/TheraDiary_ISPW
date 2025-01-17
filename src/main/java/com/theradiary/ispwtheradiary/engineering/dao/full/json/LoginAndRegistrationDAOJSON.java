@@ -16,7 +16,7 @@ public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO {
         private static final String PERSISTENCE_FILE = "src/main/resources/com/theradiary/ispwtheradiary/login.json";
         List<LoggedUser> userList = new ArrayList<>();
     //Singleton
-    private static LoginAndRegistrationDAOJSON instance;
+    private static LoginAndRegistrationDAOJSON instance=null;
     // Costruttore privato per evitare la creazione di nuove istanze
     private LoginAndRegistrationDAOJSON() {
         loadFile();
@@ -93,20 +93,19 @@ public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO {
     private void addToFile(LoggedUser  loggedUser ) {
         try (FileWriter writer = new FileWriter(PERSISTENCE_FILE, true)) { // 'true' to append
             Credentials credentials = loggedUser.getCredentials();
-            StringBuilder sb = new StringBuilder();
 
             // Costruisce la stringa da aggqingere al file
-            sb.append(credentials.getMail()).append(",") // Mail
-                    .append(credentials.getPassword()).append(",") // Password
-                    .append(credentials.getRole()).append(",") // Role
-                    .append(loggedUser.getName()).append(",") // Name
-                    .append(loggedUser.getSurname()).append(",") // Surname
-                    .append(loggedUser.getCity()).append(",") // City
-                    .append(loggedUser.getDescription()).append(",") // Description
-                    .append(loggedUser.isInPerson()).append(",") // InPerson
-                    .append(loggedUser.isOnline()); // Online
+            String sb = credentials.getMail() + "," + // Mail
+                    credentials.getPassword() + "," + // Password
+                    credentials.getRole() + "," + // Role
+                    loggedUser.getName() + "," + // Name
+                    loggedUser.getSurname() + "," + // Surname
+                    loggedUser.getCity() + "," + // City
+                    loggedUser.getDescription() + "," + // Description
+                    loggedUser.isInPerson() + "," + // InPerson
+                    loggedUser.isOnline(); // Online
 
-            writer.write(sb.toString() + "\n"); //Aggiunge l'utente al file
+            writer.write(sb + "\n"); //Aggiunge l'utente al file
             loadFile(); // Ricarica i dati dopo aver aggiunto un nuovo utente
         } catch (IOException e) {
             Printer.errorPrint("Impossibile salvare l'utente sul file JSON.");

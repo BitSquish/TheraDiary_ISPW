@@ -1,21 +1,16 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
 
-import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
-
-import java.io.IOException;
 import java.util.List;
 
 public class PsychologistsListGUI extends CommonGUI {
@@ -58,13 +53,14 @@ public class PsychologistsListGUI extends CommonGUI {
             return new javafx.beans.property.SimpleStringProperty(pag ? "Sì" : "No");
         });
         buttonColumn.setCellFactory(param -> new TableCell<>() {
-            private final Button btn = new Button("Vedi psicologo");
-
-            {
-                btn.setOnMouseClicked(event -> {
+            private final Button btn = createButton();
+            private Button createButton() {
+                Button button = new Button("Vedi psicologo");
+                button.setOnMouseClicked(event -> {
                     PsychologistBean psychologistBean = getTableView().getItems().get(getIndex());
                     goToPsychologistDescription(event, psychologistBean);
                 });
+                return button;
             }
 
             @Override

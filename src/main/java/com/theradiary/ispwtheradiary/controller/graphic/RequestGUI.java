@@ -62,14 +62,16 @@ public class RequestGUI extends CommonGUI implements Observer {
     // Metodo per creare la cella con il bottone
     private TableCell<RequestBean, Void> createButtonCell(String buttonText, boolean isAccept) {
         return new TableCell<>() {
-            private final Button button = new Button(buttonText);
-            {
-                // Configura il comportamento del bottone
-                button.setOnMouseClicked(event -> {
+            private final Button button = createButton(buttonText, isAccept);
+            private Button createButton(String buttonText, boolean isAccept) {
+                Button btn = new Button(buttonText);
+                btn.setOnMouseClicked(event -> {
                     RequestBean requestBean = getTableView().getItems().get(getIndex());
                     manageRequest(requestBean, isAccept);
                 });
+                return btn;
             }
+
 
             @Override
             protected void updateItem(Void item, boolean empty) {
