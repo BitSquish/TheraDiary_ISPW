@@ -111,7 +111,6 @@ public class UpdateDAOSQL implements UpdateDAO {
 
     @Override
     public void addAppointments(Appointment appointmentToAdd) {
-        String psychologist = appointmentToAdd.getPsychologist().getCredentials().getMail();
         try(Connection conn = ConnectionFactory.getConnection()){
             if(appointmentToAdd.getPatient() == null)
                 UpdateQuery.addAppointment(conn, appointmentToAdd, null);
