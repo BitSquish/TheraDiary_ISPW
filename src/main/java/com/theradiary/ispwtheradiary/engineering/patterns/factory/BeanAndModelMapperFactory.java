@@ -8,6 +8,8 @@ import java.util.Map;
 
 public class BeanAndModelMapperFactory {
 
+    //Emanuela Gallinelli, matricola 0308216
+
     /************ Singleton ************/
     private static BeanAndModelMapperFactory instance = null;
 

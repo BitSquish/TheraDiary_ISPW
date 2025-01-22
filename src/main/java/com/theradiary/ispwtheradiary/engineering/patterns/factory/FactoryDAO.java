@@ -12,6 +12,8 @@ import java.util.Properties;
 import java.util.function.Supplier;
 
 public class FactoryDAO {
+
+    //Sofia Tosti, matricola: 0308023
     private FactoryDAO(){}
     private static final String CONFIG_FILE = "config.properties";
     private static final Properties properties = new Properties();
