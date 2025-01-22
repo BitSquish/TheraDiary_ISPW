@@ -1,13 +1,14 @@
 package com.theradiary.ispwtheradiary.engineering.dao;
 
 import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.model.*;
 
 
 import java.util.List;
 
 public interface RetrieveDAO {
-    void searchPsychologists(List<Psychologist> psychologists, String name, String surname, String city, boolean inPerson, boolean online, boolean pag) throws NoResultException;
+    void searchPsychologists(List<Psychologist> psychologists, String name, String surname, String city, boolean inPerson, boolean online, boolean pag) throws NoResultException, DatabaseOperationException;
 
     boolean retrieveMedicalOffice(MedicalOffice medicalOffice);
 

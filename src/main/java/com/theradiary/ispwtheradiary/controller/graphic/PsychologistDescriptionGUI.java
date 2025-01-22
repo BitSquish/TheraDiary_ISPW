@@ -4,6 +4,7 @@ import com.theradiary.ispwtheradiary.controller.application.AccountController;
 import com.theradiary.ispwtheradiary.controller.application.PsychologistDescriptionController;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.*;
@@ -45,7 +46,7 @@ public class PsychologistDescriptionGUI extends CommonGUI {
     private Button request;
 
 
-    public void printPsychologist(PsychologistBean psychologistBean) {
+    public void printPsychologist(PsychologistBean psychologistBean) throws NoResultException {
         boolean hasAlreadySentARequest = psychologistDescriptionController.hasAlreadySentARequest((PatientBean)session.getUser(), psychologistBean);
         //Se il paziente ha già uno psicologo associato o ha già inviato una richiesta per quello psicologo, nasconde il bottone per inviare la richiesta
         if((((PatientBean) session.getUser()).getPsychologistBean() != null && ((PatientBean) session.getUser()).getPsychologistBean().getCredentialsBean().getMail() != null) || hasAlreadySentARequest){
@@ -83,7 +84,7 @@ public class PsychologistDescriptionGUI extends CommonGUI {
 
 
     @FXML
-    protected void sendRequest(MouseEvent event) {
+    protected void sendRequest(MouseEvent event) throws NoResultException {
         PatientBean patientBean = (PatientBean) session.getUser();
         PsychologistBean psychologistBean = new PsychologistBean(new CredentialsBean(mailField.getText(), Role.PSYCHOLOGIST), nameField.getText(), surnameField.getText(), cityField.getText(), descriptionField.getText(), false, false);
         psychologistBean.setInPerson(psychologistBean.getInPersonFromModality(modalityField.getText()));

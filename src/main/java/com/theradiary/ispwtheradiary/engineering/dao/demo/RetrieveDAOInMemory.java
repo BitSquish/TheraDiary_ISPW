@@ -23,7 +23,7 @@ public class RetrieveDAOInMemory implements RetrieveDAO {
         }
 
         if (results.isEmpty()) {
-            throw new NoResultException("La ricerca non ha prodotto risultati");
+            throw new NoResultException();
         }
         psychologists.addAll(results);
     }

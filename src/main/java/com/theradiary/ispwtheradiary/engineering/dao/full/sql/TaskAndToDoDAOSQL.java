@@ -1,7 +1,8 @@
 package com.theradiary.ispwtheradiary.engineering.dao.full.sql;
 
 import com.theradiary.ispwtheradiary.engineering.dao.TaskAndToDoDAO;
-import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
+import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.TaskAndToDoQuery;
 import com.theradiary.ispwtheradiary.model.Patient;
@@ -24,8 +25,8 @@ public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
     public void diary(Patient patient, String diaryContent, LocalDate selectedDate) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.diary(conn, diaryContent, patient.getCredentials().getMail(), selectedDate);
-        }catch (SQLException e){
-            throw new PersistenceOperationException("Errore nel salvataggio del diario",e);
+        }catch (SQLException |DatabaseOperationException e){
+            handleException(e);
         }
     }
 
@@ -40,7 +41,8 @@ public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
                 return Optional.empty();
             }
         }catch (SQLException e){
-            throw new PersistenceOperationException("Errore nel recupero del diario",e);
+            handleException(e);
+            return Optional.empty();
         }
 
     }
@@ -53,8 +55,9 @@ public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
             }else {
                 return Optional.empty();
             }
-        }catch (SQLException e){
-            throw new PersistenceOperationException("Errore nel recupero del diario",e);
+        }catch (SQLException |DatabaseOperationException e){
+            handleException(e);
+            return Optional.empty();
         }
     }
 
@@ -63,8 +66,8 @@ public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
     public void saveToDo(Patient patient, ToDoItem toDoItem) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.saveToDoItem(conn, patient.getCredentials().getMail(), toDoItem);
-        }catch (SQLException e){
-            throw new PersistenceOperationException("Errore nel salvataggio del to do",e);
+        }catch (SQLException | DatabaseOperationException e){
+            handleException(e);
         }
     }
 
@@ -77,8 +80,8 @@ public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
             while(rs.next()){
                 toDoItems.add(new ToDoItem(rs.getString("description"),rs.getBoolean("done")));
             }
-        }catch (SQLException e){
-            throw new PersistenceOperationException("Errore nel recupero del to do",e);
+        }catch (SQLException | DatabaseOperationException e){
+            handleException(e);
         }
         return toDoItems;
     }
@@ -86,8 +89,8 @@ public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
     public void deleteToDoItem(Patient patient, ToDoItem toDoItem) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.deleteToDoItem(conn, patient.getCredentials().getMail(), toDoItem);
-        }catch (SQLException e){
-            throw new PersistenceOperationException("Errore nella cancellazione del to do",e);
+        }catch (SQLException | DatabaseOperationException e){
+           handleException(e);
         }
     }
     /*********************************task**********************************/
@@ -95,24 +98,24 @@ public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
     public void saveTask(Patient patient, Task task) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.saveTask(conn, patient.getCredentials().getMail(), task);
-        }catch (SQLException e){
-            throw new PersistenceOperationException("Errore nel salvataggio del task",e);
+        }catch (SQLException | DatabaseOperationException e){
+            handleException(e);
         }
     }
     @Override
     public void deleteTask(Patient patient, Task task) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.deleteTask(conn, patient.getCredentials().getMail(), task);
-        }catch (SQLException e){
-            throw new PersistenceOperationException("Errore nella cancellazione del task",e);
+        }catch (SQLException | DatabaseOperationException e){
+            handleException(e);
         }
     }
     @Override
     public void updateTask(Patient patient, Task task) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             TaskAndToDoQuery.updateTask(conn, patient.getCredentials().getMail(), task);
-        }catch (SQLException e){
-            throw new PersistenceOperationException("Errore nell'aggiornamento del task",e);
+        }catch (SQLException | DatabaseOperationException e){
+            handleException(e);
         }
     }
     @Override
@@ -124,8 +127,11 @@ public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
                 task.add(new Task(rs.getString("description"),rs.getDate("deadline").toLocalDate(),rs.getString("status")));
             }
         }catch (SQLException e){
-            throw new PersistenceOperationException("Errore nel recupero dei task",e);
+            handleException(e);
         }
         return task;
+    }
+    private void handleException(Exception e) {
+        Printer.errorPrint(String.format("%s", e.getMessage()));
     }
 }

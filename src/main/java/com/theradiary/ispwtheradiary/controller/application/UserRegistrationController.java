@@ -6,6 +6,7 @@ import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.LoginAndRegistrationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
+import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.Patient;
@@ -41,7 +42,7 @@ public class UserRegistrationController {
         } catch (MailAlreadyExistsException exception) {
             throw new MailAlreadyExistsException(exception.getMessage());
         } catch (LoginAndRegistrationException e) {
-            throw new DAOException(e.getMessage(),e);
+            Printer.errorPrint(e.getMessage());
         }
     }
 

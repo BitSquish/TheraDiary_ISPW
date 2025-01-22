@@ -16,9 +16,9 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 public class AppointmentPatientCLI extends AbstractState {
-    private final PsychologistBean psychologistBean;
+    protected PsychologistBean psychologistBean;
     private final Scanner scanner = new Scanner(System.in);
-    private final PatientBean user;
+    protected PatientBean user;
     private final List<AppointmentBean> allAppointments = new ArrayList<>();
     private final AppointmentController appointmentController = new AppointmentController();
     private static final String PRESENZA="In presenza";
@@ -142,7 +142,7 @@ public class AppointmentPatientCLI extends AbstractState {
         newAppointment.setPatientBean(user.getCredentialsBean().getMail());
         appointmentController.askForAnAppointment(newAppointment);
     }
-    public void loadAppointments(){
+    private void loadAppointments(){
         appointmentController.loadAllAppointments(allAppointments,psychologistBean);
     }
 

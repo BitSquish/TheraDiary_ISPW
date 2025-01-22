@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
-import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.model.Task;
 import com.theradiary.ispwtheradiary.model.ToDoItem;
 
@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class TaskAndToDoQuery {
     private TaskAndToDoQuery(){}
     /*-------------------------DIARIO-------------------------*/
-    public static void diary(Connection conn, String diary, String mail, LocalDate selectedDate) {
+    public static void diary(Connection conn, String diary, String mail, LocalDate selectedDate) throws DatabaseOperationException {
         String query= "INSERT INTO diary (contenuto,data_creazione,patient) VALUES (?,?,?)";
         try  {
             PreparedStatement pstmt = conn.prepareStatement(query);
@@ -22,7 +22,7 @@ public class TaskAndToDoQuery {
             pstmt.setString(3, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nell'inserimento del diario",e);
+            throw new DatabaseOperationException("Errore nell'inserimento del diario",e);
         }
     }
 
@@ -35,7 +35,7 @@ public class TaskAndToDoQuery {
 
     }
 
-    public static ResultSet getDiaryEntry(Connection conn, LocalDate selectedDate, String mail) {
+    public static ResultSet getDiaryEntry(Connection conn, LocalDate selectedDate, String mail) throws DatabaseOperationException {
         String query = "SELECT contenuto FROM diary WHERE data_creazione=? AND patient=?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
@@ -43,25 +43,24 @@ public class TaskAndToDoQuery {
             pstmt.setString(2, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nel recupero del diario",e);
+            throw new DatabaseOperationException("Errore nel recupero del diario",e);
         }
     }
     /*-------------------------TODOLIST-------------------------*/
 
-    public static ResultSet getToDoList(Connection conn, String mail) {
+    public static ResultSet getToDoList(Connection conn, String mail) throws DatabaseOperationException {
         String query = "SELECT description,done FROM todo WHERE patient=?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nel recupero dei task",e);
+            throw new DatabaseOperationException("Errore nel recupero dei task",e);
         }
     }
 
 
-    public static void saveToDoItem(Connection conn, String mail, ToDoItem toDoItem)
-    {
+    public static void saveToDoItem(Connection conn, String mail, ToDoItem toDoItem) throws DatabaseOperationException {
         String query = "INSERT INTO todo (description,done,patient) VALUES (?,?,?)";
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
@@ -70,11 +69,11 @@ public class TaskAndToDoQuery {
             pstmt.setString(3, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nell'aggiunta del task",e);
+            throw new DatabaseOperationException("Errore nell'aggiunta del task",e);
         }
     }
 
-    public static void deleteToDoItem(Connection conn, String mail, ToDoItem toDoItem) {
+    public static void deleteToDoItem(Connection conn, String mail, ToDoItem toDoItem) throws DatabaseOperationException {
         String query = "DELETE FROM todo WHERE description=? AND patient=?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
@@ -82,13 +81,13 @@ public class TaskAndToDoQuery {
             pstmt.setString(2, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nella rimozione del task",e);
+            throw new DatabaseOperationException("Errore nella rimozione del task",e);
         }
     }
     /*-------------------------TASK-------------------------*/
 
 
-    public static void saveTask(Connection conn, String mail, Task task) {
+    public static void saveTask(Connection conn, String mail, Task task) throws DatabaseOperationException {
         String query = "INSERT INTO task (description,deadline,status,patient) VALUES (?,?,?,?)";
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
@@ -98,11 +97,11 @@ public class TaskAndToDoQuery {
             pstmt.setString(4, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nell'aggiunta del task",e);
+            throw new DatabaseOperationException("Errore nell'aggiunta del task",e);
         }
 
     }
-    public static void deleteTask(Connection conn, String mail, Task task) {
+    public static void deleteTask(Connection conn, String mail, Task task) throws DatabaseOperationException {
         String query = "DELETE FROM task WHERE description=? AND patient=?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
@@ -110,11 +109,11 @@ public class TaskAndToDoQuery {
             pstmt.setString(2, mail);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nella rimozione del task",e);
+            throw new DatabaseOperationException("Errore nella rimozione del task",e);
         }
     }
 
-    public static void updateTask(Connection conn, String mail, Task task) {
+    public static void updateTask(Connection conn, String mail, Task task) throws DatabaseOperationException {
         String query = "UPDATE task SET status=? WHERE description=? AND patient=? AND deadline=?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
@@ -124,7 +123,7 @@ public class TaskAndToDoQuery {
             pstmt.setDate(4, java.sql.Date.valueOf(task.getTaskDeadline()));
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nell'aggiornamento del task",e);
+            throw new DatabaseOperationException("Errore nell'aggiornamento del task",e);
         }
     }
 

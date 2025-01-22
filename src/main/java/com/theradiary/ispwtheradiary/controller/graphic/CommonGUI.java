@@ -13,6 +13,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.task.DiaryAndTasksGUI;
 import com.theradiary.ispwtheradiary.controller.graphic.task.DiaryControllerGUI;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
@@ -305,6 +306,8 @@ public abstract class CommonGUI {
             changeScene(root, event);
         } catch (IOException e) {
             throw new LoadingException(LOADING_SCENE, e);
+        } catch (NoResultException e) {
+            throw new RuntimeException(e);
         }
     }
 

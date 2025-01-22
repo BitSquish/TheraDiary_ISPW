@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
 import com.theradiary.ispwtheradiary.controller.application.PsychologistDescriptionController;
+import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
@@ -37,7 +38,7 @@ public class PsychologistProfileCLI extends AbstractState {
             Printer.errorPrint(e.getMessage());
         }
     }
-    private void handleRequest(StateMachineImpl context) {
+    private void handleRequest(StateMachineImpl context) throws  NoResultException {
         if (psychologistDescriptionController.hasAlreadySentARequest(user,selectedPsychologist)){
             Printer.errorPrint("Hai già inviato una richiesta a questo psicologo");
         } else if (psychologistDescriptionController.hasAlreadyAPsychologist(user)) {

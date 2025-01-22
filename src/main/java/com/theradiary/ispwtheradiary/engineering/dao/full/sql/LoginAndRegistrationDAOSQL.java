@@ -2,9 +2,10 @@ package com.theradiary.ispwtheradiary.engineering.dao.full.sql;
 
 import com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
-import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
+import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.LoginAndRegistrationQuery;
 import com.theradiary.ispwtheradiary.engineering.query.RetrieveQuery;
@@ -43,8 +44,9 @@ public class LoginAndRegistrationDAOSQL implements LoginAndRegistrationDAO {
             int rs = LoginAndRegistrationQuery.checkMail(conn, mail);
             if (rs != 0)
                 return true;
-        }catch (SQLException e){
-            throw new PersistenceOperationException("Errore nel controllo dell'email", e);
+        }catch (SQLException | DatabaseOperationException e){
+            handleException(e);
+
         }
         return false;
     }
@@ -53,8 +55,9 @@ public class LoginAndRegistrationDAOSQL implements LoginAndRegistrationDAO {
         try (Connection conn = ConnectionFactory.getConnection()) {
             int rs = LoginAndRegistrationQuery.registerUser(conn, credentials);
             return rs != 0;
-        }catch (SQLException e){
-            throw new PersistenceOperationException("Errore nell'inserimento dell'utente", e);
+        }catch (SQLException |DatabaseOperationException e){
+            handleException(e);
+            return false;
         }
     }
 
@@ -68,8 +71,8 @@ public class LoginAndRegistrationDAOSQL implements LoginAndRegistrationDAO {
             try (Connection conn = ConnectionFactory.getConnection()){
                 LoginAndRegistrationQuery.registerPatient(conn, patient);
             }
-            catch(SQLException e){
-                throw new PersistenceOperationException(REGISTER_ERROR, e);
+            catch(SQLException | DatabaseOperationException e){
+               handleException(e);
             }
         }
 
@@ -86,8 +89,8 @@ public class LoginAndRegistrationDAOSQL implements LoginAndRegistrationDAO {
             try (Connection conn = ConnectionFactory.getConnection()) {
                 LoginAndRegistrationQuery.registerPsychologist(conn, psychologist);
             }
-            catch(SQLException e){
-                throw new PersistenceOperationException(REGISTER_ERROR, e);
+            catch(SQLException | DatabaseOperationException e){
+                handleException(e);
             }
         }
 
@@ -107,7 +110,7 @@ public class LoginAndRegistrationDAOSQL implements LoginAndRegistrationDAO {
                 patient.setPsychologist(new Psychologist(new Credentials(rs.getString(PSYCHOLOGIST), Role.PSYCHOLOGIST)));
             }
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nel recupero del paziente", e);
+            handleException(e);
         }
     }
 
@@ -123,8 +126,11 @@ public class LoginAndRegistrationDAOSQL implements LoginAndRegistrationDAO {
                 psychologist.setOnline(rs.getBoolean(ONLINE));
             }
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nel recupero dello psicologo", e);
+            handleException(e);
         }
+    }
+    private void handleException(Exception e) {
+        Printer.errorPrint(String.format("%s", e.getMessage()));
     }
 
 

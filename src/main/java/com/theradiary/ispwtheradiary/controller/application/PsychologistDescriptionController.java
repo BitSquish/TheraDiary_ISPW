@@ -2,7 +2,7 @@ package com.theradiary.ispwtheradiary.controller.application;
 
 import com.theradiary.ispwtheradiary.engineering.dao.PtAndPsDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
-import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
@@ -34,33 +34,33 @@ public class PsychologistDescriptionController {
         psychologistBean.setMajor(psychologist.getMajors());
     }
 
-    public void sendRequest(RequestBean requestBean) {
+    public void sendRequest(RequestBean requestBean) throws  NoResultException {
         Request request = beanAndModelMapperFactory.fromBeanToModel(requestBean, RequestBean.class);
         try{
             ptAndPsDAO.sendRequest(request);
             RequestManagerConcreteSubject requestManagerConcreteSubject = RequestManagerConcreteSubject.getInstance();
             requestManagerConcreteSubject.addRequest(request);
         } catch (Exception e){
-            throw new DAOException(e.getMessage(), e);
+            throw new NoResultException();
         }
     }
 
-    public boolean hasAlreadySentARequest(PatientBean patientBean, PsychologistBean psychologistBean) {
+    public boolean hasAlreadySentARequest(PatientBean patientBean, PsychologistBean psychologistBean) throws  NoResultException {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         Request request= new Request(patient, psychologist);
         try{
             return ptAndPsDAO.hasAlreadySentARequest(request);
         } catch (Exception e){
-            throw new DAOException(e.getMessage(), e);
+            throw new NoResultException();
         }
     }
-    public boolean hasAlreadyAPsychologist(PatientBean patientBean) {
+    public boolean hasAlreadyAPsychologist(PatientBean patientBean) throws  NoResultException {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         try{
             return ptAndPsDAO.hasAlreadyAPsychologist(patient);
         } catch (Exception e){
-            throw new DAOException(e.getMessage(), e);
+            throw new NoResultException();
         }
     }
 }

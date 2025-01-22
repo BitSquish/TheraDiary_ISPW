@@ -4,6 +4,7 @@ import com.theradiary.ispwtheradiary.engineering.dao.*;
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.LoginAndRegistrationException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.Credentials;
@@ -50,7 +51,7 @@ class TestPatient {
         try {
             password = generatePassword();
             // Prima registriamo il paziente
-            registraTester();
+            registerTester();
 
             // Ora tentiamo di effettuare il login con le stesse credenziali
             LoginAndRegistrationDAO loginAndRegistrationDAO = FactoryDAO.getDAO();
@@ -77,22 +78,19 @@ class TestPatient {
     }
 
     // Metodo che si occupa di registrare il paziente
-    public void registraTester(){
+    public void registerTester(){
         LoginAndRegistrationDAO loginAndRegistrationDAO = FactoryDAO.getDAO();
         try {
-            // Tentiamo il login con le credenziali fornite
-            Credentials credenziali = new Credentials(TEST_MAIL, password, Role.PATIENT);
-            loginAndRegistrationDAO.login(credenziali);
-
-        } catch (WrongEmailOrPasswordException e) {
-            // Se la registrazione fallisce, eseguiamo l'inserimento dell'utente nel sistema
-            // Creiamo un nuovo paziente e lo registriamo
-            Patient paziente = new Patient(new Credentials(TEST_MAIL, password, Role.PATIENT));
-            loginAndRegistrationDAO.insertUser(paziente.getCredentials());
+            // Tentiamo la registrazione con i dati forniti
+            Patient patient = new Patient(new Credentials(TEST_MAIL, password, Role.PATIENT), TEST_TASK_NAME, TEST_SURNAME, TEST_CITY, TEST_DESCRIPTION, TEST_INPERSON, TEST_ONLINE);
+            loginAndRegistrationDAO.registerPatient(patient);
 
         } catch (LoginAndRegistrationException e) {
             // Gestiamo l'eccezione generica di registrazione
             Assertions.fail("Test fallito a causa di un'eccezione inattesa: " + e.getMessage());
+        } catch (MailAlreadyExistsException e) {
+            //Gestisco l'eccezione se è dovuta al fatto che l'email è già presente nel sistema
+            Assertions.fail("Test fallito mail considerata già esistente: " + e.getMessage());
         }
     }
     //testo il metodo di inserimento del diario
@@ -114,8 +112,7 @@ class TestPatient {
             String retrievedDiary = retrievedDiaryOpt.orElse("");
 
             // Asserts
-            Assertions.assertEquals(TEST_DIARY_CONTENT, retrievedDiary,
-                    "Il contenuto del diario recuperato non corrisponde a quello previsto.");
+            Assertions.assertEquals(TEST_DIARY_CONTENT, retrievedDiary, "Il contenuto del diario recuperato non corrisponde a quello previsto.");
 
         } catch (Exception e) {
             Assertions.fail("Test fallito a causa di un'eccezione inattesa: " + e.getMessage());
@@ -131,8 +128,7 @@ class TestPatient {
         categoryAndMajorDAO.addCategory(patient, category);
         try{
             retrieveDAO.retrieveCategories(patient); // Recupera le categorie del paziente
-            Assertions.assertTrue(patient.getCategories().contains(category),
-                    "La categoria aggiunta non è presente nella lista delle categorie del paziente.");
+            Assertions.assertTrue(patient.getCategories().contains(category), "La categoria aggiunta non è presente nella lista delle categorie del paziente.");
         }catch (Exception e){
             Assertions.fail("Test fallito a causa di un'eccezione inattesa: " + e.getMessage());
         }
