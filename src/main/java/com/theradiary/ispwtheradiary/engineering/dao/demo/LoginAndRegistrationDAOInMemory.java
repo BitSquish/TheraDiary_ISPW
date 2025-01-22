@@ -108,7 +108,7 @@ public class LoginAndRegistrationDAOInMemory implements LoginAndRegistrationDAO 
             throws NoResultException { // parametri: tabella, email, entità, funzione per popolare i campi
         T storedEntity = entityTable.get(email);
         if (storedEntity == null) {
-            throw new NoResultException();
+            throw new NoResultException(entity.getClass().getSimpleName() + " non trovato");
         }
         populateFields.accept(storedEntity); // popola i campi dell'entità
     }

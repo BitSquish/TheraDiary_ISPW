@@ -304,10 +304,8 @@ public abstract class CommonGUI {
             Parent root = loader.load();
             ((PsychologistDescriptionGUI) loader.getController()).printPsychologist(psychologistBean);
             changeScene(root, event);
-        } catch (IOException e) {
+        } catch (IOException |NoResultException e) {
             throw new LoadingException(LOADING_SCENE, e);
-        } catch (NoResultException e) {
-            throw new RuntimeException(e);
         }
     }
 
