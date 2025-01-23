@@ -2,9 +2,8 @@ package com.theradiary.ispwtheradiary.controller.application;
 
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
-import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
-import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.MedicalOffice;
 import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
@@ -17,12 +16,12 @@ public class MedicalOfficeRegistrationController {
     public MedicalOfficeRegistrationController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
-    public void register(MedicalOfficeBean medicalOfficeBean) {
+    public void register(MedicalOfficeBean medicalOfficeBean) throws  NoResultException {
         MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
         try{
             updateDAO.registerMedicalOffice(medicalOffice);
-        }catch(PersistenceOperationException exception){
-            throw new DAOException(exception.getMessage(),exception);
+        }catch(Exception e){
+            throw new NoResultException();
         }
     }
 

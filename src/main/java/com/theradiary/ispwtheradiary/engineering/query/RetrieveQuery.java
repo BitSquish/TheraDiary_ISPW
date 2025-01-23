@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
-import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +11,7 @@ public class RetrieveQuery {
 
     private RetrieveQuery(){}
 
-    public static ResultSet searchPsychologist(Connection conn, String name, String surname, String city, boolean inPerson, boolean online, boolean pag) throws SQLException {
+    public static ResultSet searchPsychologist(Connection conn, String name, String surname, String city, boolean inPerson, boolean online, boolean pag) throws SQLException, DatabaseOperationException {
         String query = "SELECT mail, name, surname, city, description, inPerson, online, pag  FROM psychologist WHERE 1=1";
         if(!name.isEmpty())
             query += " AND name = ?";
@@ -54,7 +54,7 @@ public class RetrieveQuery {
             }
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nella ricerca", e);
+            throw new DatabaseOperationException("Errore nella ricerca", e);
         }
 
     }
@@ -95,38 +95,38 @@ public class RetrieveQuery {
 
     }
 
-    public static ResultSet retrievePatientList(Connection conn, String mail) {
+    public static ResultSet retrievePatientList(Connection conn, String mail) throws DatabaseOperationException {
         String query = "SELECT mail,name,surname,city,description,inPerson,online,pag FROM patient  WHERE psychologist = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nel recupero della lista pazienti", e);
+            throw new DatabaseOperationException("Errore nel recupero della lista pazienti", e);
         }
 
     }
 
 
-    public static ResultSet checkPatientPag(Connection conn, String mail) {
+    public static ResultSet checkPatientPag(Connection conn, String mail) throws DatabaseOperationException {
         String query = "SELECT pag FROM patient WHERE mail = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nel recupero del pag", e);
+            throw new DatabaseOperationException("Errore nel recupero del pag", e);
         }
     }
 
-    public static ResultSet checkPsychologistPag(Connection conn, String mail) {
+    public static ResultSet checkPsychologistPag(Connection conn, String mail) throws DatabaseOperationException {
         String query = "SELECT pag FROM psychologist WHERE mail = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nel recupero del pag", e);
+            throw new DatabaseOperationException("Errore nel recupero del pag", e);
         }
     }
 
@@ -147,29 +147,29 @@ public class RetrieveQuery {
         return pstmt.executeQuery();
     }
 
-    public static ResultSet yourPsychologist(Connection conn, String mail) {
+    public static ResultSet yourPsychologist(Connection conn, String mail) throws DatabaseOperationException {
         String query = "SELECT psychologist.* FROM patient Join psychologist ON patient.psychologist = psychologist.mail WHERE patient.mail = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nel recupero del proprio psicologo", e);
+            throw new DatabaseOperationException("Errore nel recupero del proprio psicologo", e);
         }
     }
 
-    public static ResultSet retrieveAllAppointments(Connection conn, String mail) {
+    public static ResultSet retrieveAllAppointments(Connection conn, String mail) throws DatabaseOperationException {
         String query = "SELECT psychologist, day, timeSlot, inPerson, online, patient, available FROM appointment WHERE psychologist = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, mail);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nel recupero degli appuntamenti", e);
+            throw new DatabaseOperationException("Errore nel recupero degli appuntamenti", e);
         }
     }
 
-    public static ResultSet retrieveAppointment(Connection conn, String psychologist, String day, String timeSlot) {
+    public static ResultSet retrieveAppointment(Connection conn, String psychologist, String day, String timeSlot) throws DatabaseOperationException {
         String query = "SELECT psychologist, day, timeSlot, inPerson, online, patient, available FROM appointment WHERE psychologist = ? AND day = ? AND timeSlot = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
@@ -178,11 +178,11 @@ public class RetrieveQuery {
             pstmt.setString(3, timeSlot);
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nel recupero dell'appuntamento", e);
+            throw new DatabaseOperationException("Errore nel recupero dell'appuntamento", e);
         }
     }
 
-    public static ResultSet retrievePatientAppointment(Connection conn, String psychologist, String patient, boolean availability) {
+    public static ResultSet retrievePatientAppointment(Connection conn, String psychologist, String patient, boolean availability) throws DatabaseOperationException {
         String query = "SELECT day, timeSlot, inPerson, online FROM appointment WHERE psychologist = ? AND patient = ? AND available = ?";
         try{
             PreparedStatement pstmt = conn.prepareStatement(query);
@@ -191,7 +191,7 @@ public class RetrieveQuery {
             pstmt.setBoolean(3, availability);
             return pstmt.executeQuery();
         } catch (SQLException e){
-            throw new PersistenceOperationException("Errore nel recupero dell'appuntamento", e);
+            throw new DatabaseOperationException("Errore nel recupero dell'appuntamento", e);
         }
     }
 }

@@ -4,8 +4,9 @@ package com.theradiary.ispwtheradiary.engineering.dao.full.sql;
 
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
-import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
+import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.LoginAndRegistrationQuery;
 import com.theradiary.ispwtheradiary.engineering.query.UpdateQuery;
@@ -17,11 +18,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
-import static com.theradiary.ispwtheradiary.engineering.dao.LoginAndRegistrationDAO.REGISTER_ERROR;
 
 public class UpdateDAOSQL implements UpdateDAO {
     @Override
-    public boolean emailExists(String mail) throws SQLException {
+    public boolean emailExists(String mail) throws SQLException, DatabaseOperationException {
         try (Connection conn = ConnectionFactory.getConnection()){
             int rs = LoginAndRegistrationQuery.checkMail(conn, mail);
             if (rs != 0)
@@ -33,8 +33,8 @@ public class UpdateDAOSQL implements UpdateDAO {
     public void modifyMedicalOffice(MedicalOffice medicalOffice) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.modifyMedicalOffice(conn, medicalOffice.getPsychologist(), medicalOffice.getCity(), medicalOffice.getPostCode(), medicalOffice.getAddress(), medicalOffice.getOtherInfo());
-        } catch(SQLException e){
-            throw new PersistenceOperationException("Errore nella modifica dello studio medico", e);
+        } catch(SQLException | DatabaseOperationException e){
+            handleException(e);
         }
     }
     @Override
@@ -42,8 +42,8 @@ public class UpdateDAOSQL implements UpdateDAO {
     public void registerMedicalOffice(MedicalOffice medicalOffice) {
         try(Connection conn = ConnectionFactory.getConnection()){
             LoginAndRegistrationQuery.registerMedicalOffice(conn, medicalOffice.getPsychologist(), medicalOffice.getCity(), medicalOffice.getPostCode(), medicalOffice.getAddress(), medicalOffice.getOtherInfo());
-        } catch(SQLException e){
-            throw new PersistenceOperationException(REGISTER_ERROR, e);
+        } catch(SQLException | DatabaseOperationException e){
+            handleException(e);
         }
     }
     @Override
@@ -53,8 +53,8 @@ public class UpdateDAOSQL implements UpdateDAO {
                 throw new MailAlreadyExistsException(("Mail già registrata"));
             UpdateQuery.modifyCredentials(conn, newCredentials.getMail(), newCredentials.getPassword(), oldCredentials.getMail());
 
-        } catch(SQLException e){
-            throw new PersistenceOperationException("Errore nella modifica delle credenziali", e);
+        } catch(SQLException | DatabaseOperationException e){
+            handleException(e);
         } catch (MailAlreadyExistsException e) {
             throw new MailAlreadyExistsException(e.getMessage());
         }
@@ -63,40 +63,40 @@ public class UpdateDAOSQL implements UpdateDAO {
     public void modifyPsychologist(Psychologist psychologist) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.modifyPsychologist(conn, psychologist);
-        } catch(SQLException e){
-            throw new PersistenceOperationException("Errore nella modifica dello psicologo", e);
+        } catch(SQLException | DatabaseOperationException e){
+            handleException(e);
         }
     }
     @Override
     public void modifyPatient(Patient patient) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.modifyPatient(conn, patient);
-        } catch(SQLException e){
-            throw new PersistenceOperationException("Errore nella modifica del paziente", e);
+        } catch(SQLException | DatabaseOperationException e){
+            handleException(e);
         }
     }
     @Override
     public void joinPagPsychologist(Psychologist psychologist) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.joinPagPsychologist(conn, psychologist.getCredentials().getMail());
-        } catch(SQLException e){
-            throw new PersistenceOperationException("Errore nell'aggiunta del  pag", e);
+        } catch(SQLException | DatabaseOperationException e){
+            handleException(e);
         }
     }
     @Override
     public void joinPagPatient(Patient patient) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.joinPagPatient(conn, patient.getCredentials().getMail());
-        } catch(SQLException e){
-            throw new PersistenceOperationException("Errore nell'aggiunta del  pag", e);
+        } catch(SQLException | DatabaseOperationException e){
+            handleException(e);
         }
     }
     @Override
     public void deleteRequest(Request request) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.deleteRequest(conn, request.getPatient().getCredentials().getMail(), request.getPsychologist().getCredentials().getMail(), request.getDate());
-        } catch(SQLException e){
-            throw new PersistenceOperationException("Errore nella cancellazione della richiesta", e);
+        } catch(SQLException | DatabaseOperationException e){
+            handleException(e);
         }
     }
     @Override
@@ -104,8 +104,8 @@ public class UpdateDAOSQL implements UpdateDAO {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.setPatientsPsychologist(conn, patient.getCredentials().getMail(), patient.getPsychologist().getCredentials().getMail());
             UpdateQuery.deleteOtherRequests(conn, patient);
-        } catch(SQLException e){
-            throw new PersistenceOperationException("Errore nella modifica dello psicologo del paziente", e);
+        } catch(SQLException | DatabaseOperationException e) {
+            handleException(e);
         }
     }
 
@@ -116,8 +116,8 @@ public class UpdateDAOSQL implements UpdateDAO {
                 UpdateQuery.addAppointment(conn, appointmentToAdd, null);
             else
                 UpdateQuery.addAppointment(conn, appointmentToAdd, appointmentToAdd.getPatient().getCredentials().getMail());
-        } catch(SQLException e){
-            throw new PersistenceOperationException("Errore nella rimozione degli appuntamenti", e);
+        } catch(SQLException | DatabaseOperationException e){
+            handleException(e);
         }
     }
 
@@ -127,25 +127,28 @@ public class UpdateDAOSQL implements UpdateDAO {
             for(Appointment appointment : appointmentsToModify){
                 UpdateQuery.modifyAppointment(conn, psychologist, appointment.getDay(), appointment.getTimeSlot(), appointment.isInPerson(), appointment.isOnline());
             }
-        } catch(SQLException e){
-            throw new PersistenceOperationException("Errore nella modifica degli appuntamenti", e);
+        } catch(SQLException | DatabaseOperationException e){
+            handleException(e);
         }
     }
     @Override
     public void clearAppointments(Psychologist psychologist, DayOfTheWeek day) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.clearAppointments(conn, psychologist.getCredentials().getMail(), day.toString());
-        } catch(SQLException e){
-            throw new PersistenceOperationException("Errore nella cancellazione degli appuntamenti", e);
+        } catch(SQLException | DatabaseOperationException e){
+           handleException(e);
         }
     }
     @Override
     public void setRequestForAppointment(Appointment appointment) {
         try(Connection conn = ConnectionFactory.getConnection()){
             UpdateQuery.setRequestForAppointment(conn, appointment);
-        } catch(SQLException e){
-            throw new PersistenceOperationException("Errore nella richiesta di appuntamento", e);
+        } catch(SQLException |DatabaseOperationException e){
+            handleException(e);
         }
+    }
+    private void handleException(Exception e) {
+        Printer.errorPrint(String.format("%s", e.getMessage()));
     }
 }
 

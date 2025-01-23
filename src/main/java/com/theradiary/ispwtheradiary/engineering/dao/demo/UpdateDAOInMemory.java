@@ -3,8 +3,8 @@ package com.theradiary.ispwtheradiary.engineering.dao.demo;
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.demo.shared.SharedResources;
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
-import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
 import com.theradiary.ispwtheradiary.model.*;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class UpdateDAOInMemory implements UpdateDAO {
             patient.setCredentials(newCredentials);
             SharedResources.getInstance().getPatients().put(newCredentials.getMail(), patient);
         } else {
-            throw new PersistenceOperationException("Utente non trovato", new Throwable());
+            throw new DAOException();
         }
     }
 
@@ -98,14 +98,14 @@ public class UpdateDAOInMemory implements UpdateDAO {
             patient.setPsychologist(patient.getPsychologist());
             SharedResources.getInstance().getPatients().put(patient.getCredentials().getMail(), patient);
         } else {
-            throw new PersistenceOperationException("Psicologo non trovato", new Throwable());
+            throw new DAOException();
         }
     }
 
     @Override
     public void registerMedicalOffice(MedicalOffice medicalOffice) {
         if (SharedResources.getInstance().getMedicalOffices().containsKey(medicalOffice.getPsychologist())) {
-            throw new PersistenceOperationException("Lo studio medico è già registrato", new Throwable());
+            throw new DAOException();
         }
         SharedResources.getInstance().getMedicalOffices().put(medicalOffice.getPsychologist(), medicalOffice);
     }

@@ -1,13 +1,14 @@
 package com.theradiary.ispwtheradiary.engineering.dao;
 
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.model.*;
 
 import java.sql.SQLException;
 
 public interface UpdateDAO {
-    boolean emailExists(String mail) throws SQLException;
+    boolean emailExists(String mail) throws SQLException, DatabaseOperationException;
     void modifyMedicalOffice(MedicalOffice medicalOffice);
     void modifyCredentials(Credentials newCredentials, Credentials oldCredentials) throws MailAlreadyExistsException;
     void modifyPatient(Patient patient);

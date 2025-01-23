@@ -3,8 +3,9 @@ package com.theradiary.ispwtheradiary.engineering.dao.full.sql;
 
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.*;
-import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
+import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.RetrieveQuery;
 import com.theradiary.ispwtheradiary.model.*;
@@ -32,14 +33,13 @@ public class RetrieveDAOSQL implements RetrieveDAO {
     private static final String DAY = "day";
     private static final String TIMESLOT = "timeSlot";
     private static final String AVAILABLE = "available";
-    private static final String APPOINTMENT_ERROR = "Errore nel recupero degli appuntamenti";
 
     @Override
-    public void searchPsychologists(List<Psychologist> psychologists, String name, String surname, String city, boolean inPerson, boolean online, boolean pag) {
+    public void searchPsychologists(List<Psychologist> psychologists, String name, String surname, String city, boolean inPerson, boolean online, boolean pag) throws DatabaseOperationException {
         try (Connection conn = ConnectionFactory.getConnection();
              ResultSet rs = RetrieveQuery.searchPsychologist(conn, name, surname, city, inPerson, online, pag)) {
             if (!rs.next())
-                throw new NoResultException("La ricerca non ha prodotto risultati");
+                throw new NoResultException();
             do {
                 //Passare la password come null o creare nuovo costruttore solo con la mail?
                 Credentials credentials = new Credentials(rs.getString(MAIL), Role.PSYCHOLOGIST);
@@ -56,7 +56,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
                 psychologists.add(psychologist);
             } while (rs.next());
         } catch (SQLException | NoResultException e) {
-            throw new PersistenceOperationException("Errore nella ricerca", e);
+            handleException(e);
         }
     }
     @Override
@@ -70,9 +70,10 @@ public class RetrieveDAOSQL implements RetrieveDAO {
                 medicalOffice.setOtherInfo(rs.getString(OTHERINFO));
                 return true;
             } else
-                return false;
-        } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nel recupero dell'ufficio medico", e);
+                throw new NoResultException();
+        } catch (SQLException | NoResultException e) {
+            handleException(e);
+            return false;
         }
 
     }
@@ -87,7 +88,8 @@ public class RetrieveDAOSQL implements RetrieveDAO {
             return !categories.isEmpty();
 
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nel recupero delle categorie", e);
+            handleException(e);
+            return false;
         }
     }
 
@@ -99,7 +101,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
                 addCategory(categories, categoryName);
             }
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore durante l'elaborazione del ResultSet", e);
+            handleException(e);
         }
         return categories;
     }
@@ -121,7 +123,8 @@ public class RetrieveDAOSQL implements RetrieveDAO {
             return !majors.isEmpty();
 
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nel recupero delle specializzazioni", e);
+           handleException(e);
+            return false;
         }
     }
 
@@ -133,7 +136,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
                 addMajor(majors, majorName);
             }
         } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore durante l'elaborazione del ResultSet", e);
+            handleException(e);
         }
         return majors;
     }
@@ -168,8 +171,9 @@ public class RetrieveDAOSQL implements RetrieveDAO {
                 // Aggiungi il paziente alla lista
             }
 
-        } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nel recupero dei pazienti", e);
+        } catch (SQLException |DatabaseOperationException e) {
+            handleException(e);
+            return List.of(); //ritorno lista vuota
         }
         return patients;
     }
@@ -184,8 +188,8 @@ public class RetrieveDAOSQL implements RetrieveDAO {
             if (rs.next()) {
                 loggedUser.setPag(rs.getBoolean(PAG));
             }
-        } catch (SQLException e) {
-            throw new PersistenceOperationException("Errore nel recupero del pag", e);
+        } catch (SQLException |DatabaseOperationException e) {
+            handleException(e);
         }
     }
 
@@ -209,7 +213,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
             }
 
         }catch (SQLException e){
-            throw new PersistenceOperationException("Errore nel recupero delle richieste", e);
+            handleException(e);
         }
     }
 
@@ -230,7 +234,8 @@ public class RetrieveDAOSQL implements RetrieveDAO {
             }
             return appointments;
         }catch (SQLException e){
-            throw new PersistenceOperationException(APPOINTMENT_ERROR, e);
+            handleException(e);
+            return List.of();   //ritorno lista vuota
         }
     }
     @Override
@@ -250,9 +255,10 @@ public class RetrieveDAOSQL implements RetrieveDAO {
                 psychologist.setPag(rs.getBoolean(PAG));
                 return psychologist;
             }else
-                return null;
-        }catch (SQLException e){
-            throw new PersistenceOperationException("Errore nel recupero dello psicologo", e);
+                throw new NoResultException();
+        }catch (SQLException | NoResultException | DatabaseOperationException e){
+            handleException(e);
+            return null;
         }
     }
     @Override
@@ -272,8 +278,8 @@ public class RetrieveDAOSQL implements RetrieveDAO {
                 appointment.setAvailable(rs.getBoolean(AVAILABLE));
                 appointments.add(appointment);
             }
-        }catch (SQLException e){
-            throw new PersistenceOperationException(APPOINTMENT_ERROR, e);
+        }catch (SQLException | DatabaseOperationException e){
+            handleException(e);
         }
     }
 
@@ -295,9 +301,13 @@ public class RetrieveDAOSQL implements RetrieveDAO {
                 appointment.setAvailable(availability);
             }
             return appointment;
-        }catch (SQLException e){
-            throw new PersistenceOperationException(APPOINTMENT_ERROR, e);
+        }catch (SQLException |DatabaseOperationException e){
+            handleException(e);
         }
+        return null;
+    }
+    private void handleException(Exception e) {
+        Printer.errorPrint(String.format(" %s", e.getMessage()));
     }
 }
 
