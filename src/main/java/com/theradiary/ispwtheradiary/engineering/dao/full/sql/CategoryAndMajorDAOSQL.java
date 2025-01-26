@@ -21,10 +21,10 @@ public class CategoryAndMajorDAOSQL implements CategoryAndMajorDAO {
     public void addCategory(Patient patient, Category category) {
         try(Connection conn= ConnectionFactory.getConnection()) {
             AccountQuery.addCategory(conn, category.toString(), patient.getCredentials().getMail());
-        }catch (SQLException e){
+        }catch (SQLException | DatabaseOperationException e){
             handleException(e);
         }
-    }
+   }
     @Override
     public void addMajor(Psychologist psychologist, Major major) {
         try(Connection conn= ConnectionFactory.getConnection()) {

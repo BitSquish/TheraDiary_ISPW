@@ -3,7 +3,7 @@ package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.application.MedicalOfficeRegistrationController;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
-import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
@@ -12,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-import java.sql.SQLException;
+
 
 public class MedicalOfficeGUI extends CommonGUI {
     protected MedicalOfficeGUI(FXMLPathConfig fxmlPathConfig, Session session) {
@@ -38,7 +38,7 @@ public class MedicalOfficeGUI extends CommonGUI {
 
     //Questo metodo fa sì che le textfield siano inizializzate con i dati dello studio medico se esso è già stato inserito
     @FXML
-    protected void initializeTextFields() throws SQLException {
+    protected void initializeTextFields()  {
         MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(session.getUser().getCredentialsBean().getMail(), null, null, null, null);
         if (medicalOfficeRegistration.retrieveMedicalOffice(medicalOfficeBean)) {
             medOffAlreadyInserted = true;
@@ -64,7 +64,7 @@ public class MedicalOfficeGUI extends CommonGUI {
             else
                 medicalOfficeRegistration.register(medicalOfficeBean);
             successMessage.setVisible(true);
-        }catch(EmptyFieldException exception){
+        }catch(EmptyFieldException | NoResultException exception){
             errorMessage.setText(exception.getMessage());
             errorMessage.setVisible(true);
         }

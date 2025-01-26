@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.engineering.query;
 
 import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
+import com.theradiary.ispwtheradiary.engineering.others.Printer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +12,7 @@ public class RetrieveQuery {
 
     private RetrieveQuery(){}
 
-    public static ResultSet searchPsychologist(Connection conn, String name, String surname, String city, boolean inPerson, boolean online, boolean pag) throws SQLException, DatabaseOperationException {
+    public static ResultSet searchPsychologist(Connection conn, String name, String surname, String city, boolean inPerson, boolean online, boolean pag) throws SQLException {
         String query = "SELECT mail, name, surname, city, description, inPerson, online, pag  FROM psychologist WHERE 1=1";
         if(!name.isEmpty())
             query += " AND name = ?";
@@ -54,7 +55,8 @@ public class RetrieveQuery {
             }
             return pstmt.executeQuery();
         } catch (SQLException e) {
-            throw new DatabaseOperationException("Errore nella ricerca", e);
+            Printer.errorPrint("Errore nella ricerca dello psicologo");
+            return null;
         }
 
     }

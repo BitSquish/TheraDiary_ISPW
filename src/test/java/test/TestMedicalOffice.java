@@ -2,7 +2,6 @@ package test;
 
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
-import com.theradiary.ispwtheradiary.engineering.exceptions.PersistenceOperationException;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.MedicalOffice;
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +25,7 @@ class TestMedicalOffice {
 
     @Test
     void retrieveMedicalOfficeIfExists(){
-        try{
+        try {
             MedicalOffice medicalOffice = createMedicalOffice(PSYCHOLOGIST_WITH_MEDICALOFFICE_MAIL);
             boolean medOffAlreadyInserted = retrieveDAO.retrieveMedicalOffice(medicalOffice);
             // Verifica i risultati
@@ -36,10 +35,7 @@ class TestMedicalOffice {
             Assertions.assertEquals(POSTCODE, medicalOffice.getPostCode());
             Assertions.assertEquals(ADDRESS, medicalOffice.getAddress());
             Assertions.assertEquals(OTHERINFO, medicalOffice.getOtherInfo());
-        } catch(PersistenceOperationException e){
-            Assertions.fail("Errore di persistenza: " + e.getMessage());
-        }
-        catch(Exception e){
+        }catch(Exception e){
             Assertions.fail("Errore imprevisto: " + e.getMessage());
         }
 
@@ -52,8 +48,6 @@ class TestMedicalOffice {
             boolean medOffAlreadyInserted = retrieveDAO.retrieveMedicalOffice(medicalOffice);
             // Verifica i risultati
             Assertions.assertFalse(medOffAlreadyInserted, "Il metodo dovrebbe restituire false quando l'ufficio medico non esiste.");
-        } catch(PersistenceOperationException e){
-            Assertions.fail("Errore di persistenza: " + e.getMessage());
         }
         catch(Exception e){
             Assertions.fail("Errore imprevisto: " + e.getMessage());
@@ -66,8 +60,6 @@ class TestMedicalOffice {
         try{
             MedicalOffice medicalOffice = createMedicalOffice(PSYCHOLOGIST_WITHOUT_MEDICALOFFICE_MAIL);
             update.registerMedicalOffice(medicalOffice);
-        }catch(PersistenceOperationException e){
-            Assertions.fail("Errore di persistenza: " + e.getMessage());
         }
         catch(Exception e){
             Assertions.fail("Errore imprevisto: " + e.getMessage());
@@ -81,8 +73,6 @@ class TestMedicalOffice {
             medicalOffice.setPostCode("11111");
             update.modifyMedicalOffice(medicalOffice);
             Assertions.assertEquals("11111", medicalOffice.getPostCode());
-        }catch(PersistenceOperationException e){
-            Assertions.fail("Errore di persistenza: " + e.getMessage());
         }
         catch(Exception e){
             Assertions.fail("Errore imprevisto: " + e.getMessage());

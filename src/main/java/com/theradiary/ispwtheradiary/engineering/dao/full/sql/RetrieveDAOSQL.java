@@ -35,9 +35,10 @@ public class RetrieveDAOSQL implements RetrieveDAO {
     private static final String AVAILABLE = "available";
 
     @Override
-    public void searchPsychologists(List<Psychologist> psychologists, String name, String surname, String city, boolean inPerson, boolean online, boolean pag) throws DatabaseOperationException {
+    public void searchPsychologists(List<Psychologist> psychologists, String name, String surname, String city, boolean inPerson, boolean online, boolean pag) {
         try (Connection conn = ConnectionFactory.getConnection();
              ResultSet rs = RetrieveQuery.searchPsychologist(conn, name, surname, city, inPerson, online, pag)) {
+            assert rs != null;
             if (!rs.next())
                 throw new NoResultException();
             do {

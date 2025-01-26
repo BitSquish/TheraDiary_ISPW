@@ -34,33 +34,35 @@ public class PsychologistDescriptionController {
         psychologistBean.setMajor(psychologist.getMajors());
     }
 
-    public void sendRequest(RequestBean requestBean) throws  NoResultException {
+    public void sendRequest(RequestBean requestBean) throws NoResultException {
         Request request = beanAndModelMapperFactory.fromBeanToModel(requestBean, RequestBean.class);
         try{
             ptAndPsDAO.sendRequest(request);
             RequestManagerConcreteSubject requestManagerConcreteSubject = RequestManagerConcreteSubject.getInstance();
             requestManagerConcreteSubject.addRequest(request);
         } catch (Exception e){
-            throw new NoResultException();
+            throw new NoResultException("Errore nell'invio della richiesta");
+
         }
     }
 
-    public boolean hasAlreadySentARequest(PatientBean patientBean, PsychologistBean psychologistBean) throws  NoResultException {
+    public boolean hasAlreadySentARequest(PatientBean patientBean, PsychologistBean psychologistBean) throws NoResultException {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         Request request= new Request(patient, psychologist);
         try{
             return ptAndPsDAO.hasAlreadySentARequest(request);
         } catch (Exception e){
-            throw new NoResultException();
+            throw new NoResultException("Errore nel controllo delle richieste");
         }
     }
-    public boolean hasAlreadyAPsychologist(PatientBean patientBean) throws  NoResultException {
+    public boolean hasAlreadyAPsychologist(PatientBean patientBean) throws NoResultException {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         try{
             return ptAndPsDAO.hasAlreadyAPsychologist(patient);
         } catch (Exception e){
-            throw new NoResultException();
+            throw new NoResultException("Errore nel controllo dello psicologo");
+
         }
     }
 }
