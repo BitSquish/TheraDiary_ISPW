@@ -29,7 +29,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -64,8 +64,7 @@ public abstract class CommonGUI {
     protected static final String MODIFY_PATIENT_PATH = "MODIFY_PATIENT_PATH";
     protected static final String MODIFY_PSYCHOLOGIST_PATH = "MODIFY_PSYCHOLOGIST_PATH";
     protected static final String PSYCHOLOGIST_DESCRIPTION_PATH = "PSYCHOLOGIST_DESCRIPTION_PATH";
-    protected static final String PATIENT_DESCRIPTION_PATH = "PATIENT_DESCRIPTION_PATH";
-    protected static final String PSYCHOLOGIST_LIST_PATH = "PSYCHOLOGIST_LIST_PATH";
+
     protected static final String DIARY_PATH="DIARY_PATH";
     protected static final String DIARY_PAGE_PATH="DIARY_PAGE_PATH";
     protected static final String TODO_PATH="TODO_PATH";
@@ -217,7 +216,7 @@ public abstract class CommonGUI {
             }
             Parent root = loader.load();
             changeScene(root, event);
-        } catch (IOException | SQLException e) {
+        } catch (IOException e) {
             throw new LoadingException(LOADING_SCENE, e);
         }
     }
