@@ -44,7 +44,7 @@
          <Font size="14.0" />
       </font>
    </Text>
-   <Button layoutX="369.0" layoutY="464.0" mnemonicParsing="false" onMouseClicked="#register" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6;" text="Registra" textFill="WHITE">
+   <Button layoutX="369.0" layoutY="464.0" mnemonicParsing="false" onMouseClicked="#register" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #9067C6; -fx-background-radius: 7;" text="Registra" textFill="WHITE">
       <font>
          <Font size="18.0" />
       </font>

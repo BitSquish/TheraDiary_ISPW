@@ -34,9 +34,9 @@
                      <children>
                         <TableView fx:id="taskTableView" layoutX="26.0" layoutY="14.0" prefHeight="246.0" prefWidth="675.0">
                           <columns>
-                            <TableColumn fx:id="taskNameColumn" prefWidth="225.0" text="Nome task" />
-                            <TableColumn fx:id="taskDeadlineColumn" prefWidth="225.0" text="Scadenza" />
-                              <TableColumn fx:id="taskStatusColumn" prefWidth="225.0" text="Stato" />
+                            <TableColumn fx:id="taskNameColumn" prefWidth="322.4000244140625" text="Nome task" />
+                            <TableColumn fx:id="taskDeadlineColumn" prefWidth="172.79998779296875" text="Scadenza" />
+                              <TableColumn fx:id="taskStatusColumn" prefWidth="182.40008544921875" text="Stato" />
                           </columns>
                         </TableView>
                         <Button fx:id="modify" layoutX="160.0" layoutY="273.0" mnemonicParsing="false" onMouseClicked="#modifyTask" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Modifica" textFill="WHITE">
