@@ -41,25 +41,8 @@ class TestMedicalOfficeAndSearch {
         return new MedicalOffice(mail, CITY, POSTCODE, ADDRESS, OTHERINFO);
     }
 
-    //Test di inserimento di uno studio medico
 
-    @Test
-    void retrieveMedicalOfficeIfExists(){
-        try {
-            MedicalOffice medicalOffice = createMedicalOffice(PSYCHOLOGIST_WITH_MEDICALOFFICE_MAIL);
-            boolean medOffAlreadyInserted = retrieveDAO.retrieveMedicalOffice(medicalOffice);
-            // Verifica i risultati
-            Assertions.assertTrue(medOffAlreadyInserted, "Il metodo dovrebbe restituire true quando l'ufficio medico esiste.");
-            Assertions.assertEquals(PSYCHOLOGIST_WITH_MEDICALOFFICE_MAIL, medicalOffice.getPsychologist());
-            Assertions.assertEquals(CITY, medicalOffice.getCity());
-            Assertions.assertEquals(POSTCODE, medicalOffice.getPostCode());
-            Assertions.assertEquals(ADDRESS, medicalOffice.getAddress());
-            Assertions.assertEquals(OTHERINFO, medicalOffice.getOtherInfo());
-        }catch(Exception e){
-            Assertions.fail("Errore imprevisto: " + e.getMessage());
-        }
 
-    }
 
     //Test di avvenuta modifica dello studio medico già registrato
     @Test

@@ -20,7 +20,7 @@
             <Image url="@img/therapy.png" />
         </image>
     </ImageView>
-    <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="660.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="660.0" layoutY="227.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@img/exam.png" />
         </image>
@@ -35,12 +35,12 @@
             <Font name="System Italic" size="18.0" />
         </font>
     </Text>
-    <Text layoutX="339.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ogni sfida è meno dura se affrontata insieme" textAlignment="CENTER" wrappingWidth="198.6292724609375">
+    <Text layoutX="320.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tieni traccia dei tuoi progressi, quando e dove vuoi" textAlignment="CENTER" wrappingWidth="235.4293212890625">
         <font>
             <Font name="System Italic" size="18.0" />
         </font>
     </Text>
-    <Text layoutX="611.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assistenza, planner e molto altro" textAlignment="CENTER" wrappingWidth="198.6292724609375">
+    <Text layoutX="611.0" layoutY="349.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assistenza, planner e molto altro" textAlignment="CENTER" wrappingWidth="198.6292724609375">
         <font>
             <Font name="System Italic" size="18.0" />
         </font>
@@ -50,12 +50,12 @@
             <Font size="14.0" />
         </font>
     </Text>
-    <Text layoutX="338.0" layoutY="397.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La bacheca è un ambiente dove ogni persona può condividere riflessioni sul proprio percorso." textAlignment="CENTER" wrappingWidth="198.6292724609374">
+    <Text layoutX="338.0" layoutY="397.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tramite task personalizzabili, to-do list e pagine di diario quotidiane." textAlignment="CENTER" wrappingWidth="198.6292724609374">
         <font>
             <Font size="14.0" />
         </font>
     </Text>
-    <Text layoutX="616.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scopri il mondo di TheraDiary cliccando su &quot;Iniziamo&quot;!" textAlignment="CENTER" wrappingWidth="187.50381469726562">
+    <Text layoutX="616.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestisci in modo facile e veloce gli appuntamenti settimanali." textAlignment="CENTER" wrappingWidth="187.50381469726562">
         <font>
             <Font size="14.0" />
         </font>
