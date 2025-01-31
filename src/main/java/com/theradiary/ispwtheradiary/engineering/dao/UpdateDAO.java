@@ -1,5 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.dao;
 
+import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
@@ -22,8 +23,10 @@ public interface UpdateDAO {
     void setPatientsPsychologist(Patient patient);
     void registerMedicalOffice(MedicalOffice medicalOffice);
 
+    void deletePsychologist(Psychologist psychologist);
+    void deletePatient(Patient patient);
 
-
-
-
+    void deleteMedicalOffice(MedicalOffice medicalOffice);
+    void deleteUser(Credentials credentials);
+    void deleteCategory(Patient patient,Category category);
 }

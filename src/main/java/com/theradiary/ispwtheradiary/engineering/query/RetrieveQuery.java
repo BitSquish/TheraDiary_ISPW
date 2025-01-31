@@ -196,4 +196,6 @@ public class RetrieveQuery {
             throw new DatabaseOperationException("Errore nel recupero dell'appuntamento", e);
         }
     }
+
+
 }

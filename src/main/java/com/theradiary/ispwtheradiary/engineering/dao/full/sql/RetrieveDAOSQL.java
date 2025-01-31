@@ -307,8 +307,11 @@ public class RetrieveDAOSQL implements RetrieveDAO {
         }
         return null;
     }
+
+
     private void handleException(Exception e) {
         Printer.errorPrint(String.format(" %s", e.getMessage()));
     }
+
 }
 
