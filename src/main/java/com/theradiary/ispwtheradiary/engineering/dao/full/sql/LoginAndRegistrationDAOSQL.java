@@ -137,6 +137,15 @@ public class LoginAndRegistrationDAOSQL implements LoginAndRegistrationDAO {
             handleException(e);
         }
     }
+
+    @Override
+    public void removePsychologist(Psychologist psychologist) {
+        try (Connection conn = ConnectionFactory.getConnection()) {
+            LoginAndRegistrationQuery.removePsychologist(conn, psychologist.getCredentials().getMail());
+        } catch (SQLException | DatabaseOperationException e) {
+            handleException(e);
+        }
+    }
     private void handleException(Exception e) {
         Printer.errorPrint(String.format("%s", e.getMessage()));
     }

@@ -19,4 +19,6 @@ public interface LoginAndRegistrationDAO {
 
     void retrievePsychologist(Psychologist psychologist) throws NoResultException;
     void removePatient(Patient patient);
+
+    void removePsychologist(Psychologist psychologist);
 }

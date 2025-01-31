@@ -126,6 +126,16 @@ public class LoginAndRegistrationQuery {
             throw new DatabaseOperationException("Errore nella rimozione del paziente", e);
         }
     }
+
+    public static void removePsychologist(Connection conn, String mail) throws DatabaseOperationException {
+        String query = "DELETE FROM psychologist WHERE mail = ?";
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, mail);
+            pstmt.executeUpdate();
+        }catch (SQLException e) {
+            throw new DatabaseOperationException("Errore nella rimozione dello psicologo", e);
+        }
+    }
 }
 
 
