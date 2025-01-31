@@ -133,4 +133,16 @@ public class TaskAndToDoQuery {
         pstmt.setString(1, mail);
         return pstmt.executeQuery();
     }
+
+    public static void removeDiaryEntry(Connection conn, LocalDate selectedDate, String mail) throws DatabaseOperationException {
+        String query = "DELETE FROM diary WHERE data_creazione=? AND patient=?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setDate(1, java.sql.Date.valueOf(selectedDate));
+            pstmt.setString(2, mail);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DatabaseOperationException("Errore nella rimozione del diario", e);
+        }
+    }
 }

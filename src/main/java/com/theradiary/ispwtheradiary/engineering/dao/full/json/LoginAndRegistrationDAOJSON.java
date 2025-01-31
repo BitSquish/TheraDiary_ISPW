@@ -145,4 +145,9 @@ public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO {
         user.setInPerson(app.isInPerson());
         user.setOnline(app.isOnline());
     }
+    @Override
+    public void removePatient(Patient patient) {
+        userList.removeIf(p -> p.getCredentials().getMail().equals(patient.getCredentials().getMail()));
+        loadFile();
+    }
 }

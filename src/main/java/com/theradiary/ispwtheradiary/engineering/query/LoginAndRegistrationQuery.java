@@ -106,7 +106,7 @@ public class LoginAndRegistrationQuery {
             throw new DatabaseOperationException("Errore nella verifica della mail", e);
         }
     }
-    public static void joinPag(Connection conn,String mail) throws SQLException, DatabaseOperationException {
+    public static void joinPag(Connection conn,String mail) throws  DatabaseOperationException {
         String query = "UPDATE users SET isPag = TRUE WHERE email = ?";
         try(PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1,mail);
@@ -117,6 +117,15 @@ public class LoginAndRegistrationQuery {
     }
 
 
+    public static void removePatient(Connection conn, String mail) throws DatabaseOperationException {
+        String query = "DELETE FROM patient WHERE mail = ?";
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, mail);
+            pstmt.executeUpdate();
+        }catch (SQLException e) {
+            throw new DatabaseOperationException("Errore nella rimozione del paziente", e);
+        }
+    }
 }
 
 

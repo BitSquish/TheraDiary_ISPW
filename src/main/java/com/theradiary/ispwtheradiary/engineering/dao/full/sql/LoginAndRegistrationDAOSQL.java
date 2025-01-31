@@ -113,7 +113,7 @@ public class LoginAndRegistrationDAOSQL implements LoginAndRegistrationDAO {
             handleException(e);
         }
     }
-
+    @Override
     public void retrievePsychologist(Psychologist psychologist) {
         try (Connection conn = ConnectionFactory.getConnection();
              ResultSet rs = RetrieveQuery.retrievePsychologist(conn, psychologist.getCredentials().getMail())) {
@@ -126,6 +126,14 @@ public class LoginAndRegistrationDAOSQL implements LoginAndRegistrationDAO {
                 psychologist.setOnline(rs.getBoolean(ONLINE));
             }
         } catch (SQLException e) {
+            handleException(e);
+        }
+    }
+    @Override
+    public void removePatient(Patient patient) {
+        try (Connection conn = ConnectionFactory.getConnection()) {
+            LoginAndRegistrationQuery.removePatient(conn, patient.getCredentials().getMail());
+        } catch (SQLException | DatabaseOperationException e) {
             handleException(e);
         }
     }

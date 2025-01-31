@@ -9,7 +9,7 @@ import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 
 public interface LoginAndRegistrationDAO {
-    String REGISTER_ERROR="Errore nella registrazione";
+
     boolean emailExists(String mail) ;
     boolean insertUser(Credentials credentials) ;
     void registerPatient(Patient patient) throws MailAlreadyExistsException, LoginAndRegistrationException;
@@ -18,4 +18,5 @@ public interface LoginAndRegistrationDAO {
     void retrievePatient(Patient patient) throws NoResultException;
 
     void retrievePsychologist(Psychologist psychologist) throws NoResultException;
+    void removePatient(Patient patient);
 }

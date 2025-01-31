@@ -28,6 +28,8 @@ public interface TaskAndToDoDAO {
     void updateTask(Patient patient, Task task);
 
     List<Task> retrieveTasks(Patient patient);
+    void removeDiaryEntry(LocalDate selectedDate, Patient patient);
+
 }
 
 

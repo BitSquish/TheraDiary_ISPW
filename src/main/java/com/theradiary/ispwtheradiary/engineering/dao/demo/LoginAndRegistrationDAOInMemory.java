@@ -112,6 +112,10 @@ public class LoginAndRegistrationDAOInMemory implements LoginAndRegistrationDAO 
         }
         populateFields.accept(storedEntity); // popola i campi dell'entità
     }
+    @Override
+    public void removePatient(Patient patient) {
+        SharedResources.getInstance().getPatients().remove(patient.getCredentials().getMail());
+    }
 
 }
 

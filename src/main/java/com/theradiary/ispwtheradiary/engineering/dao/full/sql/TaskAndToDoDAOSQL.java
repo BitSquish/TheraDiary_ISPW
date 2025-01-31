@@ -60,6 +60,14 @@ public class TaskAndToDoDAOSQL implements TaskAndToDoDAO {
             return Optional.empty();
         }
     }
+    @Override
+    public void removeDiaryEntry(LocalDate selectedDate, Patient patient) {
+        try(Connection conn= ConnectionFactory.getConnection()) {
+            TaskAndToDoQuery.removeDiaryEntry(conn, selectedDate, patient.getCredentials().getMail());
+        }catch (SQLException | DatabaseOperationException e){
+            handleException(e);
+        }
+    }
 
     /**************to do***************/
     @Override

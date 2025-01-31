@@ -34,6 +34,14 @@ public class TaskAndToDoDAOInMemory implements TaskAndToDoDAO {
         }
         return Optional.ofNullable(diary.get(selectedDate)); //restituisco il contenuto del diario per la data selezionata
     }
+    @Override
+    public void removeDiaryEntry(LocalDate selectedDate, Patient patient) {
+        Map<LocalDate, String> diary = SharedResources.getInstance().getDiaryTable()
+                .get(patient.getCredentials().getMail());
+        if (diary != null) {
+            diary.remove(selectedDate);
+        }
+    }
 
     /*************************************************to do***********************************************************************/
     @Override

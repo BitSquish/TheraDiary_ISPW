@@ -3,14 +3,12 @@ package com.theradiary.ispwtheradiary.engineering.dao.full.sql;
 
 
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
-import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.LoginAndRegistrationQuery;
-import com.theradiary.ispwtheradiary.engineering.query.RetrieveQuery;
 import com.theradiary.ispwtheradiary.engineering.query.UpdateQuery;
 import com.theradiary.ispwtheradiary.model.*;
 
@@ -150,23 +148,8 @@ public class UpdateDAOSQL implements UpdateDAO {
         }
     }
 
-    @Override
-    public void deletePsychologist(Psychologist psychologist) {
-        try(Connection conn = ConnectionFactory.getConnection()){
-            UpdateQuery.deletePsychologist(conn, psychologist.getCredentials().getMail());
-        }catch (SQLException | DatabaseOperationException e){
-            handleException(e);
-        }
-    }
 
-    @Override
-    public void deletePatient(Patient patient) {
-        try(Connection conn = ConnectionFactory.getConnection()){
-            UpdateQuery.deletePatient(conn, patient.getCredentials().getMail());
-        }catch (SQLException | DatabaseOperationException e){
-            handleException(e);
-        }
-    }
+
 
     @Override
     public void deleteMedicalOffice(MedicalOffice medicalOffice) {
@@ -177,23 +160,9 @@ public class UpdateDAOSQL implements UpdateDAO {
         }
     }
 
-    @Override
-    public void deleteUser(Credentials credentials) {
-        try(Connection conn = ConnectionFactory.getConnection()){
-            UpdateQuery.deleteUser(conn, credentials.getMail());
-        }catch (SQLException | DatabaseOperationException e){
-            handleException(e);
-        }
-    }
 
-    @Override
-    public void deleteCategory(Patient patient, Category category) {
-        try(Connection conn = ConnectionFactory.getConnection()){
-            UpdateQuery.deleteCategory(conn, patient.getCredentials().getMail(), category.toString());
-        }catch (SQLException | DatabaseOperationException e){
-            handleException(e);
-        }
-    }
+
+
 
     private void handleException(Exception e) {
         Printer.errorPrint(String.format("%s", e.getMessage()));

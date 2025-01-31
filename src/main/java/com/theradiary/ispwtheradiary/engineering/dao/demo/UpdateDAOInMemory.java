@@ -2,9 +2,9 @@ package com.theradiary.ispwtheradiary.engineering.dao.demo;
 
 import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.demo.shared.SharedResources;
-import com.theradiary.ispwtheradiary.engineering.enums.Category;
+
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
-import com.theradiary.ispwtheradiary.engineering.enums.Role;
+
 import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.model.*;
@@ -112,32 +112,13 @@ public class UpdateDAOInMemory implements UpdateDAO {
         SharedResources.getInstance().getMedicalOffices().put(medicalOffice.getPsychologist(), medicalOffice);
     }
 
-    @Override
-    public void deletePsychologist(Psychologist psychologist) {
-        SharedResources.getInstance().getPsychologists().remove(psychologist.getCredentials().getMail());
-    }
 
-    @Override
-    public void deletePatient(Patient patient) {
-        SharedResources.getInstance().getPatients().remove(patient.getCredentials().getMail());
-    }
 
     @Override
     public void deleteMedicalOffice(MedicalOffice medicalOffice) {
         SharedResources.getInstance().getMedicalOffices().remove(medicalOffice.getPsychologist());
     }
 
-    @Override
-    public void deleteUser(Credentials credentials) {
-        if(credentials.getRole().equals(Role.PATIENT)){
-            SharedResources.getInstance().getPatients().remove(credentials.getMail());
-        }else if(credentials.getRole().equals(Role.PSYCHOLOGIST)){
-            SharedResources.getInstance().getPsychologists().remove(credentials.getMail());
-        }
-    }
 
-    @Override
-    public void deleteCategory(Patient patient, Category category) {
-        patient.getCategories().remove(category);
-    }
+
 }
