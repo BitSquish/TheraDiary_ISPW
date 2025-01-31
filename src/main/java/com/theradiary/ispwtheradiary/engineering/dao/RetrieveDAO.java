@@ -29,7 +29,9 @@ public interface RetrieveDAO {
 
     void retrieveAllAppointments(Psychologist psychologist, List<Appointment> appointments);
 
-    Appointment retrievePatientAppointment(Patient patient, Psychologist psychologist) ;
+    Appointment retrievePatientAppointment(Patient patient, Psychologist psychologist);
+
+
 }
 
 

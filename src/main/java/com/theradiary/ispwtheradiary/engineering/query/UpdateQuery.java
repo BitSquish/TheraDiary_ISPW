@@ -198,4 +198,60 @@ public class UpdateQuery {
             throw new DatabaseOperationException("Errore nella richiesta di appuntamento", e);
         }
     }
+
+    public static void deletePsychologist(Connection conn, String mail) throws DatabaseOperationException {
+        String query = "DELETE FROM psychologist WHERE mail = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, mail);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DatabaseOperationException("Errore nell'eliminazione dello psicologo", e);
+        }
+    }
+
+    public static void deleteMedicalOffice(Connection conn, String psychologist) throws DatabaseOperationException {
+        String query = "DELETE FROM medicaloffice WHERE mail = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, psychologist);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DatabaseOperationException("Errore nell'eliminazione dello studio medico", e);
+        }
+    }
+
+    public static void deleteUser(Connection conn, String mail) throws DatabaseOperationException {
+        String query = "DELETE FROM users WHERE mail = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, mail);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DatabaseOperationException("Errore nell'eliminazione dell'utente", e);
+        }
+    }
+
+    public static void deleteCategory(Connection conn, String mail, String string) throws DatabaseOperationException {
+        String query = "DELETE FROM category WHERE mail = ? AND category = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, mail);
+            pstmt.setString(2, string);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DatabaseOperationException("Errore nell'eliminazione della categoria", e);
+        }
+    }
+
+    public static void deletePatient(Connection conn, String mail) throws DatabaseOperationException {
+        String query = "DELETE FROM patient WHERE mail = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, mail);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DatabaseOperationException("Errore nell'eliminazione del paziente", e);
+        }
+    }
 }
