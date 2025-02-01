@@ -89,5 +89,6 @@
             <Font size="16.0" />
          </font>
       </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ebcef070" height="88.0" layoutX="173.0" stroke="#00000003" strokeType="INSIDE" width="87.0" />
    </children>
 </AnchorPane>

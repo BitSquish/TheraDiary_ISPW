@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -89,5 +90,6 @@
         </tabs>
       </TabPane>
       <Button layoutX="56.0" layoutY="106.0" mnemonicParsing="false" onMouseClicked="#goToPatientList" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ebcef070" height="88.0" layoutX="174.0" stroke="#00000003" strokeType="INSIDE" width="87.0" />
    </children>
 </AnchorPane>

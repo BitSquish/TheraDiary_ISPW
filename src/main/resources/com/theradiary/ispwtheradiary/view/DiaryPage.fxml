@@ -4,6 +4,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.task.DiaryPageGUI">
    <children>
@@ -11,5 +12,6 @@
       <DatePicker fx:id="date" layoutX="78.0" layoutY="191.0" onAction="#selectDate" prefHeight="26.0" prefWidth="166.0" />
       <TextArea fx:id="diaryPage" layoutX="78.0" layoutY="230.0" prefHeight="266.0" prefWidth="732.0" wrapText="true" />
       <Button layoutX="78.0" layoutY="130.0" mnemonicParsing="false" onMouseClicked="#goToDiary" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ebcef070" height="88.0" layoutX="172.0" stroke="#00000003" strokeType="INSIDE" width="87.0" />
    </children>
 </AnchorPane>

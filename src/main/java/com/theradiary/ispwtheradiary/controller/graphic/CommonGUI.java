@@ -35,13 +35,15 @@ import java.util.Optional;
 
 public abstract class CommonGUI {
     protected Session session;
-    protected FXMLPathConfig fxmlPathConfig; // Nuovo campo per gestire i percorsi
+    protected FXMLPathConfig fxmlPathConfig; // per gestire i percorsi
 
 
     protected CommonGUI(FXMLPathConfig fxmlPathConfig, Session session){
         this.fxmlPathConfig = fxmlPathConfig;
         this.session = session;
     }
+
+    //Path delle varie schermate
     protected static final String LOGIN_PATH = "LOGIN_PATH";
     protected static final String HOMEPAGE_NOT_LOGGED_PATH = "HOMEPAGE_NOT_LOGGED_PATH";
     protected static final String HOMEPAGE_LOGGED_PT_PATH = "HOMEPAGE_LOGGED_PT_PATH";
@@ -73,6 +75,7 @@ public abstract class CommonGUI {
     protected static final String APPOINTMENT_SUMMARY_PATH = "APPOINTMENT_SUMMARY_PATH";
 
 
+    //Metodo per tornare alla homepage
     @FXML
     protected void goToHomepage(MouseEvent event) {
         try {
@@ -94,6 +97,7 @@ public abstract class CommonGUI {
         }
     }
 
+    //Metodo per andare alla pagina del proprio account. Se non si è loggati, riporta alla pagina di login
     @FXML
     protected void goToAccount(MouseEvent event) {
         try {
@@ -120,6 +124,7 @@ public abstract class CommonGUI {
         }
     }
 
+    //Metodo per andare alle proprie task se si è un utente paziente, altrimenti alla lista dei pazienti se si è uno psicologo
     @FXML
     private void goToTasks(MouseEvent event) {
         try {
@@ -140,6 +145,7 @@ public abstract class CommonGUI {
         }
     }
 
+    //Metodo per andare alla lista dei pazienti
     @FXML
     protected void goToPatientList(MouseEvent event){
         try {
@@ -160,6 +166,7 @@ public abstract class CommonGUI {
         }
     }
 
+    //Metodo per andare alla bacheca (Non implementato)
     @FXML
     private void goToDashboard(MouseEvent event) {
         try {
@@ -178,6 +185,7 @@ public abstract class CommonGUI {
         }
     }
 
+    //Metodo per andare alla pagina informativa sul PAG
     @FXML
     private void goToPAG(MouseEvent event) {
         try {
@@ -196,6 +204,7 @@ public abstract class CommonGUI {
         }
     }
 
+    //Metodo per andare alla pagina di ricerca psicologo se si è un paziente, altrimenti alla registrazione dello studio medico se si è uno psicologo
     @FXML
     protected void goToSearch(MouseEvent event) {
         try {
@@ -221,6 +230,7 @@ public abstract class CommonGUI {
         }
     }
 
+    //Metodo per andare alla pagina di gestione degli appuntamenti
     @FXML
     private void goToAppointment(MouseEvent event) {
         try {
@@ -243,6 +253,8 @@ public abstract class CommonGUI {
             throw new LoadingException(LOADING_SCENE, e);
         }
     }
+
+    //Metodo per andare alla pagina di login/registrazione
     @FXML
     protected void goToLogin(MouseEvent event) {
         try {
@@ -254,6 +266,8 @@ public abstract class CommonGUI {
             throw new LoadingException(LOADING_SCENE, e);
         }
     }
+
+
     @FXML
     protected void goToDiary(MouseEvent event ) {
         try {
@@ -285,7 +299,7 @@ public abstract class CommonGUI {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    //INSERIRE
+
     public String showInputDialog(String title, String content, String defaultValue) {
         TextInputDialog dialog = new TextInputDialog(defaultValue);
         dialog.setTitle(title);
@@ -295,6 +309,7 @@ public abstract class CommonGUI {
         return result.orElse(null);
     }
 
+    //Mostra la pagina di descrizione dello psicologo
     @FXML
     protected void goToPsychologistDescription(MouseEvent event, PsychologistBean psychologistBean) {
         try{
