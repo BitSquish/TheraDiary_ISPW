@@ -5,6 +5,7 @@ import com.theradiary.ispwtheradiary.controller.application.LoginController;
 import com.theradiary.ispwtheradiary.controller.application.UserRegistrationController;
 import com.theradiary.ispwtheradiary.controller.graphic.CommonGUI;
 import com.theradiary.ispwtheradiary.engineering.exceptions.EmptyFieldException;
+import com.theradiary.ispwtheradiary.engineering.exceptions.LoginAndRegistrationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
@@ -80,7 +81,8 @@ public abstract class UserRegistrationGUI extends CommonGUI {
             login.log(loggedUserBean.getCredentialsBean());
             session.setUser(loggedUserBean);
             goToHomepage(event);
-        } catch (MailAlreadyExistsException | WrongEmailOrPasswordException | EmptyFieldException exception){
+        } catch (MailAlreadyExistsException | WrongEmailOrPasswordException | EmptyFieldException |
+                 LoginAndRegistrationException exception){
             errorMessage.setText(exception.getMessage());
             errorMessage.setVisible(true);
         }
