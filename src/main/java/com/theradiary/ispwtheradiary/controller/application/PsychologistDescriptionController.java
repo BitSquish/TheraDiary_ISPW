@@ -25,10 +25,15 @@ public class PsychologistDescriptionController {
     public void searchPsychologistInfo(PsychologistBean psychologistBean, MedicalOfficeBean medicalOfficeBean) {
         //Ricavo studio medico e specializzazioni
         MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
-        retrieveDAO.retrieveMedicalOffice(medicalOffice);
-        medicalOfficeBean.setPostCode(medicalOffice.getPostCode());
-        medicalOfficeBean.setAddress(medicalOffice.getAddress());
-        medicalOfficeBean.setOtherInfo(medicalOffice.getOtherInfo());
+        if(retrieveDAO.retrieveMedicalOffice(medicalOffice)){
+            medicalOfficeBean.setPostCode(medicalOffice.getPostCode());
+            medicalOfficeBean.setAddress(medicalOffice.getAddress());
+            medicalOfficeBean.setOtherInfo(medicalOffice.getOtherInfo());
+        }else{
+            medicalOfficeBean.setPostCode(null);
+            medicalOfficeBean.setAddress(null);
+            medicalOfficeBean.setOtherInfo(null);
+        }
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         retrieveDAO.retrieveMajors(psychologist);
         psychologistBean.setMajor(psychologist.getMajors());
@@ -41,7 +46,7 @@ public class PsychologistDescriptionController {
             RequestManagerConcreteSubject requestManagerConcreteSubject = RequestManagerConcreteSubject.getInstance();
             requestManagerConcreteSubject.addRequest(request);
         } catch (Exception e){
-            throw new NoResultException("Errore nell'invio della richiesta");
+            throw new NoResultException("Errore nell'invio della richiesta",e);
 
         }
     }
@@ -53,7 +58,7 @@ public class PsychologistDescriptionController {
         try{
             return ptAndPsDAO.hasAlreadySentARequest(request);
         } catch (Exception e){
-            throw new NoResultException("Errore nel controllo delle richieste");
+            throw new NoResultException("Errore nel controllo delle richieste",e);
         }
     }
     public boolean hasAlreadyAPsychologist(PatientBean patientBean) throws NoResultException {
@@ -61,7 +66,7 @@ public class PsychologistDescriptionController {
         try{
             return ptAndPsDAO.hasAlreadyAPsychologist(patient);
         } catch (Exception e){
-            throw new NoResultException("Errore nel controllo dello psicologo");
+            throw new NoResultException("Errore nel controllo dello psicologo",e);
 
         }
     }

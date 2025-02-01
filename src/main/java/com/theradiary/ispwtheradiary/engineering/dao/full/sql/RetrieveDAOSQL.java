@@ -3,9 +3,9 @@ package com.theradiary.ispwtheradiary.engineering.dao.full.sql;
 
 import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.engineering.enums.*;
+import com.theradiary.ispwtheradiary.engineering.exceptions.DAOException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.DatabaseOperationException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
-import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.patterns.factory.ConnectionFactory;
 import com.theradiary.ispwtheradiary.engineering.query.RetrieveQuery;
 import com.theradiary.ispwtheradiary.model.*;
@@ -57,7 +57,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
                 psychologists.add(psychologist);
             } while (rs.next());
         } catch (SQLException | NoResultException e) {
-            handleException(e);
+            throw new DAOException("Errore nella ricerca degli psicologi", e);
         }
     }
     @Override
@@ -71,10 +71,10 @@ public class RetrieveDAOSQL implements RetrieveDAO {
                 medicalOffice.setOtherInfo(rs.getString(OTHERINFO));
                 return true;
             } else
-                throw new NoResultException();
-        } catch (SQLException | NoResultException e) {
-            handleException(e);
-            return false;
+                return false;
+        } catch (SQLException e) {
+            throw new DAOException("Errore nel recupero dello studio medico", e);
+
         }
 
     }
@@ -89,8 +89,8 @@ public class RetrieveDAOSQL implements RetrieveDAO {
             return !categories.isEmpty();
 
         } catch (SQLException e) {
-            handleException(e);
-            return false;
+            throw new DAOException("Errore nel recupero delle categorie", e);
+
         }
     }
 
@@ -102,7 +102,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
                 addCategory(categories, categoryName);
             }
         } catch (SQLException e) {
-            handleException(e);
+            throw new DAOException("Errore nel recupero delle categorie", e);
         }
         return categories;
     }
@@ -124,8 +124,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
             return !majors.isEmpty();
 
         } catch (SQLException e) {
-           handleException(e);
-            return false;
+           throw new DAOException("Errore nel recupero delle specializzazioni", e);
         }
     }
 
@@ -137,7 +136,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
                 addMajor(majors, majorName);
             }
         } catch (SQLException e) {
-            handleException(e);
+            throw new DAOException("Errore nel recupero delle specializzazioni", e);
         }
         return majors;
     }
@@ -173,8 +172,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
             }
 
         } catch (SQLException |DatabaseOperationException e) {
-            handleException(e);
-            return List.of(); //ritorno lista vuota
+            throw new DAOException("Errore nel recupero dei pazienti", e);
         }
         return patients;
     }
@@ -190,7 +188,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
                 loggedUser.setPag(rs.getBoolean(PAG));
             }
         } catch (SQLException |DatabaseOperationException e) {
-            handleException(e);
+            throw new DAOException("Errore nel recupero del pag", e);
         }
     }
 
@@ -214,31 +212,10 @@ public class RetrieveDAOSQL implements RetrieveDAO {
             }
 
         }catch (SQLException e){
-            handleException(e);
+            throw new DAOException("Errore nel recupero delle richieste", e);
         }
     }
 
-    public List<Appointment> retrieveSlotTime(Psychologist psychologist, DayOfTheWeek dayOfTheWeek) {
-        List<Appointment> appointments = new ArrayList<>();
-        try(Connection conn = ConnectionFactory.getConnection()){
-            ResultSet rs = RetrieveQuery.retrieveSlotTime(conn, psychologist.getCredentials().getMail(), dayOfTheWeek.toString());
-            while(rs.next()){
-                Appointment appointment = new Appointment(
-                        psychologist,
-                        dayOfTheWeek,
-                        TimeSlot.valueOf(rs.getString(TIMESLOT)),
-                        rs.getBoolean(IN_PERSON),
-                        rs.getBoolean(ONLINE)
-                );
-                appointment.setPatient(new Patient(new Credentials(rs.getString(PATIENT), Role.PATIENT)));
-                appointments.add(appointment);
-            }
-            return appointments;
-        }catch (SQLException e){
-            handleException(e);
-            return List.of();   //ritorno lista vuota
-        }
-    }
     @Override
     public Psychologist yourPsychologist(Patient patient) {
         try(Connection conn = ConnectionFactory.getConnection();
@@ -258,8 +235,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
             }else
                 throw new NoResultException();
         }catch (SQLException | NoResultException | DatabaseOperationException e){
-            handleException(e);
-            return null;
+            throw new DAOException("Errore nel recupero dello psicologo", e);
         }
     }
     @Override
@@ -280,7 +256,7 @@ public class RetrieveDAOSQL implements RetrieveDAO {
                 appointments.add(appointment);
             }
         }catch (SQLException | DatabaseOperationException e){
-            handleException(e);
+            throw new DAOException("Errore nel recupero degli appuntamenti", e);
         }
     }
 
@@ -303,15 +279,13 @@ public class RetrieveDAOSQL implements RetrieveDAO {
             }
             return appointment;
         }catch (SQLException |DatabaseOperationException e){
-            handleException(e);
+           throw new DAOException("Errore nel recupero dell'appuntamento", e);
         }
-        return null;
+
     }
 
 
-    private void handleException(Exception e) {
-        Printer.errorPrint(String.format(" %s", e.getMessage()));
-    }
+
 
 }
 

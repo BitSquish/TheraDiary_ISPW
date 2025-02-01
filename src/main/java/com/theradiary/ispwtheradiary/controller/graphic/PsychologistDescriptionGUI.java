@@ -73,8 +73,8 @@ public class PsychologistDescriptionGUI extends CommonGUI {
             majorsField.setText("Non specificate");
         }
         String medicalOffice;
-        if(medicalOfficeBean.getPostCode() == null)
-            medicalOffice = "Non specificato";
+        if(medicalOfficeBean.getPostCode() == null && medicalOfficeBean.getAddress() == null && medicalOfficeBean.getOtherInfo() == null)
+            medicalOffice = "Non specificato, contattare privatamente lo psicologo";
         else
             medicalOffice = medicalOfficeBean.getAddress()+", "+medicalOfficeBean.getPostCode();
         medicalOfficeField.setText(medicalOffice);
