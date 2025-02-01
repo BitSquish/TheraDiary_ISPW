@@ -17,12 +17,12 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 public class UserRegistrationController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final LoginAndRegistrationDAO registrationGenericDAO;
-
+    //Costruttore
     public UserRegistrationController(){
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
         this.registrationGenericDAO = FactoryDAO.getDAO();
     }
-
+    //Metodo per registrare un utente
     public void registerUser(LoggedUserBean loggedUserBean) throws MailAlreadyExistsException, LoginAndRegistrationException {
         if(loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT)){
             registerPatient(new PatientBean(loggedUserBean.getCredentialsBean(), loggedUserBean.getName(), loggedUserBean.getSurname(), loggedUserBean.getCity(), loggedUserBean.getDescription(), loggedUserBean.isInPerson(), loggedUserBean.isOnline()));
@@ -32,7 +32,7 @@ public class UserRegistrationController {
         }
     }
 
-
+    //Metodo per registrare un paziente
     public void registerPatient(PatientBean patientBean) throws MailAlreadyExistsException, LoginAndRegistrationException {//metodo per registrare un paziente nel database
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         try {
@@ -43,7 +43,7 @@ public class UserRegistrationController {
             throw new LoginAndRegistrationException(e.getMessage());
         }
     }
-
+    //Metodo per registrare uno psicologo
     public void registerPsychologist(PsychologistBean psychologistBean) throws MailAlreadyExistsException {
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         try {

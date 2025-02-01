@@ -18,10 +18,11 @@ public class PsychologistDescriptionController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final PtAndPsDAO ptAndPsDAO = FactoryDAO.getPtAndPsDAO();
     private final RetrieveDAO retrieveDAO = FactoryDAO.getRetrieveDAO();
+    //Costruttore
     public PsychologistDescriptionController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
-
+    //Metodo per le informazioni dello psicologo nel profilo
     public void searchPsychologistInfo(PsychologistBean psychologistBean, MedicalOfficeBean medicalOfficeBean) {
         //Ricavo studio medico e specializzazioni
         MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
@@ -38,6 +39,7 @@ public class PsychologistDescriptionController {
         retrieveDAO.retrieveMajors(psychologist);
         psychologistBean.setMajor(psychologist.getMajors());
     }
+    //Metodo per inviare una richiesta
 
     public void sendRequest(RequestBean requestBean) throws NoResultException {
         Request request = beanAndModelMapperFactory.fromBeanToModel(requestBean, RequestBean.class);
@@ -50,6 +52,7 @@ public class PsychologistDescriptionController {
 
         }
     }
+    //Metodo per controllare se è già stata inviata una richiesta
 
     public boolean hasAlreadySentARequest(PatientBean patientBean, PsychologistBean psychologistBean) throws NoResultException {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
@@ -61,6 +64,7 @@ public class PsychologistDescriptionController {
             throw new NoResultException("Errore nel controllo delle richieste",e);
         }
     }
+    //Metodo per controllare se è già presente uno psicologo
     public boolean hasAlreadyAPsychologist(PatientBean patientBean) throws NoResultException {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         try{

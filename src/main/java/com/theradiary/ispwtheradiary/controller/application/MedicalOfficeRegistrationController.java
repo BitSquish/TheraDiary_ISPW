@@ -13,9 +13,11 @@ public class MedicalOfficeRegistrationController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final UpdateDAO updateDAO = FactoryDAO.getUpdateDAO();
     private final RetrieveDAO retrieveDAO = FactoryDAO.getRetrieveDAO();
+    //Costruttore
     public MedicalOfficeRegistrationController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
+    //Metodo per registrare lo studio medico
     public void register(MedicalOfficeBean medicalOfficeBean) throws  NoResultException {
         MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
         try{
@@ -24,7 +26,7 @@ public class MedicalOfficeRegistrationController {
             throw new NoResultException();
         }
     }
-
+    //Metodo per recuperare lo studio medico
     public boolean retrieveMedicalOffice(MedicalOfficeBean medicalOfficeBean) {
         MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
         boolean medOffAlreadyInserted = retrieveDAO.retrieveMedicalOffice(medicalOffice);
@@ -37,7 +39,7 @@ public class MedicalOfficeRegistrationController {
         }
         return medOffAlreadyInserted;
     }
-
+    //Metodo per modificare lo studio medico
     public void modify(MedicalOfficeBean medicalOfficeBean) {
         MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
         updateDAO.modifyMedicalOffice(medicalOffice);

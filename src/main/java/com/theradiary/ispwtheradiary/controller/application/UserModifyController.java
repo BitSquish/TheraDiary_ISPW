@@ -19,9 +19,11 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 public class UserModifyController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final UpdateDAO updateDAO = FactoryDAO.getUpdateDAO();
+    //Costruttore
     public UserModifyController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
+    //Metodo per modificare l'utente
     public void userModify(LoggedUserBean loggedUserBean, LoggedUserBean oldLoggedUserBean) throws MailAlreadyExistsException {
         try{
             if(loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT)){
@@ -37,6 +39,7 @@ public class UserModifyController {
         }
 
     }
+    //Metodo per modificare lo psicologo
 
     private void modifyPsychologist(PsychologistBean psychologistBean, LoggedUserBean oldLoggedUserBean) throws MailAlreadyExistsException {
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
@@ -55,6 +58,7 @@ public class UserModifyController {
         }
 
     }
+    //Metodo per modificare il paziente
 
     private void modifyPatient(PatientBean patientBean, LoggedUserBean oldLoggedUserBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);

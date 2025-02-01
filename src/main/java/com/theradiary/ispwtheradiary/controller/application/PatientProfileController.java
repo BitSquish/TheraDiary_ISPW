@@ -13,9 +13,11 @@ import com.theradiary.ispwtheradiary.model.Psychologist;
 public class PatientProfileController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final RetrieveDAO retrieveDAO = FactoryDAO.getRetrieveDAO();
+    //Costruttore
     public PatientProfileController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
+    //Metodo per recuperare le categorie del paziente
     public void retrieveCategories(PatientBean patientBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         boolean categoriesAlreadyInserted = retrieveDAO.retrieveCategories(patient);
@@ -23,6 +25,7 @@ public class PatientProfileController {
             patientBean.setCategories(patient.getCategories());
         }
     }
+    //Metodo per recuperare le specializzazioni dello psicologo
 
     public AppointmentBean retrieveAppointment(PatientBean patientBean, PsychologistBean psychologistBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);

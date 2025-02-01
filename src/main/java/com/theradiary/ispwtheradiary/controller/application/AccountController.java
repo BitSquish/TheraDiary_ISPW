@@ -25,19 +25,19 @@ public class AccountController {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
 
-
+    // Metodo per aggiungere una categoria al paziente
     public void addCategory(PatientBean patientBean, Category category) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         categoryAndMajorDAO.addCategory(patient, category);
         patientBean.setCategories(patient.getCategories());
     }
-
+    // Metodo per aggiungere una specializzazione allo psicologo
     public void addMajor(PsychologistBean psychologistBean, Major major) {
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         categoryAndMajorDAO.addMajor(psychologist, major);
         psychologistBean.setMajor(psychologist.getMajors());
     }
-
+    // Metodo per recuperare le categorie del paziente
     public void retrieveCategories(PatientBean patientBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         boolean categoriesAlreadyInserted = retrieveDAO.retrieveCategories(patient);
@@ -45,7 +45,7 @@ public class AccountController {
             patientBean.setCategories(patient.getCategories());
         }
     }
-
+    // Metodo per recuperare le specializzazioni dello psicologo
     public void retrieveMajors(PsychologistBean psychologistBean) {
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         boolean majorsAlreadyInserted = retrieveDAO.retrieveMajors(psychologist);
@@ -53,20 +53,20 @@ public class AccountController {
             psychologistBean.setMajor(psychologist.getMajors());
         }
     }
-
+    // Metodo per rimuovere una categoria dal paziente
     public void removeCategory(PatientBean patientBean, Category category) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         categoryAndMajorDAO.removeCategory(patient, category);
         patientBean.setCategories(patient.getCategories());
 
     }
-
+    // Metodo per rimuovere una specializzazione dallo psicologo
     public void removeMajor(PsychologistBean psychologistBean, Major major) {
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         categoryAndMajorDAO.removeMajor(psychologist, major);
         psychologistBean.setMajor(psychologist.getMajors());
     }
-
+    // Metodo per recuperare la lista di pazienti dello psicologo
     public List<PatientBean> retrievePatientList(PsychologistBean psychologistBean) {
         // Conversione del PsychologistBean in Psychologist (entità)
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
@@ -83,6 +83,7 @@ public class AccountController {
         }
         return patientBeans;
     }
+    // Metodo per recuperare lo psicologo del paziente
     public void yourPsychologist(PatientBean patientBean, PsychologistBean psychologistBean){
         if(psychologistBean != null) {
             // Conversione del PatientBean in Patient (entità)

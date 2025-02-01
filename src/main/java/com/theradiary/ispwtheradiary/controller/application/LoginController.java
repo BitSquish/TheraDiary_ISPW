@@ -22,11 +22,12 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 public class LoginController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final LoginAndRegistrationDAO loginGeneric;
+    // Costruttore
     public LoginController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
         this.loginGeneric = FactoryDAO.getDAO();
     }
-
+    // Metodo per il login
     public void log(CredentialsBean credentialsBean) throws WrongEmailOrPasswordException {
         try {
             Credentials credentials = beanAndModelMapperFactory.fromBeanToModel(credentialsBean, CredentialsBean.class);
@@ -38,17 +39,17 @@ public class LoginController {
             Printer.errorPrint(e.getMessage());
         }
     }
-
+    // Metodo per il recupero dell'utente
     public void retrievePatient(PatientBean patientBean) throws NoResultException {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         retrieveUser(patient, patientBean);
     }
-
+    // Metodo per il recupero dello psicologo
     public void retrievePsychologist(PsychologistBean psychologistBean) throws NoResultException {
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         retrieveUser(psychologist, psychologistBean);
     }
-
+    // Metodo per il recupero dell'utente
     private <M extends LoggedUser, B extends LoggedUserBean> void retrieveUser (M user, B userBean) throws NoResultException {
         // Recupera l'utente dal DAO
         if (user.getCredentials().getRole().equals(Role.PATIENT)) {

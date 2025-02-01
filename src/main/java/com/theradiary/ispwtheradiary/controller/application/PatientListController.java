@@ -16,9 +16,11 @@ import java.util.List;
 public class PatientListController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final RetrieveDAO retrieveDAO = FactoryDAO.getRetrieveDAO();
+    //Costruttore
     public PatientListController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
+    //Metodo per recuperare le richieste
     public void getRequests(PsychologistBean psychologistBean, List<RequestBean> requestBeans) {
         Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
         List<Request> requests = new ArrayList<>();

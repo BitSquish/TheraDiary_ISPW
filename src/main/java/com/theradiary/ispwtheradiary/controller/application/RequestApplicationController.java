@@ -20,9 +20,11 @@ public class RequestApplicationController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final RetrieveDAO retrieveDAO =FactoryDAO.getRetrieveDAO();
     private final UpdateDAO updateDAO = FactoryDAO.getUpdateDAO();
+    //Costruttore
     public RequestApplicationController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
+    //Metodo per eliminare la richiesta
     public void deleteRequest(RequestBean requestBean) {
         RequestManagerConcreteSubject requestManagerConcreteSubject = RequestManagerConcreteSubject.getInstance();
         Request request = beanAndModelMapperFactory.fromBeanToModel(requestBean, RequestBean.class);
@@ -32,7 +34,7 @@ public class RequestApplicationController {
         requestManagerConcreteSubject.loadRequests(requests);
         requestManagerConcreteSubject.removeRequest(request);
     }
-
+    //Metodo per associare uno psicologo ad un paziente
     public void addPsychologistToPatient(PatientBean patientBean) {
         try{
             Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
@@ -43,7 +45,7 @@ public class RequestApplicationController {
             Printer.errorPrint(e.getMessage());
         }
     }
-
+    //Metodo per creare una richiesta
     public RequestBean createRequestBean(Request request) {
         return beanAndModelMapperFactory.fromModelToBean(request, Request.class);
     }

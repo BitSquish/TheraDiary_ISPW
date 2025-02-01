@@ -12,9 +12,11 @@ import java.util.List;
 public class SearchController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final RetrieveDAO retrieveDAO = FactoryDAO.getRetrieveDAO();
+    //Costruttore
     public SearchController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
+    //Metodo per cercare gli psicologi
     public void searchPsychologists(List<PsychologistBean> psychologistBeans, String nomeP, String cognomeP, String cittaP, boolean inPresenza, boolean online, boolean pag) throws NoResultException {
         List<Psychologist> psychologists = new ArrayList<>();
         retrieveDAO.searchPsychologists(psychologists, nomeP, cognomeP, cittaP, inPresenza, online, pag);

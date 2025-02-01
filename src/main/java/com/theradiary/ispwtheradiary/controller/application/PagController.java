@@ -13,9 +13,11 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.LoggedUserBean;
 public class PagController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final UpdateDAO updateDAO = FactoryDAO.getUpdateDAO();
+    //Costruttore
     public PagController() {
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
+    //Metodo per unirsi al Pag
     public void joinPag(LoggedUserBean loggedUserBean) {
         if(loggedUserBean.getCredentialsBean().getRole().equals(Role.PSYCHOLOGIST)){
             Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel((PsychologistBean)loggedUserBean, PsychologistBean.class);

@@ -151,9 +151,5 @@ public class LoginAndRegistrationDAOJSON implements LoginAndRegistrationDAO {
         loadFile();
     }
 
-    @Override
-    public void removePsychologist(Psychologist psychologist) {
-        userList.removeIf(p -> p.getCredentials().getMail().equals(psychologist.getCredentials().getMail()));
-        loadFile();
-    }
+
 }

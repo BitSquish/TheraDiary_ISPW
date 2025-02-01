@@ -117,10 +117,7 @@ public class LoginAndRegistrationDAOInMemory implements LoginAndRegistrationDAO 
         SharedResources.getInstance().getPatients().remove(patient.getCredentials().getMail());
     }
 
-    @Override
-    public void removePsychologist(Psychologist psychologist) {
-        SharedResources.getInstance().getPsychologists().remove(psychologist.getCredentials().getMail());
-    }
+
 
 }
 
