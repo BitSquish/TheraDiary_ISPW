@@ -46,12 +46,15 @@ class TestMedicalOfficeAndSearch {
     void registerMedicalOffice(){
         medicalOfficeSetUp();
         retrieveDAO.retrieveMedicalOffice(medicalOffice);
-        Assertions.assertNotNull(medicalOffice, "Errore: L'ufficio medico è null");
-        Assertions.assertEquals(PSYCHOLOGIST_MAIL, medicalOffice.getPsychologist(), "Errore: La mail non corrisponde");
-        Assertions.assertEquals(CITY, medicalOffice.getCity(), "Errore: La città non corrisponde");
-        Assertions.assertEquals(POSTCODE, medicalOffice.getPostCode(), "Errore: Il cap non corrisponde");
-        Assertions.assertEquals(ADDRESS, medicalOffice.getAddress(), "Errore: L'indirizzo non corrisponde");
-        Assertions.assertEquals(OTHERINFO, medicalOffice.getOtherInfo(), "Errore: Le altre informazioni non corrispondono");
+        Assertions.assertTrue(
+                medicalOffice != null &&
+                        PSYCHOLOGIST_MAIL.equals(medicalOffice.getPsychologist()) &&
+                        CITY.equals(medicalOffice.getCity()) &&
+                        POSTCODE.equals(medicalOffice.getPostCode()) &&
+                        ADDRESS.equals(medicalOffice.getAddress()) &&
+                        OTHERINFO.equals(medicalOffice.getOtherInfo()),
+                "Errore: I valori dell'ufficio medico non corrispondono"
+        );
     }
 
 
@@ -62,8 +65,10 @@ class TestMedicalOfficeAndSearch {
         medicalOffice.setPostCode("11111");
         update.modifyMedicalOffice(medicalOffice);
         retrieveDAO.retrieveMedicalOffice(medicalOffice);
-        Assertions.assertNotNull(medicalOffice.getPostCode(), "Errore: L'ufficio medico è null");
-        Assertions.assertEquals("11111", medicalOffice.getPostCode());
+        Assertions.assertTrue(
+                medicalOffice.getPostCode() != null && medicalOffice.getPostCode().equals("11111"),
+                "Errore: L'ufficio medico non ha il codice postale corretto"
+        );
     }
 
     @Test
