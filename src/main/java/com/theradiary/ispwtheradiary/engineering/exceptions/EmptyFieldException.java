@@ -6,5 +6,6 @@ public class EmptyFieldException extends Exception {
         super(message);
     }
     /*sofia*/
+    /*Ecceziona mostra tramite un messaggio a schermo quando i fields sono vuoti */
 
 }
