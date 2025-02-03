@@ -28,7 +28,6 @@ public class PatientAccountGUI extends AccountGUI {
             goToPsychologistDescription(event, ((PatientBean)session.getUser()).getPsychologistBean());
         }else{
             goToSearch(event);
-
         }
     }
 

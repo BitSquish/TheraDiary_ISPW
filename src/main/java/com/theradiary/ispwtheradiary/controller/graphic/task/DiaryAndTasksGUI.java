@@ -44,11 +44,16 @@ public class DiaryAndTasksGUI extends com.theradiary.ispwtheradiary.controller.g
     @FXML
     protected void goToTaskPatient(MouseEvent event){
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LIST_TASK_PATIENT_PATH)));
-            loader.setControllerFactory(c -> new TaskPatientGUI(fxmlPathConfig, session));
-            Parent root = loader.load();
-            ((TaskPatientGUI) loader.getController()).initializeTaskList(patientBean);
-            changeScene(root, event);
+            if(((PatientBean)session.getUser()).getPsychologistBean() != null && ((PatientBean)session.getUser()).getPsychologistBean().getCredentialsBean().getMail() != null){
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(LIST_TASK_PATIENT_PATH)));
+                loader.setControllerFactory(c -> new TaskPatientGUI(fxmlPathConfig, session));
+                Parent root = loader.load();
+                ((TaskPatientGUI) loader.getController()).initializeTaskList(patientBean);
+                changeScene(root, event);
+            }
+            else {
+                goToSearch(event);
+            }
         }catch (IOException e) {
             throw new LoadingException(LOADING_SCENE, e);
         }
