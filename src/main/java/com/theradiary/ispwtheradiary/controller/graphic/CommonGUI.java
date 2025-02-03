@@ -11,6 +11,7 @@ import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepagePtGUI;
 import com.theradiary.ispwtheradiary.controller.graphic.login.LoginGUI;
 import com.theradiary.ispwtheradiary.controller.graphic.task.DiaryAndTasksGUI;
 import com.theradiary.ispwtheradiary.controller.graphic.task.DiaryControllerGUI;
+import com.theradiary.ispwtheradiary.controller.graphic.task.PatientDetailsGUI;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
 import com.theradiary.ispwtheradiary.engineering.exceptions.NoResultException;
@@ -321,6 +322,19 @@ public abstract class CommonGUI {
         } catch (IOException |NoResultException e) {
             throw new LoadingException(LOADING_SCENE, e);
         }
+    }
+    @FXML
+    protected void goToPatientTask(MouseEvent event, PatientBean patientBean){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_TASK_PATH)));
+            loader.setControllerFactory(c -> new PatientDetailsGUI(fxmlPathConfig, session));
+            Parent root = loader.load();
+            ((PatientDetailsGUI)loader.getController()).patientTask(patientBean);
+            changeScene(root, event);
+        } catch (IOException e) {
+            throw new LoadingException(LOADING_SCENE, e);
+        }
+
     }
 
 

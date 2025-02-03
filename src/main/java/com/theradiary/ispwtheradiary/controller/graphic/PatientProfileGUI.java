@@ -1,7 +1,8 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
-import com.theradiary.ispwtheradiary.controller.application.AccountController;
+
 import com.theradiary.ispwtheradiary.controller.application.PatientProfileController;
+
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.enums.TimeSlot;
@@ -11,14 +12,23 @@ import com.theradiary.ispwtheradiary.engineering.others.beans.AppointmentBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
 import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
 import javafx.fxml.FXML;
+
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+
+
 import java.util.StringJoiner;
 
 public class PatientProfileGUI extends CommonGUI {
-    public PatientProfileGUI(FXMLPathConfig fxmlPathConfig, Session session) {
+    private final PatientBean patientBean;
+
+    public PatientProfileGUI(FXMLPathConfig fxmlPathConfig, Session session, PatientBean patientBean) {
         super(fxmlPathConfig,session);
+        this.patientBean = patientBean;
+
     }
     private final PatientProfileController patientProfileController = new PatientProfileController();
+
 
     @FXML
     private Label fullName;
@@ -67,6 +77,12 @@ public class PatientProfileGUI extends CommonGUI {
         }
         description.setText(patientBean.getDescription());
     }
+    @FXML
+    private void handle(MouseEvent event){
+        goToPatientTask(event, patientBean);
+    }
+
+
 
 
 }

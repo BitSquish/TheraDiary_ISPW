@@ -1,7 +1,6 @@
 package com.theradiary.ispwtheradiary.controller.graphic;
 
 import com.theradiary.ispwtheradiary.controller.application.PatientListController;
-import com.theradiary.ispwtheradiary.controller.graphic.task.PatientDetailsGUI;
 import com.theradiary.ispwtheradiary.engineering.exceptions.LoadingException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
@@ -104,7 +103,7 @@ public class PatientListGUI extends CommonGUI {
     private void goToPatientProfile(MouseEvent event, PatientBean patientBean) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_PROFILE_PATH)));
-            loader.setControllerFactory(c -> new PatientProfileGUI(fxmlPathConfig, session));
+            loader.setControllerFactory(c -> new PatientProfileGUI(fxmlPathConfig, session,patientBean));
             Parent root = loader.load();
             ((PatientProfileGUI)loader.getController()).printPatient(patientBean);
             changeScene(root, event);
@@ -112,18 +111,7 @@ public class PatientListGUI extends CommonGUI {
             throw new LoadingException(LOADING_SCENE, e);
         }
     }
-    @FXML
-    private void goToPatientTask(MouseEvent event,PatientBean patientBean){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_TASK_PATH)));
-            loader.setControllerFactory(c -> new PatientDetailsGUI(fxmlPathConfig, session));
-            Parent root = loader.load();
-            ((PatientDetailsGUI)loader.getController()).patientTask(patientBean);
-            changeScene(root, event);
-        } catch (IOException e) {
-            throw new LoadingException(LOADING_SCENE, e);
-        }
-    }
+
 
     private void goToRequest(List<RequestBean> requestBeans, MouseEvent event){
         try {
