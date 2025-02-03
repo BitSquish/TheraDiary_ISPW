@@ -17,7 +17,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class TaskPatientGUI extends CommonGUI {
     public TaskPatientGUI(FXMLPathConfig fxmlPathConfig, Session session) {
@@ -42,9 +42,11 @@ public class TaskPatientGUI extends CommonGUI {
         //recupero i task
         taskAndToDoController.retrieveTasks(patientBean);
         tasks.clear();
+        if(patientBean.getTasks().isEmpty()){
+            showMessage(Alert.AlertType.INFORMATION, "Task", "Il tuo psicologo non ha ancora assegnato delle task");
+        }
         List<TaskBean> uniqueTasks = removeDuplicates(patientBean.getTasks());
         tasks.addAll(uniqueTasks);
-
         //configuro le colonne
         taskNameColumn.setCellValueFactory(new PropertyValueFactory<>("taskName"));
         taskDeadlineColumn.setCellValueFactory(new PropertyValueFactory<>("taskDeadline"));
