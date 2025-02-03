@@ -5,5 +5,5 @@ public class LoadingException extends RuntimeException {
         super(message, cause);
     }
     /*sofia*/
-    /*Propago l'eccezione originale (IOException) come causa della nuova eccezione (LoadingException), sfruttando il costruttore di LoadingException che accetta una causa.*/
+    /*Usato in caso il caricamento della scena fallisca, quindi  segnala il problema.*/
 }
