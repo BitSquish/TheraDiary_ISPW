@@ -9,16 +9,15 @@ module com.theradiary.ispwtheradiary {
     exports com.theradiary.ispwtheradiary.start;
     opens com.theradiary.ispwtheradiary.start to javafx.fxml;
     //Controller grafici
-    exports com.theradiary.ispwtheradiary.controller.graphic;
-    opens com.theradiary.ispwtheradiary.controller.graphic to javafx.fxml;
-    exports com.theradiary.ispwtheradiary.controller.graphic.account;
-    opens com.theradiary.ispwtheradiary.controller.graphic.account to javafx.fxml;
-    exports com.theradiary.ispwtheradiary.controller.graphic.login;
-    opens com.theradiary.ispwtheradiary.controller.graphic.login to javafx.fxml;
-    exports com.theradiary.ispwtheradiary.controller.graphic.modify;
-    opens com.theradiary.ispwtheradiary.controller.graphic.modify to javafx.fxml;
-    exports com.theradiary.ispwtheradiary.controller.graphic.appointments;
-    opens com.theradiary.ispwtheradiary.controller.graphic.appointments to javafx.fxml;
+
+    exports com.theradiary.ispwtheradiary.controller.graphic.gui;
+    opens com.theradiary.ispwtheradiary.controller.graphic.gui to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.controller.graphic.gui.login;
+    opens com.theradiary.ispwtheradiary.controller.graphic.gui.login to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.controller.graphic.gui.modify;
+    opens com.theradiary.ispwtheradiary.controller.graphic.gui.modify to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.controller.graphic.gui.appointments;
+    opens com.theradiary.ispwtheradiary.controller.graphic.gui.appointments to javafx.fxml;
     //Controller applicativi
     exports com.theradiary.ispwtheradiary.controller.application;
     opens com.theradiary.ispwtheradiary.controller.application to javafx.fxml;
@@ -40,10 +39,10 @@ module com.theradiary.ispwtheradiary {
     opens com.theradiary.ispwtheradiary.model to javafx.fxml;
     exports com.theradiary.ispwtheradiary.engineering.others.beans;
     opens com.theradiary.ispwtheradiary.engineering.others.beans to javafx.fxml;
-    exports com.theradiary.ispwtheradiary.controller.graphic.homepage;
-    opens com.theradiary.ispwtheradiary.controller.graphic.homepage to javafx.fxml;
-    exports com.theradiary.ispwtheradiary.controller.graphic.task;
-    opens com.theradiary.ispwtheradiary.controller.graphic.task to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.controller.graphic.gui.homepage;
+    opens com.theradiary.ispwtheradiary.controller.graphic.gui.homepage to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.controller.graphic.gui.task;
+    opens com.theradiary.ispwtheradiary.controller.graphic.gui.task to javafx.fxml;
     exports com.theradiary.ispwtheradiary.engineering.others.mappers;
     opens com.theradiary.ispwtheradiary.engineering.others.mappers to javafx.fxml;
     exports com.theradiary.ispwtheradiary.engineering.dao.demo;
@@ -52,6 +51,9 @@ module com.theradiary.ispwtheradiary {
     opens com.theradiary.ispwtheradiary.engineering.dao.full.json to javafx.fxml;
     exports com.theradiary.ispwtheradiary.engineering.dao.full.sql;
     opens com.theradiary.ispwtheradiary.engineering.dao.full.sql to javafx.fxml;
+    exports com.theradiary.ispwtheradiary.controller.graphic.gui.account;
+    opens com.theradiary.ispwtheradiary.controller.graphic.gui.account to javafx.fxml;
+
 
 
 }

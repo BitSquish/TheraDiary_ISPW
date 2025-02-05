@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.start;
 
-import com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepageGUI;
+import com.theradiary.ispwtheradiary.controller.graphic.gui.homepage.HomepageGUI;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.engineering.others.Session;

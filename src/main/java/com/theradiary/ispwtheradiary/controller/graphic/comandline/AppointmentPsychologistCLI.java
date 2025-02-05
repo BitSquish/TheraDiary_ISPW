@@ -1,6 +1,7 @@
 package com.theradiary.ispwtheradiary.controller.graphic.comandline;
 
-import com.theradiary.ispwtheradiary.controller.application.AppointmentController;
+
+import com.theradiary.ispwtheradiary.controller.application.AppointmentPsController;
 import com.theradiary.ispwtheradiary.engineering.enums.DayOfTheWeek;
 import com.theradiary.ispwtheradiary.engineering.enums.TimeSlot;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
@@ -19,7 +20,7 @@ import static com.theradiary.ispwtheradiary.engineering.enums.TimeSlot.translate
 public class AppointmentPsychologistCLI extends AbstractState {
     protected PsychologistBean user;
     private final List<AppointmentBean> allAppointments = new ArrayList<>();
-    private final AppointmentController appointmentPs = new AppointmentController();
+    private final AppointmentPsController appointmentPs = new AppointmentPsController();
     private final Scanner scanner = new Scanner(System.in);
     public AppointmentPsychologistCLI(PsychologistBean user) {
         this.user = user;

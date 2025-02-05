@@ -23,7 +23,7 @@ public class HomePatientCLI extends AbstractState {
             try {
                 int choice= Integer.parseInt(scanner.nextLine());
                 switch (choice) {
-                    case 1 -> goNext(context, new TaskPatientCLI((PatientBean) user));
+                    case 1 -> goNext(context, new TaskAndToDoPtCLI((PatientBean) user));
                     case 2 -> goNext(context, new AppointmentPatientCLI((PatientBean) user));
                     case 3 -> goNext(context, new SearchCLI((PatientBean) user));
                     case 0 -> {

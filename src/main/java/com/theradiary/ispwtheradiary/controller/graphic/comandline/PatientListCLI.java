@@ -34,7 +34,7 @@ public class PatientListCLI extends AbstractState {
                 int selectedIndex = scanner.nextInt();
                 if (selectedIndex > 0 && selectedIndex <= patients.size()) {
                     PatientBean selectedPatient = patients.get(selectedIndex - 1);
-                    goNext(context, new TaskPsychologistCLI(user,selectedPatient));
+                    goNext(context, new TaskAndToDoPsCLI(user,selectedPatient));
                 } else if (selectedIndex == 0) {
                     goBack(context);
                 } else {

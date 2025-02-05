@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="myAnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.homepage.HomepageGUI">
+<AnchorPane fx:id="myAnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.gui.homepage.HomepageGUI">
     <fx:include source="CommonPanel.fxml" />
     <ImageView fitHeight="106.0" fitWidth="106.0" layoutX="143.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
         <image>
