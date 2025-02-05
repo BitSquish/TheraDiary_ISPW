@@ -23,39 +23,30 @@ public class MedicalOfficeBean {
     public String getPsychologist() {
         return psychologist;
     }
-
-    public void setPsychologist(String psychologist) {
-        this.psychologist = psychologist;
-    }
-
     public String getCity() {
         return city;
     }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getAddress() {
         return address;
     }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getPostCode() {
         return postCode;
     }
-
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
-    }
-
     public String getOtherInfo() {
         return otherInfo;
     }
-
+    public void setPsychologist(String psychologist) {
+        this.psychologist = psychologist;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
     public void setOtherInfo(String otherInfo) {
         this.otherInfo = otherInfo;
     }

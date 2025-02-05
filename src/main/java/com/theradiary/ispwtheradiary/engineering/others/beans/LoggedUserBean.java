@@ -49,63 +49,54 @@ public abstract class LoggedUserBean {
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getSurname() {
         return surname;
     }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
     public String getCity() {
         return city;
     }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getDescription() {
         return description;
     }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public boolean isInPerson() {
         return inPerson;
     }
-
-    public void setInPerson(boolean inPerson) {
-        this.inPerson = inPerson;
-    }
-
     public boolean isOnline() {
         return online;
     }
-
-    public void setOnline(boolean online) {
-        this.online = online;
-    }
-
     public boolean isPag() {
         return pag;
     }
-
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public void setInPerson(boolean inPerson) {
+        this.inPerson = inPerson;
+    }
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
     public void setPag(boolean pag) {
         this.pag = pag;
     }
-
     public String getFullName(){
         return name + " " + surname;
     }
-
+    public boolean getInPersonFromModality(String modality){
+        return modality.equals(IN_PERSON_AND_ONLINE) || modality.equals(IN_PERSON);
+    }
+    public boolean getOnlineFromModality(String modality){
+        return modality.equals(IN_PERSON_AND_ONLINE) || modality.equals(ONLINE_MODALITY);
+    }
     public String getModality() {
         String modality = "";
         if (this.isInPerson() && this.isOnline()) {
@@ -118,11 +109,7 @@ public abstract class LoggedUserBean {
         return modality;
     }
 
-    public boolean getInPersonFromModality(String modality){
-        return modality.equals(IN_PERSON_AND_ONLINE) || modality.equals(IN_PERSON);
-    }
 
-    public boolean getOnlineFromModality(String modality){
-        return modality.equals(IN_PERSON_AND_ONLINE) || modality.equals(ONLINE_MODALITY);
-    }
+
+
 }
