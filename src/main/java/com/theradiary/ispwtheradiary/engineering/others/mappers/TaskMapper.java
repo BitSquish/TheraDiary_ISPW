@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.others.mappers;
 
-import com.theradiary.ispwtheradiary.engineering.others.beans.TaskBean;
+import com.theradiary.ispwtheradiary.beans.TaskBean;
 import com.theradiary.ispwtheradiary.model.Task;
 
 public class TaskMapper implements BeanAndModelMapper<TaskBean, Task> {

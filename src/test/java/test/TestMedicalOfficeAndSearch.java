@@ -1,8 +1,8 @@
 package test;
 
-import com.theradiary.ispwtheradiary.engineering.dao.RetrieveDAO;
-import com.theradiary.ispwtheradiary.engineering.dao.UpdateDAO;
-import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
+import com.theradiary.ispwtheradiary.dao.RetrieveDAO;
+import com.theradiary.ispwtheradiary.dao.UpdateDAO;
+import com.theradiary.ispwtheradiary.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.MedicalOffice;
 import org.junit.jupiter.api.*;
 

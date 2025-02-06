@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.others.mappers;
 
-import com.theradiary.ispwtheradiary.engineering.others.beans.CredentialsBean;
+import com.theradiary.ispwtheradiary.beans.CredentialsBean;
 import com.theradiary.ispwtheradiary.model.Credentials;
 
 public class CredentialsMapper implements BeanAndModelMapper<CredentialsBean, Credentials> {

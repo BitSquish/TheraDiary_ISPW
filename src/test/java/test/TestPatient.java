@@ -1,12 +1,16 @@
 package test;
 
+import com.theradiary.ispwtheradiary.dao.CategoryAndMajorDAO;
+import com.theradiary.ispwtheradiary.dao.LoginAndRegistrationDAO;
+import com.theradiary.ispwtheradiary.dao.RetrieveDAO;
+import com.theradiary.ispwtheradiary.dao.TaskAndToDoDAO;
 import com.theradiary.ispwtheradiary.engineering.dao.*;
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
-import com.theradiary.ispwtheradiary.engineering.exceptions.LoginAndRegistrationException;
-import com.theradiary.ispwtheradiary.engineering.exceptions.MailAlreadyExistsException;
-import com.theradiary.ispwtheradiary.engineering.exceptions.WrongEmailOrPasswordException;
-import com.theradiary.ispwtheradiary.engineering.patterns.factory.FactoryDAO;
+import com.theradiary.ispwtheradiary.exceptions.LoginAndRegistrationException;
+import com.theradiary.ispwtheradiary.exceptions.MailAlreadyExistsException;
+import com.theradiary.ispwtheradiary.exceptions.WrongEmailOrPasswordException;
+import com.theradiary.ispwtheradiary.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
 import org.junit.jupiter.api.AfterEach;

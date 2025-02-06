@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.controller.graphic.gui.task.TaskAndToDoPtGUI">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theradiary.ispwtheradiary.view.gui.task.TaskAndToDoPtGUI">
         <fx:include source="CommonPanel.fxml" />
         <Button fx:id="bacheca" layoutX="606.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#goToDashboard" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: #9067C6; -fx-border-image-width: 16px; -fx-border-radius: 16px;" />
         <Button fx:id="diary" layoutX="55.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#goToDiary" prefHeight="130.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: #9067C6; -fx-border-image-width: 16px; -fx-border-radius: 16px;" textAlignment="RIGHT" />

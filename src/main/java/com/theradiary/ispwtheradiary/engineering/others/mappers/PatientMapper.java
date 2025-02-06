@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.others.mappers;
 
-import com.theradiary.ispwtheradiary.engineering.others.beans.PatientBean;
+import com.theradiary.ispwtheradiary.beans.PatientBean;
 import com.theradiary.ispwtheradiary.model.Patient;
 
 public class PatientMapper implements BeanAndModelMapper<PatientBean, Patient> {

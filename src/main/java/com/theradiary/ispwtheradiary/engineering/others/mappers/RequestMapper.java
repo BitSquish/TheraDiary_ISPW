@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.others.mappers;
 
-import com.theradiary.ispwtheradiary.engineering.others.beans.RequestBean;
+import com.theradiary.ispwtheradiary.beans.RequestBean;
 import com.theradiary.ispwtheradiary.model.Request;
 
 public class RequestMapper implements BeanAndModelMapper<RequestBean, Request>{

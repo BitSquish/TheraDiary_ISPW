@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.others.mappers;
 
-import com.theradiary.ispwtheradiary.engineering.others.beans.ToDoItemBean;
+import com.theradiary.ispwtheradiary.beans.ToDoItemBean;
 import com.theradiary.ispwtheradiary.model.ToDoItem;
 
 public class ToDoItemMapper implements BeanAndModelMapper<ToDoItemBean, ToDoItem> {

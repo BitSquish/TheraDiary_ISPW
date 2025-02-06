@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.others.mappers;
 
-import com.theradiary.ispwtheradiary.engineering.others.beans.MedicalOfficeBean;
+import com.theradiary.ispwtheradiary.beans.MedicalOfficeBean;
 import com.theradiary.ispwtheradiary.model.MedicalOffice;
 
 public class MedicalOfficeMapper implements BeanAndModelMapper<MedicalOfficeBean, MedicalOffice> {

@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.engineering.others.mappers;
 
-import com.theradiary.ispwtheradiary.engineering.others.beans.PsychologistBean;
+import com.theradiary.ispwtheradiary.beans.PsychologistBean;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 
 public class PsychologistMapper implements BeanAndModelMapper<PsychologistBean, Psychologist> {

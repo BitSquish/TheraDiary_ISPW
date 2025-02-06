@@ -1,7 +1,8 @@
 package com.theradiary.ispwtheradiary.engineering.others.mappers;
 
+import com.theradiary.ispwtheradiary.beans.*;
 import com.theradiary.ispwtheradiary.engineering.others.beans.*;
-import com.theradiary.ispwtheradiary.engineering.patterns.factory.BeanAndModelMapperFactory;
+import com.theradiary.ispwtheradiary.patterns.factory.BeanAndModelMapperFactory;
 import com.theradiary.ispwtheradiary.model.*;
 
 public class MapperRegistration {

@@ -1,7 +1,7 @@
 package com.theradiary.ispwtheradiary.engineering.others.mappers;
 
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
-import com.theradiary.ispwtheradiary.engineering.others.beans.AppointmentBean;
+import com.theradiary.ispwtheradiary.beans.AppointmentBean;
 import com.theradiary.ispwtheradiary.model.Appointment;
 import com.theradiary.ispwtheradiary.model.Credentials;
 import com.theradiary.ispwtheradiary.model.Patient;
