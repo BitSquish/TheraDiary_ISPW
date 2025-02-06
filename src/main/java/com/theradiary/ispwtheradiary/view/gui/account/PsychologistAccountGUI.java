@@ -16,6 +16,7 @@ public class PsychologistAccountGUI extends AccountGUI {
         super(fxmlPathConfig,session);
     }
 
+    //I seguenti metodi permettono di visualizzare e gestire i major di uno psicologo
     @Override
     protected void retrieveData(AccountController accountController, LoggedUserBean loggedUserBean) {
         accountController.retrieveMajors((PsychologistBean) loggedUserBean);
@@ -31,13 +32,14 @@ public class PsychologistAccountGUI extends AccountGUI {
         initializeItems(session.getUser());
     }
 
+    //Metodo per aggiungere un major
     @FXML
     public static void addMajor(PsychologistBean psychologistBean, Major major) {
         AccountController accountController = new AccountController();
         accountController.addMajor(psychologistBean, major);
         psychologistBean.addMajor(major);
     }
-
+    //Metodo per rimuovere un major
     @FXML
     public static void removeMajor(PsychologistBean psychologistBean, Major major) {
         AccountController accountController = new AccountController();

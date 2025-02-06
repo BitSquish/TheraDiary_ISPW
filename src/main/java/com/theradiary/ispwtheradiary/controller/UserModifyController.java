@@ -15,7 +15,7 @@ import com.theradiary.ispwtheradiary.beans.PatientBean;
 import com.theradiary.ispwtheradiary.beans.PsychologistBean;
 
 
-
+/***********************Parte del caso d'uso: Gestisci account*************************/
 public class UserModifyController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final UpdateDAO updateDAO = FactoryDAO.getUpdateDAO();

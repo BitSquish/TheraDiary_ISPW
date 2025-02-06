@@ -32,6 +32,7 @@ public class AppointmentSummaryGUI extends CommonGUI {
     @FXML
     private TableColumn<AppointmentBean, String> modalityCol;
 
+    //Visualizzazione appuntamenti fissati con i pazienti
     @FXML
     public void printAppointment(MouseEvent event, List<AppointmentBean> appointmentBeans) {
         // Creazione della lista osservabile

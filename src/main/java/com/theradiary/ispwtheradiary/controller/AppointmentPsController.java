@@ -13,6 +13,7 @@ import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 
 import java.util.List;
+/***********************Caso d'uso: Gestisci apppuntamento******************/
 
 public class AppointmentPsController extends AppointmentController {
 
@@ -35,8 +36,7 @@ public class AppointmentPsController extends AppointmentController {
     public void saveAppointments(PsychologistBean psychologistBean, List<AppointmentBean> appointmentToAdd) {
         Psychologist psychologist = new Psychologist(new Credentials(psychologistBean.getCredentialsBean().getMail(), Role.PSYCHOLOGIST), psychologistBean.getName(), psychologistBean.getSurname(), psychologistBean.getCity(), psychologistBean.getDescription(), psychologistBean.isInPerson(), psychologistBean.isOnline());
         DayOfTheWeek day = appointmentToAdd.get(0).getDay();
-        updateDAO.clearAppointments(psychologist, day); //rimuovo dal database tutti gli appuntamenti dove il giorno della settimana corrisponde ai nuovi appuntamenti da caricare
-        //Da qui in giù da controllare
+        updateDAO.clearAppointments(psychologist, day); //rimuovo dalla persistenza tutti gli appuntamenti dove il giorno della settimana corrisponde ai nuovi appuntamenti da caricare
         for(AppointmentBean appointmentBean : appointmentToAdd) {
             Appointment appointment = beanAndModelMapperFactory.fromBeanToModel(appointmentBean, AppointmentBean.class);
             appointment.setPatient(new Patient(new Credentials(appointmentBean.getPatientBean(), Role.PATIENT)));
@@ -45,7 +45,7 @@ public class AppointmentPsController extends AppointmentController {
         }
     }
 
-    //Cambia la modalità di appuntamento sul profilo psicologo
+    //Cambia la modalità di appuntamento sul profilo psicologo (in caso sia stato inserito un appuntamento con una modalità non concordante con quella del profilo)
     public boolean changeModality(List<AppointmentBean> appointmentsToAdd) {
         Psychologist psychologist = new Psychologist(new Credentials(appointmentsToAdd.get(0).getPsychologistBean().getCredentialsBean().getMail(), Role.PSYCHOLOGIST), appointmentsToAdd.get(0).getPsychologistBean().getName(), appointmentsToAdd.get(0).getPsychologistBean().getSurname(), appointmentsToAdd.get(0).getPsychologistBean().getCity(), appointmentsToAdd.get(0).getPsychologistBean().getDescription(), appointmentsToAdd.get(0).getPsychologistBean().isInPerson(), appointmentsToAdd.get(0).getPsychologistBean().isOnline());
         boolean hasChanged = false;

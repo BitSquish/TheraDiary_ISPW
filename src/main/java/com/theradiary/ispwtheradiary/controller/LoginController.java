@@ -18,7 +18,7 @@ import com.theradiary.ispwtheradiary.beans.CredentialsBean;
 import com.theradiary.ispwtheradiary.beans.PatientBean;
 import com.theradiary.ispwtheradiary.beans.PsychologistBean;
 
-
+/***********************Parte del caso d'uso: Login*************************/
 public class LoginController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final LoginAndRegistrationDAO loginGeneric;
@@ -65,9 +65,9 @@ public class LoginController {
         userBean.setName(user.getName());
         userBean.setSurname(user.getSurname());
         userBean.setCity(user.getCity());
-        userBean.setDescription(user.getDescription());
         userBean.setInPerson(user.isInPerson());
         userBean.setOnline(user.isOnline());
+        userBean.setDescription(user.getDescription());
         userBean.setPag(user.isPag());
 
     }

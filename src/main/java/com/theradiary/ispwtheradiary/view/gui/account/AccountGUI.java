@@ -41,7 +41,6 @@ public abstract class AccountGUI extends CommonGUI {
         super(fxmlPathConfig,session);
     }
 
-
     @FXML
     Label errorMessage;
     @FXML
@@ -65,9 +64,7 @@ public abstract class AccountGUI extends CommonGUI {
     @FXML
     CheckBox checkbox9;
 
-
-
-
+    /*********I seguenti metodi vengono utilizzati per settare le checkbox riguardanti le category(paziente)/major(psicologi)***********/
 
     // Metodo astratto per recuperare le categorie o majors
     protected abstract void retrieveData(AccountController accountController, LoggedUserBean loggedUserBean);
@@ -75,13 +72,14 @@ public abstract class AccountGUI extends CommonGUI {
     // Metodo astratto per ottenere le categorie o majors dal bean utente
     protected abstract <T> Iterable<T> getItems(LoggedUserBean loggedUserBean);
 
+
+    //Inizializzazione delle checkbox riguardanti category/major
     @FXML
     protected void initializeItems(LoggedUserBean loggedUserBean) {
         CheckBox[] checkBoxes = new CheckBox[]{
                 checkbox1, checkbox2, checkbox3, checkbox4, checkbox5,
                 checkbox6, checkbox7, checkbox8, checkbox9
         };
-
         // Recupera i dati necessari per l'utente (categorie o majors)
         retrieveData(accountController, loggedUserBean);
         // Ottieni le categorie o majors dall'oggetto `LoggedUserBean`
@@ -89,6 +87,7 @@ public abstract class AccountGUI extends CommonGUI {
         if (items != null) {
             // Itera sugli elementi (categorie o majors) e seleziona le checkbox corrispondenti
             for (Object item : items) {
+                //cast a Category se l'utente è un paziente, o Major se l'utente è uno psicologo
                 int id = (loggedUserBean.getCredentialsBean().getRole().equals(Role.PATIENT)) ? ((Category) item).getId() : ((Major) item).getId();
                 if (id > 0 && id <= checkBoxes.length) {
                     checkBoxes[id - 1].setSelected(true);
@@ -97,11 +96,9 @@ public abstract class AccountGUI extends CommonGUI {
         }
     }
 
-
     @FXML
     protected void updateData() {
         resetMessages();
-
         // Creazione dell'array di CheckBox
         CheckBox[] checkboxes = createCheckBoxArray();
 
@@ -176,7 +173,6 @@ public abstract class AccountGUI extends CommonGUI {
 
     // Metodo per ottenere un oggetto `Category` o `Major` in base all'ID
 
-
     // Metodo per aggiungere un elemento
     private void addItem(LoggedUserBean loggedUserBean, boolean isPatient, Object item) {
         if (isPatient) {
@@ -204,8 +200,9 @@ public abstract class AccountGUI extends CommonGUI {
         }
     }
 
+/*******Fine metodi category/major********/
 
-
+    // Metodo per andare alla schermata di modifica dei dati immessi in registrazione
     @FXML
     protected void goToModifyScreen(MouseEvent event) {
         try {
@@ -232,6 +229,7 @@ public abstract class AccountGUI extends CommonGUI {
         }
     }
 
+    // Logout
     @FXML
     protected void logout(MouseEvent event) throws IOException {
         //rimuove l'utente dalla sessione

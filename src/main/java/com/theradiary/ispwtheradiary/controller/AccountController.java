@@ -17,6 +17,8 @@ import com.theradiary.ispwtheradiary.beans.PsychologistBean;
 import java.util.ArrayList;
 import java.util.List;
 
+/***********************Caso d'uso: gestisci account*************************/
+
 public class AccountController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final RetrieveDAO retrieveDAO=FactoryDAO.getRetrieveDAO();

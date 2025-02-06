@@ -51,7 +51,7 @@ public class AppointmentPtGUI extends CommonGUI {
     private static final String IN_PERSON = "In presenza";
     private static final String ONLINE = "Online";
 
-    /*
+    /* GUI Appuntamenti paziente
         Casi da distinguere:
         1) Nessuno psicologo
         2) Nessun appuntamento disponibile
@@ -61,10 +61,10 @@ public class AppointmentPtGUI extends CommonGUI {
      */
 
 
+    //Inizializza la schermata degli appuntamenti del paziente
     @FXML
     public void initializeVbox() {
-        //Se il paziente non ha un psicologo associato mostra un bottone che riporta alla ricerca dello psicologo
-        if(psychologistBean != null && psychologistBean.getCredentialsBean().getMail() != null) {
+        if(psychologistBean != null && psychologistBean.getCredentialsBean().getMail() != null) {   //Se il paziente ha uno psicologo associato:
             //Carica tutte le fasce orarie registrate dallo psicologo
             appointmentController.loadAllAppointments(allAppointments, psychologistBean);
             //Se lo psicologo associato non ha ancora registrato nessun orario per gli appuntamenti, avvisa il paziente
@@ -85,7 +85,7 @@ public class AppointmentPtGUI extends CommonGUI {
                     initializeCombobox();
                 }
             }
-        } else {
+        } else {    //Se il paziente non ha un psicologo associato mostra un bottone che riporta alla ricerca dello psicologo
             psychologistNotSetted.setVisible(true);
         }
     }
@@ -151,16 +151,17 @@ public class AppointmentPtGUI extends CommonGUI {
         });
     }
 
+    //Creazione dell'appuntamento tra psicologo e paziente
     @FXML
     private void askForAnAppointment(MouseEvent event) {
         DayOfTheWeek day = DayOfTheWeek.fromStringToDay(chooseDay.getValue());
         TimeSlot timeSlot = TimeSlot.fromStringToTimeSlot(chooseTimeSlot.getValue());
         boolean modality = chooseModality.getValue().equals(IN_PERSON);
         AppointmentBean appointmentBean = new AppointmentBean(psychologistBean, day, timeSlot, modality, !modality);
-        appointmentBean.setAvailable(false);
+        appointmentBean.setAvailable(false);    //L'appuntamento viene impostato come non più disponibile, in modo da non essere più visibile ad altri utenti
         appointmentBean.setPatientBean(session.getUser().getCredentialsBean().getMail());
-        appointmentController.askForAnAppointment(appointmentBean);
-        success.setText("Richiesta inviata con successo.");
+        appointmentController.askForAnAppointment(appointmentBean); //salva l'appuntamento
+        success.setText("Appuntamento impostato con successo.");
         success.setVisible(true);
     }
 

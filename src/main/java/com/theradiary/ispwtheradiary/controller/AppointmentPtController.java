@@ -14,6 +14,8 @@ import com.theradiary.ispwtheradiary.model.Patient;
 import java.util.List;
 import java.util.Objects;
 
+/***********************Caso d'uso: Prenota appuntamento******************/
+
 public class AppointmentPtController extends AppointmentController {
 
     //Costruttore
@@ -23,7 +25,7 @@ public class AppointmentPtController extends AppointmentController {
     }
 
 
-    // Controlla se il paziente ha già un appuntamento associato
+    // Controlla se il paziente ha già un appuntamento fissato
     public AppointmentBean getAppointmentIfExists(PatientBean patientBean, List<AppointmentBean> allAppointments) {
         return allAppointments.stream()
                 .filter(appointmentBean -> appointmentBean.getPatientBean() != null
@@ -33,7 +35,7 @@ public class AppointmentPtController extends AppointmentController {
                 .orElse(null); // Restituisce null se non c'è alcun appuntamento che soddisfa la condizione
     }
 
-    // invio della richiesta di appuntamento
+    // Salvataggio dell'appuntamento
     public void askForAnAppointment(AppointmentBean appointmentBean) {
         Appointment appointment = beanAndModelMapperFactory.fromBeanToModel(appointmentBean, AppointmentBean.class);
         appointment.setPatient(new Patient(new Credentials(appointmentBean.getPatientBean(), Role.PATIENT)));
@@ -42,7 +44,7 @@ public class AppointmentPtController extends AppointmentController {
     }
 
 
-    // Rimuove dalla lista degli appuntamenti quelli non disponibili e quelli per cui il paziente ha già fatto richiesta
+    // Rimuove dalla lista degli appuntamenti visualizzati quelli non disponibili e quelli per cui il paziente ha già fatto richiesta
     public void loadAvailableAppointments(List<AppointmentBean> allAppointments, PatientBean patientBean) {
         allAppointments.removeIf(appointmentBean -> !appointmentBean.isAvailable() || (appointmentBean.isAvailable() && Objects.equals(appointmentBean.getPatientBean(), patientBean.getCredentialsBean().getMail())));
     }

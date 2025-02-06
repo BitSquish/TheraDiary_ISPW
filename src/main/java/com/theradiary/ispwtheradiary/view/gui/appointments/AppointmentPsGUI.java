@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+//Gui Appuntamento psicologo
+
 public class AppointmentPsGUI extends CommonGUI {
     @FXML
     private TabPane tabPane;
@@ -48,7 +50,7 @@ public class AppointmentPsGUI extends CommonGUI {
     private final AppointmentPsController appointmentPs = new AppointmentPsController();
 
     @FXML
-    protected void loadCheckboxes() { //metodo chiamato quando viene cambiata la tab
+    protected void loadCheckboxes() { //metodo chiamato quando viene cambiata la tab per inizializzare le chechboxes delle fasce orarie
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
         if(selectedTab == null) {
             throw new IllegalStateException("Nessuna tab selezionata");
@@ -75,11 +77,12 @@ public class AppointmentPsGUI extends CommonGUI {
         }
     }
 
+
     private void initializeCheckboxes(DayOfTheWeek dayOfTheWeek, Tab selectedTab) {
         if(!allAppointments.isEmpty()) {    //Se sono stati precedentemente memorizzati degli appuntamenti, li carica
             AnchorPane anchorPane = (AnchorPane) selectedTab.getContent();  //il metodo getContent() restituisce un nodo
             VBox vBoxInPerson = (VBox) anchorPane.getChildren().getFirst(); //il primo nodo figlio dell'anchorpane è la vbox per le visite di persona
-            VBox vBoxOnline = (VBox) anchorPane.getChildren().get(1);   //il secondo nodo figlio dell?anchorpane è la vbox per le visite online
+            VBox vBoxOnline = (VBox) anchorPane.getChildren().get(1);   //il secondo nodo figlio dell'anchorpane è la vbox per le visite online
             //Ricavo le checkbox dalle VBox
             List<CheckBox> inPersonCheckboxes = new ArrayList<>();
             List<CheckBox> onlineCheckboxes = new ArrayList<>();
@@ -108,6 +111,7 @@ public class AppointmentPsGUI extends CommonGUI {
 
 
 
+    //Salva gli appuntamenti per un giorno della settimana
     @FXML
     private void save(MouseEvent event){
         List<AppointmentBean> appointmentToAdd = new ArrayList<>(); //lista da riempire con gli appuntamenti da salvare (vecchi e nuovi)
@@ -149,6 +153,7 @@ public class AppointmentPsGUI extends CommonGUI {
         );
     }
 
+    //Metodo che setta il paziente e la disponibilità dell'appuntamento, recupera i dati di appuntamenti già settati
     private void setPatientAndAvailability(AppointmentBean appointmentBean) {
         for(AppointmentBean app: allAppointments){
             if(app.getDay().equals(appointmentBean.getDay()) && app.getTimeSlot().equals(appointmentBean.getTimeSlot()) && app.getPatientBean() != null){
@@ -183,6 +188,7 @@ public class AppointmentPsGUI extends CommonGUI {
         }
     }
 
+    //Metodo per visualizzare la schermata di riepilogo degli appuntamenti fissati con i pazienti
     @FXML
     private void goToSummary(MouseEvent event) {
         try{
@@ -193,7 +199,7 @@ public class AppointmentPsGUI extends CommonGUI {
                 loader.setControllerFactory(c -> new AppointmentSummaryGUI(fxmlPathConfig, session));
                 Parent root = loader.load();
                 List<AppointmentBean> allPatientAppointments = allAppointments.stream()
-                        .filter(appointmentBean -> !appointmentBean.isAvailable())  // Filtra gli appuntamenti non disponibili
+                        .filter(appointmentBean -> !appointmentBean.isAvailable())  // Filtra gli appuntamenti non disponibili (quindi quelli fissati con i pazienti)
                         .toList();         // Raccoglie i risultati in una nuova lista
                 ((AppointmentSummaryGUI)loader.getController()).printAppointment(event, allPatientAppointments);
                 changeScene(root, event);
@@ -204,6 +210,7 @@ public class AppointmentPsGUI extends CommonGUI {
 
     }
 
+    //Metodo per visualizzare le informazioni aggiuntive sul salvataggio degli appuntamenti
     @FXML
     private void clickForInformation(MouseEvent event){
         if(infoLabel.isVisible()){
