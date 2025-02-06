@@ -4,7 +4,7 @@ import com.theradiary.ispwtheradiary.dao.CategoryAndMajorDAO;
 import com.theradiary.ispwtheradiary.dao.LoginAndRegistrationDAO;
 import com.theradiary.ispwtheradiary.dao.RetrieveDAO;
 import com.theradiary.ispwtheradiary.dao.TaskAndToDoDAO;
-import com.theradiary.ispwtheradiary.engineering.dao.*;
+
 import com.theradiary.ispwtheradiary.engineering.enums.Category;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.exceptions.LoginAndRegistrationException;
@@ -70,9 +70,10 @@ class TestPatient {
     @AfterEach
     void tearDown() {
         if(testpatient!=null){
+            loginAndRegistrationDAO.removePatient(testpatient);
             taskAndToDoDAO.removeDiaryEntry(today, testpatient);
             categoryAndMajorDAO.removeCategory(testpatient, Category.OTHER);
-            loginAndRegistrationDAO.removePatient(testpatient);
+
         }
 
     }

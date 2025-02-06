@@ -116,26 +116,26 @@ public class LoginAndRegistrationQuery {
         }
     }
 
-
     public static void removePatient(Connection conn, String mail) throws DatabaseOperationException {
-        String query = "DELETE FROM patient WHERE mail = ?";
-        try(PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, mail);
-            pstmt.executeUpdate();
-        }catch (SQLException e) {
+        String deletePatient = "DELETE FROM patient WHERE mail = ?";
+        String deleteUser = "DELETE FROM users WHERE mail = ?";
+
+        try (PreparedStatement pstmt1 = conn.prepareStatement(deletePatient);
+             PreparedStatement pstmt2 = conn.prepareStatement(deleteUser)) {
+
+            pstmt1.setString(1, mail);
+            pstmt1.executeUpdate();
+
+            pstmt2.setString(1, mail);
+            pstmt2.executeUpdate();
+
+        } catch (SQLException e) {
             throw new DatabaseOperationException("Errore nella rimozione del paziente", e);
         }
     }
 
-    public static void removePsychologist(Connection conn, String mail) throws DatabaseOperationException {
-        String query = "DELETE FROM psychologist WHERE mail = ?";
-        try(PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, mail);
-            pstmt.executeUpdate();
-        }catch (SQLException e) {
-            throw new DatabaseOperationException("Errore nella rimozione dello psicologo", e);
-        }
-    }
+
+
 }
 
 
