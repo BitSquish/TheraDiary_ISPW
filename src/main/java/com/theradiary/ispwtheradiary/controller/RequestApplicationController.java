@@ -1,6 +1,6 @@
 package com.theradiary.ispwtheradiary.controller;
 
-import com.theradiary.ispwtheradiary.dao.RetrieveDAO;
+
 import com.theradiary.ispwtheradiary.dao.UpdateDAO;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.beans.PsychologistBean;
@@ -13,14 +13,13 @@ import com.theradiary.ispwtheradiary.model.Request;
 import com.theradiary.ispwtheradiary.beans.PatientBean;
 import com.theradiary.ispwtheradiary.beans.RequestBean;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 /***********************Parte del caso d'uso: Richiedi psicologo*************************/
 
 public class RequestApplicationController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
-    private final RetrieveDAO retrieveDAO =FactoryDAO.getRetrieveDAO();
+
     private final UpdateDAO updateDAO = FactoryDAO.getUpdateDAO();
     //Costruttore
     public RequestApplicationController() {
