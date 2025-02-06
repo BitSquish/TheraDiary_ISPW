@@ -13,6 +13,7 @@ import com.theradiary.ispwtheradiary.beans.LoggedUserBean;
 import com.theradiary.ispwtheradiary.beans.PatientBean;
 import com.theradiary.ispwtheradiary.beans.PsychologistBean;
 
+/***********************Parte del caso d'uso: Login*************************/
 
 public class UserRegistrationController {
     private final BeanAndModelMapperFactory beanAndModelMapperFactory;

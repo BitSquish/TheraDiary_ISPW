@@ -14,6 +14,12 @@ import com.theradiary.ispwtheradiary.beans.ToDoItemBean;
 import java.util.List;
 import java.util.Optional;
 
+/***********************
+ * Parte del caso d'uso:
+ * Consulta materiale paziente, assegna task, assegna to-do (psicologo)
+ * Aggiorna diario, completa task, completa to-do (paziente)
+ * *************************/
+
 public abstract class TaskAndToDoController {
     protected  BeanAndModelMapperFactory beanAndModelMapperFactory;
     protected final TaskAndToDoDAO taskAndToDoDAO = FactoryDAO.getTaskAndToDoDAO();
@@ -61,14 +67,6 @@ public abstract class TaskAndToDoController {
         }
 
     }
-
-
-
-
-
-
-
-
 
 
 

@@ -15,7 +15,7 @@ import com.theradiary.ispwtheradiary.model.Psychologist;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/***********************Parte del caso d'uso: gestisci apppuntamento (psicologo) e prenota appuntamento (paziente)******************/
 public abstract class AppointmentController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
     protected final RetrieveDAO retrieveDAO= FactoryDAO.getRetrieveDAO();

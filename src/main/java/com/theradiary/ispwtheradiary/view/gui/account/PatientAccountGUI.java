@@ -16,10 +16,10 @@ public class PatientAccountGUI extends AccountGUI {
         super(fxmlPathConfig,session);
     }
 
-
     @FXML
     Label psychologist;
 
+    //Imposta il bottone relativo al proprio psicologo. Se si ha uno psicologo, porta alla sua descrizione, altrimenti alla ricerca
     @FXML
     private void yourPsychologist(MouseEvent event) {
         if(((PatientBean)session.getUser()).getPsychologistBean() != null && ((PatientBean)session.getUser()).getPsychologistBean().getCredentialsBean().getMail() != null){
@@ -30,6 +30,7 @@ public class PatientAccountGUI extends AccountGUI {
         }
     }
 
+    //Inizializza il campo relativo allo psicologo, stampando il suo nome se si ha uno psicologo associato al proprio profilo
     public void initializePsychologistField(){
         if(((PatientBean)session.getUser()).getPsychologistBean() != null) {
             if (((PatientBean) session.getUser()).getPsychologistBean().getCredentialsBean().getMail() == null) {
@@ -42,6 +43,7 @@ public class PatientAccountGUI extends AccountGUI {
     }
 
 
+    //Metodi per visualizzare la lista delle categorie
     @Override
     protected void retrieveData(AccountController accountController, LoggedUserBean loggedUserBean) {
         accountController.retrieveCategories((PatientBean) loggedUserBean);
@@ -56,16 +58,19 @@ public class PatientAccountGUI extends AccountGUI {
     public void initializeCategories()  {
         initializeItems(session.getUser());
     }
+    //aggiunta nuova category
     @FXML
     public static void addCategory(PatientBean patientBean, Category category) {
         patientBean.addCategory(category);
         AccountController account=new AccountController();
         account.addCategory(patientBean, category);
     }
+    //rimozione category
     @FXML
     public static void removeCategory(PatientBean patientBean, Category category) {
         AccountController account=new AccountController();
         account.removeCategory(patientBean, category);
         patientBean.removeCategory(category);
     }
+    //fine metodi category
 }

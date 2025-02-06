@@ -13,6 +13,8 @@ import com.theradiary.ispwtheradiary.beans.RequestBean;
 import java.util.ArrayList;
 import java.util.List;
 
+/***********************Parte del caso d'uso: Gestisci paziente*************************/
+
 public class PatientListController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final RetrieveDAO retrieveDAO = FactoryDAO.getRetrieveDAO();
