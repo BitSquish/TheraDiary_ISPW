@@ -2,7 +2,6 @@ package com.theradiary.ispwtheradiary.dao.demo;
 
 import com.theradiary.ispwtheradiary.dao.PtAndPsDAO;
 import com.theradiary.ispwtheradiary.dao.demo.shared.SharedResources;
-import com.theradiary.ispwtheradiary.engineering.others.Printer;
 import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 import com.theradiary.ispwtheradiary.model.Request;
@@ -20,7 +19,6 @@ public class PtAndPsDAOInMemory implements PtAndPsDAO {
         // Usa computeIfAbsent per evitare il controllo esplicito e creazione della lista
         SharedResources.getInstance().getRequestsSent()
                 .computeIfAbsent(psychologistMail, k -> new ArrayList<>()).add(request);
-        Printer.println("Richiesta inviata da " + request.getPatient().getCredentials().getMail() + " a " + psychologistMail);
     }
 
     @Override
