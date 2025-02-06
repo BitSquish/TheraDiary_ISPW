@@ -2,7 +2,6 @@ package com.theradiary.ispwtheradiary.dao.demo;
 
 import com.theradiary.ispwtheradiary.dao.LoginAndRegistrationDAO;
 import com.theradiary.ispwtheradiary.dao.demo.shared.SharedResources;
-import com.theradiary.ispwtheradiary.engineering.exceptions.*;
 import com.theradiary.ispwtheradiary.exceptions.LoginAndRegistrationException;
 import com.theradiary.ispwtheradiary.exceptions.MailAlreadyExistsException;
 import com.theradiary.ispwtheradiary.exceptions.NoResultException;

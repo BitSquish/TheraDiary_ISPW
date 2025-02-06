@@ -46,16 +46,20 @@ public class SearchGUI extends CommonGUI {
     private void search(MouseEvent event){
         errorMessage.setVisible(false);
         try{
-            TextField[] fields = {cognomeP, cittaP};
+            TextField[] fields = {cognomeP, cittaP};    //Almeno uno tra cognome e città è obbligatorio
             checkFields(fields);
             List<PsychologistBean> psychologistBeans = new ArrayList<>();
+            //Cerca gli psicologi corrispondenti ai filtri immessi
             searchController.searchPsychologists(psychologistBeans,nomeP.getText(), cognomeP.getText(), cittaP.getText(), inPresenza.isSelected(), online.isSelected(), pag.isSelected());
-            goToPsychologistsList(psychologistBeans,event);
-        } catch (EmptyFieldException | NoResultException exception){
+            goToPsychologistsList(psychologistBeans,event); //porta alla schermata con la lista di psicologi
+        } catch (EmptyFieldException | NoResultException exception){    //Eccezioni: campi obbligatori non inseriti, nessun risultato trovato
+            //Visualizza messaggio di errore
             errorMessage.setText(exception.getMessage());
             errorMessage.setVisible(true);
         }
     }
+
+    //Metodo per passare alla schermata con la lista di psicologi
     @FXML
     private void goToPsychologistsList(List<PsychologistBean> psychologistBeans, MouseEvent event){
         try {
@@ -69,6 +73,7 @@ public class SearchGUI extends CommonGUI {
         }
     }
 
+    //Metodo per verificare l'immissione dei campi obbligatori
     @FXML
     protected void checkFields(TextField[] fields) throws EmptyFieldException {
         for(TextField field:fields){

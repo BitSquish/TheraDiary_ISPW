@@ -35,6 +35,7 @@ public class PsychologistsListGUI extends CommonGUI {
     private TableColumn<PsychologistBean, Void> buttonColumn;
 
 
+    //Metodo per inizializzare e visualizzare la lista di psicologi
     @FXML
     public void printPsychologists(List<PsychologistBean> psychologistBeans) {
         ObservableList<PsychologistBean> psychologistsBeansList = FXCollections.observableArrayList(psychologistBeans);

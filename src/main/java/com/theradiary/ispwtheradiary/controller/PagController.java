@@ -10,6 +10,8 @@ import com.theradiary.ispwtheradiary.model.Patient;
 import com.theradiary.ispwtheradiary.model.Psychologist;
 import com.theradiary.ispwtheradiary.beans.LoggedUserBean;
 
+/***********************Caso d'uso: Richiedi adesione al P.A.G.*************************/
+
 public class PagController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final UpdateDAO updateDAO = FactoryDAO.getUpdateDAO();

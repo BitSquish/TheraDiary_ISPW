@@ -18,6 +18,7 @@ public class PagGUI extends CommonGUI {
     @FXML
     Label successMessage;
 
+    //Metodo per adesione al P.A.G. (Piano di Assistenza Gratuita)
     @FXML
     protected void joinPag(MouseEvent event){
         try{

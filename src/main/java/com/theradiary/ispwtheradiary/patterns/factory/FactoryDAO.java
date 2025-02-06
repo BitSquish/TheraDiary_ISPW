@@ -3,7 +3,6 @@ package com.theradiary.ispwtheradiary.patterns.factory;
 import com.theradiary.ispwtheradiary.dao.*;
 import com.theradiary.ispwtheradiary.dao.demo.*;
 import com.theradiary.ispwtheradiary.dao.full.sql.*;
-import com.theradiary.ispwtheradiary.engineering.dao.*;
 import com.theradiary.ispwtheradiary.dao.full.json.LoginAndRegistrationDAOJSON;
 import com.theradiary.ispwtheradiary.engineering.others.Printer;
 

@@ -9,7 +9,9 @@ import com.theradiary.ispwtheradiary.model.MedicalOffice;
 import com.theradiary.ispwtheradiary.beans.MedicalOfficeBean;
 
 
+/***********************Caso d'uso: registra studio medico*************************/
 public class MedicalOfficeRegistrationController {
+
     BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final UpdateDAO updateDAO = FactoryDAO.getUpdateDAO();
     private final RetrieveDAO retrieveDAO = FactoryDAO.getRetrieveDAO();
@@ -26,7 +28,7 @@ public class MedicalOfficeRegistrationController {
             throw new NoResultException();
         }
     }
-    //Metodo per recuperare lo studio medico
+    //Metodo per recuperare i dati dello studio medico
     public boolean retrieveMedicalOffice(MedicalOfficeBean medicalOfficeBean) {
         MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
         boolean medOffAlreadyInserted = retrieveDAO.retrieveMedicalOffice(medicalOffice);

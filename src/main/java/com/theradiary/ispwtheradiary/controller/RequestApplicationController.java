@@ -16,6 +16,8 @@ import com.theradiary.ispwtheradiary.beans.RequestBean;
 import java.util.ArrayList;
 import java.util.List;
 
+/***********************Parte del caso d'uso: Richiedi psicologo*************************/
+
 public class RequestApplicationController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
     private final RetrieveDAO retrieveDAO =FactoryDAO.getRetrieveDAO();
@@ -26,15 +28,13 @@ public class RequestApplicationController {
     }
     //Metodo per eliminare la richiesta
     public void deleteRequest(RequestBean requestBean) {
-        RequestManagerConcreteSubject requestManagerConcreteSubject = RequestManagerConcreteSubject.getInstance();
+        RequestManagerConcreteSubject requestManagerConcreteSubject = RequestManagerConcreteSubject.getInstance();  //recupero istanza del ConcreteSubject
         Request request = beanAndModelMapperFactory.fromBeanToModel(requestBean, RequestBean.class);
         updateDAO.deleteRequest(request);
-        List<Request> requests = new ArrayList<>();
-        retrieveDAO.retrievePatientsRequest(request.getPsychologist(), requests);
-        requestManagerConcreteSubject.loadRequests(requests);
-        requestManagerConcreteSubject.removeRequest(request);
+        requestManagerConcreteSubject.removeRequest(request);   //rimuovo la richiesta dalla lista salvata nel ConcreteSubject
     }
-    //Metodo per associare uno psicologo ad un paziente
+
+    //Metodo per associare uno psicologo ad un paziente (in caso sia stata accettata la richiesta)
     public void addPsychologistToPatient(PatientBean patientBean) {
         try{
             Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);

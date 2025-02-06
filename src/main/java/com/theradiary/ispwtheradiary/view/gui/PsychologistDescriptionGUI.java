@@ -8,7 +8,6 @@ import com.theradiary.ispwtheradiary.engineering.enums.Role;
 import com.theradiary.ispwtheradiary.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
-import com.theradiary.ispwtheradiary.engineering.others.beans.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -47,23 +46,25 @@ public class PsychologistDescriptionGUI extends CommonGUI {
     private Button request;
 
 
+    //Metodo per visualizzare le informazioni dello psicologo
     public void printPsychologist(PsychologistBean psychologistBean) throws NoResultException {
         boolean hasAlreadySentARequest = psychologistDescriptionController.hasAlreadySentARequest((PatientBean)session.getUser(), psychologistBean);
         //Se il paziente ha già uno psicologo associato o ha già inviato una richiesta per quello psicologo, nasconde il bottone per inviare la richiesta
         if((((PatientBean) session.getUser()).getPsychologistBean() != null && ((PatientBean) session.getUser()).getPsychologistBean().getCredentialsBean().getMail() != null) || hasAlreadySentARequest){
             request.setVisible(false);
         }
-
+        //Recupero delle informazioni sullo psicologo e sul suo studio medico
         MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCity());
         psychologistDescriptionController.searchPsychologistInfo(psychologistBean, medicalOfficeBean);
+        //impostazione dei campi
         nameField.setText(psychologistBean.getName());
         surnameField.setText(psychologistBean.getSurname());
         cityField.setText(psychologistBean.getCity());
         mailField.setText(psychologistBean.getCredentialsBean().getMail());
         modalityField.setText(psychologistBean.getModality());
         StringJoiner majorString= new StringJoiner(",");
-        AccountController account = new AccountController();
-        account.retrieveMajors(psychologistBean);
+        psychologistDescriptionController.retrieveMajors(psychologistBean);
+        //Traduzione delle specializzazioni (se impostate dallo psicologo)
         if(psychologistBean.getMajors() != null && !psychologistBean.getMajors().isEmpty()) {
             for (Major m : psychologistBean.getMajors()) {
                 String translatedMajor = Major.translateMajor(m.getId());
@@ -73,6 +74,7 @@ public class PsychologistDescriptionGUI extends CommonGUI {
         }else{
             majorsField.setText("Non specificate");
         }
+        //Impostazione delle informazioni sullo studio medico
         String medicalOffice;
         if(medicalOfficeBean.getPostCode() == null && medicalOfficeBean.getAddress() == null && medicalOfficeBean.getOtherInfo() == null)
             medicalOffice = "Non specificato, contattare privatamente lo psicologo";
@@ -80,10 +82,12 @@ public class PsychologistDescriptionGUI extends CommonGUI {
             medicalOffice = medicalOfficeBean.getAddress()+", "+medicalOfficeBean.getPostCode();
         medicalOfficeField.setText(medicalOffice);
         otherInfoField.setText(medicalOfficeBean.getOtherInfo());
+        //Descrizione dello psicologo
         descriptionField.setText(psychologistBean.getDescription());
     }
 
 
+    //Metodo per inviare una richiesta di associazione allo psicologo
     @FXML
     protected void sendRequest(MouseEvent event) throws NoResultException {
         PatientBean patientBean = (PatientBean) session.getUser();

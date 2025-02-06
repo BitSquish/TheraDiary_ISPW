@@ -12,7 +12,7 @@ import com.theradiary.ispwtheradiary.patterns.factory.FactoryDAO;
 import com.theradiary.ispwtheradiary.patterns.observer.RequestManagerConcreteSubject;
 import com.theradiary.ispwtheradiary.model.*;
 
-
+/***********************Parte del caso d'uso: Richiedi psicologo*************************/
 
 public class PsychologistDescriptionController {
     BeanAndModelMapperFactory beanAndModelMapperFactory;
@@ -72,6 +72,14 @@ public class PsychologistDescriptionController {
         } catch (Exception e){
             throw new NoResultException("Errore nel controllo dello psicologo",e);
 
+        }
+    }
+
+    public void retrieveMajors(PsychologistBean psychologistBean) {
+        Psychologist psychologist = beanAndModelMapperFactory.fromBeanToModel(psychologistBean, PsychologistBean.class);
+        boolean majorsAlreadyInserted = retrieveDAO.retrieveMajors(psychologist);
+        if (majorsAlreadyInserted) {
+            psychologistBean.setMajor(psychologist.getMajors());
         }
     }
 }

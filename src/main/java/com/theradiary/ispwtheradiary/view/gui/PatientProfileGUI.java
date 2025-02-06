@@ -25,7 +25,6 @@ public class PatientProfileGUI extends CommonGUI {
     public PatientProfileGUI(FXMLPathConfig fxmlPathConfig, Session session, PatientBean patientBean) {
         super(fxmlPathConfig,session);
         this.patientBean = patientBean;
-
     }
     private final PatientProfileController patientProfileController = new PatientProfileController();
 
@@ -45,6 +44,7 @@ public class PatientProfileGUI extends CommonGUI {
     @FXML
     private Label appointment;
 
+    //Metodo per visualizzare il profilo del paziente
     protected void printPatient(PatientBean patientBean) {
         //recupero il paziente
         fullName.setText(patientBean.getFullName());
@@ -65,6 +65,7 @@ public class PatientProfileGUI extends CommonGUI {
             appointment.setText("Non presente");
         }
         StringJoiner categoryString = new StringJoiner(",");
+        //Recupero delle categorie
         patientProfileController.retrieveCategories(patientBean);
         if (patientBean.getCategories() != null && !patientBean.getCategories().isEmpty()) {
             for (Category c : patientBean.getCategories()) {
@@ -77,6 +78,8 @@ public class PatientProfileGUI extends CommonGUI {
         }
         description.setText(patientBean.getDescription());
     }
+
+    //Porta alla schermata di assegnazione delle task
     @FXML
     private void handle(MouseEvent event){
         goToPatientTask(event, patientBean);

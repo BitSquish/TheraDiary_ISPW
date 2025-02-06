@@ -20,6 +20,10 @@ public class MedicalOfficeBean {
         this.city = city;
     }
 
+    public MedicalOfficeBean(String mail) {
+        this.psychologist = mail;
+    }
+
     public String getPsychologist() {
         return psychologist;
     }

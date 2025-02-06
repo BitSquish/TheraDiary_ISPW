@@ -4,6 +4,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -13,11 +14,10 @@
       <columns>
          <TableColumn fx:id="fullName" prefWidth="154.4000244140625" text="Nome e Cognome" />
          <TableColumn fx:id="cityName" prefWidth="144.0" text="Città" />
-         <TableColumn fx:id="requestDate" prefWidth="99.99993896484375" text="Data Richiesta" />
-         <TableColumn fx:id="pagAdesion" prefWidth="76.0" text="P.A.G." />
-         <TableColumn fx:id="modality" minWidth="0.0" prefWidth="134.4000244140625" text="Visite:" />
-         <TableColumn fx:id="acceptButton" minWidth="0.0" prefWidth="99.2000732421875" />
-         <TableColumn fx:id="rejectButton" prefWidth="87.9998779296875" />
+         <TableColumn fx:id="requestDate" prefWidth="119.199951171875" text="Data Richiesta" />
+         <TableColumn fx:id="modality" minWidth="0.0" prefWidth="139.2000732421875" text="Visite:" />
+         <TableColumn fx:id="acceptButton" minWidth="0.0" prefWidth="121.60003662109375" />
+         <TableColumn fx:id="rejectButton" prefWidth="120.800048828125" />
       </columns>
    </TableView>
    <Text fill="#242038" layoutX="332.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le tue richieste" textAlignment="CENTER">
@@ -26,4 +26,5 @@
       </font>
    </Text>
    <Button fx:id="back" layoutX="48.0" layoutY="122.0" mnemonicParsing="false" onMouseClicked="#goToPatientList" style="-fx-background-color: #9067C6; -fx-background-radius: 20px;" text="Indietro" textFill="WHITE" />
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ebcef070" height="88.0" layoutX="85.0" stroke="#00000003" strokeType="INSIDE" width="87.0" />
 </AnchorPane>

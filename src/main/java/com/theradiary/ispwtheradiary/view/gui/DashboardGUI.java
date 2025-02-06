@@ -5,6 +5,7 @@ import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 
 public class DashboardGUI extends CommonGUI {
+    //Non implementato
     protected DashboardGUI(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig, session);
     }

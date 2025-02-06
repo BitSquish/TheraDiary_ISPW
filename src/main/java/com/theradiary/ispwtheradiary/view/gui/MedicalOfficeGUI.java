@@ -3,7 +3,6 @@ package com.theradiary.ispwtheradiary.view.gui;
 
 import com.theradiary.ispwtheradiary.controller.MedicalOfficeRegistrationController;
 import com.theradiary.ispwtheradiary.exceptions.EmptyFieldException;
-import com.theradiary.ispwtheradiary.exceptions.NoResultException;
 import com.theradiary.ispwtheradiary.engineering.others.FXMLPathConfig;
 import com.theradiary.ispwtheradiary.engineering.others.Session;
 import com.theradiary.ispwtheradiary.beans.MedicalOfficeBean;
@@ -39,8 +38,8 @@ public class MedicalOfficeGUI extends CommonGUI {
     //Questo metodo fa sì che le textfield siano inizializzate con i dati dello studio medico se esso è già stato inserito
     @FXML
     protected void initializeTextFields()  {
-        MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(session.getUser().getCredentialsBean().getMail(), null, null, null, null);
-        if (medicalOfficeRegistration.retrieveMedicalOffice(medicalOfficeBean)) {
+        MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(session.getUser().getCredentialsBean().getMail());
+        if (medicalOfficeRegistration.retrieveMedicalOffice(medicalOfficeBean)) {   // Controlla se l'ufficio medico è già stato inserito
             medOffAlreadyInserted = true;
             citta.setText(medicalOfficeBean.getCity());
             cap.setText(medicalOfficeBean.getPostCode());
@@ -51,26 +50,28 @@ public class MedicalOfficeGUI extends CommonGUI {
             medOffAlreadyInserted = false;
     }
 
+    //Metodo per registrare o modificare lo studio medico inserito
     @FXML
     private void register(MouseEvent event){
         errorMessage.setVisible(false);
         successMessage.setVisible(false);
         try{
-            TextField[] fields = {citta, cap, via};
+            TextField[] fields = {citta, cap, via}; //campi obbligatori
             checkFields(fields);
             MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(session.getUser().getCredentialsBean().getMail(), citta.getText(), cap.getText(), via.getText(), altreInfo.getText());
-            if(medOffAlreadyInserted)
+            if(medOffAlreadyInserted)   //se l'ufficio medico è già stato inserito precedentemente, lo modifica
                 medicalOfficeRegistration.modify(medicalOfficeBean);
-            else
+            else    //altrimenti registra il nuovo studio medico
                 medicalOfficeRegistration.register(medicalOfficeBean);
-            successMessage.setVisible(true);
-        }catch(EmptyFieldException | NoResultException exception){
+            successMessage.setVisible(true);    //conferma dell'avvenuta modifica/registrazione
+        }catch(EmptyFieldException exception){  //gestisce l'eccezione dovuta al mancato inserimento di campi obbligatori mostrando un messaggio di errore all'utente
             errorMessage.setText(exception.getMessage());
             errorMessage.setVisible(true);
         }
 
     }
 
+    //Controllo inserimento campi obbligatori
     @FXML
     protected void checkFields(TextField[] fields) throws EmptyFieldException {
         for(TextField field:fields){
@@ -79,4 +80,6 @@ public class MedicalOfficeGUI extends CommonGUI {
         }
     }
 }
+
+
 

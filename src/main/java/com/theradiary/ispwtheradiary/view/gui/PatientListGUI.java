@@ -45,29 +45,25 @@ public class PatientListGUI extends CommonGUI {
     private TableColumn<PatientBean,Void> checkProfile;
 
 
+    //Metodo per inizializzare e visualizzare la lista di pazienti dell'utente psicologo
     @FXML
     public void printPatient(MouseEvent event, List<PatientBean> patientBeans) {
         // Creazione della lista osservabile
         ObservableList<PatientBean> patientBeansList = FXCollections.observableArrayList(patientBeans);
-
         // Configurazione delle colonne
         fullName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         cityName.setCellValueFactory(new PropertyValueFactory<>("city"));
-
-        inPresenza.setCellValueFactory(cellData -> {
-            boolean inPerson = cellData.getValue().isInPerson();
-            return new javafx.beans.property.SimpleStringProperty(inPerson ? "Sì" : "No");
-        });
-
         online.setCellValueFactory(cellData -> {
             boolean onlineStatus = cellData.getValue().isOnline();
             return new javafx.beans.property.SimpleStringProperty(onlineStatus ? "Sì" : "No");
         });
-
+        inPresenza.setCellValueFactory(cellData -> {
+            boolean inPerson = cellData.getValue().isInPerson();
+            return new javafx.beans.property.SimpleStringProperty(inPerson ? "Sì" : "No");
+        });
         // Configurazione delle colonne con bottoni
         checkTask.setCellFactory(createButtonCellFactory("Vedi Task", this::goToPatientTask));
         checkProfile.setCellFactory(createButtonCellFactory("Vedi Profilo", this::goToPatientProfile));
-
         // Imposta i dati nella tabella
         patientTable.setItems(patientBeansList);
     }
@@ -99,20 +95,28 @@ public class PatientListGUI extends CommonGUI {
         };
     }
 
+    //Metodo per visualizzare il profilo del paziente
     @FXML
     private void goToPatientProfile(MouseEvent event, PatientBean patientBean) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PATIENT_PROFILE_PATH)));
             loader.setControllerFactory(c -> new PatientProfileGUI(fxmlPathConfig, session,patientBean));
             Parent root = loader.load();
-            ((PatientProfileGUI)loader.getController()).printPatient(patientBean);
+            ((PatientProfileGUI)loader.getController()).printPatient(patientBean);  //inizializza il profilo del paziente
             changeScene(root, event);
         } catch (IOException e) {
             throw new LoadingException(LOADING_SCENE, e);
         }
     }
 
-
+    //Metodi per visualizzare le richieste di contatto dei pazienti
+    @FXML
+    public void seeRequest(MouseEvent event) {
+        ArrayList<RequestBean> requestBeans = new ArrayList<>();
+        PatientListController patientListController = new PatientListController();
+        patientListController.getRequests((PsychologistBean)session.getUser(), requestBeans);
+        goToRequest(requestBeans, event);
+    }
     private void goToRequest(List<RequestBean> requestBeans, MouseEvent event){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(REQUEST_PATH)));
@@ -125,12 +129,6 @@ public class PatientListGUI extends CommonGUI {
             throw new LoadingException(LOADING_SCENE, e);
         }
     }
-    @FXML
-    public void seeRequest(MouseEvent event) {
-        ArrayList<RequestBean> requestBeans = new ArrayList<>();
-        PatientListController patientListController = new PatientListController();
-        patientListController.getRequests((PsychologistBean)session.getUser(), requestBeans);
-        goToRequest(requestBeans, event);
-    }
+
 }
 

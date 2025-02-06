@@ -24,12 +24,14 @@ public class RequestGUI extends CommonGUI implements Observer {
 
     /*
         La classe ConcreteObserver:
-            implementa l’interfaccia dell’Observer definendo il comportamento in caso di cambio di stato del soggetto osservato
+            implementa l’interfaccia dell’Observer definendo il comportamento
+            in caso di cambio di stato del soggetto osservato
+        Questa classe è un ConcreteObserver
      */
 
     private final RequestApplicationController requestApplicationController = new RequestApplicationController();
 
-    private final RequestManagerConcreteSubject requestManagerConcreteSubject;
+    private final RequestManagerConcreteSubject requestManagerConcreteSubject;  // ConcreteSubject
     private List<RequestBean> requestBeans = new ArrayList<>();
     public RequestGUI(FXMLPathConfig fxmlPathConfig, Session session) {
         super(fxmlPathConfig, session);
@@ -71,8 +73,6 @@ public class RequestGUI extends CommonGUI implements Observer {
                 });
                 return btn;
             }
-
-
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -106,7 +106,7 @@ public class RequestGUI extends CommonGUI implements Observer {
     private void manageRequest(RequestBean requestBean, boolean flag) {
         //chiamo applicativo passandogli la richiesta da rimuovere
         requestApplicationController.deleteRequest(requestBean);
-        if(flag){
+        if(flag){   //se la richiesta è stata accettata
             PatientBean patientBean = requestBean.getPatientBean();
             patientBean.setPsychologistBean(requestBean.getPsychologistBean());
             requestApplicationController.addPsychologistToPatient(patientBean);   //assegno lo psicologo al paziente
@@ -128,6 +128,7 @@ public class RequestGUI extends CommonGUI implements Observer {
         refreshTableView();
     }
 
+    // Metodo per aggiornare la tabella
     private void refreshTableView() {
         requestBeanTableView.getItems().clear();
         requestBeanTableView.getItems().addAll(requestBeans);
