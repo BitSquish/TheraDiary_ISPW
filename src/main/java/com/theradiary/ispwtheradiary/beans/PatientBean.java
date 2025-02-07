@@ -39,14 +39,12 @@ public class PatientBean extends LoggedUserBean{
     public void clearTasks(){
         tasks.clear();
     }
-    public void setTasks(List<TaskBean> tasks) {
-        this.tasks = tasks;
-    }
+
     public void removeTask(TaskBean task){tasks.remove(task);}
     //To do
     public List<ToDoItemBean> getToDoList() {return toDoList;}
     public void addToDoItem(ToDoItemBean toDoItem){toDoList.add(toDoItem);}
-    public void setToDoList(List<ToDoItemBean> toDoList) {this.toDoList = toDoList;}
+
     public void removeToDoItem(ToDoItemBean toDoItem){ toDoList.remove(toDoItem);}
 
 
