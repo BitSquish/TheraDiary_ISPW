@@ -45,7 +45,7 @@ public class TaskAndToDoPtController  extends TaskAndToDoController {
     }
 
     //Metodo per recuperare il diario del paziente
-    public String getDiary(LocalDate selectedDate, PatientBean patientBean) {
+    public String getDiaryPage(LocalDate selectedDate, PatientBean patientBean) {
         Patient patient = beanAndModelMapperFactory.fromBeanToModel(patientBean, PatientBean.class);
         Optional<String> diaryContent = taskAndToDoDAO.getDiaryEntry(selectedDate,patient);
         return diaryContent.orElse("");

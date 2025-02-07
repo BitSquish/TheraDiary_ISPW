@@ -25,7 +25,7 @@ public class DiaryPagesPatientGUI extends CommonGUI {
        if(selectedDate!=null) {
            TaskAndToDoPtController taskAndToDo = new TaskAndToDoPtController();
            PatientBean patientBean = (PatientBean) session.getUser();
-           diaryPage.setText(taskAndToDo.getDiary(selectedDate, patientBean));
+           diaryPage.setText(taskAndToDo.getDiaryPage(selectedDate, patientBean));
        }else{
               diaryPage.setText("Seleziona una data");
        }
