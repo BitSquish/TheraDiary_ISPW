@@ -161,7 +161,7 @@ public class AppointmentPtGUI extends CommonGUI {
         appointmentBean.setAvailable(false);    //L'appuntamento viene impostato come non più disponibile, in modo da non essere più visibile ad altri utenti
         appointmentBean.setPatientBean(session.getUser().getCredentialsBean().getMail());
         appointmentController.askForAnAppointment(appointmentBean); //salva l'appuntamento
-        success.setText("Appuntamento impostato con successo.");
+        success.setText("Appuntamento fissato.");
         success.setVisible(true);
     }
 

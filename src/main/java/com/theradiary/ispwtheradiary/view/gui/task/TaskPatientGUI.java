@@ -77,6 +77,7 @@ public class TaskPatientGUI extends CommonGUI {
             }
         }
     }
+
     @FXML
     public void saveTask(MouseEvent event){
         if(!modifiedTasks.isEmpty()){
