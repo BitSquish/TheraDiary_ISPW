@@ -317,7 +317,7 @@ public abstract class CommonGUI {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPathConfig.getFXMLPath(PSYCHOLOGIST_DESCRIPTION_PATH)));
             loader.setControllerFactory(c -> new PsychologistDescriptionGUI(fxmlPathConfig, session));
             Parent root = loader.load();
-            ((PsychologistDescriptionGUI) loader.getController()).printPsychologist(psychologistBean);
+            ((PsychologistDescriptionGUI) loader.getController()).printPsychologistInfo(psychologistBean);
             changeScene(root, event);
         } catch (IOException |NoResultException e) {
             throw new LoadingException(LOADING_SCENE, e);

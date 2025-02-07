@@ -45,8 +45,9 @@ public class PsychologistDescriptionGUI extends CommonGUI {
     private Button request;
 
 
+
     //Metodo per visualizzare le informazioni dello psicologo
-    public void printPsychologist(PsychologistBean psychologistBean) throws NoResultException {
+    public void printPsychologistInfo(PsychologistBean psychologistBean) throws NoResultException {
         boolean hasAlreadySentARequest = psychologistDescriptionController.hasAlreadySentARequest((PatientBean)session.getUser(), psychologistBean);
         //Se il paziente ha già uno psicologo associato o ha già inviato una richiesta per quello psicologo, nasconde il bottone per inviare la richiesta
         if((((PatientBean) session.getUser()).getPsychologistBean() != null && ((PatientBean) session.getUser()).getPsychologistBean().getCredentialsBean().getMail() != null) || hasAlreadySentARequest){
