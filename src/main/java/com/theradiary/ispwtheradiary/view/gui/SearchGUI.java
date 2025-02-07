@@ -43,7 +43,7 @@ public class SearchGUI extends CommonGUI {
     Label errorMessage;
 
     @FXML
-    private void search(MouseEvent event){
+    public  void search(MouseEvent event){
         errorMessage.setVisible(false);
         try{
             TextField[] fields = {cognomeP, cittaP};    //Almeno uno tra cognome e città è obbligatorio
@@ -61,7 +61,7 @@ public class SearchGUI extends CommonGUI {
 
     //Metodo per passare alla schermata con la lista di psicologi
     @FXML
-    private void goToPsychologistsList(List<PsychologistBean> psychologistBeans, MouseEvent event){
+    public void goToPsychologistsList(List<PsychologistBean> psychologistBeans, MouseEvent event){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(PSYCHOLOGISTS_LIST));
             loader.setControllerFactory(c -> new PsychologistsListGUI(fxmlPathConfig,session));

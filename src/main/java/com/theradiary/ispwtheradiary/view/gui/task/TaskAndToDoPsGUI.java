@@ -67,7 +67,7 @@ public class TaskAndToDoPsGUI extends CommonGUI {
         fullName.setText(patientBean.getFullName());
 
         // Configura la tabella dei Task
-        configureTaskTable(patientBean);
+        configureTaskTable();
 
         // Configura la lista To-Do
         configureToDoList();
@@ -76,9 +76,9 @@ public class TaskAndToDoPsGUI extends CommonGUI {
         configureDiary();
     }
 
-    private void configureTaskTable(PatientBean patientBean) {
-        taskAndToDoController.retrieveTasks(patientBean);
-        ObservableList<TaskBean> tasks = FXCollections.observableArrayList(patientBean.getTasks());
+    private void configureTaskTable() {
+        taskAndToDoController.retrieveTasks(this.patientBean);
+        ObservableList<TaskBean> tasks = FXCollections.observableArrayList(this.patientBean.getTasks());
         taskNameColumn.setCellValueFactory(new PropertyValueFactory<>("taskName"));
         taskDeadlineColumn.setCellValueFactory(new PropertyValueFactory<>("taskDeadline"));
         taskStatusColumn.setCellValueFactory(new PropertyValueFactory<>("taskStatus"));

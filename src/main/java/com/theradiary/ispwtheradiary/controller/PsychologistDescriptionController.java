@@ -20,10 +20,11 @@ public class PsychologistDescriptionController {
     private final RetrieveDAO retrieveDAO = FactoryDAO.getRetrieveDAO();
     //Costruttore
     public PsychologistDescriptionController() {
+
         this.beanAndModelMapperFactory = BeanAndModelMapperFactory.getInstance();
     }
     //Metodo per le informazioni dello psicologo nel profilo
-    public void searchPsychologistInfo(PsychologistBean psychologistBean, MedicalOfficeBean medicalOfficeBean) {
+    public void psychologistInfo(PsychologistBean psychologistBean, MedicalOfficeBean medicalOfficeBean) {
         //Ricavo studio medico e specializzazioni
         MedicalOffice medicalOffice = beanAndModelMapperFactory.fromBeanToModel(medicalOfficeBean, MedicalOfficeBean.class);
         if(retrieveDAO.retrieveMedicalOffice(medicalOffice)){

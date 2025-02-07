@@ -1,7 +1,6 @@
 package com.theradiary.ispwtheradiary.view.gui;
 
 import com.theradiary.ispwtheradiary.beans.*;
-import com.theradiary.ispwtheradiary.controller.AccountController;
 import com.theradiary.ispwtheradiary.controller.PsychologistDescriptionController;
 import com.theradiary.ispwtheradiary.engineering.enums.Major;
 import com.theradiary.ispwtheradiary.engineering.enums.Role;
@@ -55,7 +54,7 @@ public class PsychologistDescriptionGUI extends CommonGUI {
         }
         //Recupero delle informazioni sullo psicologo e sul suo studio medico
         MedicalOfficeBean medicalOfficeBean = new MedicalOfficeBean(psychologistBean.getCredentialsBean().getMail(), psychologistBean.getCity());
-        psychologistDescriptionController.searchPsychologistInfo(psychologistBean, medicalOfficeBean);
+        psychologistDescriptionController.psychologistInfo(psychologistBean, medicalOfficeBean);
         //impostazione dei campi
         nameField.setText(psychologistBean.getName());
         surnameField.setText(psychologistBean.getSurname());
